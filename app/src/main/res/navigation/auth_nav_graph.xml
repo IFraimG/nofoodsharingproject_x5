@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/mainAuthF">
+
+    <fragment
+        android:id="@+id/getterAuthF"
+        android:name="com.example.nofoodsharingproject.fragments.auth.GetterAuthF"
+        android:label="fragment_getter_auth"
+        tools:layout="@layout/fragment_getter_auth" >
+        <action
+            android:id="@+id/action_getterAuthF_to_mainAuthF"
+            app:destination="@id/mainAuthF" />
+    </fragment>
+    <fragment
+        android:id="@+id/setterAuthF"
+        android:name="com.example.nofoodsharingproject.fragments.auth.SetterAuthF"
+        android:label="fragment_setter_auth"
+        tools:layout="@layout/fragment_setter_auth" >
+        <action
+            android:id="@+id/action_setterAuthF_to_mainAuthF"
+            app:destination="@id/mainAuthF" />
+        <action
+            android:id="@+id/action_setterAuthF_to_setterLoginAuthF"
+            app:destination="@id/setterLoginAuthF" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainAuthF"
+        android:name="com.example.nofoodsharingproject.fragments.auth.MainAuthF"
+        android:label="fragment_main_auth"
+        tools:layout="@layout/fragment_main_auth" >
+        <action
+            android:id="@+id/action_mainAuthF_to_setterAuthF"
+            app:destination="@id/setterAuthF" />
+        <action
+            android:id="@+id/action_mainAuthF_to_getterAuthF"
+            app:destination="@id/getterAuthF" />
+    </fragment>
+    <fragment
+        android:id="@+id/setterLoginAuthF"
+        android:name="com.example.nofoodsharingproject.fragments.auth.SetterLoginAuthF"
+        android:label="fragment_setter_login_auth"
+        tools:layout="@layout/fragment_setter_login_auth" >
+        <action
+            android:id="@+id/action_setterLoginAuthF_to_setterAuthF"
+            app:destination="@id/setterAuthF" />
+    </fragment>
+</navigation>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/getterAdvrsF">
+
+    <fragment
+        android:id="@+id/getterProfileF"
+        android:name="com.example.nofoodsharingproject.fragments.getter.GetterProfileF"
+        android:label="fragment_getter_profile"
+        tools:layout="@layout/fragment_getter_profile" />
+    <fragment
+        android:id="@+id/getterAdvrsF"
+        android:name="com.example.nofoodsharingproject.fragments.getter.GetterAdvrsF"
+        android:label="fragment_getter_advrs"
+        tools:layout="@layout/fragment_getter_advrs" />
+    <fragment
+        android:id="@+id/marketsMapF"
+        android:name="com.example.nofoodsharingproject.MarketsMapF"
+        android:label="fragment_markets_map"
+        tools:layout="@layout/fragment_markets_map" />
+    <fragment
+        android:id="@+id/getterNotifyF"
+        android:name="com.example.nofoodsharingproject.fragments.getter.GetterNotifyF"
+        android:label="fragment_getter_notify"
+        tools:layout="@layout/fragment_getter_notify" />
+</navigation>

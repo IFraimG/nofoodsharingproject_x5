@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/setterAdvrsF"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Объявления"
+        android:enabled="true" />
+    <item
+        android:id="@+id/setterNotifyF"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Уведомления" />
+    <item
+        android:id="@+id/setterProfileF"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Профиль" />
+    <item
+        android:id="@+id/marketsMapF"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Карта" />
+</menu>
