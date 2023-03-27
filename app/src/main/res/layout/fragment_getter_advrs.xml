@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.getter.GetterAdvrsF">
-
-    <TextView
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Объявления" />
+    android:background="@color/main_color"
+        android:orientation="vertical">
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10sp"
+        android:text="Объявления"
+        android:background="@drawable/style5"
+        android:textSize="25sp"
+        android:textColor="@color/grey_500"/>
+
+    <!--active re-->
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_new_request"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="580sp"
+        android:background="@drawable/style1"
+        android:text="@string/add_new_request_button"
+        android:textColor="@color/white" />
+
+</LinearLayout>
+

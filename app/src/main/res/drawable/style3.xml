@@ -2,6 +2,6 @@
     android:thickness="0dp"
     android:shape="rectangle">
     <corners android:radius="5dp" />
-    <solid android:color="@color/white"/>
+    <solid android:color="@color/main_color"/>
     <stroke android:width="3dp" android:color="@color/yellow_500" />
 </shape>
