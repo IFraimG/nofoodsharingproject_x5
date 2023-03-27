@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="main_color">#FBFBF0</color>
+    <color name="green_pastel">#BFD6A5</color>
+    <color name="grey_500">#272624</color>
+    <color name="grey_300">	#d3d3d3	</color>
+    <color name="yellow_500">#D5A200</color>
+
+
+
+
+    <!--Stok colorc-->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

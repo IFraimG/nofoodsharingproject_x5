@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetBottom="0dp"
+    android:insetLeft="0dp"
+    android:insetRight="0dp"
+    android:insetTop="0dp">
+    <ripple android:color="@color/black">
+        <item>
+            <shape xmlns:android="http://schemas.android.com/apk/res/android"
+                android:thickness="0dp"
+                android:shape="rectangle">
+                <solid android:color="@color/yellow_500"/>
+            </shape>
+        </item>
+    </ripple>
+</inset>
