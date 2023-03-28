@@ -29,10 +29,18 @@ public class GetterAdvrsF extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_getter_advrs, container, false);
-        ImageButton goToMap = getActivity().findViewById(R.id.open_map);
-        TextView adresShop = getActivity().findViewById(R.id.adress_shop);
-        TextView activeAdvertisement = getActivity().findViewById(R.id.on_advertisement);
+        ImageButton goToMap = view.findViewById(R.id.open_map);
+        TextView adresShop = view.findViewById(R.id.adress_shop);
+        TextView activeAdvertisement = view.findViewById(R.id.on_advertisement);
+        TextView product1 = view.findViewById(R.id.product1);
+        TextView product2 = view.findViewById(R.id.product2);
 
+        // ИЗ БД
+        activeAdvertisement.setText("Сейчас это объявление не активно");
+        adresShop.setText("Адрес недоступен");
+        product1.setText("продукт не найден");
+        product2.setText("продукт не найден");
+        //
 
 
         return view;

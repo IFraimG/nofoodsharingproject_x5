@@ -64,10 +64,39 @@
         android:text="Ваше объявление:"
         />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50sp"
+        android:layout_marginLeft="20sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:textSize="15sp"
+            android:text="Продукт1"
+            android:id="@+id/product1"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:textSize="15sp"
+            android:text="Продукт2"
+            android:id="@+id/product2"
+            />
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150sp"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
         android:id="@+id/on_advertisement"
