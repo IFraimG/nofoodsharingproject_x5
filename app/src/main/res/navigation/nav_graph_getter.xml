@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_getter_advrs" />
     <fragment
         android:id="@+id/marketsMapF"
-        android:name="com.example.nofoodsharingproject.MarketsMapF"
+        android:name="com.example.nofoodsharingproject.fragments.MarketsMapF"
         android:label="fragment_markets_map"
         tools:layout="@layout/fragment_markets_map" />
     <fragment

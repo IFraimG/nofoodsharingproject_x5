@@ -11,6 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.nofoodsharingproject.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.yandex.mapkit.MapKitFactory;
 
 public class GetterAC extends AppCompatActivity {
     NavController navController;
@@ -19,6 +20,8 @@ public class GetterAC extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getter);
+
+        MapKitFactory.setApiKey("1d877443-08b6-4bef-8b1f-166d827b7fd7");
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_getter_fragment);
         navController = navHostFragment.getNavController();
