@@ -10,27 +10,87 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10sp"
+        android:layout_marginTop="25sp"
         android:text="@string/heading_ads"
         android:background="@drawable/style5"
         android:textSize="25sp"
         android:textColor="@color/grey_500"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10sp"
-        android:text="Вы прикреплены к магазину: "
-        android:background="@drawable/style5"
-        android:textColor="@color/grey_500"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginTop="30sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:text="@string/Adres_your_magazin"
+            android:textSize="15sp"
+            android:textColor="@color/grey_500"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:text="адрес магазина"
+            android:id="@+id/adress_shop"
+            android:textSize="15sp" />
+
+        <ImageButton
+            android:id="@+id/open_map"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/style6"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="250sp"
+        android:layout_height="40sp"
+        android:background="@drawable/style2"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="10sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5sp"
+            android:text="Адрес магазина:"
+            android:textColor="@color/grey_500"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5sp"
+            android:text="Продукты:"
+            android:textColor="@color/grey_500"
+            android:id="@+id/spisok_productov"
+            />
+
+
+
+    </LinearLayout>
+
+
 
 
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="10sp"
         android:id="@+id/add_new_request"
         android:layout_width="250sp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="580sp"
         android:background="@drawable/style1"
         android:text="@string/add_new_request_button"
         android:textColor="@color/white" />
