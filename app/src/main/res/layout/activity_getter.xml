@@ -22,7 +22,7 @@
         android:id="@+id/getter_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:background="@drawable/style6"
+        android:background="@drawable/style2"
         app:itemIconTint="@color/green_pastel"
         app:itemTextColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"

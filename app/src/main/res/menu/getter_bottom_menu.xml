@@ -3,18 +3,18 @@
     <item
         android:id="@+id/getterAdvrsF"
         android:icon="@drawable/ic_launcher_background"
-        android:title="Объявление"
+        android:title="@string/button_navigation_first"
         android:enabled="true" />
     <item
         android:id="@+id/getterNotifyF"
         android:icon="@drawable/ic_launcher_background"
-        android:title="Уведомления" />
+        android:title="@string/button_navigation_notification" />
     <item
         android:id="@+id/getterProfileF"
         android:icon="@drawable/ic_launcher_background"
-        android:title="Профиль" />
+        android:title="@string/button_navigation_profile" />
     <item
         android:id="@+id/marketsMapF"
         android:icon="@drawable/ic_launcher_background"
-        android:title="Карта" />
+        android:title="@string/button_navigation_map" />
 </menu>
