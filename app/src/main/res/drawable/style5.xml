@@ -9,9 +9,10 @@
             <shape xmlns:android="http://schemas.android.com/apk/res/android"
                 android:thickness="6dp"
                 android:shape="rectangle">
-                <corners android:radius="29dp"/>
-                <corners android:radius="8dp" />
-                <solid android:color="#FFFFFF"/>
+                <stroke android:width="2sp" android:color="@color/grey_500"/>
+                <corners android:radius="6sp" />
+                <padding android:left="10dp"/>
+                <padding android:right="10dp"/>
             </shape>
         </item>
     </ripple>
