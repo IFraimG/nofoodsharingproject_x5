@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.fragments.MarketsMapF;
 
 public class GetterAdvrsF extends Fragment {
 
@@ -29,7 +30,7 @@ public class GetterAdvrsF extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_getter_advrs, container, false);
-        ImageButton goToMap = view.findViewById(R.id.open_map);
+        ImageButton buttonMapOpen = view.findViewById(R.id.open_map);
         TextView adresShop = view.findViewById(R.id.adress_shop);
         TextView activeAdvertisement = view.findViewById(R.id.on_advertisement);
         TextView product1 = view.findViewById(R.id.product1);
@@ -41,6 +42,13 @@ public class GetterAdvrsF extends Fragment {
         product1.setText("продукт не найден");
         product2.setText("продукт не найден");
         //
+
+        buttonMapOpen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //не робит new MarketsMapF();
+            }
+        });
 
 
         return view;
