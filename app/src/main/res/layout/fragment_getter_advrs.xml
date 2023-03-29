@@ -9,12 +9,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="25sp"
         android:text="@string/heading_ads"
         android:background="@drawable/style5"
-        android:textSize="25sp"
-        android:textColor="@color/grey_500"/>
+        android:textColor="@color/grey_500"
+        android:textSize="25sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
         android:orientation="horizontal"
         android:layout_marginLeft="10sp"
         android:layout_marginRight="10sp"
-        android:layout_marginTop="80sp">
+        android:layout_marginTop="100sp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,7 +63,8 @@
         android:layout_marginTop="80sp"
         android:layout_gravity="center"
         android:textSize="15sp"
-        android:text="Ваше объявление:"
+        android:text="Ваше последнее объявление:"
+        android:textColor="@color/grey_500"
         />
 
     <LinearLayout
@@ -71,42 +73,99 @@
         android:layout_marginTop="50sp"
         android:layout_marginLeft="20sp"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
-            android:textSize="15sp"
-            android:text="Продукт1"
-            android:id="@+id/product1"
-            />
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="3sp"
+                android:textSize="15sp"
+                android:text="1)" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="Продукт1"
+                android:id="@+id/product1"/>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
-            android:textSize="15sp"
-            android:text="Продукт2"
-            android:id="@+id/product2"
-            />
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="3sp"
+                android:textSize="15sp"
+                android:text="2)" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10sp"
+                android:textSize="15sp"
+                android:text="Продукт2"
+                android:id="@+id/product2"
+                />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150sp"
+        android:layout_marginTop="40sp"
         android:id="@+id/on_advertisement"
         android:text="Это объявление сейчас активно"
+        android:textColor="@color/grey_500"
         android:layout_gravity="center"
-        android:textSize="15sp" />
+        android:textSize="15sp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Номер заказа:"
+            android:layout_marginRight="2.5sp"
+            android:layout_gravity="center"
+            android:textColor="@color/grey_500"
+            android:id="@+id/number_advertisement_vspomogalka"
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="2.5sp"
+            android:layout_height="wrap_content"
+            android:id="@+id/number_advertisement"
+            android:text="1111"
+            android:layout_gravity="center"
+            android:textSize="15sp"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Для получения заказа обратитесь на кассы или в зону доставки"
+        android:layout_marginTop="10sp"
+        android:textStyle="italic"
+        android:layout_marginRight="2.5sp"
+        android:layout_gravity="center"
+        android:textSize="10sp"/>
+
+
 
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginTop="10sp"
+        android:layout_marginTop="100sp"
         android:id="@+id/create_new_request"
         android:layout_width="250sp"
         android:layout_height="wrap_content"

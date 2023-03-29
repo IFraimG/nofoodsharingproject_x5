@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,26 +31,41 @@ public class GetterAdvrsF extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_getter_advrs, container, false);
+
         ImageButton buttonMapOpen = view.findViewById(R.id.open_map);
         TextView adresShop = view.findViewById(R.id.adress_shop);
         TextView activeAdvertisement = view.findViewById(R.id.on_advertisement);
         TextView product1 = view.findViewById(R.id.product1);
         TextView product2 = view.findViewById(R.id.product2);
+        TextView numberAdvertisement = view.findViewById(R.id.number_advertisement);
+        TextView numberAdvertisementVsp = view.findViewById(R.id.number_advertisement_vspomogalka);
 
-        // ИЗ БД
+
+        // ИЗ БД и сервера
         activeAdvertisement.setText("Сейчас это объявление не активно");
         adresShop.setText("Адрес недоступен");
         product1.setText("продукт не найден");
         product2.setText("продукт не найден");
+
+        //только если активен заказ
+        numberAdvertisement.setText(null);
+        numberAdvertisementVsp.setText(null);
+        //
+
+
         //
 
         buttonMapOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //не робит new MarketsMapF();
+                Fragment someFragment = new MarketsMapF();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_getter_fragment, someFragment );
+                transaction.addToBackStack(null);
+                transaction.commit();
+                //Есть задержка, возврат только жестом "назад"
             }
         });
-
 
         return view;
     }
