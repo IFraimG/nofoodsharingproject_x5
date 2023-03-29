@@ -31,6 +31,7 @@ public class GetterAdvrsF extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_getter_advrs, container, false);
+
         ImageButton buttonMapOpen = view.findViewById(R.id.open_map);
         TextView adresShop = view.findViewById(R.id.adress_shop);
         TextView activeAdvertisement = view.findViewById(R.id.on_advertisement);
