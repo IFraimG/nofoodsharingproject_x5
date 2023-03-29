@@ -27,7 +27,12 @@
         </activity>
         <activity android:exported="true" android:name=".activities.MainAuthAC">
         </activity>
-        <activity android:name=".activities.GetterAC" android:exported="true"></activity>
+        <activity android:name=".activities.GetterAC" android:exported="true" />
+        <activity android:name=".activities.SetterAC" android:exported="true" />
+        <!--    test    -->
+        <activity
+            android:name=".utils.CustomSearchMarkets"
+            android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>

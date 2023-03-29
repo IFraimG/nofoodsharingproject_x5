@@ -2,6 +2,7 @@ package com.example.nofoodsharingproject.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.utils.CustomLocationListener;
+import com.example.nofoodsharingproject.utils.CustomSearchMarkets;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
@@ -34,19 +36,21 @@ public class MarketsMapF extends Fragment {
     int secondPermission;
 
     final Point moscowPoint = new Point(55.71989101308894, 37.5689757769603);
-    final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 2);
+    final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        MapKitFactory.setApiKey("1d877443-08b6-4bef-8b1f-166d827b7fd7");
-
         firstPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         secondPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (firstPermission != PackageManager.PERMISSION_GRANTED || secondPermission != PackageManager.PERMISSION_GRANTED) {
+        if (firstPermission != PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+        } else if (firstPermission != PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION }, 200);
+        } else if (firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION }, 200);
         }
 //        final Activity mainContext = getActivity();
 //        new Thread(new Runnable() {
@@ -54,6 +58,13 @@ public class MarketsMapF extends Fragment {
 //            public void run() {
 //                CustomLocationListener.SetUpLocationListener(mainContext);
 //            }
+    }
+
+    public boolean checkLocationPermissions() {
+        firstPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        secondPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+
+        return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
@@ -64,15 +75,15 @@ public class MarketsMapF extends Fragment {
         CustomLocationListener.SetUpLocationListener(getActivity());
 
         mapView = (MapView) view.findViewById(R.id.mapview);
-        if (firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED) {
-
+        if (checkLocationPermissions()) {
             Location location = CustomLocationListener.location;
             try {
-                mapView.getMap().move(new CameraPosition(new Point(CustomLocationListener.location.getLatitude(), CustomLocationListener.location.getLongitude()), 14, 0, 0),  new Animation(Animation.Type.SMOOTH, 0), null);
+                mapView.getMap().move(new CameraPosition(new Point(location.getLatitude(), location.getLongitude()), 14, 0, 0),  new Animation(Animation.Type.SMOOTH, 0), null);
             } catch (NullPointerException err) {
                 mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
             }
-        }
+        } else mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
+
         return view;
     }
 

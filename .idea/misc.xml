@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/layout/activity_getter.xml" value="0.24974358974358973" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/layout/activity_main_auth.xml" value="0.22592592592592592" />
+        <entry key="app/src/main/res/layout/activity_setter.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/layout/fragment_getter_advrs.xml" value="0.24974358974358973" />
         <entry key="app/src/main/res/layout/fragment_getter_auth.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/layout/fragment_getter_notify.xml" value="0.24974358974358973" />
@@ -14,6 +15,8 @@
         <entry key="app/src/main/res/layout/fragment_markets_map.xml" value="0.24974358974358973" />
         <entry key="app/src/main/res/layout/fragment_setter_auth.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/layout/fragment_setter_login_auth.xml" value="0.24974358974358973" />
+        <entry key="app/src/main/res/layout/fragment_setter_profile.xml" value="0.25364583333333335" />
+        <entry key="app/src/main/res/layout/setter_history_transfer.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/menu/setter_bottom_menu.xml" value="0.24871794871794872" />
         <entry key="app/src/main/res/menu/user_bottom_menu.xml" value="0.24974358974358973" />
       </map>

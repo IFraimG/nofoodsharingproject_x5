@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.example.nofoodsharingproject.activities.GetterAC;
 import com.example.nofoodsharingproject.activities.MainAuthAC;
+import com.example.nofoodsharingproject.activities.SetterAC;
 import com.yandex.mapkit.MapKitFactory;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     NavController navController = null;
     boolean isAuth = false;
     // костыль
+    // ЕСЛИ ХОЧЕШЬ РЕДАКТИРОВАТЬ НУЖДАЮЩЕГОСЯ, ОБЯЗАТЕЛЬНО ПРОПИШИ ЗДЕСЬ true
     boolean isGetter = true;
 
     @Override
@@ -35,9 +37,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intentAuth);
             finish();
         }
-        else if (isGetter) {
-            Intent intentGetter = new Intent(getApplicationContext(), GetterAC.class);
-            startActivity(intentGetter);
+        else {
+            if (isGetter) {
+                Intent intentGetter = new Intent(getApplicationContext(), GetterAC.class);
+                startActivity(intentGetter);
+                finish();
+            } else {
+                Intent intentSetter = new Intent(getApplicationContext(), SetterAC.class);
+                startActivity(intentSetter);
+            }
             finish();
         }
 
