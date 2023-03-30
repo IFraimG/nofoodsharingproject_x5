@@ -39,6 +39,7 @@ public class GetterAdvrsF extends Fragment {
         TextView product2 = view.findViewById(R.id.product2);
         TextView numberAdvertisement = view.findViewById(R.id.number_advertisement);
         TextView numberAdvertisementVsp = view.findViewById(R.id.number_advertisement_vspomogalka);
+        Button buttonNewAdvertisement = view.findViewById(R.id.create_new_request);
 
 
         // ИЗ БД и сервера
@@ -67,6 +68,17 @@ public class GetterAdvrsF extends Fragment {
             }
         });
 
+        buttonNewAdvertisement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment newFragment = new GetterNewAdvertisementCreateF();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_getter_fragment, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                //Есть задержка, возврат только жестом "назад"
+            }
+        });
         return view;
     }
 }
