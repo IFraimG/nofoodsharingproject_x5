@@ -2,28 +2,25 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="huynya"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/dsiudh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/style1"
-            android:text="отменет"
-            android:textColor="@color/white" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/cr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/style1"
-            android:text="Создать объявление"
+            android:text="Создать"
             android:textColor="@color/white" />
 
     </LinearLayout>
