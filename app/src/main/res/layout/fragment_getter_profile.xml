@@ -4,15 +4,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.getter.GetterProfileF">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10sp"
-        android:background="@drawable/style5"
-        android:textSize="25sp"
-        android:textColor="@color/grey_500"
-        android:text="Профиль" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10sp"
+            android:background="@drawable/style5"
+            android:textSize="25sp"
+            android:textColor="@color/grey_500"
+            android:text="Профиль" />
+
+        <ImageButton
+            android:layout_marginTop="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+
+        </ImageButton>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="100sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:text="@string/Adres_your_magazin"
+                android:textSize="15sp"
+                android:textColor="@color/grey_500"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:text="адрес магазина"
+                android:id="@+id/adress_shop"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/create_new_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:background="@drawable/style1"
+                android:text="сменить магазин"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 
 </FrameLayout>
