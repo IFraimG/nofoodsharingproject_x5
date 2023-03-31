@@ -38,10 +38,18 @@
             android:layout_weight="1"
             android:text="20 успешных передач продуктов" />
     </LinearLayout>
+
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/setter_profile_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Включить геолокацию" />
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/setter_profile_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Включить уведомления" />
+
+
     <include layout="@layout/setter_history_transfer" />
 </LinearLayout>
