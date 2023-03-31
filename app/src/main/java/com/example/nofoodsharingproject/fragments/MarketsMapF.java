@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PointF;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -25,11 +27,19 @@ import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.GeoObjectCollection;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
+import com.yandex.mapkit.layers.GeoObjectTapEvent;
+import com.yandex.mapkit.layers.GeoObjectTapListener;
+import com.yandex.mapkit.layers.ObjectEvent;
 import com.yandex.mapkit.map.CameraListener;
 import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.map.CameraUpdateReason;
+import com.yandex.mapkit.map.CompositeIcon;
+import com.yandex.mapkit.map.GeoObjectSelectionMetadata;
+import com.yandex.mapkit.map.IconStyle;
+import com.yandex.mapkit.map.InputListener;
 import com.yandex.mapkit.map.Map;
 import com.yandex.mapkit.map.MapObjectCollection;
+import com.yandex.mapkit.map.RotationType;
 import com.yandex.mapkit.map.VisibleRegionUtils;
 import com.yandex.mapkit.mapview.MapView;
 import com.yandex.mapkit.search.Response;
@@ -38,6 +48,9 @@ import com.yandex.mapkit.search.SearchManager;
 import com.yandex.mapkit.search.SearchManagerType;
 import com.yandex.mapkit.search.SearchOptions;
 import com.yandex.mapkit.search.Session;
+import com.yandex.mapkit.user_location.UserLocationLayer;
+import com.yandex.mapkit.user_location.UserLocationObjectListener;
+import com.yandex.mapkit.user_location.UserLocationView;
 import com.yandex.runtime.Error;
 import com.yandex.runtime.image.ImageProvider;
 import com.yandex.runtime.network.NetworkError;
@@ -45,14 +58,15 @@ import com.yandex.runtime.network.RemoteError;
 
 // Карта на данный момент будет единой для всех пользователей
 
-public class MarketsMapF extends Fragment implements Session.SearchListener, CameraListener {
+public class MarketsMapF extends Fragment implements Session.SearchListener, CameraListener,
+        GeoObjectTapListener, InputListener, UserLocationObjectListener {
 
     MapView mapView;
     int firstPermission;
     int secondPermission;
     private SearchManager searchManager;
     private Session searchSession;
-
+    private UserLocationLayer userLocationLayer;
 
     final Point moscowPoint = new Point(55.71989101308894, 37.5689757769603);
     final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
@@ -71,19 +85,20 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         } else if (firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION }, 200);
         }
-//        final Activity mainContext = getActivity();
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                CustomLocationListener.SetUpLocationListener(mainContext);
-//            }
     }
 
-    public boolean checkLocationPermissions() {
-        firstPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        secondPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+    @Override
+    public void onStart() {
+        super.onStart();
+        MapKitFactory.getInstance().onStart();
+        mapView.onStart();
+    }
 
-        return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
+    @Override
+    public void onStop() {
+        mapView.onStop();
+        MapKitFactory.getInstance().onStop();
+        super.onStop();
     }
 
     @Override
@@ -96,23 +111,17 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED);
         CustomLocationListener.SetUpLocationListener(getActivity());
 
-//        String style = "[" +
-//                "        {" +
-//                "            \"types\": \"point\"," +
-//                "            \"tags\": {" +
-//                "                \"all\": [" +
-//                "                    \"poi\"" +
-//                "                ]" +
-//                "            }," +
-//                "            \"stylers\": {" +
-//                "                \"color\": \"f00\"" +
-//                "            }" +
-//                "        }" +
-//                "    ]";
-
         mapView = (MapView) view.findViewById(R.id.mapview);
-//        mapElement.setMapStyle(style);
         mapView.getMap().addCameraListener(this);
+        mapView.getMap().addTapListener(this);
+        mapView.getMap().addInputListener(this);
+
+        mapView.getMap().setRotateGesturesEnabled(false);
+        MapKitFactory.getInstance().resetLocationManagerToDefault();
+        userLocationLayer = MapKitFactory.getInstance().createUserLocationLayer(mapView.getMapWindow());
+        userLocationLayer.setVisible(true);
+        userLocationLayer.setHeadingEnabled(true);
+        userLocationLayer.setObjectListener(this);
 
         if (checkLocationPermissions()) {
             Location location = CustomLocationListener.location;
@@ -128,6 +137,7 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         return view;
     }
 
+
     private void submitQuery(String query) {
         searchSession = searchManager.submit(
                 query,
@@ -136,6 +146,16 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
                 this
         );
     }
+
+    public boolean checkLocationPermissions() {
+        firstPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        secondPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+
+        return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+    // Session.SearchListener, CameraListener
 
     @Override
     public void onSearchResponse(@NonNull Response response) {
@@ -167,17 +187,70 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         if (finished) submitQuery("Пятерочка");
     }
 
+    // GeoObjectTapListener
+
     @Override
-    public void onStop() {
-        mapView.onStop();
-        MapKitFactory.getInstance().onStop();
-        super.onStop();
+    public boolean onObjectTap(@NonNull GeoObjectTapEvent geoObjectTapEvent) {
+        final GeoObjectSelectionMetadata selectionMetadata = geoObjectTapEvent
+                .getGeoObject()
+                .getMetadataContainer()
+                .getItem(GeoObjectSelectionMetadata.class);
+
+        if (selectionMetadata != null) {
+            mapView.getMap().selectGeoObject(selectionMetadata.getId(), selectionMetadata.getLayerId());
+        }
+
+        return selectionMetadata != null;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        MapKitFactory.getInstance().onStart();
-        mapView.onStart();
+    public void onMapTap(@NonNull Map map, @NonNull Point point) {
+        mapView.getMap().deselectGeoObject();
+    }
+
+    @Override
+    public void onMapLongTap(@NonNull Map map, @NonNull Point point) {}
+
+
+
+    // UserLocationObjectListener
+
+    @Override
+    public void onObjectAdded(UserLocationView userLocationView) {
+        userLocationLayer.setAnchor(
+                new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.5)),
+                new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.83)));
+
+        userLocationView.getArrow().setIcon(ImageProvider.fromResource(getContext(), R.drawable.map_simbol));
+
+        CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
+
+        pinIcon.setIcon(
+                "icon",
+                ImageProvider.fromResource(getContext(), R.drawable.map_simbol),
+                new IconStyle().setAnchor(new PointF(0f, 0f))
+                        .setRotationType(RotationType.ROTATE)
+                        .setZIndex(0f)
+                        .setScale(1f)
+        );
+
+        pinIcon.setIcon(
+                "pin",
+                ImageProvider.fromResource(getContext(), R.drawable.map_simbol),
+                new IconStyle().setAnchor(new PointF(0.5f, 0.5f))
+                        .setRotationType(RotationType.ROTATE)
+                        .setZIndex(1f)
+                        .setScale(0.5f)
+        );
+
+        userLocationView.getAccuracyCircle().setFillColor(Color.BLUE & 0x99ffffff);
+    }
+
+    @Override
+    public void onObjectRemoved(UserLocationView view) {
+    }
+
+    @Override
+    public void onObjectUpdated(UserLocationView view, ObjectEvent event) {
     }
 }
