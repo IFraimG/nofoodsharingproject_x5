@@ -54,16 +54,17 @@
                 android:text="адрес магазина"
                 android:id="@+id/adress_shop"
                 android:textSize="15sp" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/create_new_request"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:background="@drawable/style1"
-                android:text="сменить магазин"/>
         </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/create_new_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="10sp"
+            android:background="@drawable/style1"
+            android:text="сменить магазин"
+            android:textColor="@color/white" />
 
 
     </LinearLayout>
