@@ -27,11 +27,12 @@ public class GetterNotifyF extends Fragment {
         View view = inflater.inflate(R.layout.fragment_getter_notify, container, false);
 
 
-        RecyclerView rv = view.findViewById(R.id.recycler);/*
+        RecyclerView rv = view.findViewById(R.id.recycler); /*
+        DataBaseHandler bd = new DataBaseHandler(this);
         ArrayList<Products> productsList = (ArrayList<Products>) bd.getAllProd();
         ProductRecyclerAdapter adapter = new ProductRecyclerAdapter(RootActivity.this, productsList);
         rv.setAdapter(adapter);
-        какая-то ебанина, надо разобраться*/
+        какая надо разобраться*/
 
         return view;
     }
