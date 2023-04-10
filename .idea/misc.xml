@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.1535" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1535" />
+        <entry key="app/src/main/res/drawable/style1.xml" value="0.1535" />
+        <entry key="app/src/main/res/drawable/style2.xml" value="0.1535" />
+        <entry key="app/src/main/res/drawable/style3.xml" value="0.1535" />
+        <entry key="app/src/main/res/drawable/style5.xml" value="0.1535" />
         <entry key="app/src/main/res/layout/activity_getter.xml" value="0.24974358974358973" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/layout/activity_main_auth.xml" value="0.22592592592592592" />
@@ -14,9 +20,11 @@
         <entry key="app/src/main/res/layout/fragment_getter_profile.xml" value="0.24974358974358973" />
         <entry key="app/src/main/res/layout/fragment_main_auth.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_markets_map.xml" value="0.24974358974358973" />
+        <entry key="app/src/main/res/layout/fragment_setter_advrs.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/fragment_setter_auth.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/layout/fragment_setter_login_auth.xml" value="0.24974358974358973" />
         <entry key="app/src/main/res/layout/fragment_setter_profile.xml" value="0.25364583333333335" />
+        <entry key="app/src/main/res/layout/setter_advert_item.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/setter_history_transfer.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/menu/setter_bottom_menu.xml" value="0.24871794871794872" />
         <entry key="app/src/main/res/menu/user_bottom_menu.xml" value="0.24974358974358973" />

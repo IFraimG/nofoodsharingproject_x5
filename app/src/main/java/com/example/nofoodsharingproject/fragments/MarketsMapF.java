@@ -24,6 +24,7 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.utils.CustomLocationListener;
 import com.example.nofoodsharingproject.utils.CustomSearchMarkets;
 import com.yandex.mapkit.Animation;
+import com.yandex.mapkit.GeoObject;
 import com.yandex.mapkit.GeoObjectCollection;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
@@ -38,7 +39,9 @@ import com.yandex.mapkit.map.GeoObjectSelectionMetadata;
 import com.yandex.mapkit.map.IconStyle;
 import com.yandex.mapkit.map.InputListener;
 import com.yandex.mapkit.map.Map;
+import com.yandex.mapkit.map.MapObject;
 import com.yandex.mapkit.map.MapObjectCollection;
+import com.yandex.mapkit.map.MapObjectTapListener;
 import com.yandex.mapkit.map.RotationType;
 import com.yandex.mapkit.map.VisibleRegionUtils;
 import com.yandex.mapkit.mapview.MapView;
@@ -48,6 +51,7 @@ import com.yandex.mapkit.search.SearchManager;
 import com.yandex.mapkit.search.SearchManagerType;
 import com.yandex.mapkit.search.SearchOptions;
 import com.yandex.mapkit.search.Session;
+import com.yandex.mapkit.search.ToponymObjectMetadata;
 import com.yandex.mapkit.user_location.UserLocationLayer;
 import com.yandex.mapkit.user_location.UserLocationObjectListener;
 import com.yandex.mapkit.user_location.UserLocationView;
@@ -57,7 +61,7 @@ import com.yandex.runtime.network.NetworkError;
 import com.yandex.runtime.network.RemoteError;
 
 // Карта на данный момент будет единой для всех пользователей
-
+// MapObjectTapListener потом добавить
 public class MarketsMapF extends Fragment implements Session.SearchListener, CameraListener,
         GeoObjectTapListener, InputListener, UserLocationObjectListener {
 
@@ -124,15 +128,20 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         userLocationLayer.setObjectListener(this);
 
         if (checkLocationPermissions()) {
-            Location location = CustomLocationListener.location;
-            Log.i("mapInfo", location.getLatitude() + " " + location.getLongitude());
             try {
-                mapView.getMap().move(new CameraPosition(new Point(location.getLatitude(), location.getLongitude()), 14, 0, 0),  new Animation(Animation.Type.SMOOTH, 0), null);
-                submitQuery("Пятерочка");
+                Log.d("mapInfo", CustomLocationListener.location.getLatitude() + " " + CustomLocationListener.location.getLongitude());
+                double lat = CustomLocationListener.location.getLatitude();
+                double longt = CustomLocationListener.location.getLongitude();
+
+                mapView.getMap().move(new CameraPosition(new Point(lat, longt), 14, 0, 0),  new Animation(Animation.Type.SMOOTH, 0), null);
+//                mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
             } catch (NullPointerException err) {
                 mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
             }
         } else mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
+
+        submitQuery("Пятёрочка");
+        submitQuery("Перекрёсток");
 
         return view;
     }
@@ -161,7 +170,8 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
     public void onSearchResponse(@NonNull Response response) {
         MapObjectCollection mapObjects = mapView.getMap().getMapObjects();
         mapObjects.clear();
-
+//
+//        Log.d("msg", response.getMetadata().getToponymResultMetadata());
         for (GeoObjectCollection.Item searchResult : response.getCollection().getChildren()) {
             Point resultLocation = searchResult.getObj().getGeometry().get(0).getPoint();
             if (resultLocation != null) {
@@ -184,7 +194,10 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
 
     @Override
     public void onCameraPositionChanged(@NonNull Map map, @NonNull CameraPosition cameraPosition, @NonNull CameraUpdateReason cameraUpdateReason, boolean finished) {
-        if (finished) submitQuery("Пятерочка");
+        if (finished) {
+            submitQuery("Пятёрочка");
+            submitQuery("Перекрёсток");
+        }
     }
 
     // GeoObjectTapListener
@@ -203,17 +216,18 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         return selectionMetadata != null;
     }
 
+
+    // при нажатии на любой объект
     @Override
     public void onMapTap(@NonNull Map map, @NonNull Point point) {
         mapView.getMap().deselectGeoObject();
     }
-
     @Override
     public void onMapLongTap(@NonNull Map map, @NonNull Point point) {}
 
 
 
-    // UserLocationObjectListener
+    // UserLocationObjectListener отображение метки пользователя
 
     @Override
     public void onObjectAdded(UserLocationView userLocationView) {
@@ -222,7 +236,6 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
                 new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.83)));
 
         userLocationView.getArrow().setIcon(ImageProvider.fromResource(getContext(), R.drawable.map_simbol));
-
         CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
 
         pinIcon.setIcon(
@@ -234,16 +247,17 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
                         .setScale(1f)
         );
 
-        pinIcon.setIcon(
-                "pin",
-                ImageProvider.fromResource(getContext(), R.drawable.map_simbol),
-                new IconStyle().setAnchor(new PointF(0.5f, 0.5f))
-                        .setRotationType(RotationType.ROTATE)
-                        .setZIndex(1f)
-                        .setScale(0.5f)
-        );
+//        pinIcon.setIcon(
+//                "pin",
+//                ImageProvider.fromResource(getContext(), R.drawable.map_simbol),
+//                new IconStyle().setAnchor(new PointF(0.5f, 0.5f))
+//                        .setRotationType(RotationType.ROTATE)
+//                        .setZIndex(1f)
+//                        .setScale(0.5f)
+//        );
 
         userLocationView.getAccuracyCircle().setFillColor(Color.BLUE & 0x99ffffff);
+        submitQuery("Пятерочка");
     }
 
     @Override
@@ -253,4 +267,19 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
     @Override
     public void onObjectUpdated(UserLocationView view, ObjectEvent event) {
     }
+
+    // MapObjectTapListener
+//
+//    @Override
+//    public boolean onMapObjectTap(@NonNull MapObject mapObject, @NonNull Point point) {
+//        GeoObject geoObject = (GeoObject) mapObject;
+//        ToponymObjectMetadata metadata = geoObject.getMetadataContainer().getItem(ToponymObjectMetadata.class);
+//        if (metadata != null) {
+//            String toponym = metadata.getFormerName();
+//            Log.i("msg",  toponym);
+//            submitQuery(toponym);
+//        }
+//
+//        return false;
+//    }
 }
