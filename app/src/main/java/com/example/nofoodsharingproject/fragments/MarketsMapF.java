@@ -175,7 +175,7 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         for (GeoObjectCollection.Item searchResult : response.getCollection().getChildren()) {
             Point resultLocation = searchResult.getObj().getGeometry().get(0).getPoint();
             if (resultLocation != null) {
-                mapObjects.addPlacemark(resultLocation, ImageProvider.fromResource(getContext(), R.drawable.map_simbol));
+                if (getContext() != null) mapObjects.addPlacemark(resultLocation, ImageProvider.fromResource(getContext(), R.drawable.map_simbol));
             }
         }
     }

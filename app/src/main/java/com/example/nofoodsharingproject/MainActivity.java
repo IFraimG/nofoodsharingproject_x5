@@ -2,6 +2,7 @@ package com.example.nofoodsharingproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.ui.NavigationUI;
 
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import com.example.nofoodsharingproject.activities.GetterAC;
 import com.example.nofoodsharingproject.activities.MainAuthAC;
 import com.example.nofoodsharingproject.activities.SetterAC;
+import com.example.nofoodsharingproject.view_models.AdvertisementListViewModel;
 import com.yandex.mapkit.MapKitFactory;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
             }
             finish();
         }
-
     }
 
 }

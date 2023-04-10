@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/setter_advert_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:textSize="32dp"
+        android:text="Название" />
+
+    <TextView
+        android:id="@+id/setter_advert_item_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:textSize="16dp"
+        android:text="Описание" />
+
+    <TextView
+        android:id="@+id/setter_advert_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:textSize="16dp"
+        android:text="Имя нуждающегося" />
+
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/black"/>
 </LinearLayout>
