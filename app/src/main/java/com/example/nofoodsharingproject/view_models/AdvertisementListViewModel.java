@@ -30,7 +30,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
         // Запрос на сервер
         List<Advertisement> advertisementsTestArray = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            advertisementsTestArray.add(new Advertisement("ПОМОГИТЕ МНЕ !!!!", "Кабачки и две капусты требую", "айдиавтора"));
+            advertisementsTestArray.add(new Advertisement("ПОМОГИТЕ МНЕ !!!!", "Кабачки и две капусты требую", "айдиавтора", "Автор"));
         }
         all = new MutableLiveData<>(advertisementsTestArray);
     }

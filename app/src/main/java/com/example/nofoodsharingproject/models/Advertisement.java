@@ -7,15 +7,17 @@ public class Advertisement implements ShortDataWithDate {
     public String fieldDescription;
     public Product[] listProducts;
     public String adversID;
+    public String authorName;
     public String gettingProductID;
-    public String authorID;
+    public final String authorID;
     public Date dateOfCreated;
     public Date dateOfExpires;
 
-    public Advertisement(String title, String fieldDescription, String authorID) {
+    public Advertisement(String title, String fieldDescription, String authorID, String authorName) {
         this.title = title;
         this.fieldDescription = fieldDescription;
         this.authorID = authorID;
+        this.authorName = authorName;
     }
 
     public Advertisement(Date date, String authorID, String adversID, String gettingProductID) {

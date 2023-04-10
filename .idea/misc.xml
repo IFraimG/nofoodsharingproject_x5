@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/layout/activity_main_auth.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/layout/activity_setter.xml" value="0.25104166666666666" />
+        <entry key="app/src/main/res/layout/activity_setter_advert.xml" value="0.18796296296296297" />
         <entry key="app/src/main/res/layout/fragment_getter_advrs.xml" value="0.24974358974358973" />
         <entry key="app/src/main/res/layout/fragment_getter_auth.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/layout/fragment_getter_new_advertisment_create.xml" value="0.25364583333333335" />

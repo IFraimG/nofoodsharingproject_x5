@@ -29,6 +29,7 @@
         </activity>
         <activity android:name=".activities.GetterAC" android:exported="true" />
         <activity android:name=".activities.SetterAC" android:exported="true" />
+        <activity android:name=".activities.SetterAdvertAC" android:exported="true" />
         <!--    test    -->
         <activity
             android:name=".utils.CustomSearchMarkets"

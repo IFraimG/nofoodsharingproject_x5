@@ -6,16 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.activities.SetterAdvertAC;
 import com.example.nofoodsharingproject.models.Advertisement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertListAdapter.ViewHolder> {
     Context ctx;
@@ -38,6 +41,13 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
         Advertisement advertisement = advertisements.get(position);
         holder.title.setText(advertisement.title);
         holder.desc.setText(advertisement.fieldDescription);
+        holder.authorName.setText(advertisement.authorName);
+
+        holder.link.setOnClickListener(View -> {
+            Intent intent = new Intent(this.ctx, SetterAdvertAC.class);
+            intent.putExtra("advertID", advertisement.adversID);
+            ctx.startActivity(intent);
+        });
     }
 
     @Override
@@ -60,11 +70,15 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView desc;
+        TextView authorName;
+        Button link;
 
         public ViewHolder(View view) {
             super(view);
             this.title = (TextView) view.findViewById(R.id.setter_advert_item_title);
             this.desc = (TextView) view.findViewById(R.id.setter_advert_item_desc);
+            this.authorName = (TextView) view.findViewById(R.id.setter_advert_item_name);
+            this.link = (Button) view.findViewById(R.id.setter_advert_item_link);
         }
     }
 }
