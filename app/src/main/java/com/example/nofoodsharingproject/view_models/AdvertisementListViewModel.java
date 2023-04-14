@@ -8,40 +8,54 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
-import androidx.lifecycle.ViewModel;
 
+import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.ShortDataWithDate;
+import com.example.nofoodsharingproject.data.api.adverts.AdvertsApiService;
+import com.example.nofoodsharingproject.utils.LoaderStatus;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class AdvertisementListViewModel extends AndroidViewModel {
-    List<Advertisement> adverts = new ArrayList<>();
-    MutableLiveData<List<Advertisement>> all = new MutableLiveData<>();
+    public List<Advertisement> adverts = new ArrayList<>();
+    private final MutableLiveData<List<Advertisement>> _adverts = new MutableLiveData<>();
+
+    private final MutableLiveData<LoaderStatus> _status = new MutableLiveData<>();
+    public LiveData<LoaderStatus> status = _status;
 
 
     public AdvertisementListViewModel(@NonNull Application application) {
         super(application);
-
-        // Запрос на сервер
-        List<Advertisement> advertisementsTestArray = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            advertisementsTestArray.add(new Advertisement("ПОМОГИТЕ МНЕ !!!!", "Кабачки и две капусты требую", "айдиавтора", "Автор"));
-        }
-        all = new MutableLiveData<>(advertisementsTestArray);
     }
 
     public LiveData<List<Advertisement>> getAllAdverts() {
-        return all;
+        _status.setValue(LoaderStatus.LOADING);
+        AdvertsRepository.getListAdverts().enqueue(new Callback<List<Advertisement>>() {
+            @Override
+            public void onResponse(Call<List<Advertisement>> call, Response<List<Advertisement>> response) {
+                _status.setValue(LoaderStatus.LOADED);
+                _adverts.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Advertisement>> call, Throwable t) {
+                _status.setValue(LoaderStatus.FAILURE);
+                t.printStackTrace();
+            }
+        });
+        return _adverts;
     }
 
     public void addAdvert(Advertisement advertisement) {
         adverts.add(advertisement);
-        all.setValue(adverts);
+        _adverts.setValue(adverts);
         // запрос на сервер
     }
 

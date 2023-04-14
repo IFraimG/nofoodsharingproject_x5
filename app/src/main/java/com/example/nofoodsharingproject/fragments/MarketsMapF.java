@@ -2,7 +2,9 @@ package com.example.nofoodsharingproject.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PointF;
@@ -19,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.utils.CustomLocationListener;
@@ -45,6 +48,8 @@ import com.yandex.mapkit.map.MapObjectTapListener;
 import com.yandex.mapkit.map.RotationType;
 import com.yandex.mapkit.map.VisibleRegionUtils;
 import com.yandex.mapkit.mapview.MapView;
+import com.yandex.mapkit.search.FuelMetadata;
+import com.yandex.mapkit.search.FuelType;
 import com.yandex.mapkit.search.Response;
 import com.yandex.mapkit.search.SearchFactory;
 import com.yandex.mapkit.search.SearchManager;
@@ -60,10 +65,11 @@ import com.yandex.runtime.image.ImageProvider;
 import com.yandex.runtime.network.NetworkError;
 import com.yandex.runtime.network.RemoteError;
 
+import java.util.List;
+
 // Карта на данный момент будет единой для всех пользователей
-// MapObjectTapListener потом добавить
 public class MarketsMapF extends Fragment implements Session.SearchListener, CameraListener,
-        GeoObjectTapListener, InputListener, UserLocationObjectListener {
+        GeoObjectTapListener, InputListener, UserLocationObjectListener, MapObjectTapListener {
 
     MapView mapView;
     int firstPermission;
@@ -71,6 +77,8 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
     private SearchManager searchManager;
     private Session searchSession;
     private UserLocationLayer userLocationLayer;
+    SharedPreferences settings;
+    boolean isLocation;
 
     final Point moscowPoint = new Point(55.71989101308894, 37.5689757769603);
     final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
@@ -78,6 +86,8 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settings = getActivity().getSharedPreferences("prms", Context.MODE_PRIVATE);
+        isLocation = settings.getBoolean("location", false);
 
         firstPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         secondPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
@@ -89,6 +99,8 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         } else if (firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION }, 200);
         }
+
+        if (isLocation) setToPreferences(checkLocationPermissions());
     }
 
     @Override
@@ -127,14 +139,13 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         userLocationLayer.setHeadingEnabled(true);
         userLocationLayer.setObjectListener(this);
 
-        if (checkLocationPermissions()) {
+        if (checkLocationPermissions() && isLocation) {
             try {
                 Log.d("mapInfo", CustomLocationListener.location.getLatitude() + " " + CustomLocationListener.location.getLongitude());
                 double lat = CustomLocationListener.location.getLatitude();
                 double longt = CustomLocationListener.location.getLongitude();
 
                 mapView.getMap().move(new CameraPosition(new Point(lat, longt), 14, 0, 0),  new Animation(Animation.Type.SMOOTH, 0), null);
-//                mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
             } catch (NullPointerException err) {
                 mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
             }
@@ -146,6 +157,12 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         return view;
     }
 
+    private void setToPreferences(boolean value) {
+        SharedPreferences.Editor editor = settings.edit();
+
+        editor.putBoolean("location", value);
+        editor.apply();
+    }
 
     private void submitQuery(String query) {
         searchSession = searchManager.submit(
@@ -173,9 +190,15 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
 //
 //        Log.d("msg", response.getMetadata().getToponymResultMetadata());
         for (GeoObjectCollection.Item searchResult : response.getCollection().getChildren()) {
+//          searchResult.getObj().getMetadataContainer().getItem(ToponymObjectMetadata.class).getAddress().getAdditionalInfo()
+
             Point resultLocation = searchResult.getObj().getGeometry().get(0).getPoint();
             if (resultLocation != null) {
-                if (getContext() != null) mapObjects.addPlacemark(resultLocation, ImageProvider.fromResource(getContext(), R.drawable.map_simbol));
+                if (getContext() != null) {
+//                    List<FuelType> types = searchResult.getObj().getMetadataContainer().getItem(FuelMetadata.class).getFuels();
+                    mapObjects.addPlacemark(resultLocation, ImageProvider.fromResource(getContext(), R.drawable.map_simbol));
+//                    mapObjects.setUserData(types);
+                }
             }
         }
     }
@@ -231,21 +254,22 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
 
     @Override
     public void onObjectAdded(UserLocationView userLocationView) {
-        userLocationLayer.setAnchor(
-                new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.5)),
-                new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.83)));
+        if (isLocation) {
+            userLocationLayer.setAnchor(
+                    new PointF((float) (mapView.getWidth() * 0.5), (float) (mapView.getHeight() * 0.5)),
+                    new PointF((float) (mapView.getWidth() * 0.5), (float) (mapView.getHeight() * 0.83)));
 
-        userLocationView.getArrow().setIcon(ImageProvider.fromResource(getContext(), R.drawable.map_simbol));
-        CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
+            userLocationView.getArrow().setIcon(ImageProvider.fromResource(getContext(), R.drawable.map_simbol));
+            CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
 
-        pinIcon.setIcon(
-                "icon",
-                ImageProvider.fromResource(getContext(), R.drawable.map_simbol),
-                new IconStyle().setAnchor(new PointF(0f, 0f))
-                        .setRotationType(RotationType.ROTATE)
-                        .setZIndex(0f)
-                        .setScale(1f)
-        );
+            pinIcon.setIcon(
+                    "icon",
+                    ImageProvider.fromResource(getContext(), R.drawable.map_simbol),
+                    new IconStyle().setAnchor(new PointF(0f, 0f))
+                            .setRotationType(RotationType.ROTATE)
+                            .setZIndex(0f)
+                            .setScale(1f)
+            );
 
 //        pinIcon.setIcon(
 //                "pin",
@@ -256,8 +280,8 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
 //                        .setScale(0.5f)
 //        );
 
-        userLocationView.getAccuracyCircle().setFillColor(Color.BLUE & 0x99ffffff);
-        submitQuery("Пятерочка");
+            userLocationView.getAccuracyCircle().setFillColor(Color.BLUE & 0x99ffffff);
+        }
     }
 
     @Override
@@ -269,17 +293,17 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
     }
 
     // MapObjectTapListener
-//
-//    @Override
-//    public boolean onMapObjectTap(@NonNull MapObject mapObject, @NonNull Point point) {
-//        GeoObject geoObject = (GeoObject) mapObject;
-//        ToponymObjectMetadata metadata = geoObject.getMetadataContainer().getItem(ToponymObjectMetadata.class);
-//        if (metadata != null) {
-//            String toponym = metadata.getFormerName();
-//            Log.i("msg",  toponym);
-//            submitQuery(toponym);
-//        }
-//
-//        return false;
-//    }
+
+    @Override
+    public boolean onMapObjectTap(@NonNull MapObject mapObject, @NonNull Point point) {
+        GeoObject geoObject = (GeoObject) mapObject;
+        try {
+            List<FuelType> types = geoObject.getMetadataContainer().getItem(FuelMetadata.class).getFuels();
+            Log.i("typesINFO", types.get(0).toString());
+        } catch (NullPointerException err) {
+            Log.e("msg", err.toString());
+        }
+
+        return false;
+    }
 }
