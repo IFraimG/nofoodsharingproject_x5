@@ -1,7 +1,5 @@
 package com.example.nofoodsharingproject.fragments.getter;
 
-import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,11 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.fragments.MarketsMapF;
 
@@ -73,7 +69,7 @@ public class GetterAdvrsF extends Fragment {
         buttonNewAdvertisement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment newFragment = new GetterNotifyF();
+                Fragment newFragment = new GetterCreateNewAdvertisment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_getter_fragment, newFragment);
                 transaction.addToBackStack(null);
