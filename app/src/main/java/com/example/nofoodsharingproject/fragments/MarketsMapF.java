@@ -175,7 +175,7 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
         for (GeoObjectCollection.Item searchResult : response.getCollection().getChildren()) {
             Point resultLocation = searchResult.getObj().getGeometry().get(0).getPoint();
             if (resultLocation != null) {
-                if (getContext() != null) mapObjects.addPlacemark(resultLocation, ImageProvider.fromResource(getContext(), R.drawable.location_on));
+                if (getContext() != null) mapObjects.addPlacemark(resultLocation, ImageProvider.fromResource(getContext(), R.drawable.map_simbol));
             }
         }
     }
@@ -235,12 +235,12 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
                 new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.5)),
                 new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.83)));
 
-        userLocationView.getArrow().setIcon(ImageProvider.fromResource(getContext(), R.drawable.location_on));
+        userLocationView.getArrow().setIcon(ImageProvider.fromResource(getContext(), R.drawable.map_simbol));
         CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
 
         pinIcon.setIcon(
                 "icon",
-                ImageProvider.fromResource(getContext(), R.drawable.location_on),
+                ImageProvider.fromResource(getContext(), R.drawable.map_simbol),
                 new IconStyle().setAnchor(new PointF(0f, 0f))
                         .setRotationType(RotationType.ROTATE)
                         .setZIndex(0f)

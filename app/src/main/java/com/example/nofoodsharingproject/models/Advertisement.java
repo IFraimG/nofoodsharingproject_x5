@@ -10,8 +10,8 @@ public class Advertisement implements ShortDataWithDate {
     public String authorName;
     public String gettingProductID;
     public final String authorID;
-    public Date dateOfCreated;
-    public Date dateOfExpires;
+    public String dateOfCreated;
+    public String dateOfExpires;
 
     public Advertisement(String title, String fieldDescription, String authorID, String authorName) {
         this.title = title;
@@ -20,14 +20,14 @@ public class Advertisement implements ShortDataWithDate {
         this.authorName = authorName;
     }
 
-    public Advertisement(Date date, String authorID, String adversID, String gettingProductID) {
-        this.dateOfCreated = date;
-        this.authorID = authorID;
-        this.adversID = adversID;
-        this.gettingProductID = gettingProductID;
-    }
+//    public Advertisement(String date, String authorID, String adversID, String gettingProductID) {
+//        this.dateOfCreated = date;
+//        this.authorID = authorID;
+//        this.adversID = adversID;
+//        this.gettingProductID = gettingProductID;
+//    }
 
-    public Date getDateOfCreated() {
+    public String getDateOfCreated() {
         return this.dateOfCreated;
     }
 }
