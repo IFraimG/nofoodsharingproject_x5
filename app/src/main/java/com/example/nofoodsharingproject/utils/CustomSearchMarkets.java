@@ -80,7 +80,7 @@ public class CustomSearchMarkets extends AppCompatActivity implements Session.Se
             if (resultLocation != null) {
                 mapObjects.addPlacemark(
                         resultLocation,
-                        ImageProvider.fromResource(this, R.drawable.map_simbol));
+                        ImageProvider.fromResource(this, R.drawable.location_on));
             }
         }
     }

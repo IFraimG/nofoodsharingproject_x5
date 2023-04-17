@@ -73,7 +73,7 @@ public class GetterAdvrsF extends Fragment {
         buttonNewAdvertisement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment newFragment = new GetterNewAdvertisementCreateF();
+                Fragment newFragment = new GetterNotifyF();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_getter_fragment, newFragment);
                 transaction.addToBackStack(null);

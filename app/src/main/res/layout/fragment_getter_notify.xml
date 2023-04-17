@@ -23,11 +23,8 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/search"
-            android:layout_above="@+id/add"
-            android:layout_weight="1"
-            android:padding="12dp"
-            android:background="@drawable/style3"/>
+
+            tools:listitem="@layout/item_notifications_getter"/>
 
     </LinearLayout>
 

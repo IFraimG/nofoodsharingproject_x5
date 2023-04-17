@@ -49,7 +49,8 @@
             android:layout_marginLeft="10sp"
             android:layout_marginRight="10sp"
             android:layout_height="wrap_content"
-            android:src="@drawable/map_simbol"
+            android:src="@drawable/location_on"
+            android:background="@drawable/style7"
             />
 
     </LinearLayout>
