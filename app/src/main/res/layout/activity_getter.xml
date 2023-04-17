@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/style2"
         app:itemIconTint="@color/orange"
-        app:itemTextColor="@color/black"
+        app:itemTextColor="@color/grey_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/getter_bottom_menu" />
