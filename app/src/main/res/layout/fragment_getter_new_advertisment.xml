@@ -2,14 +2,39 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/style5"
+            android:textSize="25sp"
+            android:layout_marginTop="25sp"
+            android:textColor="@color/grey_500"
+            android:text="Создание объявления"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:layout_marginTop="25sp"
+            android:textColor="@color/grey_500"
+            android:text="Выберите необходимые товары из списка"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/style5"
-        android:textSize="25sp"
-        android:layout_marginTop="25sp"
-        android:textColor="@color/grey_500"
-        android:text="создать новое объявление"
-        android:gravity="center"/>
+        android:layout_gravity="bottom|center"
+        android:text="Готово"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/style2"/>
 </FrameLayout>

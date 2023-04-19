@@ -3,6 +3,7 @@ package com.example.nofoodsharingproject.fragments.getter;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -59,10 +60,9 @@ public class GetterAdvrsF extends Fragment {
             public void onClick(View v) {
                 Fragment someFragment = new MarketsMapF();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_getter_fragment, someFragment );
+                transaction.replace(R.id.nav_host_getter_fragment, someFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-                //Есть задержка, возврат только жестом "назад"
             }
         });
 
