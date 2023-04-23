@@ -19,28 +19,15 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/name_of_user"
+            android:id="@+id/name_of_product"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Имя пользователя"
+            tools:text="Название продукта"
             android:textSize="25sp"
             android:textColor="@color/black"/>
-
-        <TextView
-            android:id="@+id/shot_text_notify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Краткое содержание уведомления"
-            android:textSize="13sp"/>
-
-
-
 
     </LinearLayout>
 
