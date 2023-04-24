@@ -16,13 +16,13 @@
             android:background="@drawable/style5"
             android:textSize="25sp"
             android:textColor="@color/grey_500"
-            android:text="Профиль" />
+            android:text="Профиль"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_marginTop="25sp">
+            android:layout_marginTop="45sp">
 
 
         </ImageButton>
