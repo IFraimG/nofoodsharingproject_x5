@@ -18,7 +18,6 @@ import com.example.nofoodsharingproject.models.Advertisement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertListAdapter.ViewHolder> {
     Context ctx;
