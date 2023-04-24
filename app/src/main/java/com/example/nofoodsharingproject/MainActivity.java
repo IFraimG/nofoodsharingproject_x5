@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.nofoodsharingproject.activities.GetterAC;
 import com.example.nofoodsharingproject.activities.GetterNewAdvert;
 import com.example.nofoodsharingproject.activities.MainAuthAC;
 import com.example.nofoodsharingproject.activities.SetterAC;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             if (isGetter) {
-                Intent intentGetter = new Intent(getApplicationContext(), GetterNewAdvert.class);
+                Intent intentGetter = new Intent(getApplicationContext(), GetterAC.class);
                 startActivity(intentGetter);
                 finish();
             } else {

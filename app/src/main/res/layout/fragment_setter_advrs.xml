@@ -7,10 +7,21 @@
     android:orientation="vertical"
     tools:context=".fragments.setter.SetterAdvrsF">
 
+    <TextView
+        android:id="@+id/setter_advert_title"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:textSize="32dp"
+        android:layout_margin="10dp"
+        android:text="Активные объявления" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/setter_list_advert"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="100dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <ProgressBar
