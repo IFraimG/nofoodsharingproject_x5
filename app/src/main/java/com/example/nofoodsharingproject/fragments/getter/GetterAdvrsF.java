@@ -36,13 +36,12 @@ public class GetterAdvrsF extends Fragment {
         TextView adresShop = view.findViewById(R.id.adress_shop);
         TextView numberAdvertisement = view.findViewById(R.id.number_of_advertisment);
         Button buttonNewAdvertisement = view.findViewById(R.id.create_new_request);
+        Button buttonZaborProducts = view.findViewById(R.id.pick_up_order);
+        Button buttonStopAdvert = view.findViewById(R.id.stop_advert);
 
 
-        // ИЗ БД и сервера
-        adresShop.setText("Адрес недоступен");
-        //только если активен заказ
-        numberAdvertisement.setText(null);
-        //
+        buttonNewAdvertisement.setVisibility(View.VISIBLE);
+
 
 
         // Замени все getFragmentManager на getSupportFragmentManager !!
@@ -65,8 +64,30 @@ public class GetterAdvrsF extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), GetterNewAdvert.class);
                 startActivity(intent);
+                buttonStopAdvert.setVisibility(View.VISIBLE);
+                buttonNewAdvertisement.setVisibility(View.GONE);
+
             }
         });
+
+        buttonStopAdvert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonStopAdvert.setVisibility(View.GONE);
+                buttonZaborProducts.setVisibility(View.VISIBLE);
+            }
+        });
+
+        buttonZaborProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonZaborProducts.setVisibility(View.GONE);
+                buttonNewAdvertisement.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+
         return view;
     }
 }
