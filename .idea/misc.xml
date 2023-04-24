@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
@@ -24,15 +25,17 @@
         <entry key="app/src/main/res/layout/fragment_setter_advrs.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/fragment_setter_auth.xml" value="0.22592592592592592" />
         <entry key="app/src/main/res/layout/fragment_setter_login_auth.xml" value="0.24974358974358973" />
+        <entry key="app/src/main/res/layout/fragment_setter_notify.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/layout/fragment_setter_profile.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/setter_advert_item.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/setter_history_transfer.xml" value="0.25364583333333335" />
+        <entry key="app/src/main/res/layout/setter_notification_item.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/menu/setter_bottom_menu.xml" value="0.24871794871794872" />
         <entry key="app/src/main/res/menu/user_bottom_menu.xml" value="0.24974358974358973" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17_PREVIEW" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

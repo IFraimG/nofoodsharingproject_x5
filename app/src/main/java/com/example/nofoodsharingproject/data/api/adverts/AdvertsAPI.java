@@ -10,4 +10,6 @@ import retrofit2.http.GET;
 public interface AdvertsAPI {
     @GET("/advertisements/get_active")
     Call<List<Advertisement>> getListAdvertisements();
+
+//    @GET("")
 }

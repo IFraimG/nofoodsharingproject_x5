@@ -2,6 +2,8 @@ package com.example.nofoodsharingproject.activities;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +18,15 @@ public class SetterAdvertAC extends AppCompatActivity {
         setContentView(R.layout.activity_setter_advert);
 
         String advertID = getIntent().getStringExtra("advertID");
+        ImageView backButton = findViewById(R.id.setter_advert_back);
+        backButton.setOnClickListener(View -> {
+            finish();
+        });
+
+        Button acceptBtn = (Button) findViewById(R.id.setter_advert_accept);
+        acceptBtn.setOnClickListener(View -> {
+
+        });
 //        AdvertsApiService.getInstance().getListAdvertisements().enqueue(new Callback<List<Advertisement>>() {
 //            @Override
 //            public void onResponse(Call<List<Advertisement>> call, Response<List<Advertisement>> response) {
@@ -27,9 +38,5 @@ public class SetterAdvertAC extends AppCompatActivity {
 //                t.printStackTrace();
 //            }
 //        });
-    }
-
-    public void backHome(View view) {
-//        Intent intent = new Intent();
     }
 }
