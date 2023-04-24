@@ -1,114 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/main_color"
-        android:orientation="vertical"
+    android:orientation="vertical"
     android:id="@+id/fragment_getter_advrs">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="25sp"
-        android:text="@string/heading_ads"
         android:background="@drawable/style5"
+        android:textSize="25sp"
+        android:layout_marginTop="25sp"
         android:textColor="@color/grey_500"
-        android:textSize="25sp" />
+        android:text="Объявления"/>
 
-    <LinearLayout
+    <!-- Только кода есть заказ -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Номер заказа:"
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center"
+        android:textColor="@color/grey_500"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0000"
+        android:layout_gravity="center"
+        android:textSize="50sp"
+        android:id="@+id/number_of_advertisment"
+        android:textColor="@color/grey_500"/>
+
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="40sp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10sp"
-        android:layout_marginRight="10sp"
-        android:layout_marginTop="100sp">
-
-        <TextView
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
-            android:text="@string/Adres_your_magazin"
-            android:textSize="15sp"
-            android:textColor="@color/grey_500"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
-            android:text="адрес магазина"
-            android:id="@+id/adress_shop"
-            android:textSize="15sp" />
+            android:layout_marginLeft="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Адрeс вашего магазина:"
+                android:textColor="@color/grey_500"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="Адрес магазина"
+                android:id="@+id/adress_shop"
+                android:layout_marginRight="5dp"/>
+        </LinearLayout>
 
         <ImageButton
-            android:id="@+id/open_map"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
             android:layout_height="wrap_content"
-            android:src="@drawable/location_on"
             android:background="@drawable/style7"
-            />
+            android:layout_gravity="right"
+            android:layout_marginRight="30dp"
+            android:id="@+id/open_map"
+            android:src="@drawable/location_on" />
+    </FrameLayout>
 
-    </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="1dp"
+        android:background="@color/grey_light"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40sp"
-        android:id="@+id/on_advertisement"
-        android:text="Это объявление сейчас активно"
-        android:textColor="@color/grey_500"
-        android:layout_gravity="center"
-        android:textSize="15sp"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15sp"
-        android:layout_gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Номер заказа:"
-            android:layout_marginRight="2.5sp"
-            android:layout_gravity="center"
-            android:textColor="@color/grey_500"
-            android:id="@+id/number_advertisement_vspomogalka"
-            android:textSize="15sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="2.5sp"
-            android:layout_height="wrap_content"
-            android:id="@+id/number_advertisement"
-            android:text="1111"
-            android:layout_gravity="center"
-            android:textSize="15sp"/>
-    </LinearLayout>
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:text="Состояние объявления:"
+        android:textColor="@color/grey_500"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Для получения заказа обратитесь на кассы или в зону доставки"
-        android:layout_marginTop="10sp"
-        android:textStyle="italic"
-        android:layout_marginRight="2.5sp"
-        android:layout_gravity="center"
-        android:textSize="10sp"/>
+        android:text="Объявление не активно"
+        android:layout_gravity="center" />
 
 
 
 
     <androidx.appcompat.widget.AppCompatButton
 
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="290dp"
         android:id="@+id/create_new_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/style1"
         android:text="@string/add_new_request_button"
         android:textColor="@color/white" />

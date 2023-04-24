@@ -34,18 +34,14 @@ public class GetterAdvrsF extends Fragment {
 
         ImageButton buttonMapOpen = view.findViewById(R.id.open_map);
         TextView adresShop = view.findViewById(R.id.adress_shop);
-        TextView activeAdvertisement = view.findViewById(R.id.on_advertisement);
-        TextView numberAdvertisement = view.findViewById(R.id.number_advertisement);
-        TextView numberAdvertisementVsp = view.findViewById(R.id.number_advertisement_vspomogalka);
+        TextView numberAdvertisement = view.findViewById(R.id.number_of_advertisment);
         Button buttonNewAdvertisement = view.findViewById(R.id.create_new_request);
 
 
         // ИЗ БД и сервера
-        activeAdvertisement.setText("Сейчас это объявление не активно");
         adresShop.setText("Адрес недоступен");
         //только если активен заказ
         numberAdvertisement.setText(null);
-        numberAdvertisementVsp.setText(null);
         //
 
 
