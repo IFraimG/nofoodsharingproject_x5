@@ -15,18 +15,70 @@
             android:textSize="25sp"
             android:layout_marginTop="25sp"
             android:textColor="@color/grey_500"
-            android:text="Создание объявления"/>
+            android:text="Создание объявления" />
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ваш последний заказ:"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="Продукт1"
+                android:id="@+id/product1_adv"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="Продукт2"
+                android:id="@+id/product2_adv"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Вы можете:"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="140dp"
+                android:layout_height="28dp"
+                android:background="@drawable/style3"
+                android:text="Перезакакзать"
+                android:id="@+id/re_advertisment"
+                android:textSize="15sp"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:layout_marginTop="10dp"
+             android:text="ИЛИ"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="18sp"
-            android:layout_marginTop="25sp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/grey_500"
-            android:text="Выберите необходимые товары из списка"/>
+            android:text="Выбрать необходимые товары из списка"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_getter_product_name"
@@ -34,14 +86,33 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:text="Готово"
-        android:id="@+id/ready_to_create"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/style3"/>
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="100dp">
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:text="назад"
+            android:id="@+id/button_back"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/style3"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:text="Готово"
+            android:id="@+id/ready_to_create"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/style3"/>
+    </LinearLayout>
+
+
 </FrameLayout>

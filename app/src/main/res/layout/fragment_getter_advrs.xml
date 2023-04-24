@@ -59,68 +59,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10sp"
-        android:layout_marginRight="10sp"
-        android:layout_marginTop="80sp"
-        android:layout_gravity="center"
-        android:textSize="15sp"
-        android:text="Ваше последнее объявление:"
-        android:textColor="@color/grey_500"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50sp"
-        android:layout_marginLeft="20sp"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10sp"
-                android:layout_marginEnd="3sp"
-                android:textSize="15sp"
-                android:text="1)" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="Продукт1"
-                android:id="@+id/product1"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10sp"
-                android:layout_marginEnd="3sp"
-                android:textSize="15sp"
-                android:text="2)" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10sp"
-                android:textSize="15sp"
-                android:text="Продукт2"
-                android:id="@+id/product2"
-                />
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="40sp"
         android:id="@+id/on_advertisement"
         android:text="Это объявление сейчас активно"
@@ -165,7 +103,8 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginTop="100sp"
+
+        android:layout_marginTop="230dp"
         android:id="@+id/create_new_request"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
