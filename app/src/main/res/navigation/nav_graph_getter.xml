@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/getterNotifyF"
-        android:name="com.example.nofoodsharingproject.fragments.getter.GetterCreateNewAdvertisment"
+        android:name="com.example.nofoodsharingproject.fragments.getter.GetterNotifyF"
         android:label="fragment_getter_notify"
         tools:layout="@layout/fragment_getter_notify" >
         <action

@@ -1,6 +1,7 @@
 package com.example.nofoodsharingproject.fragments.getter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -71,7 +72,8 @@ public class GetterAdvrsF extends Fragment {
         buttonNewAdvertisement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Activity newAct = new GetterNewAdvert();
+                Intent intent = new Intent(getActivity(), GetterNewAdvert.class);
+                startActivity(intent);
             }
         });
         return view;
