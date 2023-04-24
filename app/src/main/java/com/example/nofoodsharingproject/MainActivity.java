@@ -1,20 +1,14 @@
 package com.example.nofoodsharingproject;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import com.example.nofoodsharingproject.activities.GetterAC;
+import com.example.nofoodsharingproject.activities.GetterNewAdvert;
 import com.example.nofoodsharingproject.activities.MainAuthAC;
 import com.example.nofoodsharingproject.activities.SetterAC;
-import com.example.nofoodsharingproject.view_models.AdvertisementListViewModel;
-import com.yandex.mapkit.MapKitFactory;
 
 public class MainActivity extends AppCompatActivity {
     //    private ActivityMainBinding binding;
@@ -41,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             if (isGetter) {
-                Intent intentGetter = new Intent(getApplicationContext(), GetterAC.class);
+                Intent intentGetter = new Intent(getApplicationContext(), GetterNewAdvert.class);
                 startActivity(intentGetter);
                 finish();
             } else {

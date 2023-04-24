@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.GetterAC">
+    tools:context=".activities.GetterNewAdvert">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_getter_fragment"

@@ -1,5 +1,6 @@
 package com.example.nofoodsharingproject.fragments.getter;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.activities.GetterNewAdvert;
 import com.example.nofoodsharingproject.fragments.MarketsMapF;
 
 public class GetterAdvrsF extends Fragment {
@@ -69,12 +71,7 @@ public class GetterAdvrsF extends Fragment {
         buttonNewAdvertisement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment newFragment = new GetterCreateNewAdvertisment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_getter_fragment, newFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-                //Есть задержка, возврат только жестом "назад"
+                Activity newAct = new GetterNewAdvert();
             }
         });
         return view;

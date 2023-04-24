@@ -28,7 +28,7 @@
         </activity>
         <activity android:exported="true" android:name=".activities.MainAuthAC">
         </activity>
-        <activity android:name=".activities.GetterAC" android:exported="true" />
+        <activity android:name=".activities.GetterNewAdvert" android:exported="true" />
         <activity android:name=".activities.SetterAC" android:exported="true" />
         <activity android:name=".activities.SetterAdvertAC" android:exported="true" />
         <!--    test    -->
