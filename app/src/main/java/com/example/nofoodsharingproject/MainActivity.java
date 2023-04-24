@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     boolean isAuth = false;
     // костыль
     // ЕСЛИ ХОЧЕШЬ РЕДАКТИРОВАТЬ НУЖДАЮЩЕГОСЯ, ОБЯЗАТЕЛЬНО ПРОПИШИ ЗДЕСЬ true
-    boolean isGetter = true;
+    boolean isGetter = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
         isAuth = getIntent().getBooleanExtra("isAuth", false);
 
         // server request ...
-//        if (!isAuth) { потом заменить
-        if (isAuth) {
+        if (!isAuth) {
             Intent intentAuth = new Intent(getApplicationContext(), MainAuthAC.class);
             startActivity(intentAuth);
             finish();
