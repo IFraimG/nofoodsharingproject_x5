@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     boolean isAuth = false;
     // костыль
     // ЕСЛИ ХОЧЕШЬ РЕДАКТИРОВАТЬ НУЖДАЮЩЕГОСЯ, ОБЯЗАТЕЛЬНО ПРОПИШИ ЗДЕСЬ true
-    boolean isGetter = false;
+    boolean isGetter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

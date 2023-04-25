@@ -25,7 +25,9 @@
         android:text="Номер заказа:"
         android:layout_marginTop="60dp"
         android:layout_gravity="center"
-        android:textColor="@color/grey_500"/>
+        android:textColor="@color/grey_500"
+        android:id="@+id/text_number_advert"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,7 +36,8 @@
         android:layout_gravity="center"
         android:textSize="60sp"
         android:id="@+id/number_of_advertisment"
-        android:textColor="@color/grey_500"/>
+        android:textColor="@color/grey_500"
+        android:visibility="invisible"/>
 
 
     <FrameLayout
@@ -76,6 +79,26 @@
         android:layout_marginRight="20dp"
         android:layout_height="1dp"
         android:background="@color/grey_light"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Оставшееся время:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/timer_to_advert"
+            android:text="00:00:00"/>
+
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="wrap_content"

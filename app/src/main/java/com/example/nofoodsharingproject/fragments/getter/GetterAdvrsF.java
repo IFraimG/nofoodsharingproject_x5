@@ -19,6 +19,8 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.GetterNewAdvert;
 import com.example.nofoodsharingproject.fragments.MarketsMapF;
 
+import java.util.TimerTask;
+
 public class GetterAdvrsF extends Fragment {
 
     @Override
@@ -38,9 +40,13 @@ public class GetterAdvrsF extends Fragment {
         Button buttonNewAdvertisement = view.findViewById(R.id.create_new_request);
         Button buttonZaborProducts = view.findViewById(R.id.pick_up_order);
         Button buttonStopAdvert = view.findViewById(R.id.stop_advert);
+        TextView textNewAdvert = view.findViewById(R.id.text_number_advert);
+
 
 
         buttonNewAdvertisement.setVisibility(View.VISIBLE);
+
+
 
 
 
@@ -64,8 +70,13 @@ public class GetterAdvrsF extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), GetterNewAdvert.class);
                 startActivity(intent);
+
+
+//                Для демонстрации
                 buttonStopAdvert.setVisibility(View.VISIBLE);
                 buttonNewAdvertisement.setVisibility(View.GONE);
+                textNewAdvert.setVisibility(View.VISIBLE);
+                numberAdvertisement.setVisibility(View.VISIBLE);
 
             }
         });
@@ -73,14 +84,19 @@ public class GetterAdvrsF extends Fragment {
         buttonStopAdvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //   Для демонстрации
                 buttonStopAdvert.setVisibility(View.GONE);
                 buttonZaborProducts.setVisibility(View.VISIBLE);
+                textNewAdvert.setVisibility(View.GONE);
+                numberAdvertisement.setVisibility(View.GONE);
+
             }
         });
 
         buttonZaborProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Для демонстрации
                 buttonZaborProducts.setVisibility(View.GONE);
                 buttonNewAdvertisement.setVisibility(View.VISIBLE);
             }
