@@ -72,6 +72,7 @@ public class MarketsMapF extends Fragment implements Session.SearchListener, Cam
     private Session searchSession;
     private UserLocationLayer userLocationLayer;
 
+    // координаты экземпляра Пятерочки 55.684806, 37.847285
     final Point moscowPoint = new Point(55.71989101308894, 37.5689757769603);
     final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
 

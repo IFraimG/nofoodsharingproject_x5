@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
@@ -39,10 +40,16 @@ public class SetterAuthF extends Fragment {
         });
 
         Button btnLogin = (Button) view.findViewById(R.id.setter_auth_btn_login);
+
+        EditText phone = (EditText) view.findViewById(R.id.setter_auth_phone);
+        EditText login = (EditText) view.findViewById(R.id.setter_auth_login);
+        EditText password = (EditText) view.findViewById(R.id.setter_auth_password);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MainActivity.class);
+
 
                 // костыль !
                 intent.putExtra("isAuth", true);
