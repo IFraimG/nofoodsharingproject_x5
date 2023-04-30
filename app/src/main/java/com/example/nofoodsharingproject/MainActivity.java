@@ -2,48 +2,98 @@ package com.example.nofoodsharingproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKey;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.nofoodsharingproject.activities.GetterAC;
 import com.example.nofoodsharingproject.activities.GetterNewAdvert;
 import com.example.nofoodsharingproject.activities.MainAuthAC;
 import com.example.nofoodsharingproject.activities.SetterAC;
+import com.example.nofoodsharingproject.data.api.auth.interfaces.CheckAuthI;
+import com.example.nofoodsharingproject.data.repository.AuthRepository;
+import com.example.nofoodsharingproject.models.Setter;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     //    private ActivityMainBinding binding;
     NavController navController = null;
-    boolean isAuth = false;
-    // костыль
-    // ЕСЛИ ХОЧЕШЬ РЕДАКТИРОВАТЬ НУЖДАЮЩЕГОСЯ, ОБЯЗАТЕЛЬНО ПРОПИШИ ЗДЕСЬ true
-    boolean isGetter = true;
+    SharedPreferences sharedPreferences = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // костыль !
-        isAuth = getIntent().getBooleanExtra("isAuth", false);
-
-        // server request ...
-        if (!isAuth) {
-            Intent intentAuth = new Intent(getApplicationContext(), MainAuthAC.class);
-            startActivity(intentAuth);
-            finish();
-        }
-        else {
-            if (isGetter) {
-                Intent intentGetter = new Intent(getApplicationContext(), GetterAC.class);
-                startActivity(intentGetter);
-                finish();
-            } else {
-                Intent intentSetter = new Intent(getApplicationContext(), SetterAC.class);
-                startActivity(intentSetter);
-            }
-            finish();
+        try {
+            MasterKey masterKey = new MasterKey.Builder(getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build();
+            sharedPreferences = EncryptedSharedPreferences.create(getApplicationContext(), "user", masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
+            if (sharedPreferences.contains("isGetter")) {
+                if (sharedPreferences.getBoolean("isGetter", false)) authGetter();
+                else authSetter();
+            } else redirectToAuth();
+        } catch (IOException | GeneralSecurityException err) {
+            Log.e("auth error", err.toString());
+            err.printStackTrace();
         }
     }
 
+    public void authSetter() {
+        AuthRepository.checkAuthSetter(sharedPreferences.getString("token", "")).enqueue(new Callback<CheckAuthI>() {
+            @Override
+            public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
+                if (!response.body().getIsAuth()) redirectToAuth();
+                else {
+                    Intent intentSetter = new Intent(getApplicationContext(), SetterAC.class);
+                    startActivity(intentSetter);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CheckAuthI> call, Throwable t) {
+                redirectToAuth();
+            }
+        });
+    }
+
+    public void authGetter() {
+        AuthRepository.checkAuthGetter(sharedPreferences.getString("token", "")).enqueue(new Callback<CheckAuthI>() {
+            @Override
+            public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
+                if (response.body().getIsAuth()) {
+                    Intent intentGetter = new Intent(getApplicationContext(), GetterAC.class);
+                    startActivity(intentGetter);
+                    finish();
+                } else redirectToAuth();
+            }
+
+            @Override
+            public void onFailure(Call<CheckAuthI> call, Throwable t) {
+                redirectToAuth();
+            }
+        });
+    }
+
+    public void redirectToAuth() {
+//        Toast.makeText(getApplicationContext(), "Вы не авторизованы", Toast.LENGTH_SHORT).show();
+        Intent intentAuth = new Intent(getApplicationContext(), MainAuthAC.class);
+        startActivity(intentAuth);
+        finish();
+    }
 }

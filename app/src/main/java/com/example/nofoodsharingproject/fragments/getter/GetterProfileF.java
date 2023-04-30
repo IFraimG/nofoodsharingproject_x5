@@ -1,10 +1,13 @@
 package com.example.nofoodsharingproject.fragments.getter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKey;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.activities.MainAuthAC;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 
 public class GetterProfileF extends Fragment {
@@ -46,6 +53,26 @@ public class GetterProfileF extends Fragment {
         });
 
 
-        return inflater.inflate(R.layout.fragment_getter_profile, container, false);
+        Button buttonLogout = (Button) view.findViewById(R.id.getter_profile_logout);
+        buttonLogout.setOnClickListener(View -> logout());
+
+        return view;
+    }
+
+    public void logout() {
+        try {
+            MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build();
+            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getActivity().getApplicationContext(), "user", masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+        } catch (IOException | GeneralSecurityException err) {
+            err.printStackTrace();
+        }
+        Intent intent = new Intent(getActivity().getApplicationContext(), MainAuthAC.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

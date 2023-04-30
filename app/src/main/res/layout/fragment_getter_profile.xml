@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.getter.GetterProfileF">
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,6 +84,16 @@
             android:background="@drawable/style1"
             android:text="сменить магазин"
             android:textColor="@color/white" />
+        <Button
+            android:id="@+id/getter_profile_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/green_pastel"
+            android:text="Выйти из аккаунта"
+            android:textSize="18dp"
+            app:backgroundTint="@color/material_dynamic_neutral_variant40" />
 
 
     </LinearLayout>

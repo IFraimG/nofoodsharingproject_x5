@@ -55,6 +55,17 @@
         android:layout_height="wrap_content"
         android:text="Включить уведомления" />
 
+    <Button
+        android:id="@+id/setter_profile_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="@color/green_pastel"
+        android:text="Выйти из аккаунта"
+        android:textSize="18dp"
+        app:backgroundTint="@color/material_dynamic_neutral_variant40" />
+
 
     <include layout="@layout/setter_history_transfer" />
 </LinearLayout>

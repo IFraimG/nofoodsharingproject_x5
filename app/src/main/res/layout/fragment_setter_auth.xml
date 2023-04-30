@@ -7,13 +7,28 @@
     android:orientation="vertical"
     android:paddingTop="50dp"
     tools:context=".fragments.auth.SetterAuthF">
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:layout_gravity="center"
-        android:text="Отдающий пользователь" />
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/auth_setter_signup_back"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/custom_round_border"
+            android:src="@drawable/ic_baseline_chevron_left_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:layout_marginLeft="20dp"
+
+            android:layout_gravity="center"
+            android:text="Отдающий пользователь" />
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/setter_auth_phone"
@@ -45,6 +60,7 @@
         android:background="@drawable/custom_round_border"
         android:hint="Введите пароль..."
         android:paddingLeft="20dp"
+        android:inputType="textPassword"
         android:layout_marginTop="50dp"
         />
 

@@ -1,17 +1,26 @@
 package com.example.nofoodsharingproject.data;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.moshi.MoshiConverterFactory;
 
 public class RetrofitService {
     private static Retrofit retrofit;
-//    private static final String BASE_URL = "https://buy-help-server.onrender.com";
-    private static final String BASE_URL = "http://localhost:8000";
+    public static final String BASE_URL = "https://buy-help-server.onrender.com";
 
     public static Retrofit create() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder client = new OkHttpClient.Builder().addInterceptor(interceptor);
+
         return new Retrofit.Builder()
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+//                .addConverterFactory(MoshiConverterFactory.create())
                 .baseUrl(BASE_URL)
+                .client(client.build())
                 .build();
     }
 

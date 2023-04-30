@@ -1,10 +1,39 @@
 package com.example.nofoodsharingproject.models;
 
-public class Getter extends User {
-    boolean isCreatedAdvst;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public Getter(String firstname, String lastname, String phone) {
-        super(firstname, lastname, phone);
+public class Getter extends User {
+//    boolean isCreatedAdvst;
+    @SerializedName("_id")
+    @Expose
+    String X5_Id;
+
+    public Getter(String phone, String login, String password) {
+        super(phone, login, password);
+    }
+
+    @Override
+    public String getLogin() {
+        return super.getLogin();
+    }
+
+    @Override
+    public String getPassword() {
+        return super.getPassword();
+    }
+
+    @Override
+    public String getPhone() {
+        return super.getPhone();
+    }
+
+    public String getX5_Id() {
+        return X5_Id;
+    }
+
+    public void setX5_Id(String x5_Id) {
+        this.X5_Id = x5_Id;
     }
 
     public boolean removeAdvertisement() {

@@ -1,5 +1,8 @@
 package com.example.nofoodsharingproject.data.api.auth;
 
+import com.example.nofoodsharingproject.data.api.auth.interfaces.CheckAuthI;
+import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpInformation;
+import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpResponseI;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Setter;
 
@@ -11,21 +14,21 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface AuthAPI {
-    @POST("/auth/setter/login")
-    Call<Setter> setterLogin(@Body String login, @Body String password);
-
     @POST("/auth/getter/login")
-    Call<Getter> getterLogin(@Body String login, @Body String password);
+    Call<SignUpResponseI<Getter>> getterLogin(@Body SignUpInformation signUpInformation);
 
-    @POST("/auth/setter/registration")
-    Call<Setter> setterRegistration(@Body String phone, @Body String login, @Body String hashedPassword);
-
-    @POST("/auth/getter/registration")
-    Call<Getter> getterRegistration(@Body String phone, @Body String login, @Body String hashedPassword);
+    @POST("/auth/getter/signup")
+    Call<SignUpResponseI<Getter>> getterRegistration(@Body SignUpInformation signUpInformation);
 
     @GET("/auth/getter/test")
-    Call<Getter> checkAuthGetter(@Header("Authorization") String credentials);
+    Call<CheckAuthI> checkAuthGetter(@Header("Authorization") String credentials);
+
+    @POST("/auth/setter/login")
+    Call<SignUpResponseI<Setter>> setterLogin(@Body SignUpInformation signUpInformation);
+
+    @POST("/auth/setter/signup")
+    Call<SignUpResponseI<Setter>> setterRegistration(@Body SignUpInformation signUpInformation);
 
     @GET("/auth/setter/test")
-    Call<Setter> checkAuthSetter(@Header("Authorization") String credentials);
+    Call<CheckAuthI> checkAuthSetter(@Header("Authorization") String credentials);
 }

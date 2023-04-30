@@ -7,15 +7,41 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragments.auth.GetterAuthF">
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:layout_gravity="center"
-        android:text="Нуждающийся пользователь" />
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/auth_getter_signup_back"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/custom_round_border"
+            android:src="@drawable/ic_baseline_chevron_left_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
+            android:text="Нуждающийся пользователь" />
+
+    </LinearLayout>
 
     <EditText
+        android:id="@+id/auth_getter_signup_phone"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:background="@drawable/custom_round_border"
+        android:hint="Введите номер телефона..."
+        android:paddingLeft="20dp"
+        android:layout_marginTop="50dp"
+        />
+
+    <EditText
+        android:id="@+id/auth_getter_signup_login"
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
@@ -26,11 +52,13 @@
         />
 
     <EditText
+        android:id="@+id/auth_getter_signup_password"
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:background="@drawable/custom_round_border"
         android:hint="Введите пароль..."
+        android:inputType="textPassword"
         android:paddingLeft="20dp"
         android:layout_marginTop="50dp"
         />
@@ -44,4 +72,16 @@
         android:layout_gravity="center"
         android:textSize="24dp"
         android:text="Войти" />
+
+    <Button
+        android:id="@+id/auth_getter_create"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Создать новый аккаунт"
+        android:textSize="18dp"
+        android:visibility="gone"
+        app:backgroundTint="@color/green_pastel" />
+
 </LinearLayout>
