@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "850577830773",
+    "project_id": "buyhelp-5e922",
+    "storage_bucket": "buyhelp-5e922.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:850577830773:android:38a60b0495ef817244993c",
+        "android_client_info": {
+          "package_name": "com.example.nofoodsharingproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "850577830773-r4kdca4icoucj0770eclabc9ha3ffkia.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArEId8UY_tG_2nXbMm5BXjzA1gBqCvZhY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "850577830773-r4kdca4icoucj0770eclabc9ha3ffkia.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
