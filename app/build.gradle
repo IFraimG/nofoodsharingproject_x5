@@ -62,8 +62,8 @@ dependencies {
 
     // yandex map
 // lite   implementation 'com.yandex.android:maps.mobile:4.3.1-lite'
-    implementation 'com.yandex.android:maps.mobile:4.3.1-lite'
-
+//    implementation 'com.yandex.android:maps.mobile:4.3.1-lite'
+    implementation 'com.yandex.android:maps.mobile:4.3.1-full'
 
     // firebase cloud messaging
     implementation platform('com.google.firebase:firebase-bom:31.5.0')
