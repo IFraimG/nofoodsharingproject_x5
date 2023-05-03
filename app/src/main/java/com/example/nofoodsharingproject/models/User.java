@@ -20,6 +20,9 @@ public abstract class User {
 
     Date dateOfCreated;
 
+    public User() {
+
+    }
     public User(String phone, String login, String password) {
         this.login = login;
         this.phone = phone;

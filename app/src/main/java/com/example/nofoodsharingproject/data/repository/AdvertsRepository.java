@@ -13,4 +13,8 @@ public class AdvertsRepository {
     public static Call<List<Advertisement>> getListAdverts() {
         return AdvertsApiService.getInstance().getListAdvertisements();
     }
+
+    public static Call<Advertisement> createAdvert(Advertisement advert) {
+        return AdvertsApiService.getInstance().createAdvert(advert);
+    }
 }

@@ -13,4 +13,5 @@ public class AdvertsApiService {
         if (advertsAPI == null) advertsAPI = create();
         return advertsAPI;
     }
+
 }

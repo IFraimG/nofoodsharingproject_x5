@@ -92,6 +92,10 @@ public class GetterAdvrsF extends Fragment {
         // Замени все getFragmentManager на getSupportFragmentManager !!
         // Замени все getFragmentManager на getSupportFragmentManager !!
         // Замени все getFragmentManager на getSupportFragmentManager !!
+        // Замени все getFragmentManager на getSupportFragmentManager !!
+        // Замени все getFragmentManager на getSupportFragmentManager !!
+        // Замени все getFragmentManager на getSupportFragmentManager !!
+        // Замени все getFragmentManager на getSupportFragmentManager !!
 
         buttonMapOpen.setOnClickListener(new View.OnClickListener() {
             @Override

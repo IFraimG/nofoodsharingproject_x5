@@ -9,6 +9,9 @@ public class Getter extends User {
     @Expose
     String X5_Id;
 
+    public Getter() {
+
+    }
     public Getter(String phone, String login, String password) {
         super(phone, login, password);
     }
@@ -34,6 +37,11 @@ public class Getter extends User {
 
     public void setX5_Id(String x5_Id) {
         this.X5_Id = x5_Id;
+    }
+
+    @Override
+    public void setLogin(String login) {
+        super.setLogin(login);
     }
 
     public boolean removeAdvertisement() {
