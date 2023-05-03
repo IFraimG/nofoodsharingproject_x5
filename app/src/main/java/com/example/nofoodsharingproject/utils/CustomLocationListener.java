@@ -26,7 +26,7 @@ public class CustomLocationListener implements LocationListener {
 
         LocationListener locationListener = new CustomLocationListener();
         if (firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 25,  locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 25,  locationListener);
             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
     }

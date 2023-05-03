@@ -28,6 +28,7 @@ import com.yandex.runtime.image.ImageProvider;
 import com.yandex.runtime.network.NetworkError;
 import com.yandex.runtime.network.RemoteError;
 
+// не используется
 public class CustomSearchMarkets extends AppCompatActivity implements Session.SearchListener, CameraListener {
     private MapView mapView;
     private SearchManager searchManager;

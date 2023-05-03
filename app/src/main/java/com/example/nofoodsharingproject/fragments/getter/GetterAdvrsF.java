@@ -101,10 +101,14 @@ public class GetterAdvrsF extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment someFragment = new MarketsMapF();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_getter_fragment, someFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                try {
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_getter_fragment, someFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                } catch (NullPointerException err) {
+                    Log.e("err", err.toString());
+                }
             }
         });
 

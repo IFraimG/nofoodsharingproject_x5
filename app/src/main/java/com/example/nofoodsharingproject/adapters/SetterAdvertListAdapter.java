@@ -44,7 +44,7 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
 
         holder.link.setOnClickListener(View -> {
             Intent intent = new Intent(this.ctx, SetterAdvertAC.class);
-            intent.putExtra("advertID", advertisement.adversID);
+            intent.putExtra("advertID", advertisement.advertsID);
             ctx.startActivity(intent);
         });
     }

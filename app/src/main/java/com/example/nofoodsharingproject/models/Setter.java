@@ -12,13 +12,12 @@ public class Setter extends User {
     @Expose
     Advertisement[] successHistory;
 
-    public Setter(String phone, String login, String password) {
-        super(phone, login, password);
+    public Setter() {
+
     }
 
-    public String makeHelp(String adversID) {
-
-        return "cлучайно сгенерированный айди до 6 символов из русских букв";
+    public Setter(String phone, String login, String password) {
+        super(phone, login, password);
     }
 
     @Override

@@ -50,7 +50,7 @@ public class SetterProfileF extends Fragment {
         super.onResume();
 
         switchLocation.setChecked(checkLocationPermissions() && settings.getBoolean("location", false));
-        switchNotification.setChecked(settings.getBoolean("notification", false));
+        switchNotification.setChecked(settings.getBoolean("notification", true));
     }
 
     private void setToPreferences(String key, boolean value) {
@@ -83,6 +83,7 @@ public class SetterProfileF extends Fragment {
                             == PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(getActivity(),
                                 new String[]{ android.Manifest.permission.ACCESS_BACKGROUND_LOCATION }, 201);
+                        setToPreferences("location", checkLocationPermissions());
                     }
 
                     setToPreferences("location", checkLocationPermissions());
