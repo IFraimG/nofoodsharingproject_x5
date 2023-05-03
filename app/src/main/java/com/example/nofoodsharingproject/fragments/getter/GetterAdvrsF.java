@@ -65,6 +65,9 @@ public class GetterAdvrsF extends Fragment {
 
 
 
+
+
+
         CountDownTimer timerView = new CountDownTimer(3600000 * 2, 1000){
             @Override
             public void onTick(long l) {
@@ -88,27 +91,14 @@ public class GetterAdvrsF extends Fragment {
 
 
 
-
-        // Замени все getFragmentManager на getSupportFragmentManager !!
-        // Замени все getFragmentManager на getSupportFragmentManager !!
-        // Замени все getFragmentManager на getSupportFragmentManager !!
-        // Замени все getFragmentManager на getSupportFragmentManager !!
-        // Замени все getFragmentManager на getSupportFragmentManager !!
-        // Замени все getFragmentManager на getSupportFragmentManager !!
-        // Замени все getFragmentManager на getSupportFragmentManager !!
-
         buttonMapOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment someFragment = new MarketsMapF();
-                try {
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.nav_host_getter_fragment, someFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                } catch (NullPointerException err) {
-                    Log.e("err", err.toString());
-                }
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_getter_fragment, someFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 

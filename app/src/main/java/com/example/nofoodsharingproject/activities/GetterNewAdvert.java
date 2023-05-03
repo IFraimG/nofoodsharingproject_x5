@@ -19,13 +19,17 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
 import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.adapters.GetterProductListAdapter;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.fragments.getter.GetterAdvrsF;
+import com.example.nofoodsharingproject.fragments.getter.GetterProductItem;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Getter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,21 +39,39 @@ import com.yandex.mapkit.MapKitFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetterNewAdvert extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private ArrayList<GetterProductItem> productItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getter_create_new_advertisment);
+
+        initalazeData();
         Button button_ready = findViewById(R.id.ready_to_create);
         Button button_back = findViewById(R.id.button_back);
         Button button_re = findViewById(R.id.re_advertisment);
+        RecyclerView recyclerView = findViewById(R.id.product_choice);
+        GetterProductListAdapter productListAdapter = new GetterProductListAdapter(this, productItems);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(productListAdapter);
+
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         button_ready.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +80,8 @@ public class GetterNewAdvert extends AppCompatActivity {
                 Getter result = getUserInfo();
                 Advertisement advertisement = new Advertisement("test title", "test desc", result.getX5_Id(), result.getLogin());
                 advertisement.setGettingProductID("testid");
+
+
                 // жду recycler от тебя
                 advertisement.setListProducts(null);
                 button_ready.setEnabled(false);
@@ -82,6 +106,9 @@ public class GetterNewAdvert extends AppCompatActivity {
                 });
             }
         });
+
+
+
         button_re.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,13 +118,32 @@ public class GetterNewAdvert extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
-        button_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    private void initalazeData(){
+        productItems.add(new GetterProductItem("Хлеб"));
+        productItems.add(new GetterProductItem("Картофель"));
+        productItems.add(new GetterProductItem("Мороженая рыба"));
+        productItems.add(new GetterProductItem("Сливочное масло"));
+        productItems.add(new GetterProductItem("Подсолнечное масло"));
+        productItems.add(new GetterProductItem("Яйца куриные"));
+        productItems.add(new GetterProductItem("Молоко"));
+        productItems.add(new GetterProductItem("Чай"));
+        productItems.add(new GetterProductItem("Кофе"));
+        productItems.add(new GetterProductItem("Соль"));
+        productItems.add(new GetterProductItem("Сахар"));
+        productItems.add(new GetterProductItem("Мука"));
+        productItems.add(new GetterProductItem("Лук"));
+        productItems.add(new GetterProductItem("Макаронные изделия"));
+        productItems.add(new GetterProductItem("Пшено"));
+        productItems.add(new GetterProductItem("Шлифованный рис"));
+        productItems.add(new GetterProductItem("Гречневая крупа"));
+        productItems.add(new GetterProductItem("Белокочанная капуста"));
+        productItems.add(new GetterProductItem("Морковь"));
+        productItems.add(new GetterProductItem("Яблоки"));
+        productItems.add(new GetterProductItem("Свинина"));
+        productItems.add(new GetterProductItem("Баранина"));
+        productItems.add(new GetterProductItem("Курица"));
     }
 
     public Getter getUserInfo() {
