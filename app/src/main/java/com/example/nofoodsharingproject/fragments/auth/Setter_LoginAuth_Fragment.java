@@ -67,7 +67,7 @@ public class Setter_LoginAuth_Fragment extends Fragment {
 
     public void login() {
         if (loginInput.getText().toString().length() == 0 || passwordInput.getText().toString().length() == 0) {
-            Toast.makeText(getContext(), "Вы не заполнили все поля", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.not_full, Toast.LENGTH_LONG).show();
         } else {
             btn.setEnabled(false);
             AuthRepository.setterLogin(loginInput.getText().toString(), passwordInput.getText().toString()).enqueue(new Callback<SignUpResponseI<Setter>>() {
@@ -75,7 +75,7 @@ public class Setter_LoginAuth_Fragment extends Fragment {
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
                     SignUpResponseI<Setter> result = response.body();
                     if (response.code() == 404 || response.code() == 400 || result.getToken().length() == 0) {
-                        Toast.makeText(getContext(), "Пароль введен некорректно, либо такого пользователя не существует", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
                         btn.setEnabled(true);
                     } else {
                         saveData(response.body());

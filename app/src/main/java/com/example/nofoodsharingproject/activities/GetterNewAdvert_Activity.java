@@ -79,7 +79,7 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
                         Advertisement result = response.body();
                         if (response.code() != 400) {
                             Toast.makeText(getApplicationContext(),
-                                    "Объявление успешно создано", Toast.LENGTH_SHORT).show();
+                                    R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
                             button_ready.setEnabled(true);
@@ -90,7 +90,7 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
                     public void onFailure(Call<Advertisement> call, Throwable t) {
                         button_ready.setEnabled(true);
                         Toast.makeText(getApplicationContext(),
-                                "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                                R.string.smth_not_good, Toast.LENGTH_SHORT).show();
                         t.printStackTrace();
                     }
                 });
@@ -104,48 +104,23 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 //ОТПРАВИТЬ ДАНЫЕ НА СЕРВЕР
                 Toast.makeText(getApplicationContext(),
-                        "Объявление успешно создано", Toast.LENGTH_SHORT).show();
+                        R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
     }
 
-    private void initalazeData(){
-        // ПИШИ ЦИКЛ!!!!
-        // ПИШИ ЦИКЛ!!!!
-        // ПИШИ ЦИКЛ!!!!
-        // ПИШИ ЦИКЛ!!!!
-        // ПИШИ ЦИКЛ!!!!
-        // ПИШИ ЦИКЛ!!!!
-        // ПИШИ ЦИКЛ!!!!
-        // ПИШИ ЦИКЛ!!!!
-        // ПИШИ ЦИКЛ!!!!
-        // ПИШИ ЦИКЛ!!!!
-        // ПИШИ ЦИКЛ!!!!
-        productItems.add(new GetterProductItem("Хлеб"));
-        productItems.add(new GetterProductItem("Картофель"));
-        productItems.add(new GetterProductItem("Мороженая рыба"));
-        productItems.add(new GetterProductItem("Сливочное масло"));
-        productItems.add(new GetterProductItem("Подсолнечное масло"));
-        productItems.add(new GetterProductItem("Яйца куриные"));
-        productItems.add(new GetterProductItem("Молоко"));
-        productItems.add(new GetterProductItem("Чай"));
-        productItems.add(new GetterProductItem("Кофе"));
-        productItems.add(new GetterProductItem("Соль"));
-        productItems.add(new GetterProductItem("Сахар"));
-        productItems.add(new GetterProductItem("Мука"));
-        productItems.add(new GetterProductItem("Лук"));
-        productItems.add(new GetterProductItem("Макаронные изделия"));
-        productItems.add(new GetterProductItem("Пшено"));
-        productItems.add(new GetterProductItem("Шлифованный рис"));
-        productItems.add(new GetterProductItem("Гречневая крупа"));
-        productItems.add(new GetterProductItem("Белокочанная капуста"));
-        productItems.add(new GetterProductItem("Морковь"));
-        productItems.add(new GetterProductItem("Яблоки"));
-        productItems.add(new GetterProductItem("Свинина"));
-        productItems.add(new GetterProductItem("Баранина"));
-        productItems.add(new GetterProductItem("Курица"));
+    private void initalazeData() {
+        String[] array = new String[]{"Хлеб", "Картофель", "Мороженая рыба", "Сливочное масло",
+                "Подсолнечное масло", "Яйца куриные", "Молоко", "Чай", "Кофе", "Соль", "Сахар",
+                "Мука", "Лук", "Макаронные изделия", "Пшено", "Шлифованный рис", "Гречневая крупа",
+                "Белокочанная капуста", "Морковь", "Яблоки", "Свинина", "Баранина", "Курица"};
+
+        for (int i = 0; i < 23; i++) {
+            productItems.add(new GetterProductItem(array[i]));
+        }
     }
+
 
     public Getter getUserInfo() {
         try {

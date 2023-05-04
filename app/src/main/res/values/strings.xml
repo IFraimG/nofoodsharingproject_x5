@@ -72,4 +72,15 @@ Nuclear IT Hack. Объединённый совет обучающихся и �
     <string name="name_enter_text">Название</string>
     <string name="description_text">Описание</string>
     <string name="history_transfer_text">История передач</string>
+    <string name="advert_sucesfully_create">Объявление успешно создано</string>
+    <string name="smth_not_good">Что-то пошло не так</string>
+    <string name="smth_not_good_try_again">Что-то пошло не так. Попробуйте еще раз</string>
+    <string name="uncorrect_number_phone">Номер телефона введен некорректно</string>
+    <string name="uncorrect_name">Ваш логин должен содержать хотя бы 4 символа</string>
+    <string name="uncorrect_password">Ваш пароль должен содержать хотя бы 8 символов</string>
+    <string name="not_right_password">Пароль неверный</string>
+    <string name="account_not_exist">Данного пользователя не существует. Хотите создать новый аккаунт?</string>
+    <string name="account_created">Данный пользователь уже существует. Войдите</string>
+    <string name="not_full">"Вы не заполнили все поля</string>
+    <string name="error">Пароль введен некорректно, либо такого пользователя не существует</string>
 </resources>

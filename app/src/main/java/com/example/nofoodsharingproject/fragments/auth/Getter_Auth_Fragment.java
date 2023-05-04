@@ -63,15 +63,15 @@ public class Getter_Auth_Fragment extends Fragment {
     public boolean validate() {
         String regexPhone = "^\\+?[0-9\\-\\s]*$";
         if (!phone.getText().toString().matches(regexPhone)) {
-            Toast.makeText(getContext(), "Номер телефона введен некорректно", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
             return false;
         }
         if (login.getText().toString().length() < 4) {
-            Toast.makeText(getContext(), "Ваш логин должен содержать хотя бы 4 символа", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
             return false;
         }
         if (password.getText().toString().length() < 8) {
-            Toast.makeText(getContext(), "Ваш пароль должен содержать хотя бы 8 символов", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -113,14 +113,14 @@ public class Getter_Auth_Fragment extends Fragment {
                     try {
                         if (response.code() == 400) {
                             btnLogin.setEnabled(true);
-                            Toast.makeText(getContext(), "Пароль неверный", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.not_right_password, Toast.LENGTH_SHORT).show();
                         } else if (result.token.length() == 0 || response.code() == 404) {
-                            Toast.makeText(getContext(), "Данного пользователя не существует. Хотите создать новый аккаунт?", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.account_not_exist, Toast.LENGTH_SHORT).show();
                             btnLogin.setEnabled(true);
                             btnSignup.setVisibility(View.VISIBLE);
                         } else pushData(result);
                     } catch (NullPointerException err) {
-                        Toast.makeText(getContext(), "Данного пользователя не существует. Хотите создать нового?", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.account_not_exist, Toast.LENGTH_SHORT).show();
                         btnLogin.setEnabled(true);
                         btnSignup.setVisibility(View.VISIBLE);
                     }
@@ -143,7 +143,7 @@ public class Getter_Auth_Fragment extends Fragment {
             public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                 SignUpResponseI<Getter> result = response.body();
                 if (result.token.length() == 0 || response.code() == 400) {
-                    Toast.makeText(getContext(), "Данный пользователь уже существует. Войдите", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.account_created, Toast.LENGTH_SHORT).show();
                     btnSignup.setEnabled(true);
                 } else pushData(result);
             }

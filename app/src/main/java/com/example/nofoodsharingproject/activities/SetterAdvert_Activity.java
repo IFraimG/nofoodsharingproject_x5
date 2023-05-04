@@ -48,7 +48,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                 public void onResponse(@NotNull Call<RequestDoneAdvert> call, @NotNull Response<RequestDoneAdvert> response) {
                     if (response.code() == 400) {
                         acceptBtn.setEnabled(true);
-                        Toast.makeText(getApplicationContext(), "Что-то пошло не так. Попробуйте еще раз", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.smth_not_good_try_again, Toast.LENGTH_SHORT).show();
                     } else {
                         finish();
 
