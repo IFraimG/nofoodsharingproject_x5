@@ -1,7 +1,6 @@
 package com.example.nofoodsharingproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
@@ -9,15 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.nofoodsharingproject.activities.GetterAC;
-import com.example.nofoodsharingproject.activities.GetterNewAdvert;
-import com.example.nofoodsharingproject.activities.MainAuthAC;
-import com.example.nofoodsharingproject.activities.SetterAC;
+import com.example.nofoodsharingproject.activities.Getter_Activity;
+import com.example.nofoodsharingproject.activities.MainAuth_Activity;
+import com.example.nofoodsharingproject.activities.Setter_Activity;
 import com.example.nofoodsharingproject.data.api.auth.interfaces.CheckAuthI;
 import com.example.nofoodsharingproject.data.repository.AuthRepository;
-import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.databinding.ActivityMainBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,14 +26,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-    //    private ActivityMainBinding binding;
-    NavController navController = null;
-    SharedPreferences sharedPreferences = null;
+    private ActivityMainBinding binding;
+    private SharedPreferences sharedPreferences = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         try {
             MasterKey masterKey = new MasterKey.Builder(getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
@@ -59,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (!response.body().getIsAuth()) redirectToAuth();
                 else {
-                    Intent intentSetter = new Intent(getApplicationContext(), SetterAC.class);
+                    Intent intentSetter = new Intent(getApplicationContext(), Setter_Activity.class);
                     startActivity(intentSetter);
                     finish();
                 }
@@ -77,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body().getIsAuth()) {
-                    Intent intentGetter = new Intent(getApplicationContext(), GetterAC.class);
+                    Intent intentGetter = new Intent(getApplicationContext(), Getter_Activity.class);
                     startActivity(intentGetter);
                     finish();
                 } else redirectToAuth();
@@ -92,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void redirectToAuth() {
 //        Toast.makeText(getApplicationContext(), "Вы не авторизованы", Toast.LENGTH_SHORT).show();
-        Intent intentAuth = new Intent(getApplicationContext(), MainAuthAC.class);
+        Intent intentAuth = new Intent(getApplicationContext(), MainAuth_Activity.class);
         startActivity(intentAuth);
         finish();
     }

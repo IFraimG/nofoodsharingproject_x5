@@ -5,28 +5,33 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.nofoodsharingproject.BuildConfig;
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.databinding.ActivityMainBinding;
+import com.example.nofoodsharingproject.databinding.ActivitySetterBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yandex.mapkit.MapKitFactory;
 
-public class GetterAC extends AppCompatActivity {
+public class Setter_Activity extends AppCompatActivity {
     NavController navController;
+    private ActivitySetterBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_getter);
+        binding = ActivitySetterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        MapKitFactory.setApiKey("1d877443-08b6-4bef-8b1f-166d827b7fd7");
-
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_getter_fragment);
+        MapKitFactory.setApiKey(BuildConfig.apiKey);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_setter_fragment);
         navController = navHostFragment.getNavController();
 
-        BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.getter_navigation);
+        BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.setter_navigation);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 

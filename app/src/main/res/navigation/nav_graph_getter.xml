@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/getterProfileF"
-        android:name="com.example.nofoodsharingproject.fragments.getter.GetterProfileF"
+        android:name="com.example.nofoodsharingproject.fragments.getter.GetterProfile_Fragment"
         android:label="fragment_getter_profile"
         tools:layout="@layout/fragment_getter_profile" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/getterAdvrsF"
-        android:name="com.example.nofoodsharingproject.fragments.getter.GetterAdvrsF"
+        android:name="com.example.nofoodsharingproject.fragments.getter.GetterAdvrs_Fragment"
         android:label="fragment_getter_advrs"
         tools:layout="@layout/fragment_getter_advrs" >
         <action
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/marketsMapF"
-        android:name="com.example.nofoodsharingproject.fragments.MarketsMapF"
+        android:name="com.example.nofoodsharingproject.fragments.MarketsMap_Fragment"
         android:label="fragment_markets_map"
         tools:layout="@layout/fragment_markets_map" >
         <action
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/getterNotifyF"
-        android:name="com.example.nofoodsharingproject.fragments.getter.GetterNotifyF"
+        android:name="com.example.nofoodsharingproject.fragments.getter.GetterNotify_Fragment"
         android:label="fragment_getter_notify"
         tools:layout="@layout/fragment_getter_notify" >
         <action

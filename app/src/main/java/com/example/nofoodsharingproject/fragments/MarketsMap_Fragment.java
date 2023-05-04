@@ -1,13 +1,7 @@
 package com.example.nofoodsharingproject.fragments;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.PointF;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,7 +17,6 @@ import android.view.ViewGroup;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.utils.CustomLocationListener;
 import com.yandex.mapkit.Animation;
-import com.yandex.mapkit.GeoObject;
 import com.yandex.mapkit.GeoObjectCollection;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
@@ -33,15 +26,10 @@ import com.yandex.mapkit.layers.ObjectEvent;
 import com.yandex.mapkit.map.CameraListener;
 import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.map.CameraUpdateReason;
-import com.yandex.mapkit.map.CompositeIcon;
 import com.yandex.mapkit.map.GeoObjectSelectionMetadata;
-import com.yandex.mapkit.map.IconStyle;
 import com.yandex.mapkit.map.InputListener;
 import com.yandex.mapkit.map.Map;
-import com.yandex.mapkit.map.MapObject;
 import com.yandex.mapkit.map.MapObjectCollection;
-import com.yandex.mapkit.map.MapObjectTapListener;
-import com.yandex.mapkit.map.RotationType;
 import com.yandex.mapkit.map.VisibleRegionUtils;
 import com.yandex.mapkit.mapview.MapView;
 import com.yandex.mapkit.search.Response;
@@ -50,7 +38,6 @@ import com.yandex.mapkit.search.SearchManager;
 import com.yandex.mapkit.search.SearchManagerType;
 import com.yandex.mapkit.search.SearchOptions;
 import com.yandex.mapkit.search.Session;
-import com.yandex.mapkit.search.ToponymObjectMetadata;
 import com.yandex.mapkit.user_location.UserLocationLayer;
 import com.yandex.mapkit.user_location.UserLocationObjectListener;
 import com.yandex.mapkit.user_location.UserLocationView;
@@ -61,7 +48,7 @@ import com.yandex.runtime.network.RemoteError;
 
 // Карта на данный момент будет единой для всех пользователей
 // MapObjectTapListener потом добавить
-public class MarketsMapF extends Fragment implements Session.SearchListener, CameraListener,
+public class MarketsMap_Fragment extends Fragment implements Session.SearchListener, CameraListener,
         GeoObjectTapListener, InputListener, UserLocationObjectListener {
 
     MapView mapView;

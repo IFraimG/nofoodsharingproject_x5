@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+<!--    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove"/>-->
+
+
+<!--    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />-->
 
     <application
         android:allowBackup="true"
@@ -25,12 +29,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:exported="true" android:name=".activities.MainAuthAC">
+        <activity android:exported="true" android:name=".activities.MainAuth_Activity">
         </activity>
-        <activity android:name=".activities.GetterNewAdvert" android:exported="true" />
-        <activity android:name=".activities.SetterAC" android:exported="true" />
-        <activity android:name=".activities.SetterAdvertAC" android:exported="true" />
-        <activity android:name=".activities.GetterAC" android:exported="true" />
+        <activity android:name=".activities.GetterNewAdvert_Activity" android:exported="true" />
+        <activity android:name=".activities.Setter_Activity" android:exported="true" />
+        <activity android:name=".activities.SetterAdvert_Activity" android:exported="true" />
+        <activity android:name=".activities.Getter_Activity" android:exported="true" />
         <!--    test    -->
         <activity
             android:name=".utils.CustomSearchMarkets"
@@ -41,6 +45,7 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
+
             </intent-filter>
         </service>
         <meta-data

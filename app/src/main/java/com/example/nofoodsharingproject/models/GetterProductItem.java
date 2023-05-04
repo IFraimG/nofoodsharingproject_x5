@@ -1,9 +1,10 @@
-package com.example.nofoodsharingproject.fragments.getter;
+package com.example.nofoodsharingproject.models;
 
-public class GetterProductItem {
+public class GetterProductItem extends Product {
     private String name;
 
     public GetterProductItem(String name){
+        super(name);
         this.name = name;
     }
     public String getName(){

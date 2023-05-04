@@ -1,11 +1,13 @@
 package com.example.nofoodsharingproject.utils;
 
 import com.example.nofoodsharingproject.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.yandex.mapkit.GeoObjectCollection;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -88,8 +90,12 @@ public class CustomSearchMarkets extends AppCompatActivity implements Session.Se
 
     @Override
     public void onSearchError(@NonNull Error error) {
-        if (error instanceof RemoteError) Log.i("msg", "RemoteError");
+        String errorSearch = getString(R.string.map_error_search);
+        if (error instanceof RemoteError) {
+            Log.i("msg", "RemoteError");
+        }
         else if (error instanceof NetworkError) Log.i("msg", "NetworkError");
+        Snackbar.make(this.getCurrentFocus(), errorSearch, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

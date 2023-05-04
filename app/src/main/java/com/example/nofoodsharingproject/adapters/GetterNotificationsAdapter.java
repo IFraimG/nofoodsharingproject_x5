@@ -1,7 +1,6 @@
 package com.example.nofoodsharingproject.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.activities.SetterAdvertAC;
-import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Notification;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GetterNotificationsAdapter extends RecyclerView.Adapter<GetterNotificationsAdapter.ViewHolder> {
-    Context ctx;
+    private final Context ctx;
     private final List<Notification> notifications = new ArrayList<>();
     private final LayoutInflater inflater;
 
@@ -65,10 +62,10 @@ public class GetterNotificationsAdapter extends RecyclerView.Adapter<GetterNotif
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        TextView desc;
-        TextView createdAt;
-        Button link;
+        final TextView title;
+        final TextView desc;
+        final TextView createdAt;
+        final Button link;
 
         public ViewHolder(View view) {
             super(view);

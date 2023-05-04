@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.setter.SetterNotifyF">
+    tools:context=".fragments.setter.SetterNotify_Fragment">
 
     <TextView
         android:id="@+id/setter_advert_item_title"

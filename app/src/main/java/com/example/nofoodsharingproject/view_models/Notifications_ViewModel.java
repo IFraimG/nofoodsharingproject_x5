@@ -13,11 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class NotificationsViewModel extends AndroidViewModel {
+public class Notifications_ViewModel extends AndroidViewModel {
     public List<Notification> notifications = new ArrayList<>();
     private final MutableLiveData<List<Notification>> _notifications = new MutableLiveData<>();
 
@@ -25,7 +21,7 @@ public class NotificationsViewModel extends AndroidViewModel {
 //    public LiveData<LoaderStatus> status = _status;
 
 
-    public NotificationsViewModel(@NonNull Application application) {
+    public Notifications_ViewModel(@NonNull Application application) {
         super(application);
     }
 

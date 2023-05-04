@@ -2,8 +2,6 @@ package com.example.nofoodsharingproject.fragments.setter;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 //import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.Observer;
@@ -14,17 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.adapters.SetterAdvertListAdapter;
 import com.example.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.utils.LoaderStatus;
-import com.example.nofoodsharingproject.view_models.AdvertisementListViewModel;
+import com.example.nofoodsharingproject.view_models.AdvertisementList_ViewModel;
 
 import java.util.List;
 
-public class SetterAdvrsF extends Fragment {
-    AdvertisementListViewModel viewModel;
+public class SetterAdvrs_Fragment extends Fragment {
+    AdvertisementList_ViewModel viewModel;
     private FragmentSetterAdvrsBinding binding;
 
     @Override
@@ -43,7 +40,7 @@ public class SetterAdvrsF extends Fragment {
 
         viewModel = new ViewModelProvider(getActivity(),
                 (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()))
-                .get(AdvertisementListViewModel.class);
+                .get(AdvertisementList_ViewModel.class);
 
         viewModel.getAllAdverts().observe(getActivity(), new Observer<List<Advertisement>>() {
             @Override

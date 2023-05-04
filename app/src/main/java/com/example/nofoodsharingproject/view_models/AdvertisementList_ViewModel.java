@@ -12,7 +12,6 @@ import androidx.lifecycle.Transformations;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.ShortDataWithDate;
-import com.example.nofoodsharingproject.data.api.adverts.AdvertsApiService;
 import com.example.nofoodsharingproject.utils.LoaderStatus;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class AdvertisementListViewModel extends AndroidViewModel {
+public class AdvertisementList_ViewModel extends AndroidViewModel {
     public List<Advertisement> adverts = new ArrayList<>();
     private final MutableLiveData<List<Advertisement>> _adverts = new MutableLiveData<>();
 
@@ -31,7 +30,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
     public LiveData<LoaderStatus> status = _status;
 
 
-    public AdvertisementListViewModel(@NonNull Application application) {
+    public AdvertisementList_ViewModel(@NonNull Application application) {
         super(application);
     }
 
@@ -65,7 +64,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
             @Override
             public List<ShortDataWithDate> apply(List<Advertisement> input) {
                 List<ShortDataWithDate> result = new ArrayList<>();
-                for (Advertisement ad: input) result.add(new Advertisement(ad.getDateOfCreated(), ad.authorID, ad.adversID, ad.gettingProductID));
+                for (Advertisement ad: input) result.add(new ShortDataWithDate(ad.getDateOfCreated(), ad.authorID, ad.advertsID, ad.gettingProductID));
 
                 return result;
             }

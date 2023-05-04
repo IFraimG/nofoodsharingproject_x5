@@ -1,4 +1,4 @@
 package com.example.nofoodsharingproject.view_models;
 
-public class LoaderViewModel {
+public class Loader_ViewModel {
 }

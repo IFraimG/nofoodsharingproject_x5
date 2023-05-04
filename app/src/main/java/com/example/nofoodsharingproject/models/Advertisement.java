@@ -3,9 +3,11 @@ package com.example.nofoodsharingproject.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class Advertisement implements ShortDataWithDate {
+public class Advertisement {
     @SerializedName("title")
     @Expose
     public String title;
@@ -15,7 +17,7 @@ public class Advertisement implements ShortDataWithDate {
 
     @SerializedName("listProducts")
     @Expose
-    public Product[] listProducts;
+    public ArrayList<Product> listProducts;
 
     @SerializedName("advertsID")
     @Expose
@@ -61,7 +63,7 @@ public class Advertisement implements ShortDataWithDate {
         return this.dateOfCreated;
     }
 
-    public Product[] getListProducts() {
+    public ArrayList<Product> getListProducts() {
         return listProducts;
     }
 
@@ -85,7 +87,7 @@ public class Advertisement implements ShortDataWithDate {
         this.fieldDescription = fieldDescription;
     }
 
-    public void setListProducts(Product[] listProducts) {
+    public void setListProducts(ArrayList<Product> listProducts) {
         this.listProducts = listProducts;
     }
 

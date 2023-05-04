@@ -3,9 +3,7 @@ package com.example.nofoodsharingproject.fragments.auth;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +13,7 @@ import android.widget.Button;
 import com.example.nofoodsharingproject.R;
 
 
-public class MainAuthF extends Fragment {
+public class MainAuth_Fragment extends Fragment {
 
 
     @Override

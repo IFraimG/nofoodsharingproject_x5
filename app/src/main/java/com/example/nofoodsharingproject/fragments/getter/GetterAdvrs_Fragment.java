@@ -1,23 +1,13 @@
 package com.example.nofoodsharingproject.fragments.getter;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-import static java.lang.Math.floor;
-import static java.lang.Math.random;
-
-import android.app.Activity;
-import android.app.Notification;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.CountDownTimer;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +15,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.activities.GetterNewAdvert;
-import com.example.nofoodsharingproject.fragments.MarketsMapF;
+import com.example.nofoodsharingproject.activities.GetterNewAdvert_Activity;
+import com.example.nofoodsharingproject.fragments.MarketsMap_Fragment;
 
-import java.util.Random;
-import java.util.TimerTask;
-
-public class GetterAdvrsF extends Fragment {
+public class GetterAdvrs_Fragment extends Fragment {
 
     public static final String APP_PREFERENCES_NAME = "Nickname"; // имя кота
     public static final String APP_PREFERENCES_AGE = "Age"; // возраст кота
@@ -94,7 +80,7 @@ public class GetterAdvrsF extends Fragment {
         buttonMapOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment someFragment = new MarketsMapF();
+                Fragment someFragment = new MarketsMap_Fragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_getter_fragment, someFragment);
                 transaction.addToBackStack(null);
@@ -105,7 +91,7 @@ public class GetterAdvrsF extends Fragment {
         buttonNewAdvertisement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), GetterNewAdvert.class);
+                Intent intent = new Intent(getActivity(), GetterNewAdvert_Activity.class);
                 startActivity(intent);
                 int x = 0;
                 // Отправляем на сервер

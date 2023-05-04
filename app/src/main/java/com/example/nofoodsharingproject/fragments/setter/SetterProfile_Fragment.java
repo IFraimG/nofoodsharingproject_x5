@@ -14,19 +14,18 @@ import androidx.fragment.app.Fragment;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.activities.MainAuthAC;
+import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-public class SetterProfileF extends Fragment {
+public class SetterProfile_Fragment extends Fragment {
     SharedPreferences settings;
     SwitchCompat switchLocation;
     SwitchCompat switchNotification;
@@ -113,7 +112,7 @@ public class SetterProfileF extends Fragment {
             editor.clear();
             editor.apply();
 
-            Intent intent = new Intent(getActivity(), MainAuthAC.class);
+            Intent intent = new Intent(getActivity(), MainAuth_Activity.class);
             startActivity(intent);
             getActivity().finish();
         } catch (IOException | GeneralSecurityException err) {

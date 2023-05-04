@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
@@ -22,7 +21,6 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpResponseI;
 import com.example.nofoodsharingproject.data.repository.AuthRepository;
 import com.example.nofoodsharingproject.models.Getter;
-import com.example.nofoodsharingproject.models.Setter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetterAuthF extends Fragment {
+public class Getter_Auth_Fragment extends Fragment {
     EditText phone = null;
     EditText login = null;
     EditText password = null;

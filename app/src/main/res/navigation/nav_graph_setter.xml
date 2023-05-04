@@ -6,22 +6,22 @@
     app:startDestination="@id/setterAdvrsF">
     <fragment
         android:id="@+id/setterAdvrsF"
-        android:name="com.example.nofoodsharingproject.fragments.setter.SetterAdvrsF"
+        android:name="com.example.nofoodsharingproject.fragments.setter.SetterAdvrs_Fragment"
         android:label="fragment_setter_advrs"
         tools:layout="@layout/fragment_setter_advrs" />
     <fragment
         android:id="@+id/setterNotifyF"
-        android:name="com.example.nofoodsharingproject.fragments.setter.SetterNotifyF"
+        android:name="com.example.nofoodsharingproject.fragments.setter.SetterNotify_Fragment"
         android:label="fragment_setter_notify"
         tools:layout="@layout/fragment_setter_notify" />
     <fragment
         android:id="@+id/setterProfileF"
-        android:name="com.example.nofoodsharingproject.fragments.setter.SetterProfileF"
+        android:name="com.example.nofoodsharingproject.fragments.setter.SetterProfile_Fragment"
         android:label="fragment_setter_profile"
         tools:layout="@layout/fragment_setter_profile" />
     <fragment
         android:id="@+id/marketsMapF"
-        android:name="com.example.nofoodsharingproject.fragments.MarketsMapF"
+        android:name="com.example.nofoodsharingproject.fragments.MarketsMap_Fragment"
         android:label="fragment_markets_map"
         tools:layout="@layout/fragment_markets_map" />
 </navigation>

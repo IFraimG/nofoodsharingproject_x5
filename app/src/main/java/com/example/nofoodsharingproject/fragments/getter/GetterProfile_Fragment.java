@@ -15,13 +15,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.activities.MainAuthAC;
+import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 
-public class GetterProfileF extends Fragment {
+public class GetterProfile_Fragment extends Fragment {
 
 
     private SharedPreferences sp;
@@ -71,7 +71,7 @@ public class GetterProfileF extends Fragment {
         } catch (IOException | GeneralSecurityException err) {
             err.printStackTrace();
         }
-        Intent intent = new Intent(getActivity().getApplicationContext(), MainAuthAC.class);
+        Intent intent = new Intent(getActivity().getApplicationContext(), MainAuth_Activity.class);
         startActivity(intent);
         getActivity().finish();
     }

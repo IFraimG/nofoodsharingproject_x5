@@ -13,20 +13,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.activities.SetterAdvertAC;
+import com.example.nofoodsharingproject.activities.SetterAdvert_Activity;
 import com.example.nofoodsharingproject.models.Advertisement;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertListAdapter.ViewHolder> {
-    Context ctx;
-    private List<Advertisement> advertisements = new ArrayList<>();
+    final Context ctx;
+    private final List<Advertisement> advertisements = new ArrayList<>();
     private final LayoutInflater inflater;
+
+    private final Intent intent;
 
     public SetterAdvertListAdapter(Context context) {
         this.ctx = context;
         this.inflater = LayoutInflater.from(context);
+        this.intent = new Intent(this.ctx, SetterAdvert_Activity.class);
     }
 
     @Override
@@ -43,7 +46,6 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
         holder.authorName.setText(advertisement.authorName);
 
         holder.link.setOnClickListener(View -> {
-            Intent intent = new Intent(this.ctx, SetterAdvertAC.class);
             intent.putExtra("advertID", advertisement.advertsID);
             ctx.startActivity(intent);
         });
@@ -67,10 +69,10 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        TextView desc;
-        TextView authorName;
-        Button link;
+        final TextView title;
+        final TextView desc;
+        final TextView authorName;
+        final Button link;
 
         public ViewHolder(View view) {
             super(view);

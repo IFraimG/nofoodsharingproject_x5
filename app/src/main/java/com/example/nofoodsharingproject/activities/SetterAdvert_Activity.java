@@ -3,7 +3,6 @@ package com.example.nofoodsharingproject.activities;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,7 +15,8 @@ import androidx.security.crypto.MasterKey;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.adverts.RequestDoneAdvert;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
-import com.example.nofoodsharingproject.models.Getter;
+import com.example.nofoodsharingproject.databinding.ActivityMainBinding;
+import com.example.nofoodsharingproject.databinding.ActivitySetterAdvertBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,12 +27,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SetterAdvertAC extends AppCompatActivity {
+public class SetterAdvert_Activity extends AppCompatActivity {
+    private ActivitySetterAdvertBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setter_advert);
+        binding = ActivitySetterAdvertBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         String advertID = getIntent().getStringExtra("advertID");
         ImageView backButton = findViewById(R.id.setter_advert_back);
@@ -47,7 +49,10 @@ public class SetterAdvertAC extends AppCompatActivity {
                     if (response.code() == 400) {
                         acceptBtn.setEnabled(true);
                         Toast.makeText(getApplicationContext(), "Что-то пошло не так. Попробуйте еще раз", Toast.LENGTH_SHORT).show();
-                    } else finish();
+                    } else {
+                        finish();
+
+                    }
                 }
 
                 @Override

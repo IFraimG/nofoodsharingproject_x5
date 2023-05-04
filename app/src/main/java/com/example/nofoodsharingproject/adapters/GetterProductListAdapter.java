@@ -11,16 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.fragments.getter.GetterProductItem;
-import com.google.firebase.annotations.concurrent.Background;
+import com.example.nofoodsharingproject.models.Product;
 
 import java.util.List;
 
 public class GetterProductListAdapter extends RecyclerView.Adapter<GetterProductListAdapter.ViewHolder> {
-    private LayoutInflater inflater;
-    private List<GetterProductItem> products;
+    final private LayoutInflater inflater;
+    final private List<Product> products;
 
-    public GetterProductListAdapter(Context context, List<GetterProductItem> products){
+    public GetterProductListAdapter(Context context, List<Product> products){
         this.products = products;
         this.inflater = LayoutInflater.from(context);
     }
@@ -35,8 +34,8 @@ public class GetterProductListAdapter extends RecyclerView.Adapter<GetterProduct
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int clickCounter = 0;
-        GetterProductItem productItem = products.get(position);
-        holder.name.setText(productItem.getName());
+        Product productItem = products.get(position);
+        holder.name.setText(productItem.getTitle());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +53,7 @@ public class GetterProductListAdapter extends RecyclerView.Adapter<GetterProduct
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView name;
+        final TextView name;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 

@@ -13,15 +13,13 @@ import android.view.ViewGroup;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.adapters.SetterNotificationsAdapter;
-import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Notification;
-import com.example.nofoodsharingproject.view_models.AdvertisementListViewModel;
-import com.example.nofoodsharingproject.view_models.NotificationsViewModel;
+import com.example.nofoodsharingproject.view_models.Notifications_ViewModel;
 
 import java.util.List;
 
-public class SetterNotifyF extends Fragment {
-    NotificationsViewModel viewModel;
+public class SetterNotify_Fragment extends Fragment {
+    Notifications_ViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +38,7 @@ public class SetterNotifyF extends Fragment {
         viewModel = new ViewModelProvider(
                 getActivity(),
                 (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()))
-                .get(NotificationsViewModel.class);
+                .get(Notifications_ViewModel.class);
         // для сохранения уведомлений придется sqllite использовать
 
         viewModel.getAllNotifications().observe(getActivity(), new Observer<List<Notification>>() {
