@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <TextView
         android:id="@+id/setter_notify_item_title"
@@ -11,7 +12,7 @@
         android:layout_weight="1"
         android:textSize="32dp"
         android:layout_margin="10dp"
-        android:text="Название уведомления" />
+        tools:text="Название уведомления" />
     <TextView
         android:id="@+id/setter_notify_item_date"
         android:layout_width="wrap_content"
@@ -19,7 +20,7 @@
         android:layout_weight="1"
         android:textSize="16dp"
         android:layout_margin="10dp"
-        android:text="24.05.23" />
+        tools:text="24.05.23" />
 
     <TextView
         android:id="@+id/setter_notify_item_desc"
@@ -28,7 +29,7 @@
         android:layout_weight="1"
         android:textSize="18dp"
         android:layout_margin="10dp"
-        android:text="Описание" />
+        tools:text="Описание" />
 
     <Button
         android:id="@+id/setter_notify_item_link"
@@ -36,7 +37,7 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:background="@color/green_pastel"
-        android:text="Перейти"
+        tools:text="Перейти"
         android:textSize="18dp"
         app:backgroundTint="@color/green_pastel" />
 

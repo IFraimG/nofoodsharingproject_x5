@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <TextView
@@ -12,7 +13,7 @@
         android:layout_weight="1"
         android:textSize="32dp"
         android:layout_margin="10dp"
-        android:text="Название" />
+        android:text="@string/name_enter_text" />
 
     <TextView
         android:id="@+id/setter_advert_item_desc"
@@ -21,7 +22,7 @@
         android:layout_weight="1"
         android:textSize="16dp"
         android:layout_margin="10dp"
-        android:text="Описание" />
+        android:text="@string/description_text" />
 
     <TextView
         android:id="@+id/setter_advert_item_name"
@@ -30,7 +31,7 @@
         android:layout_weight="1"
         android:layout_margin="10dp"
         android:textSize="24dp"
-        android:text="Имя нуждающегося" />
+        tools:text="Имя нуждающегося" />
 
     <Button
         android:id="@+id/setter_advert_item_link"
@@ -38,7 +39,7 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:background="@color/green_pastel"
-        android:text="Подробнее"
+        tools:text="Подробнее"
         app:backgroundTint="@color/green_pastel" />
 
     <com.google.android.material.divider.MaterialDivider

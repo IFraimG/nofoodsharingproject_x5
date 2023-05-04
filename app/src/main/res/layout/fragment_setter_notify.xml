@@ -12,7 +12,7 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:text="Уведомления"
+        android:text="@string/notifications_text"
         android:textSize="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

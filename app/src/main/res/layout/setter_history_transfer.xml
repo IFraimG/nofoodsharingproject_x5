@@ -11,5 +11,5 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="24dp"
-        android:text="История передач" />
+        android:text="@string/history_transfer_text" />
 </LinearLayout>

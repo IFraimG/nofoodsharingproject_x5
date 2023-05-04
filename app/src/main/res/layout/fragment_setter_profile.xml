@@ -28,32 +28,33 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginBottom="10dp"
-            android:text="Крабокраб Крыболович" />
+            android:text="@string/name_text_hint" />
         <TextView
             android:id="@+id/setter_profile_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:text="Отдающий" />
+            android:text="@string/setter_text"
+            />
         <TextView
             android:id="@+id/setter_profile_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="20 успешных передач продуктов" />
+            android:text="@string/broadcast_text_hint" />
     </LinearLayout>
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/setter_profile_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Включить геолокацию" />
+        android:text="@string/geolocation_text" />
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/setter_profile_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Включить уведомления" />
+        android:text="@string/on_notifications_text" />
 
     <Button
         android:id="@+id/setter_profile_logout"
@@ -62,7 +63,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:background="@color/green_pastel"
-        android:text="Выйти из аккаунта"
+        android:text="@string/leave_account_text"
         android:textSize="18dp"
         app:backgroundTint="@color/material_dynamic_neutral_variant40" />
 

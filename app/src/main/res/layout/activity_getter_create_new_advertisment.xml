@@ -16,12 +16,12 @@
             android:textSize="25sp"
             android:layout_marginTop="25sp"
             android:textColor="@color/grey_500"
-            android:text="Создание объявления" />
+            android:text="@string/create_new_adv_text" />
         <TextView
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ваш последний заказ:"
+            android:text="@string/your_last_adv_text"
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_gravity="center"/>
@@ -33,14 +33,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:text="Продукт1"
+                android:layout_marginStart="3dp"
+                android:text="@string/product1"
                 android:id="@+id/product1_adv"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:text="Продукт2"
+                android:layout_marginStart="3dp"
+                android:text="@string/product2_text"
                 android:id="@+id/product2_adv"
                 />
         </LinearLayout>
@@ -53,13 +53,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Вы можете:"/>
+                android:text="@string/your_can_text"/>
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="140dp"
                 android:layout_height="28dp"
                 android:background="@drawable/style1"
                 android:textColor="@color/white"
-                android:text="Перезаказать"
+                android:text="@string/re_text"
                 android:id="@+id/re_advertisment"
                 android:textSize="12sp"
                 android:layout_marginLeft="5dp"/>
@@ -69,7 +69,7 @@
              android:layout_height="wrap_content"
              android:layout_gravity="center"
              android:layout_marginTop="10dp"
-             android:text="ИЛИ"/>
+             android:text="@string/or_text"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
             android:textSize="18sp"
             android:layout_marginTop="10dp"
             android:textColor="@color/grey_500"
-            android:text="Выбрать необходимые товары из списка"/>
+            android:text="@string/chose_product_text"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="10dp"
@@ -102,7 +102,7 @@
             android:layout_marginLeft="20dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:text="назад"
+            android:text="@string/back_text"
             android:id="@+id/button_back"
             android:textColor="@color/white"
             android:background="@drawable/style1"/>
@@ -113,7 +113,7 @@
             android:layout_marginLeft="20dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:text="Готово"
+            android:text="@string/ready_text"
             android:textColor="@color/white"
             android:id="@+id/ready_to_create"
             android:background="@drawable/style1"/>

@@ -16,13 +16,13 @@
         android:textSize="25sp"
         android:layout_marginTop="25sp"
         android:textColor="@color/grey_500"
-        android:text="Объявления"/>
+        android:text="@string/adv_text"/>
 
     <!-- Только кода есть заказ -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Номер заказа:"
+        android:text="@string/number_adv_text"
         android:layout_marginTop="60dp"
         android:layout_gravity="center"
         android:textColor="@color/grey_500"
@@ -32,7 +32,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0000"
+        android:text="@string/number_adv_text_hint6"
         android:layout_gravity="center"
         android:textSize="60sp"
         android:id="@+id/number_of_advertisment"
@@ -51,13 +51,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Адрeс вашего магазина:"
+                android:text="@string/adress_shop_text"
                 android:textColor="@color/grey_500"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
-                android:text="Адрес магазина"
+                android:text="@string/adress_shop_text_hint"
                 android:id="@+id/adress_shop"
                 android:layout_marginRight="5dp"/>
         </LinearLayout>
@@ -90,13 +90,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="2.5dp"
-            android:text="Оставшееся время:"/>
+            android:text="@string/time_text"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/timer_to_advert"
             android:layout_marginLeft="2.5dp"
-            android:text="00:00:00"/>
+            android:text="@string/time_text_hint"/>
 
     </LinearLayout>
 
@@ -106,12 +106,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
-        android:text="Состояние объявления:"
+        android:text="@string/create_adv_text"
         android:textColor="@color/grey_500"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Объявление не активно"
+        android:text="@string/adv_text_hint"
         android:layout_gravity="center" />
 
 
@@ -125,7 +125,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Остановить распространение"
+            android:text="@string/stop_adv_text"
             android:textColor="@color/white"
             android:id="@+id/stop_advert"
             android:background="@drawable/style1"
@@ -137,7 +137,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Забираю продукты"
+            android:text="@string/adv_zabor_text"
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:id="@+id/pick_up_order"

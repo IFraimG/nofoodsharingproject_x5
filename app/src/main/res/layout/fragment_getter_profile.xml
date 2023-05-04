@@ -17,33 +17,24 @@
             android:background="@drawable/style5"
             android:textSize="25sp"
             android:textColor="@color/grey_500"
-            android:text="Профиль"/>
-
-        <ImageButton
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="45sp">
-
-
-        </ImageButton>
+            android:text="@string/profile_text"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="300dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Имя"
+                android:text="@string/name_text"
                 android:layout_marginRight="2.5dp"
                 android:id="@+id/name_profile"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2.5dp"
-                android:text="Фамилия"
+                android:text="@string/surname_text"
                 android:id="@+id/surname_profile"/>
 
         </LinearLayout>
@@ -70,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10sp"
                 android:layout_marginRight="10sp"
-                android:text="адрес магазина"
+                android:text="@string/adress_shop_text_hint"
                 android:id="@+id/adress_shop"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -82,7 +73,7 @@
             android:layout_gravity="center"
             android:textSize="10sp"
             android:background="@drawable/style1"
-            android:text="сменить магазин"
+            android:text="@string/redid_shop_text"
             android:textColor="@color/white" />
         <Button
             android:id="@+id/getter_profile_logout"
@@ -91,7 +82,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:background="@drawable/style1"
-            android:text="Выйти из аккаунта"
+            android:text="@string/exit_from_account_text"
             android:textSize="10sp"
             app:backgroundTint="@color/material_dynamic_neutral_variant40" />
 

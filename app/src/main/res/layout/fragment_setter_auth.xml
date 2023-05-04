@@ -26,7 +26,7 @@
             android:layout_marginLeft="20dp"
 
             android:layout_gravity="center"
-            android:text="Отдающий пользователь" />
+            android:text="@string/setter_account_text" />
     </LinearLayout>
 
 
@@ -36,7 +36,7 @@
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:background="@drawable/custom_round_border"
-        android:hint="Введите номер телефона..."
+        android:hint="@string/write_number_phone_text_hint"
         android:paddingLeft="20dp"
         android:layout_marginTop="50dp"
         />
@@ -47,7 +47,7 @@
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:background="@drawable/custom_round_border"
-        android:hint="Введите имя..."
+        android:hint="@string/write_name_text_hint"
         android:paddingLeft="20dp"
         android:layout_marginTop="50dp"
         />
@@ -58,7 +58,7 @@
         android:layout_height="80dp"
         android:layout_gravity="center"
         android:background="@drawable/custom_round_border"
-        android:hint="Введите пароль..."
+        android:hint="@string/write_password_text_hint"
         android:paddingLeft="20dp"
         android:inputType="textPassword"
         android:layout_marginTop="50dp"
@@ -72,7 +72,7 @@
         app:backgroundTint="@color/green_pastel"
         android:layout_gravity="center"
         android:textSize="24dp"
-        android:text="Создать аккаунт" />
+        android:text="@string/create_account_text" />
 
     <Button
         android:layout_marginTop="20dp"
@@ -82,6 +82,6 @@
         app:backgroundTint="@color/green_pastel"
         android:layout_gravity="center"
         android:textSize="14dp"
-        android:text="Уже есть аккаунт? Войдите" />
+        android:text="@string/save_account_text" />
 
 </LinearLayout>
