@@ -33,6 +33,7 @@ public class GetterNotify_Fragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler);
 
 
+
         GetterNotificationsAdapter getterNotificationsAdapter = new GetterNotificationsAdapter(getContext());
         recyclerView.setAdapter(getterNotificationsAdapter);
 

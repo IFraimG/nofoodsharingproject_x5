@@ -64,7 +64,20 @@ public class GetterAdvrs_Fragment extends Fragment {
                 l /= 60;
                 int hours = (int) l % 60;
 
-                timeAdvert.setText("" + hours + ":" + minuts + ":" + seconds);
+                String timer = hours + ":";
+
+                if(minuts < 10){
+                    timer += "0" + minuts + ":";
+                }else{
+                    timer += minuts + ":";
+                }
+                if(seconds < 10){
+                    timer += "0" + seconds;
+                }else{
+                    timer+= seconds;
+                }
+
+                timeAdvert.setText(timer);
 
             }
             @Override
@@ -81,7 +94,7 @@ public class GetterAdvrs_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment someFragment = new MarketsMap_Fragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_getter_fragment, someFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
