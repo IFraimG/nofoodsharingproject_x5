@@ -39,7 +39,6 @@ public class SetterNotify_Fragment extends Fragment {
                 getActivity(),
                 (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication()))
                 .get(Notifications_ViewModel.class);
-        // для сохранения уведомлений придется sqllite использовать
 
         viewModel.getAllNotifications().observe(getActivity(), new Observer<List<Notification>>() {
             @Override

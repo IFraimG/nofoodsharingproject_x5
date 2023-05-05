@@ -23,7 +23,6 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
     final Context ctx;
     private final List<Advertisement> advertisements = new ArrayList<>();
     private final LayoutInflater inflater;
-
     private final Intent intent;
 
     public SetterAdvertListAdapter(Context context) {

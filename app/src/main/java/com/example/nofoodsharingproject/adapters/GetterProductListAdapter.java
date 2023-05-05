@@ -33,7 +33,6 @@ public class GetterProductListAdapter extends RecyclerView.Adapter<GetterProduct
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int clickCounter = 0;
         Product productItem = products.get(position);
         holder.name.setText(productItem.getTitle());
 
@@ -57,8 +56,7 @@ public class GetterProductListAdapter extends RecyclerView.Adapter<GetterProduct
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-
-            name = itemView.findViewById(R.id.name_of_product);
+            this.name = itemView.findViewById(R.id.name_of_product);
         }
     }
 }

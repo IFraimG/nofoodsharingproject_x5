@@ -3,9 +3,10 @@ package com.example.nofoodsharingproject.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 public class Advertisement {
     @SerializedName("title")
@@ -43,13 +44,25 @@ public class Advertisement {
     @Expose
     public String dateOfExpires;
 
-    public Advertisement(String title, String fieldDescription, String authorID, String authorName) {
+    public Advertisement(String title, String authorID, String authorName) {
         this.title = title;
-        this.fieldDescription = fieldDescription;
         this.authorID = authorID;
         this.authorName = authorName;
         // change
         this.dateOfExpires = Long.toString(new Date().getTime());
+    }
+
+    public static String generateID() {
+        String alphabet = "абвгдежзиклмнопрстухцчшщэюя";
+        int length = 4;
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(alphabet.length());
+            char randomChar = alphabet.charAt(index);
+            sb.append(randomChar);
+        }
+        return sb.toString();
     }
 
 //    public Advertisement(String date, String authorID, String advertsID, String gettingProductID) {
@@ -87,8 +100,11 @@ public class Advertisement {
         this.fieldDescription = fieldDescription;
     }
 
-    public void setListProducts(ArrayList<Product> listProducts) {
-        this.listProducts = listProducts;
+    public void setListProducts(List<String> listProducts) {
+        this.listProducts = new ArrayList<>();
+        for (int i = 0 ; i < listProducts.size(); i++) {
+            this.listProducts.add(new Product(listProducts.get(i)));
+        }
     }
 
     public String getAdvertsID() {

@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:text="@string/adress_shop_text_hint"
-                android:id="@+id/adress_shop"
+                android:id="@+id/address_shop"
                 android:layout_marginRight="5dp"/>
         </LinearLayout>
 

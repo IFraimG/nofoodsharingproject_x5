@@ -17,15 +17,14 @@ import android.widget.TextView;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.GetterNewAdvert_Activity;
+import com.example.nofoodsharingproject.databinding.FragmentGetterAdvrsBinding;
+import com.example.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
 import com.example.nofoodsharingproject.fragments.MarketsMap_Fragment;
 
 public class GetterAdvrs_Fragment extends Fragment {
 
-    public static final String APP_PREFERENCES_NAME = "Nickname"; // имя кота
-    public static final String APP_PREFERENCES_AGE = "Age"; // возраст кота
     private SharedPreferences sp;
-
-
+    private FragmentGetterAdvrsBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,24 +34,18 @@ public class GetterAdvrs_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_getter_advrs, container, false);
+        binding = FragmentGetterAdvrsBinding.inflate(inflater);
 
-        ImageButton buttonMapOpen = view.findViewById(R.id.open_map);
-        TextView adresShop = view.findViewById(R.id.adress_shop);
-        TextView numberAdvertisement = view.findViewById(R.id.number_of_advertisment);
-        Button buttonNewAdvertisement = view.findViewById(R.id.create_new_request);
-        Button buttonZaborProducts = view.findViewById(R.id.pick_up_order);
-        Button buttonStopAdvert = view.findViewById(R.id.stop_advert);
-        TextView textNewAdvert = view.findViewById(R.id.text_number_of_advert);
-        TextView timeAdvert = view.findViewById(R.id.timer_to_advert);
-
+        ImageButton buttonMapOpen = binding.openMap;
+        TextView addressShop = binding.addressShop;
+        TextView numberAdvertisement = binding.numberOfAdvertisment;
+        Button buttonNewAdvertisement = binding.createNewRequest;
+        Button buttonZaborProducts = binding.pickUpOrder;
+        Button buttonStopAdvert = binding.stopAdvert;
+        TextView textNewAdvert = binding.textNumberOfAdvert;
+        TextView timeAdvert = binding.timerToAdvert;
 
         buttonNewAdvertisement.setVisibility(View.VISIBLE);
-
-
-
-
-
 
         CountDownTimer timerView = new CountDownTimer(3600000 * 2, 1000){
             @Override
@@ -89,7 +82,6 @@ public class GetterAdvrs_Fragment extends Fragment {
 //        timeAdvert.setText();
 
 
-
         buttonMapOpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,18 +98,17 @@ public class GetterAdvrs_Fragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), GetterNewAdvert_Activity.class);
                 startActivity(intent);
-                int x = 0;
-                // Отправляем на сервер
-                do{x = (int)(Math.random() * 10000);
-                } while (x < 1000 || x > 9999);
-                numberAdvertisement.setText(""+x);
+//                int x = 0;
+//                do{x = (int)(Math.random() * 10000);
+//                } while (x < 1000 || x > 9999);
+//                numberAdvertisement.setText(""+x);
 
                 timerView.start();
 //                Для демонстрации
                 buttonStopAdvert.setVisibility(View.VISIBLE);
                 buttonNewAdvertisement.setVisibility(View.GONE);
                 textNewAdvert.setVisibility(View.VISIBLE);
-                numberAdvertisement.setVisibility(View.VISIBLE);
+//                numberAdvertisement.setVisibility(View.VISIBLE);
 
             }
         });
@@ -145,6 +136,6 @@ public class GetterAdvrs_Fragment extends Fragment {
 
 
 
-        return view;
+        return binding.getRoot();
     }
 }
