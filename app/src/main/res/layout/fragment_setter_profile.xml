@@ -64,7 +64,7 @@
         android:layout_margin="10dp"
         android:background="@color/green_pastel"
         android:text="@string/leave_account_text"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:backgroundTint="@color/material_dynamic_neutral_variant40" />
 
 

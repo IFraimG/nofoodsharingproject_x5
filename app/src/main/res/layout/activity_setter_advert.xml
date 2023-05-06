@@ -22,8 +22,8 @@
             android:id="@+id/setter_advert_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:layout_marginLeft="20dp"
+            android:textSize="24sp"
+            android:layout_marginStart="20dp"
             android:text="@string/named_advert_text"
             />
     </LinearLayout>
@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:gravity="start"
             android:text="@string/name_autor_text"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/setter_advert_date"
@@ -48,7 +48,7 @@
             android:gravity="end"
             android:layout_weight="1"
             android:text="@string/date_text"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
     </LinearLayout>
     <TextView
         android:id="@+id/setter_advert_product_title"
@@ -57,7 +57,7 @@
         android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:text="@string/list_product_text"
-        android:textSize="32dp" />
+        android:textSize="32sp" />
 
     <!--    <androidx.recyclerview.widget.RecyclerView />-->
     <TextView
@@ -67,7 +67,7 @@
         android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:text="@string/example_description"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <Button
         android:layout_marginTop="20dp"
@@ -76,6 +76,6 @@
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:text="@string/message_adv_text"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:backgroundTint="@color/green_pastel" />
 </LinearLayout>

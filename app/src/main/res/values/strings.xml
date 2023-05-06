@@ -19,9 +19,9 @@ Nuclear IT Hack. Объединённый совет обучающихся и �
     <string name="product1">Продукт1</string>
     <string name="product2_text">Продукт2</string>
     <string name="your_can_text">Вы можете:</string>
-    <string name="re_text">Пересоздать прошлое объявление</string>
+    <string name="re_text">Пересоздайте прошлое объявление</string>
     <string name="or_text">ИЛИ</string>
-    <string name="chose_product_text">Выбрать необходимые товары из списка</string>
+    <string name="chose_product_text">Выберите необходимые товары из списка</string>
     <string name="back_text">назад</string>
     <string name="ready_text">Готово</string>
     <string name="named_advert_text">Название объявления</string>
@@ -82,7 +82,7 @@ Nuclear IT Hack. Объединённый совет обучающихся и �
     <string name="account_not_exist">Данного пользователя не существует. Хотите создать новый аккаунт?</string>
     <string name="account_created">Данный пользователь уже существует. Войдите</string>
     <string name="not_full">Вы не заполнили все поля</string>
-    <string name="getter_creating_title">Введите название объявления</string>
+    <string name="getter_creating_title">Введите название вашего объявления</string>
     <string name="error">Пароль введен некорректно, либо такого пользователя не существует</string>
-    <string name="getter_result_list">Итоговый набор продуктов</string>
+    <string name="getter_result_list">Итоговый набор продуктов:</string>
 </resources>

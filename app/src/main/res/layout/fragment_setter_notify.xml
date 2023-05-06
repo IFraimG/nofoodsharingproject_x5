@@ -13,7 +13,7 @@
         android:layout_margin="10dp"
         android:layout_weight="1"
         android:text="@string/notifications_text"
-        android:textSize="32dp"
+        android:textSize="32sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -10,6 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:text="@string/history_transfer_text" />
 </LinearLayout>
