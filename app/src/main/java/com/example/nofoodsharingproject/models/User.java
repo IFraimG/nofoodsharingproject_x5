@@ -18,7 +18,9 @@ public abstract class User {
     @Expose
     String password;
 
-    Date dateOfCreated;
+    @SerializedName("market")
+    @Expose
+    String marketName;
 
     public User() {
 

@@ -51,7 +51,6 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), R.string.smth_not_good_try_again, Toast.LENGTH_SHORT).show();
                     } else {
                         finish();
-
                     }
                 }
 

@@ -5,10 +5,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 <!--    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove"/>-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
-
-<!--    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />-->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -39,6 +41,12 @@
         <activity
             android:name=".utils.CustomSearchMarkets"
             android:configChanges="orientation|screenSize" />
+
+        <receiver android:exported="false" android:name=".utils.LocationUpdateReceiver" >
+            <intent-filter>
+                <action android:name="com.example.nofoodsharingproject.LOCATION_READY" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".utils.CustomMessagingService"

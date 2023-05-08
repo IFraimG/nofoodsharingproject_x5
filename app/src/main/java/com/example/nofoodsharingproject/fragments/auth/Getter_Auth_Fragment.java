@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.MainActivity;
@@ -37,6 +39,7 @@ public class Getter_Auth_Fragment extends Fragment {
     EditText password = null;
     Button btnSignup = null;
     Button btnLogin = null;
+    ImageView btnBack = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,9 +56,16 @@ public class Getter_Auth_Fragment extends Fragment {
         password = view.findViewById(R.id.auth_getter_signup_password);
         login = view.findViewById(R.id.auth_getter_signup_login);
         btnSignup = view.findViewById(R.id.auth_getter_create);
+        btnBack = view.findViewById(R.id.auth_getter_signup_back);
 
         btnSignup.setOnClickListener(View -> signup());
         btnLogin.setOnClickListener(View -> login());
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_getterAuthF_to_mainAuthF);
+            }
+        });
 
         return view;
     }

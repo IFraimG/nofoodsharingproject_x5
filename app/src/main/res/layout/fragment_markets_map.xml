@@ -3,21 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.MarketsMap_Fragment">
-
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="10sp"-->
-<!--        android:background="@drawable/style5"-->
-<!--        android:textSize="25sp"-->
-<!--        android:textColor="@color/grey_500"-->
-<!--        android:text="Карта" />-->
 
     <com.yandex.mapkit.mapview.MapView
         android:id="@+id/mapview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@color/white"
+        android:layout_marginBottom="40dp">
+        <Spinner
+            android:id="@+id/map_list_markets"
+            android:layout_width="match_parent"
+            android:popupBackground="@color/white"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_marginTop="20dp"
+            android:id="@+id/map_set_market_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/green_pastel"
+            android:layout_gravity="center"
+            android:textSize="18dp"
+            android:text="Прикрепиться" />
+    </LinearLayout>
 </FrameLayout>

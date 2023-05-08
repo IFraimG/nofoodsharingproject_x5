@@ -8,9 +8,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
@@ -26,7 +23,7 @@ public class CustomLocationListener implements LocationListener {
 
         LocationListener locationListener = new CustomLocationListener();
         if (firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 25,  locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  locationListener);
             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
     }
@@ -51,5 +48,7 @@ public class CustomLocationListener implements LocationListener {
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
+
+
 
 }

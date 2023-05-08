@@ -25,7 +25,6 @@ import retrofit2.Response;
 public class AdvertisementList_ViewModel extends AndroidViewModel {
     public List<Advertisement> adverts = new ArrayList<>();
     private final MutableLiveData<List<Advertisement>> _adverts = new MutableLiveData<>();
-
     private final MutableLiveData<LoaderStatus> _status = new MutableLiveData<>();
     public LiveData<LoaderStatus> status = _status;
 

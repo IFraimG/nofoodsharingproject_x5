@@ -44,6 +44,10 @@ public class Advertisement {
     @Expose
     public String dateOfExpires;
 
+    @SerializedName("isSuccessDone")
+    @Expose
+    public boolean isDone = false;
+
     public Advertisement(String title, String authorID, String authorName) {
         this.title = title;
         this.authorID = authorID;
@@ -71,6 +75,19 @@ public class Advertisement {
 //        this.adversID = adversID;
 //        this.gettingProductID = gettingProductID;
 //    }
+
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
+    public void setListProducts(ArrayList<Product> listProducts) {
+        this.listProducts = listProducts;
+    }
 
     public String getDateOfCreated() {
         return this.dateOfCreated;

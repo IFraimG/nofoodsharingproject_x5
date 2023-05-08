@@ -41,7 +41,7 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
             "Подсолнечное масло", "Яйца куриные", "Молоко", "Чай", "Кофе", "Соль", "Сахар",
             "Мука", "Лук", "Макаронные изделия", "Пшено", "Шлифованный рис", "Гречневая крупа",
             "Белокочанная капуста", "Морковь", "Яблоки", "Свинина", "Баранина", "Курица"};
-    private List<String> userProductItems = new ArrayList<String>();
+    private final List<String> userProductItems = new ArrayList<String>();
     private ActivityGetterCreateNewAdvertismentBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
