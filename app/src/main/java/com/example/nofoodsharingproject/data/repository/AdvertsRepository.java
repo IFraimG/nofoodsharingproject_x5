@@ -22,4 +22,8 @@ public class AdvertsRepository {
     public static Call<RequestDoneAdvert> makeDoneAdvert(RequestDoneAdvert req) {
         return AdvertsApiService.getInstance().makeDoneAdvert(req);
     }
+
+    public static Call<Advertisement> getOwnAdvert(String authorID) {
+        return AdvertsApiService.create().getOwnAdvert(authorID);
+    }
 }

@@ -4,13 +4,15 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Setter extends User {
-    @SerializedName("_id")
+    @SerializedName("id")
     @Expose
     String X5_Id;
-
     @SerializedName("successHistory")
     @Expose
     Advertisement[] successHistory;
+
+    @SerializedName("authID")
+    String authID;
 
     public Setter() {
 
@@ -49,5 +51,13 @@ public class Setter extends User {
 
     public void setSuccessHistory(Advertisement[] successHistory) {
         this.successHistory = successHistory;
+    }
+
+    public void setAuthID(String authID) {
+        this.authID = authID;
+    }
+
+    public String getAuthID() {
+        return authID;
     }
 }

@@ -13,21 +13,15 @@ import androidx.core.content.ContextCompat;
 
 public class CustomLocationListener implements LocationListener {
 
-    static public Location location;
+    public Location location;
 
-    public static void SetUpLocationListener(Activity context) {
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
-        int firstPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
-        int secondPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION);
-
-        LocationListener locationListener = new CustomLocationListener();
-        if (firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  locationListener);
-            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        }
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
+    public Location getLocation() {
+        return location;
+    }
 
     @Override
     public void onLocationChanged(Location loc) {

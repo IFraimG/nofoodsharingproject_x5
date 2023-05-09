@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
         AuthRepository.checkAuthGetter(sharedPreferences.getString("token", "")).enqueue(new Callback<CheckAuthI>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
-                if (response.body().getIsAuth()) {
+                if (response.body() == null) redirectToAuth();
+                else if (response.body().getIsAuth()) {
                     Intent intentGetter = new Intent(getApplicationContext(), Getter_Activity.class);
                     startActivity(intentGetter);
                     finish();

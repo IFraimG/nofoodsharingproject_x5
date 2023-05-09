@@ -41,7 +41,6 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
     public void onBindViewHolder(SetterAdvertListAdapter.ViewHolder holder, int position) {
         Advertisement advertisement = advertisements.get(position);
         holder.title.setText(advertisement.title);
-        holder.desc.setText(advertisement.fieldDescription);
         holder.authorName.setText(advertisement.authorName);
 
         holder.link.setOnClickListener(View -> {
@@ -69,14 +68,15 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView title;
-        final TextView desc;
+//        final TextView desc;
         final TextView authorName;
         final Button link;
 
         public ViewHolder(View view) {
             super(view);
             this.title = (TextView) view.findViewById(R.id.setter_advert_item_title);
-            this.desc = (TextView) view.findViewById(R.id.setter_advert_item_desc);
+//            заменить на отображение списка продуктов
+//            this.desc = (TextView) view.findViewById(R.id.setter_advert_item_desc);
             this.authorName = (TextView) view.findViewById(R.id.setter_advert_item_name);
             this.link = (Button) view.findViewById(R.id.setter_advert_item_link);
         }

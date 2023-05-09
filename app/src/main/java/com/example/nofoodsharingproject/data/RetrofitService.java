@@ -9,6 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory;
 public class RetrofitService {
     private static Retrofit retrofit;
     public static final String BASE_URL = "https://buy-help-server.onrender.com";
+//    public static final String BASE_URL = "http://192.168.0.101:3000";
 
     public static Retrofit create() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

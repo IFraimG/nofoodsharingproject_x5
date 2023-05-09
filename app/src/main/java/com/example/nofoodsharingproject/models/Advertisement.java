@@ -12,9 +12,6 @@ public class Advertisement {
     @SerializedName("title")
     @Expose
     public String title;
-    @SerializedName("fieldDescription")
-    @Expose
-    public String fieldDescription;
 
     @SerializedName("listProducts")
     @Expose
@@ -97,6 +94,12 @@ public class Advertisement {
         return listProducts;
     }
 
+    public String[] getListTitleProducts() {
+        String[] arr = new String[this.listProducts.size()];
+        for (int i = 0; i < listProducts.size(); i++) arr[i] = listProducts.get(i).getTitle();
+        return arr;
+    }
+
     public void setAdvertsID(String advertsID) {
         this.advertsID = advertsID;
     }
@@ -109,13 +112,6 @@ public class Advertisement {
         this.title = title;
     }
 
-    public String getFieldDescription() {
-        return fieldDescription;
-    }
-
-    public void setFieldDescription(String fieldDescription) {
-        this.fieldDescription = fieldDescription;
-    }
 
     public void setListProducts(List<String> listProducts) {
         this.listProducts = new ArrayList<>();

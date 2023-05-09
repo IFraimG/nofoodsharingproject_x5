@@ -107,6 +107,7 @@ public class Setter_LoginAuth_Fragment extends Fragment {
             editor.putString("login", result.user.getLogin());
             editor.putString("phone", result.user.getPhone());
             editor.putString("X5_id", result.user.getX5_Id());
+            editor.putString("auth_id", result.user.getAuthID());
             editor.putString("token", result.token);
             editor.apply();
         } catch (IOException | GeneralSecurityException err) {

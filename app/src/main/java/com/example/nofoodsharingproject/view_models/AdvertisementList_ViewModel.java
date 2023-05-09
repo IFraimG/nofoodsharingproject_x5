@@ -11,7 +11,6 @@ import androidx.lifecycle.Transformations;
 
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.models.Advertisement;
-import com.example.nofoodsharingproject.models.ShortDataWithDate;
 import com.example.nofoodsharingproject.utils.LoaderStatus;
 
 import java.util.ArrayList;
@@ -58,17 +57,17 @@ public class AdvertisementList_ViewModel extends AndroidViewModel {
     }
 
     // потом удалим, если будет не нужен + Transactions.switchMap
-    public LiveData<List<ShortDataWithDate>> getAdvertsExpiresAt() {
-        return Transformations.map(getAllAdverts(), new Function<List<Advertisement>, List<ShortDataWithDate>>() {
-            @Override
-            public List<ShortDataWithDate> apply(List<Advertisement> input) {
-                List<ShortDataWithDate> result = new ArrayList<>();
-                for (Advertisement ad: input) result.add(new ShortDataWithDate(ad.getDateOfCreated(), ad.authorID, ad.advertsID, ad.gettingProductID));
-
-                return result;
-            }
-        });
-    }
+//    public LiveData<List<ShortDataWithDate>> getAdvertsExpiresAt() {
+//        return Transformations.map(getAllAdverts(), new Function<List<Advertisement>, List<ShortDataWithDate>>() {
+//            @Override
+//            public List<ShortDataWithDate> apply(List<Advertisement> input) {
+//                List<ShortDataWithDate> result = new ArrayList<>();
+//                for (Advertisement ad: input) result.add(new ShortDataWithDate(ad.getDateOfCreated(), ad.authorID, ad.advertsID, ad.gettingProductID));
+//
+//                return result;
+//            }
+//        });
+//    }
 
 
 

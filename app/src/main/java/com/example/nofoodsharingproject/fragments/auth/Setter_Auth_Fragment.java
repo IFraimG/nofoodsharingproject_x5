@@ -88,7 +88,10 @@ public class Setter_Auth_Fragment extends Fragment {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
                     SignUpResponseI<Setter> result = response.body();
-                    if (response.code() == 400 || result.token.length() == 0) {
+                    if (response.code() == 401 || result.token.length() == 0) {
+                        Toast.makeText(getContext(), "Произошла ошибка при авторизации. Попробуйте еще раз!", Toast.LENGTH_LONG).show();
+                        btnLogin.setEnabled(true);
+                    } else if (response.code() == 400 || result.token.length() == 0) {
                         Toast.makeText(getContext(), R.string.account_created, Toast.LENGTH_LONG).show();
                         btnLogin.setEnabled(true);
                     } else pushData(result);
@@ -134,6 +137,7 @@ public class Setter_Auth_Fragment extends Fragment {
             editor.putString("login", result.user.getLogin());
             editor.putString("phone", result.user.getPhone());
             editor.putString("X5_id", result.user.getX5_Id());
+            editor.putString("auth_id", result.user.getAuthID());
             editor.putString("token", result.token);
             editor.apply();
 
@@ -158,7 +162,7 @@ public class Setter_Auth_Fragment extends Fragment {
 
                 String token = task.getResult();
                 Log.d("msg", token);
-                Toast.makeText(getContext(), token, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), token, Toast.LENGTH_SHORT).show();
             }
         });
     }

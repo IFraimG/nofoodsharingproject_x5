@@ -121,14 +121,14 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
                         @Override
                         public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                             Advertisement result = response.body();
-//                             потом обработать при коде 200!!!!!!!
-//                            if (response.code() != 400) {
+                            if (response.code() == 400) {
+                                Toast.makeText(GetterNewAdvert_Activity.this, "Возникли проблемы. Попробуйте еще раз!", Toast.LENGTH_SHORT).show();
+                                button_ready.setEnabled(true);
+                            } else {
                                 Toast.makeText(getApplicationContext(),
                                         R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
                                 finish();
-//                            } else {
-//                                button_ready.setEnabled(true);
-//                            }
+                            }
                         }
 
                         @Override

@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
+    <uses-permission android:name='android.permission.WAKE_LOCK'/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -47,6 +48,7 @@
                 <action android:name="com.example.nofoodsharingproject.LOCATION_READY" />
             </intent-filter>
         </receiver>
+        <receiver android:name='com.example.nofoodsharingproject.utils.AlarmManagerBroadcastReceiver' />
 
         <service
             android:name=".utils.CustomMessagingService"

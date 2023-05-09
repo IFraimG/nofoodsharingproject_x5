@@ -1,8 +1,15 @@
 package com.example.nofoodsharingproject.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PointF;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,8 +34,10 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.repository.MapRepository;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Market;
+import com.example.nofoodsharingproject.models.Setter;
 import com.example.nofoodsharingproject.models.User;
 import com.example.nofoodsharingproject.utils.CustomLocationListener;
+import com.example.nofoodsharingproject.utils.MarketTitleResponse;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.GeoObjectCollection;
 import com.yandex.mapkit.MapKitFactory;
@@ -39,10 +48,13 @@ import com.yandex.mapkit.layers.ObjectEvent;
 import com.yandex.mapkit.map.CameraListener;
 import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.map.CameraUpdateReason;
+import com.yandex.mapkit.map.CompositeIcon;
 import com.yandex.mapkit.map.GeoObjectSelectionMetadata;
+import com.yandex.mapkit.map.IconStyle;
 import com.yandex.mapkit.map.InputListener;
 import com.yandex.mapkit.map.Map;
 import com.yandex.mapkit.map.MapObjectCollection;
+import com.yandex.mapkit.map.RotationType;
 import com.yandex.mapkit.map.VisibleRegionUtils;
 import com.yandex.mapkit.mapview.MapView;
 import com.yandex.mapkit.search.Response;
@@ -69,6 +81,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.internal.EverythingIsNonNull;
 
 // MapObjectTapListener потом добавить
 public class MarketsMap_Fragment extends Fragment implements Session.SearchListener, CameraListener,
@@ -78,6 +91,8 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
     int firstPermission;
     int secondPermission;
     private SearchManager searchManager;
+    private LocationManager locationManager;
+    private CustomLocationListener locationListener;
     private Session searchSession;
     private UserLocationLayer userLocationLayer;
 
@@ -85,7 +100,9 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
     private Spinner listMarketsSpinner;
 
     private String choosenMarket;
-    private String[] listMarkets;
+    ArrayAdapter<String> adapter;
+    private int oldPosition = -1;
+    private String[] listMarkets = new String[]{"Выберите магазин"};
     private final Market[] fullListMarkets = new Market[]{
             new Market("Выберите магазин", 0, 0, false),
             new Market("Большая Андроньевская улица, 22", 55.740813, 37.670078),
@@ -104,19 +121,11 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        firstPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        secondPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+        requestPermissions();
 
-        if (firstPermission != PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 200);
-        } else if (firstPermission != PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION }, 200);
-        } else if (firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION }, 200);
-        }
-
+        MapKitFactory.initialize(getContext());
+        SearchFactory.initialize(getContext());
     }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -143,101 +152,131 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
         getPinnedMarketInfo();
         initListMarkets();
 
-        setMarketBtn.setOnClickListener(View -> {
-            Pair<String, Boolean> userDate = defineTypeUser();
-            if (userDate.second) {
-                MapRepository.setGetterMarket(userDate.first, choosenMarket).enqueue(new Callback<Getter>() {
-                    @Override
-                    public void onResponse(@NotNull Call<Getter> call, @NotNull retrofit2.Response<Getter> response) {
-                        if (response.code() == 200) {
-                            Toast.makeText(getContext(), "Успешно!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Getter> call, Throwable t) {
-                        Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-            // изменение прикрепленного магазина
-        });
-
-        loadMap();
+        setMarketBtn.setOnClickListener(View -> updateMarket());
 
         return view;
     }
 
+    public void updateMarket() {
+        Pair<String, Boolean> userData = defineTypeUser();
+        if (userData != null && userData.second) {
+            MapRepository.setGetterMarket(userData.first, choosenMarket).enqueue(new Callback<Getter>() {
+                @Override
+                public void onResponse(@NotNull Call<Getter> call, @NotNull retrofit2.Response<Getter> response) {
+                    if (response.code() == 200) {
+                        Toast.makeText(getContext(), "Успешно!", Toast.LENGTH_SHORT).show();
+                        if (oldPosition != -1) listMarketsSpinner.setSelection(oldPosition);
+                    }
+                }
+                @Override
+                public void onFailure(Call<Getter> call, Throwable t) {
+                    Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else if (!userData.second) {
+            MapRepository.setSetterMarket(userData.first, choosenMarket).enqueue(new Callback<Setter>() {
+                @Override
+                public void onResponse(@NotNull Call<Setter> call, @NotNull retrofit2.Response<Setter> response) {
+                    if (response.code() == 200) {
+                        Toast.makeText(getContext(), "Успешно!", Toast.LENGTH_SHORT).show();
+                        if (oldPosition != -1) listMarketsSpinner.setSelection(oldPosition);
+                    }
+                }
+                @Override
+                public void onFailure(Call<Setter> call, Throwable t) {
+                    Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    public void requestPermissions() {
+        firstPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        secondPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (firstPermission != PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+        } else if (firstPermission != PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION }, 200);
+        } else if (firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION }, 200);
+        }
+    }
     private void getPinnedMarketInfo() {
-        Pair<String, Boolean> userDate = defineTypeUser();
-        String userType = userDate.second ? "getter" : "setter";
+        Pair<String, Boolean> userData = defineTypeUser();
+        String userType = userData.second ? "getter" : "setter";
 
         this.listMarkets = new String[fullListMarkets.length];
-        this.listMarkets[0] = "Выберите магазин";
-        MapRepository.getPinMarket(userType, userDate.first).enqueue(new Callback<String>() {
+        MapRepository.getPinMarket(userType, userData.first).enqueue(new Callback<MarketTitleResponse>() {
             @Override
-            public void onResponse(@NotNull Call<String> call, @NotNull retrofit2.Response<String> response) {
+            public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull retrofit2.Response<MarketTitleResponse> response) {
                 if (response.code() == 404) choosenMarket = "";
                 else if (response.code() == 400) Toast.makeText(getContext(), "Что-то пошло не так!", Toast.LENGTH_SHORT).show();
                 else {
-                    choosenMarket = response.body();
-                    listMarkets[0] = response.body();
-                    for (int i = 1; i < fullListMarkets.length; i++) listMarkets[i] = fullListMarkets[i].getTitle();
+                    choosenMarket = response.body().market;
+                    for (int i = 0; i < fullListMarkets.length; i++) {
+                        if (fullListMarkets[i].getTitle().equals(choosenMarket)) {
+                            oldPosition = i;
+                            listMarketsSpinner.setSelection(i);
+                            break;
+                        }
+                    }
+                    listMarkets[0] = response.body().market;
                 }
+                boolean isTrue = oldPosition != -1;
+                for (int i = 1; i < fullListMarkets.length; i++) {
+                    if (isTrue && i + 1 == fullListMarkets.length) break;
+
+                    if (isTrue && i >= oldPosition) {
+                        listMarkets[i] = fullListMarkets[i + 1].getTitle();
+                    } else listMarkets[i] = fullListMarkets[i].getTitle();
+                }
+
             }
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<MarketTitleResponse> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
-                for (int i = 1; i < fullListMarkets.length; i++) listMarkets[i] = fullListMarkets[i].getTitle();
+                Toast.makeText(getContext(), "Что-то пошло не так!!!", Toast.LENGTH_SHORT).show();
+
             }
         });
+    }
+
+    @SuppressLint("MissingPermission")
+    private void setUpLocationListener() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new CustomLocationListener();
+
+        if (checkLocationPermissions()) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 25,  locationListener);
+            locationListener.setLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+        }
     }
 
     private void initMap() {
-        MapKitFactory.initialize(getContext());
-        SearchFactory.initialize(getContext());
+        requestPermissions();
 
-        this.searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED);
-        CustomLocationListener.SetUpLocationListener(getActivity());
+        searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED);
 
-        this.mapView.getMap().addCameraListener(this);
-        this.mapView.getMap().addTapListener(this);
-        this.mapView.getMap().addInputListener(this);
-        this.mapView.getMap().setRotateGesturesEnabled(false);
+//        setUpLocationListener();
+        mapView.getMap().addCameraListener(this);
+        mapView.getMap().addTapListener(this);
+        mapView.getMap().addInputListener(this);
 
         MapKitFactory.getInstance().resetLocationManagerToDefault();
 
-        this.userLocationLayer = MapKitFactory.getInstance().createUserLocationLayer(mapView.getMapWindow());
-        this.userLocationLayer.setVisible(true);
-        this.userLocationLayer.setHeadingEnabled(true);
-        this.userLocationLayer.setObjectListener(this);
-    }
+        mapView.getMap().setRotateGesturesEnabled(false);
 
-    private void initListMarkets() {
-        ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), R.layout.market_item, this.listMarkets);
-        adapter.setDropDownViewResource(R.layout.map_dropdown_text);
-        listMarketsSpinner.setAdapter(adapter);
+//        userLocationLayer = MapKitFactory.getInstance().createUserLocationLayer(mapView.getMapWindow());
+//        userLocationLayer.setVisible(true);
+//        userLocationLayer.setHeadingEnabled(true);
+//        userLocationLayer.setObjectListener(this);
 
-        listMarketsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                choosenMarket = listMarkets[position];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
-    private void loadMap() {
         if (checkLocationPermissions()) {
             try {
-                Log.d("mapInfo", CustomLocationListener.location.getLatitude() + " " + CustomLocationListener.location.getLongitude());
-                double lat = CustomLocationListener.location.getLatitude();
-                double longt = CustomLocationListener.location.getLongitude();
+//                Log.d("mapInfo", locationListener.getLocation().getLongitude() + " " + locationListener.getLocation().getLongitude());
+//                double lat = CustomLocationListener.location.getLatitude();
+//                double longt = CustomLocationListener.location.getLongitude();
 
 //                mapView.getMap().move(new CameraPosition(new Point(lat, longt), 14, 0, 0),  new Animation(Animation.Type.SMOOTH, 0), null);
                 this.mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
@@ -248,7 +287,25 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
 
         submitQuery("Пятёрочка");
         submitQuery("Перекрёсток");
+    }
 
+    private void initListMarkets() {
+        adapter = new ArrayAdapter<>(getContext(), R.layout.market_item, this.listMarkets);
+        adapter.setDropDownViewResource(R.layout.map_dropdown_text);
+        listMarketsSpinner.setAdapter(adapter);
+
+        listMarketsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                choosenMarket = listMarkets[position];
+                oldPosition = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private Pair<String, Boolean> defineTypeUser() {
@@ -264,6 +321,7 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
             return new Pair<>(userID, isUser);
         } catch (GeneralSecurityException | IOException err) {
             Toast.makeText(getContext(), "Непредвиденная ошибка!", Toast.LENGTH_SHORT).show();
+            Log.e("esp_error", err.toString());
         }
         return null;
     }

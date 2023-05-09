@@ -7,6 +7,7 @@ import com.example.nofoodsharingproject.data.api.map.MapApiService;
 import com.example.nofoodsharingproject.data.api.map.RequestMarketInfo;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.utils.MarketTitleResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -19,7 +20,7 @@ public class MapRepository {
         return MapApiService.getInstance().setGetterMarket(new RequestMarketInfo(userID, marketName));
     }
 
-    public static Call<String> getPinMarket(String typeUser, String userID) {
+    public static Call<MarketTitleResponse> getPinMarket(String typeUser, String userID) {
         return MapApiService.getInstance().getPinMarket(typeUser, userID);
     }
 }
