@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,15 +48,15 @@ public class GetterAdvrs_Fragment extends Fragment {
     private TextView addressShop;
     private TextView timeAdvert;
     private CountDownTimer timerView;
-    private ImageButton buttonMapOpen;
     private TextView numberAdvertisement;
     private Button buttonNewAdvertisement;
     private Button buttonZaborProducts;
     private Button buttonStopAdvert;
     private TextView textNewAdvert;
     private TextView titleAdvert;
-    private TextView statusAdvert;
+    private LinearLayout statusAdvert;
     private ListView listViewProducts;
+    private LinearLayout getterAdvertLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,6 @@ public class GetterAdvrs_Fragment extends Fragment {
                              Bundle savedInstanceState){
         binding = FragmentGetterAdvrsBinding.inflate(inflater);
 
-        buttonMapOpen = binding.openMap;
         addressShop = binding.addressShop;
         numberAdvertisement = binding.numberOfAdvertisment;
         buttonNewAdvertisement = binding.createNewRequest;
@@ -78,24 +78,13 @@ public class GetterAdvrs_Fragment extends Fragment {
         titleAdvert = binding.getterAdvertTitleProducts;
         listViewProducts = binding.getterAdvertProducts;
         statusAdvert = binding.getterAdvertStatus;
+        getterAdvertLayout = binding.getterAdvertLayout;
 
         buttonNewAdvertisement.setVisibility(View.VISIBLE);
 
         getAddress();
         getAdvertisement();
         timerInit();
-
-
-        buttonMapOpen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment someFragment = new MarketsMap_Fragment();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_getter_fragment, someFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
 
         buttonNewAdvertisement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +165,7 @@ public class GetterAdvrs_Fragment extends Fragment {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.code() == 400) Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                if (response.code() == 404) getterAdvertLayout.setVisibility(View.INVISIBLE);
                 if (response.code() == 200) {
                     titleAdvert.setText(response.body().getTitle());
                     statusAdvert.setVisibility(View.INVISIBLE);
