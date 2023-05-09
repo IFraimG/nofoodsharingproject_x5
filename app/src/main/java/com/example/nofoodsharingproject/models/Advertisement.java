@@ -3,6 +3,7 @@ package com.example.nofoodsharingproject.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,9 +14,11 @@ public class Advertisement {
     @Expose
     public String title;
 
+    public ArrayList<Product> fullListProducts;
+
     @SerializedName("listProducts")
     @Expose
-    public ArrayList<Product> listProducts;
+    public String[] listProducts;
 
     @SerializedName("advertsID")
     @Expose
@@ -82,22 +85,37 @@ public class Advertisement {
         isDone = done;
     }
 
-    public void setListProducts(ArrayList<Product> listProducts) {
+    public void setListProducts(String[] listProducts) {
         this.listProducts = listProducts;
+    }
+
+    public void setListProductsCustom(List<String> listProducts) {
+        this.listProducts = new String[listProducts.size()];
+        for (int i = 0; i < listProducts.size(); i++) {
+            this.listProducts[i] = listProducts.get(i);
+        }
+    }
+
+    public ArrayList<Product> getFullListProducts() {
+        return fullListProducts;
+    }
+
+    public void setFullListProducts(ArrayList<Product> fullListProducts) {
+        this.fullListProducts = fullListProducts;
     }
 
     public String getDateOfCreated() {
         return this.dateOfCreated;
     }
 
-    public ArrayList<Product> getListProducts() {
+    public String[] getListProducts() {
         return listProducts;
     }
 
     public String[] getListTitleProducts() {
-        String[] arr = new String[this.listProducts.size()];
-        for (int i = 0; i < listProducts.size(); i++) arr[i] = listProducts.get(i).getTitle();
-        return arr;
+//        String[] arr = new String[this.listProducts.size()];
+//        for (int i = 0; i < listProducts.size(); i++) arr[i] = listProducts.get(i).getTitle();
+        return getListProducts();
     }
 
     public void setAdvertsID(String advertsID) {
@@ -112,13 +130,6 @@ public class Advertisement {
         this.title = title;
     }
 
-
-    public void setListProducts(List<String> listProducts) {
-        this.listProducts = new ArrayList<>();
-        for (int i = 0 ; i < listProducts.size(); i++) {
-            this.listProducts.add(new Product(listProducts.get(i)));
-        }
-    }
 
     public String getAdvertsID() {
         return advertsID;

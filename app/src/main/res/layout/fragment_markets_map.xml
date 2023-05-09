@@ -21,6 +21,7 @@
         <Spinner
             android:id="@+id/map_list_markets"
             android:layout_width="match_parent"
+            android:minHeight="48dp"
             android:popupBackground="@color/white"
             android:layout_height="wrap_content" />
         <Button

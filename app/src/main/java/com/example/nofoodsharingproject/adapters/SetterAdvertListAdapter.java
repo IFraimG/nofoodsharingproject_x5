@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,11 +42,15 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
     @Override
     public void onBindViewHolder(SetterAdvertListAdapter.ViewHolder holder, int position) {
         Advertisement advertisement = advertisements.get(position);
-        holder.title.setText(advertisement.title);
-        holder.authorName.setText(advertisement.authorName);
+        holder.title.setText(advertisement.getTitle());
+        holder.authorName.setText(advertisement.getAuthorName());
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this.ctx, R.layout.item_getter_product_name, advertisement.getListProducts());
+        holder.productList.setAdapter(arrayAdapter);
+
 
         holder.link.setOnClickListener(View -> {
-            intent.putExtra("advertID", advertisement.advertsID);
+            intent.putExtra("advertID", advertisement.getAdvertsID());
             ctx.startActivity(intent);
         });
     }
@@ -55,22 +61,21 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
     }
 
     public void updateAdverts(List<Advertisement> advertisements) {
-        if (this.advertisements != null) {
-            try {
-                this.advertisements.clear();
-                this.advertisements.addAll(advertisements);
-            } catch (NullPointerException err) {
-                Log.e("msg", "null adverts");
-            }
-        }
-        notifyDataSetChanged();
-    }
+        try {
+            this.advertisements.clear();
+            this.advertisements.addAll(advertisements);
+
+            notifyDataSetChanged();
+        } catch (NullPointerException err) {
+            Log.e("msg", "null adverts");
+        }}
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView title;
 //        final TextView desc;
         final TextView authorName;
         final Button link;
+        final ListView productList;
 
         public ViewHolder(View view) {
             super(view);
@@ -79,6 +84,7 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
 //            this.desc = (TextView) view.findViewById(R.id.setter_advert_item_desc);
             this.authorName = (TextView) view.findViewById(R.id.setter_advert_item_name);
             this.link = (Button) view.findViewById(R.id.setter_advert_item_link);
+            this.productList = (ListView) view.findViewById(R.id.setter_advert_product_list);
         }
     }
 }

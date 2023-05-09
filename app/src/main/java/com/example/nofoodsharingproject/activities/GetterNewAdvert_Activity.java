@@ -97,12 +97,8 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
                 }
             }
         });
-        button_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
+        button_back.setOnClickListener(View -> finish());
 
 
         button_ready.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +110,7 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
                     Getter result = getUserInfo();
                     Advertisement advertisement = new Advertisement(titleAdvert.getText().toString(), result.getX5_Id(), result.getLogin());
                     advertisement.setGettingProductID(Advertisement.generateID());
-                    advertisement.setListProducts(userProductItems);
+                    if (userProductItems.size() > 0) advertisement.setListProductsCustom(userProductItems);
 
                     button_ready.setEnabled(false);
                     AdvertsRepository.createAdvert(advertisement).enqueue(new Callback<Advertisement>() {

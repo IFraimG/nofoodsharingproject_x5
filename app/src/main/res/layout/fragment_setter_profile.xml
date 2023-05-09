@@ -62,11 +62,19 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="@color/green_pastel"
         android:text="@string/leave_account_text"
         android:textSize="18sp"
-        app:backgroundTint="@color/material_dynamic_neutral_variant40" />
-
-
-    <include layout="@layout/setter_history_transfer" />
+        app:backgroundTint="@color/green_pastel" />
+<!--    <TextView-->
+<!--        android:id="@+id/setter_profile_history_title"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="1"-->
+<!--        android:textSize="24sp"-->
+<!--        android:text="@string/history_transfer_text" />-->
+    <ListView
+        android:id="@+id/setter_profile_history_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>

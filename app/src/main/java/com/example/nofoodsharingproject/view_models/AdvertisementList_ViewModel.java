@@ -1,6 +1,7 @@
 package com.example.nofoodsharingproject.view_models;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
@@ -9,11 +10,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import com.example.nofoodsharingproject.data.api.adverts.ResponseActiveAdverts;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.utils.LoaderStatus;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -27,51 +32,27 @@ public class AdvertisementList_ViewModel extends AndroidViewModel {
     private final MutableLiveData<LoaderStatus> _status = new MutableLiveData<>();
     public LiveData<LoaderStatus> status = _status;
 
-
     public AdvertisementList_ViewModel(@NonNull Application application) {
         super(application);
     }
 
     public LiveData<List<Advertisement>> getAllAdverts() {
         _status.setValue(LoaderStatus.LOADING);
-        AdvertsRepository.getListAdverts().enqueue(new Callback<List<Advertisement>>() {
+        AdvertsRepository.getListAdverts().enqueue(new Callback<ResponseActiveAdverts>() {
             @Override
-            public void onResponse(Call<List<Advertisement>> call, Response<List<Advertisement>> response) {
-                _status.setValue(LoaderStatus.LOADED);
-                _adverts.setValue(response.body());
+            public void onResponse(@NotNull Call<ResponseActiveAdverts> call, @NotNull Response<ResponseActiveAdverts> response) {
+                if (response.body() != null) {
+                    _status.setValue(LoaderStatus.LOADED);
+                    _adverts.setValue(Arrays.asList(response.body().getAdvertisements()));
+                }
             }
 
             @Override
-            public void onFailure(Call<List<Advertisement>> call, Throwable t) {
+            public void onFailure(Call<ResponseActiveAdverts> call, Throwable t) {
                 _status.setValue(LoaderStatus.FAILURE);
                 t.printStackTrace();
             }
         });
         return _adverts;
-    }
-
-    public void addAdvert(Advertisement advertisement) {
-        adverts.add(advertisement);
-        _adverts.setValue(adverts);
-        // запрос на сервер
-    }
-
-    // потом удалим, если будет не нужен + Transactions.switchMap
-//    public LiveData<List<ShortDataWithDate>> getAdvertsExpiresAt() {
-//        return Transformations.map(getAllAdverts(), new Function<List<Advertisement>, List<ShortDataWithDate>>() {
-//            @Override
-//            public List<ShortDataWithDate> apply(List<Advertisement> input) {
-//                List<ShortDataWithDate> result = new ArrayList<>();
-//                for (Advertisement ad: input) result.add(new ShortDataWithDate(ad.getDateOfCreated(), ad.authorID, ad.advertsID, ad.gettingProductID));
-//
-//                return result;
-//            }
-//        });
-//    }
-
-
-
-    public void removeAdvert(String advertID) {
-        // запрос на сервер
     }
 }

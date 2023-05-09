@@ -4,25 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/setter_advert_item_title"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="32sp"
         android:layout_margin="10dp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="40dp"
         android:text="@string/name_enter_text" />
-
-    <TextView
-        android:id="@+id/setter_advert_item_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:textSize="16sp"
-        android:layout_margin="10dp"
-        android:text="@string/description_text" />
 
     <TextView
         android:id="@+id/setter_advert_item_name"
@@ -33,13 +28,18 @@
         android:textSize="24sp"
         tools:text="Имя нуждающегося" />
 
+    <ListView
+        android:id="@+id/setter_advert_product_list"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+
     <Button
         android:id="@+id/setter_advert_item_link"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/green_pastel"
-        tools:text="Подробнее"
+        android:text="Подробнее"
+        android:textSize="16sp"
         app:backgroundTint="@color/green_pastel" />
 
     <com.google.android.material.divider.MaterialDivider

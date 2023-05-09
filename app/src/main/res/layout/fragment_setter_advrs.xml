@@ -26,21 +26,22 @@
             android:layout_height="3dp"
             android:background="@color/black"/>
     </LinearLayout>
+
     <ScrollView
         android:id="@+id/setter_list_advert_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/setter_list_advert"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="80dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="150dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-         />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </ScrollView>
     <ProgressBar
         android:id="@+id/setter_loader"

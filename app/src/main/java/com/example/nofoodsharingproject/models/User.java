@@ -22,9 +22,7 @@ public abstract class User {
     @Expose
     String marketName;
 
-    public User() {
-
-    }
+    public User() {}
     public User(String phone, String login, String password) {
         this.login = login;
         this.phone = phone;

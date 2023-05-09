@@ -58,21 +58,14 @@
         android:layout_weight="1"
         android:text="@string/list_product_text"
         android:textSize="32sp" />
-
-    <!--    <androidx.recyclerview.widget.RecyclerView />-->
-    <TextView
-        android:id="@+id/setter_advert_description"
+    <ListView
+        android:id="@+id/setter_advert_product_item_list_products"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
-        android:text="@string/example_description"
-        android:textSize="18sp" />
-
+        android:layout_height="wrap_content" />
     <Button
+        android:id="@+id/setter_advert_accept"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
-        android:id="@+id/setter_advert_accept"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:text="@string/message_adv_text"

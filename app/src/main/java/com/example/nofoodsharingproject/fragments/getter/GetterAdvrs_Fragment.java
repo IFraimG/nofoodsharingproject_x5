@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.GetterNewAdvert_Activity;
+import com.example.nofoodsharingproject.data.api.adverts.ResponseDeleteAdvert;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.data.repository.MapRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterAdvrsBinding;
@@ -50,13 +51,17 @@ public class GetterAdvrs_Fragment extends Fragment {
     private CountDownTimer timerView;
     private TextView numberAdvertisement;
     private Button buttonNewAdvertisement;
-    private Button buttonZaborProducts;
+    private Button buttonTakenProducts;
     private Button buttonStopAdvert;
     private TextView textNewAdvert;
     private TextView titleAdvert;
     private LinearLayout statusAdvert;
     private ListView listViewProducts;
     private LinearLayout getterAdvertLayout;
+
+    private Advertisement advertisement;
+    private ArrayAdapter<String> arrayAdapter;
+    private String market;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,9 +74,9 @@ public class GetterAdvrs_Fragment extends Fragment {
         binding = FragmentGetterAdvrsBinding.inflate(inflater);
 
         addressShop = binding.addressShop;
-        numberAdvertisement = binding.numberOfAdvertisment;
+        numberAdvertisement = binding.numberOfAdvertisement;
         buttonNewAdvertisement = binding.createNewRequest;
-        buttonZaborProducts = binding.pickUpOrder;
+        buttonTakenProducts = binding.pickUpOrder;
         buttonStopAdvert = binding.stopAdvert;
         textNewAdvert = binding.textNumberOfAdvert;
         timeAdvert = binding.timerToAdvert;
@@ -80,48 +85,16 @@ public class GetterAdvrs_Fragment extends Fragment {
         statusAdvert = binding.getterAdvertStatus;
         getterAdvertLayout = binding.getterAdvertLayout;
 
-        buttonNewAdvertisement.setVisibility(View.VISIBLE);
-
         getAddress();
         getAdvertisement();
         timerInit();
 
-        buttonNewAdvertisement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), GetterNewAdvert_Activity.class);
-                startActivity(intent);
+        buttonStopAdvert.setVisibility(View.INVISIBLE);
+        getterAdvertLayout.setVisibility(View.INVISIBLE);
 
-                timerView.start();
-//                Для демонстрации
-                buttonStopAdvert.setVisibility(View.VISIBLE);
-                buttonNewAdvertisement.setVisibility(View.GONE);
-                textNewAdvert.setVisibility(View.VISIBLE);
-//                numberAdvertisement.setVisibility(View.VISIBLE);
-
-            }
-        });
-
-        buttonStopAdvert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                //   Для демонстрации
-                buttonStopAdvert.setVisibility(View.GONE);
-                buttonZaborProducts.setVisibility(View.VISIBLE);
-                textNewAdvert.setVisibility(View.GONE);
-                numberAdvertisement.setVisibility(View.GONE);
-                timerView.cancel();
-            }
-        });
-
-        buttonZaborProducts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Для демонстрации
-                buttonZaborProducts.setVisibility(View.GONE);
-                buttonNewAdvertisement.setVisibility(View.VISIBLE);
-            }
-        });
+        buttonNewAdvertisement.setOnClickListener(View -> startActivity(new Intent(getActivity(), GetterNewAdvert_Activity.class)));
+        buttonStopAdvert.setOnClickListener(View -> removeAdvertisement());
+        buttonTakenProducts.setOnClickListener(View -> takeProducts());
 
         return binding.getRoot();
     }
@@ -164,19 +137,54 @@ public class GetterAdvrs_Fragment extends Fragment {
         AdvertsRepository.getOwnAdvert(defineTypeUser().first).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                if (response.code() == 400) Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
-                if (response.code() == 404) getterAdvertLayout.setVisibility(View.INVISIBLE);
-                if (response.code() == 200) {
-                    titleAdvert.setText(response.body().getTitle());
-                    statusAdvert.setVisibility(View.INVISIBLE);
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, response.body().getListTitleProducts());
-                    listViewProducts.setAdapter(arrayAdapter);
+                if (response.code() == 400) {
+                    buttonNewAdvertisement.setVisibility(View.VISIBLE);
+                    Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
                 }
+                if (response.code() == 404) {
+                    buttonNewAdvertisement.setVisibility(View.VISIBLE);
+                }
+                if (response.code() == 200) showAdvertisementElements(response.body());
             }
 
             @Override
             public void onFailure(Call<Advertisement> call, Throwable t) {
                 t.printStackTrace();
+                Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void removeAdvertisement() {
+        AdvertsRepository.deleteAdvert(advertisement.getAdvertsID()).enqueue(new Callback<ResponseDeleteAdvert>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseDeleteAdvert> call, @NotNull Response<ResponseDeleteAdvert> response) {
+                if (response.code() != 400 && response.body().isDelete) {
+                    Toast.makeText(getContext(), "Успешно удалено!", Toast.LENGTH_SHORT).show();
+                    hideAdvertisementElements();
+                } else Toast.makeText(getContext(), "Произошла ошибка при удалении", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDeleteAdvert> call, Throwable t) {
+                Toast.makeText(getContext(), "Произошла ошибка при удалении", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void takeProducts() {
+        AdvertsRepository.takingProducts(defineTypeUser().first).enqueue(new Callback<Advertisement>() {
+            @Override
+            public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
+                if (response.code() == 404) Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                else if (response.code() == 201) {
+                    Toast.makeText(getContext(), "Поздравляем с успешно совершенной сделкой!", Toast.LENGTH_LONG).show();
+                    hideAdvertisementElements();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Advertisement> call, Throwable t) {
                 Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
             }
         });
@@ -190,7 +198,9 @@ public class GetterAdvrs_Fragment extends Fragment {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                 if (response.code() != 404 && response.code() != 400) {
+                    market = response.body().market;
                     addressShop.setText(response.body().market);
+                    addressShop.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -200,6 +210,29 @@ public class GetterAdvrs_Fragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void hideAdvertisementElements() {
+        advertisement = null;
+        statusAdvert.setVisibility(View.VISIBLE);
+        buttonStopAdvert.setVisibility(View.INVISIBLE);
+        arrayAdapter.notifyDataSetChanged();
+        buttonTakenProducts.setVisibility(View.INVISIBLE);
+        numberAdvertisement.setVisibility(View.INVISIBLE);
+    }
+    private void showAdvertisementElements(Advertisement advert) {
+        titleAdvert.setText(advert.getTitle());
+        statusAdvert.setVisibility(View.INVISIBLE);
+        buttonStopAdvert.setVisibility(View.VISIBLE);
+        arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advert.getListTitleProducts());
+        listViewProducts.setAdapter(arrayAdapter);
+        getterAdvertLayout.setVisibility(View.VISIBLE);
+        advertisement = advert;
+        if (advert.getGettingProductID() != null && advert.getGettingProductID().length() > 0) {
+            buttonTakenProducts.setVisibility(View.VISIBLE);
+            numberAdvertisement.setVisibility(View.VISIBLE);
+            numberAdvertisement.setText(advert.getGettingProductID());
+        }
     }
 
     private Pair<String, Boolean> defineTypeUser() {

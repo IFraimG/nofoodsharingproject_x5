@@ -10,10 +10,6 @@
     <string name="heading_ads">Объявления</string>
     <string name="Adres_your_magazin">Адрес вашего магазина:</string>
     <string name="map_error_search">С поиском магазинов произошли проблемы</string>
-    <string name="example_description">Если вдруг вы переживали, что вам нечем заняться в конце апреля, то теперь вы можете не переживать
-Nuclear IT Hack. Объединённый совет обучающихся и Студенческое научное общество @snomephi организуют на последней неделе апреля хакатон, задачи которого предоставит Росатом, VK и Eremex.
-24 апреля будет открыта задача VK. 28 апреля пройдёт iX MeetUp. 29-30 апреля очный хакатон, на котором откроют задачи Гринатома (Росатом) и Eremex
-</string>
     <string name="create_new_adv_text">Создание объявления</string>
     <string name="your_last_adv_text">Ваш последний заказ:</string>
     <string name="product1">Продукт1</string>
@@ -38,9 +34,9 @@ Nuclear IT Hack. Объединённый совет обучающихся и �
     <string name="time_text_hint">00:00:00</string>
     <string name="create_adv_text">Состояние объявления:</string>
     <string name="adv_text_hint">Объявление не активно</string>
-    <string name="stop_adv_text">Остановить распространение</string>
+    <string name="stop_adv_text">Удалить объявление</string>
     <string name="adv_zabor_text">Забираю продукты</string>
-    <string name="setter_text">Нуждающийся пользователь</string>
+    <string name="setter_text">Отдающий пользователь</string>
     <string name="number_telephone_text_hint">Введите номер телефона...</string>
     <string name="write_name_text">Введите имя...</string>
     <string name="write_password_text">Введите пароль...</string>
@@ -64,8 +60,8 @@ Nuclear IT Hack. Объединённый совет обучающихся и �
     <string name="save_account_text">Уже есть аккаунт? Войдите</string>
     <string name="enter_to_getter_text">Вход для отдающего</string>
     <string name="enter_text">Войти</string>
-    <string name="name_text_hint">Крабокраб Крыболович</string>
-    <string name="broadcast_text_hint">20 успешных передач продуктов</string>
+    <string name="name_text_hint">Имя профиля</string>
+    <string name="broadcast_text_hint">N успешных передач продуктов</string>
     <string name="geolocation_text">Включить геолокацию</string>
     <string name="on_notifications_text">Включить уведомления</string>
     <string name="leave_account_text">Выйти из аккаунта</string>
