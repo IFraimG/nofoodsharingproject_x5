@@ -1,16 +1,12 @@
 package com.example.nofoodsharingproject.data.repository;
 
-import com.example.nofoodsharingproject.data.api.auth.AuthApiService;
-import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpInformation;
-import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpResponseI;
 import com.example.nofoodsharingproject.data.api.map.MapApiService;
 import com.example.nofoodsharingproject.data.api.map.RequestMarketInfo;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Setter;
-import com.example.nofoodsharingproject.utils.MarketTitleResponse;
+import com.example.nofoodsharingproject.data.api.map.MarketTitleResponse;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 
 public class MapRepository {
     public static Call<Setter> setSetterMarket(String userID, String marketName) {

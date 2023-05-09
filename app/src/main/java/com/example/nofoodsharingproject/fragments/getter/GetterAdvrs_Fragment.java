@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,10 +27,8 @@ import com.example.nofoodsharingproject.data.api.adverts.ResponseDeleteAdvert;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.data.repository.MapRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterAdvrsBinding;
-import com.example.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
-import com.example.nofoodsharingproject.fragments.MarketsMap_Fragment;
 import com.example.nofoodsharingproject.models.Advertisement;
-import com.example.nofoodsharingproject.utils.MarketTitleResponse;
+import com.example.nofoodsharingproject.data.api.map.MarketTitleResponse;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -2,13 +2,11 @@ package com.example.nofoodsharingproject.data.api.map;
 
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Setter;
-import com.example.nofoodsharingproject.utils.MarketTitleResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface MapAPI {
