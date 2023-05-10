@@ -10,10 +10,10 @@
         android:label="fragment_setter_advrs"
         tools:layout="@layout/fragment_setter_advrs" />
     <fragment
-        android:id="@+id/setterNotifyF"
-        android:name="com.example.nofoodsharingproject.fragments.setter.SetterNotify_Fragment"
-        android:label="fragment_setter_notify"
-        tools:layout="@layout/fragment_setter_notify" />
+        android:id="@+id/getterNotifyF"
+        android:name="com.example.nofoodsharingproject.fragments.Notify_Fragment"
+        android:label="fragment_getter_notify"
+        tools:layout="@layout/fragment_getter_notify" />
     <fragment
         android:id="@+id/setterProfileF"
         android:name="com.example.nofoodsharingproject.fragments.setter.SetterProfile_Fragment"

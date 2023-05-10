@@ -22,8 +22,8 @@ public class NotificationRepository {
         return NotificationApiService.getInstance().notifyUserAboutDonate(new FMCMessage(fmcToken, new FMCNotification(title, body)));
     }
 
-    public static Call<ResponseNotificationsList> getNotifications(String userID) {
-        return InnerNotificationService.getInstance().getNotifications(userID);
+    public static Call<ResponseNotificationsList> getNotifications(String userID, String typeOfUser) {
+        return InnerNotificationService.getInstance().getNotifications(userID, typeOfUser);
     }
 
     public static Call<Notification> getNotificationOne(String notificationID) {

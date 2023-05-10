@@ -6,7 +6,7 @@
         android:title="Объявления"
         android:enabled="true" />
     <item
-        android:id="@+id/setterNotifyF"
+        android:id="@+id/getterNotifyF"
         android:icon="@drawable/ic_launcher_background"
         android:title="Уведомления" />
     <item

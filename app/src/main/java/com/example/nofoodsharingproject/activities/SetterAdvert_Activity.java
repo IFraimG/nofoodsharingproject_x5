@@ -23,6 +23,7 @@ import com.example.nofoodsharingproject.data.repository.GetterRepository;
 import com.example.nofoodsharingproject.data.repository.NotificationRepository;
 import com.example.nofoodsharingproject.databinding.ActivitySetterAdvertBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
+import com.example.nofoodsharingproject.models.Notification;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,6 +45,9 @@ public class SetterAdvert_Activity extends AppCompatActivity {
     private TextView title;
     private TextView dateAdvert;
     private String fcmToken;
+
+    private String successTitle = "На ваше объявление откликнулись!";
+    private String successBody = "Заберите продукты как можно скорее.";
 
     private ArrayAdapter<String> productsAdapter;
 
@@ -99,7 +103,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                     acceptBtn.setEnabled(true);
                     Toast.makeText(getApplicationContext(), R.string.smth_not_good_try_again, Toast.LENGTH_SHORT).show();
                 } else {
-                    getFCMTokenByUserID();
+                    saveMessageForUser();
                     finish();
                 }
             }
@@ -119,7 +123,6 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                 if (response.code() == 400) Toast.makeText(SetterAdvert_Activity.this, "Что-то пошло не так", Toast.LENGTH_SHORT).show();
                 if (response.code() == 200) {
                     fcmToken = response.body().getFcmToken();
-                    saveMessageForUser(fcmToken);
                     sendNotification();
                 }
             }
@@ -133,7 +136,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
     }
 
     public void sendNotification() {
-            NotificationRepository.requestNotifyDonateCall(fcmToken, "На ваше объявление откликнулись!", "Заберите продукты как можно скорее.").enqueue(new Callback<ResponseBody>() {
+            NotificationRepository.requestNotifyDonateCall(fcmToken, successTitle, successBody).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
@@ -150,8 +153,24 @@ public class SetterAdvert_Activity extends AppCompatActivity {
             });
     }
 
-    private void saveMessageForUser(String fcmToken) {
+    private void saveMessageForUser() {
+        Notification notification = new Notification(successTitle, successBody, advertisement.getAuthorID());
+        notification.setFromUserID(getSetterID());
+        notification.setListItems(advertisement.getListProducts());
+        notification.setTypeOfUser("getter");
+        NotificationRepository.createNotification(notification).enqueue(new Callback<Notification>() {
+            @Override
+            public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
+                if (response.code() != 201) Toast.makeText(SetterAdvert_Activity.this, "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                else getFCMTokenByUserID();
+            }
 
+            @Override
+            public void onFailure(Call<Notification> call, Throwable t) {
+                Toast.makeText(SetterAdvert_Activity.this, "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
     }
 
     private String getSetterID() {
@@ -161,8 +180,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                     .build();
             SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getApplicationContext(), "user", masterKey,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            String authorID = sharedPreferences.getString("X5_id", "");
-            return authorID;
+            return sharedPreferences.getString("X5_id", "");
         } catch (IOException | GeneralSecurityException err) {
             Log.e("getting info error", err.toString());
             err.printStackTrace();

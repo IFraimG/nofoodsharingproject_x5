@@ -1,34 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/fragment_getter_notify">
-    <LinearLayout
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_getter_notify"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/style5"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/grey_500"
+        android:text="@string/notifications_text" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:id="@+id/notify_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/main_color"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/style5"
-            android:textSize="25sp"
-            android:layout_marginTop="25sp"
-            android:textColor="@color/grey_500"
-            android:text="@string/notifications_text" />
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_getter_notifications"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="10dp"
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            tools:listitem="@layout/item_getter_notifications" />
-
-    </LinearLayout>
-
-
-
-</FrameLayout>
+</LinearLayout>

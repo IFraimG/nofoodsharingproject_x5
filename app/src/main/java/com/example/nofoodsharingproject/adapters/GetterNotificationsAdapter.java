@@ -29,7 +29,7 @@ public class GetterNotificationsAdapter extends RecyclerView.Adapter<GetterNotif
 
     @Override
     public GetterNotificationsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.setter_notification_item, parent, false);
+        View view = inflater.inflate(R.layout.item_getter_notifications, parent, false);
         return new ViewHolder(view);
     }
 
@@ -38,12 +38,7 @@ public class GetterNotificationsAdapter extends RecyclerView.Adapter<GetterNotif
         Notification notification = notifications.get(position);
         holder.title.setText(notification.getTitle());
         holder.desc.setText(notification.getDescription());
-//
-//        holder.link.setOnClickListener(View -> {
-//            Intent intent = new Intent(this.ctx, SetterAdvertAC.class);
-//            intent.putExtra("advertID", notification.getNotificationID());
-//            ctx.startActivity(intent);
-//        });
+        holder.createdAt.setText(notification.getCreatedAt());
     }
 
     @Override
@@ -51,28 +46,26 @@ public class GetterNotificationsAdapter extends RecyclerView.Adapter<GetterNotif
         return notifications.size();
     }
 
-    public void updateNotifications(List<Notification> advertisements) {
+    public void updateNotifications(List<Notification> notifications) {
         try {
             this.notifications.clear();
-            this.notifications.addAll(advertisements);
+            this.notifications.addAll(notifications);
+            notifyDataSetChanged();
         } catch (NullPointerException err) {
             Log.e("msg", "null notifications");
         }
-        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView title;
-        final TextView desc;
-        final TextView createdAt;
-        final Button link;
+        public final TextView title;
+        public final TextView desc;
+        public final TextView createdAt;
 
         public ViewHolder(View view) {
             super(view);
-            this.title = (TextView) view.findViewById(R.id.setter_notify_item_title);
-            this.desc = (TextView) view.findViewById(R.id.setter_notify_item_desc);
-            this.createdAt = (TextView) view.findViewById(R.id.setter_notify_item_date);
-            this.link = (Button) view.findViewById(R.id.setter_notify_item_link);
+            this.title = (TextView) view.findViewById(R.id.notify_title);
+            this.desc = (TextView) view.findViewById(R.id.notify_body);
+            this.createdAt = (TextView) view.findViewById(R.id.notify_date);
         }
     }
 }

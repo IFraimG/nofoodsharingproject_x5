@@ -8,10 +8,11 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface InnerNotificationAPI {
-    @GET("/notifications/get_notifications/{userID}")
-    Call<ResponseNotificationsList> getNotifications(@Path("userID") String userID);
+    @GET("/notifications/get_notifications")
+    Call<ResponseNotificationsList> getNotifications(@Query("userID") String userID, @Query("typeOfUser") String typeOfUser);
 
     @GET("/notifications/get_notification_one/{notificationID}")
     Call<Notification> getNotificationOne(@Path("notificationID") String notificationID);
