@@ -1,28 +1,70 @@
 package com.example.nofoodsharingproject.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.UUID;
 
 public class Notification {
-    public String title;
-    public String description;
-    public String link;
-    public String createdAt;
-    String notificationID;
+    @SerializedName("title")
+    @Expose
+    private String title;
 
-    public Notification(String title, String description, String link) {
+    @SerializedName("description")
+    @Expose
+    private String description;
+
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
+
+    @SerializedName("notificationID")
+    @Expose
+    private String notificationID;
+
+    @SerializedName("typeOfUser")
+    @Expose
+    private String typeOfUser;
+
+    @SerializedName("userID")
+    @Expose
+    private String userID;
+
+    @SerializedName("fromUserID")
+    @Expose
+    private String fromUserID;
+
+    @SerializedName("isRead")
+    @Expose
+    private boolean isRead;
+
+    @SerializedName("listItems")
+    @Expose
+    private String[] listItems;
+
+    @SerializedName("buttonType")
+    @Expose
+    private String buttonType;
+    public Notification() {}
+
+    public Notification(String title, String description, String userID) {
         this.title = title;
         this.description = description;
-        this.link = link;
-        this.notificationID = UUID.randomUUID().toString();
+        this.userID = userID;
     }
 
-    public Notification(String title, String description, String link, Date createdAt) {
+    public Notification(String title, String description, String createdAt, String notificationID, String typeOfUser, String userID, String fromUserID, boolean isRead, String[] listItems, String buttonType) {
         this.title = title;
         this.description = description;
-        this.link = link;
-        this.createdAt = createdAt.toString();
-        this.notificationID = UUID.randomUUID().toString();
+        this.createdAt = createdAt;
+        this.notificationID = notificationID;
+        this.typeOfUser = typeOfUser;
+        this.userID = userID;
+        this.fromUserID = fromUserID;
+        this.isRead = isRead;
+        this.listItems = listItems;
+        this.buttonType = buttonType;
     }
 
     public void setCreatedAt(Date createdAt) {
@@ -45,7 +87,67 @@ public class Notification {
         return title;
     }
 
-    public String getLink() {
-        return link;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setNotificationID(String notificationID) {
+        this.notificationID = notificationID;
+    }
+
+    public String getTypeOfUser() {
+        return typeOfUser;
+    }
+
+    public void setTypeOfUser(String typeOfUser) {
+        this.typeOfUser = typeOfUser;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getFromUserID() {
+        return fromUserID;
+    }
+
+    public void setFromUserID(String fromUserID) {
+        this.fromUserID = fromUserID;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
+    }
+
+    public String[] getListItems() {
+        return listItems;
+    }
+
+    public void setListItems(String[] listItems) {
+        this.listItems = listItems;
+    }
+
+    public String getButtonType() {
+        return buttonType;
+    }
+
+    public void setButtonType(String buttonType) {
+        this.buttonType = buttonType;
     }
 }

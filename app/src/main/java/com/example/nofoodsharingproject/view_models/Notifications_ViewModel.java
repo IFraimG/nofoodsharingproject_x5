@@ -27,7 +27,7 @@ public class Notifications_ViewModel extends AndroidViewModel {
 
     public LiveData<List<Notification>> getAllNotifications() {
         for (int i = 0; i < 5; i++) {
-            notifications.add(new Notification("Краболов нуждается в помощи!", "Описание необходимой помощи", "link", new Date()));
+            notifications.add(new Notification("Краболов нуждается в помощи!", "Описание необходимой помощи", "id"));
         }
         _notifications.setValue(notifications);
         return _notifications;

@@ -36,8 +36,8 @@ public class SetterNotificationsAdapter extends RecyclerView.Adapter<SetterNotif
     @Override
     public void onBindViewHolder(SetterNotificationsAdapter.ViewHolder holder, int position) {
         Notification notification = notifications.get(position);
-        holder.title.setText(notification.title);
-        holder.desc.setText(notification.description);
+        holder.title.setText(notification.getTitle());
+        holder.desc.setText(notification.getDescription());
 //
 //        holder.link.setOnClickListener(View -> {
 //            Intent intent = new Intent(this.ctx, SetterAdvertAC.class);

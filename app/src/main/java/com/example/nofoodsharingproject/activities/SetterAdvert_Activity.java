@@ -39,7 +39,6 @@ public class SetterAdvert_Activity extends AppCompatActivity {
     private ListView listProducts;
     private ImageView backButton;
     private Button acceptBtn;
-    private String advertID;
     private Advertisement advertisement;
     private TextView authorName;
     private TextView title;
@@ -120,6 +119,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                 if (response.code() == 400) Toast.makeText(SetterAdvert_Activity.this, "Что-то пошло не так", Toast.LENGTH_SHORT).show();
                 if (response.code() == 200) {
                     fcmToken = response.body().getFcmToken();
+                    saveMessageForUser(fcmToken);
                     sendNotification();
                 }
             }
@@ -148,14 +148,10 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                     t.printStackTrace();
                 }
             });
+    }
 
-//            RequestBody requestBody = RequestBody.create(JSON, notification.toString());
-//            Request request = new Request.Builder()
-//                    .url("https://fcm.googleapis.com/fcm/send")
-//                    .post(requestBody)
-//                    .addHeader("Content-Type", "application/json")
-//                    .addHeader("Authorization", "key=<YOUR_SERVER_KEY>")
-//                    .build();
+    private void saveMessageForUser(String fcmToken) {
+
     }
 
     private String getSetterID() {
