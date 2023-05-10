@@ -22,7 +22,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="100dp"
             android:text="@string/Authorization_text"
-            android:textSize="48dp"
+            android:textSize="48sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +33,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="40dp"
             android:text="@string/i_getter_text"
-            android:textSize="24dp"
+            android:textSize="24sp"
             app:backgroundTint="@color/light_orange" />
 
         <Button
@@ -44,7 +44,7 @@
             android:layout_marginBottom="40dp"
             android:text="@string/i_setter_text"
 
-            android:textSize="24dp"
+            android:textSize="24sp"
             app:backgroundTint="@color/green_pastel" />
     </LinearLayout>
 
@@ -61,6 +61,6 @@
             android:layout_height="86dp"
             android:layout_gravity="center"
             android:layout_marginBottom="40dp"
-            android:src="@drawable/restaurant" />
+            android:src="@drawable/logo" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

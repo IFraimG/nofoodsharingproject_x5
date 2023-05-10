@@ -6,7 +6,7 @@
     android:layout_marginLeft="20sp"
     android:layout_marginRight="20sp"
     android:padding="10dp"
-    android:text="Название продукта"
+    android:text="@string/name_of_product_text"
     android:textSize="15sp"
     android:layout_marginBottom="20dp"
     android:textColor="@color/black"

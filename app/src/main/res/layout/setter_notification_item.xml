@@ -36,7 +36,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:text="Перейти"
+        android:text="@string/go_over_text"
         android:textSize="18sp"
         app:backgroundTint="@color/green_pastel" />
 

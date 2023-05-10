@@ -59,7 +59,7 @@
         android:background="@drawable/custom_round_border"
         android:hint="@string/write_password_text"
         android:inputType="textPassword"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
         android:layout_marginTop="50dp"
         />
 

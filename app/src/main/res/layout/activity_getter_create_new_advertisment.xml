@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
         android:background="@drawable/style5"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:layout_marginTop="25sp"
         android:textColor="@color/grey_500"
         android:text="@string/create_new_adv_text" />

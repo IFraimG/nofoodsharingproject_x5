@@ -36,9 +36,9 @@
     <string name="stop_adv_text">Удалить объявление</string>
     <string name="adv_zabor_text">Забираю продукты</string>
     <string name="setter_text">Отдающий пользователь</string>
-    <string name="number_telephone_text_hint">Введите номер телефона...</string>
-    <string name="write_name_text">Введите имя...</string>
-    <string name="write_password_text">Введите пароль...</string>
+    <string name="number_telephone_text_hint">Введите номер телефона…</string>
+    <string name="write_name_text">Введите имя…</string>
+    <string name="write_password_text">Введите пароль…</string>
     <string name="Enter_text">Войти</string>
     <string name="create_new_account_text">Создать новый аккаунт</string>
     <string name="notifications_text">Уведомления</string>
@@ -52,9 +52,9 @@
     <string name="i_setter_text">Я - отдающий</string>
     <string name="active_adv_text">Активные объявления</string>
     <string name="setter_account_text">Отдающий пользователь</string>
-    <string name="write_number_phone_text_hint">Введите номер телефона...</string>
-    <string name="write_name_text_hint">Введите имя...</string>
-    <string name="write_password_text_hint">Введите пароль...</string>
+    <string name="write_number_phone_text_hint">Введите номер телефона…</string>
+    <string name="write_name_text_hint">Введите имя…</string>
+    <string name="write_password_text_hint">Введите пароль…</string>
     <string name="create_account_text">Создать аккаунт</string>
     <string name="save_account_text">Уже есть аккаунт? Войдите</string>
     <string name="enter_to_getter_text">Вход для отдающего</string>
@@ -80,4 +80,16 @@
     <string name="getter_creating_title">Введите название вашего объявления</string>
     <string name="error">Пароль введен некорректно, либо такого пользователя не существует</string>
     <string name="getter_result_list">Итоговый набор продуктов:</string>
+    <string name="connect_to_this_shop_market_map_text">Прикрепиться к этому магазину</string>
+    <string name="edit_profile_data_text">Здесь можно редактировать ваш профиль:</string>
+    <string name="login_hint">Логин</string>
+    <string name="telephone_hint">Телефон</string>
+    <string name="enter_existing_password_hint">Введите существующий пароль</string>
+    <string name="new_password_hint">Новый пароль</string>
+    <string name="update_profile_data_text">Обновить данные профиля</string>
+    <string name="name_of_product_text">Название продукта</string>
+    <string name="cchoose_shop_text">Выберите магазин</string>
+    <string name="name_of_shop_text">Название магазина</string>
+    <string name="detailed_text">Подробнее</string>
+    <string name="go_over_text">Перейти</string>
 </resources>

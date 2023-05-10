@@ -5,6 +5,6 @@
     android:layout_width="wrap_content"
     android:layout_height="50dp"
     android:layout_weight="1"
-    android:textSize="18dp"
+    android:textSize="18sp"
     android:background="@color/white"
-    android:text="Выберите магазин" />
+    android:text="@string/cchoose_shop_text" />
