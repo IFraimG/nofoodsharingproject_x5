@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Покупай — Помогай</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_new_request_button">Создать новое объявление</string>
     <string name="button_navigation_first">Объявления</string>

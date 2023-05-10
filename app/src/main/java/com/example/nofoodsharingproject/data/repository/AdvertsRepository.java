@@ -5,10 +5,8 @@ import com.example.nofoodsharingproject.data.api.adverts.AdvertsApiService;
 import com.example.nofoodsharingproject.data.api.adverts.RequestDoneAdvert;
 import com.example.nofoodsharingproject.data.api.adverts.ResponseActiveAdverts;
 import com.example.nofoodsharingproject.data.api.adverts.ResponseDeleteAdvert;
-import com.example.nofoodsharingproject.fragments.getter.RequestTakingProduct;
+import com.example.nofoodsharingproject.data.api.adverts.RequestTakingProduct;
 import com.example.nofoodsharingproject.models.Advertisement;
-
-import java.util.List;
 
 import retrofit2.Call;
 

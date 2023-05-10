@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.utils;
+package com.example.nofoodsharingproject.services;
 
 import android.Manifest;
 import android.app.Activity;

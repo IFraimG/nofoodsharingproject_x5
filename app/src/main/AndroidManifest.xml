@@ -2,16 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!--  геолокация  -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 <!--    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove"/>-->
+    <!-- уведомления  -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-    <uses-permission android:name='android.permission.WAKE_LOCK'/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- наблюдение за сроком годности -->
+    <uses-permission android:name='android.permission.WAKE_LOCK'/>
 
     <application
         android:allowBackup="true"
@@ -39,20 +43,16 @@
         <activity android:name=".activities.Setter_Activity" android:exported="true" />
         <activity android:name=".activities.SetterAdvert_Activity" android:exported="true" />
         <activity android:name=".activities.Getter_Activity" android:exported="true" />
-        <!--    test    -->
-        <activity
-            android:name=".utils.CustomSearchMarkets"
-            android:configChanges="orientation|screenSize" />
 
-        <receiver android:exported="false" android:name=".utils.LocationUpdateReceiver" >
+        <receiver android:exported="false" android:name=".services.LocationUpdateReceiver" >
             <intent-filter>
                 <action android:name="com.example.nofoodsharingproject.LOCATION_READY" />
             </intent-filter>
         </receiver>
-        <receiver android:name='com.example.nofoodsharingproject.utils.AlarmManagerBroadcastReceiver' />
+        <receiver android:name='com.example.nofoodsharingproject.services.AlarmManagerBroadcastReceiver' />
 
         <service
-            android:name=".utils.CustomMessagingService"
+            android:name=".services.CustomMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

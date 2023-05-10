@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.utils;
+package com.example.nofoodsharingproject.services;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -39,27 +39,27 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
     public void SetAlarm(Context context)
     {
-        AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
-        intent.putExtra(ONE_TIME, Boolean.FALSE);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
-        //After after 5 seconds
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 5 , pi);
+//        AlarmManager am = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+//        Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
+//        intent.putExtra(ONE_TIME, Boolean.FALSE);
+//        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, );
+//        //After after 5 seconds
+//        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 5 , pi);
     }
 
     public void CancelAlarm(Context context)
     {
-        Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
-        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(sender);
+//        Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
+//        PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
+//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//        alarmManager.cancel(sender);
     }
 
     public void setOnetimeTimer(Context context){
-        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
-        intent.putExtra(ONE_TIME, Boolean.TRUE);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
-        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pi);
+//        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+//        Intent intent = new Intent(context, AlarmManagerBroadcastReceiver.class);
+//        intent.putExtra(ONE_TIME, Boolean.TRUE);
+//        PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
+//        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pi);
     }
 }

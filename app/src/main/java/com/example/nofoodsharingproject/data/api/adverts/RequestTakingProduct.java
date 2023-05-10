@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.fragments.getter;
+package com.example.nofoodsharingproject.data.api.adverts;
 
 import com.google.gson.annotations.SerializedName;
 

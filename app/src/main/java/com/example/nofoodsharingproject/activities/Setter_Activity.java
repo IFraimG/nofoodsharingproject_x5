@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -21,17 +20,14 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.nofoodsharingproject.BuildConfig;
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.databinding.ActivityMainBinding;
 import com.example.nofoodsharingproject.databinding.ActivitySetterBinding;
 import com.example.nofoodsharingproject.utils.DateNowChecker;
-import com.example.nofoodsharingproject.utils.LocationUpdateReceiver;
+import com.example.nofoodsharingproject.services.LocationUpdateReceiver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.yandex.mapkit.MapKitFactory;
-
-import java.util.Set;
 
 public class Setter_Activity extends AppCompatActivity {
     NavController navController;

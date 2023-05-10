@@ -26,27 +26,6 @@
         android:id="@+id/getter_advert_input_title"
         android:hint="@string/getter_creating_title" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/style1"
-        android:textColor="@color/white"
-        android:text="@string/re_text"
-        android:id="@+id/re_advertisment"
-        android:textSize="12sp"
-        android:layout_gravity="center|top"
-        android:layout_marginTop="150dp" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:textSize="10sp"
-        android:textColor="@color/grey_500"
-        android:layout_marginTop="205dp"
-        android:text="@string/or_text"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

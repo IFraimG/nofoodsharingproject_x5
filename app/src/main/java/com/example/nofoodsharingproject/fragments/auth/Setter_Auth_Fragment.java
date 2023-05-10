@@ -24,6 +24,7 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpResponseI;
 import com.example.nofoodsharingproject.data.repository.AuthRepository;
 import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.utils.ValidateUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -107,16 +108,15 @@ public class Setter_Auth_Fragment extends Fragment {
     }
 
     public boolean validate() {
-        String regexPhone = "^\\+?[0-9\\-\\s]*$";
-        if (!phone.getText().toString().matches(regexPhone)) {
+        if (!ValidateUser.validatePhone(phone.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
             return false;
         }
-        if (login.getText().toString().length() < 4) {
+        if (!ValidateUser.validateLogin(login.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
             return false;
         }
-        if (password.getText().toString().length() < 8) {
+        if (!ValidateUser.validatePassword(password.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
             return false;
         }

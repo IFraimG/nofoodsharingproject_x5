@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.utils;
+package com.example.nofoodsharingproject.services;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 

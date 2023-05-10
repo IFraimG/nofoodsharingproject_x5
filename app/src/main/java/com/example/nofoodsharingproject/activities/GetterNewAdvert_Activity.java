@@ -43,6 +43,14 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
             "Белокочанная капуста", "Морковь", "Яблоки", "Свинина", "Баранина", "Курица"};
     private final List<String> userProductItems = new ArrayList<String>();
     private ActivityGetterCreateNewAdvertismentBinding binding;
+    private Button button_ready;
+    private Button button_back;
+    private ListView listViewChoose;
+    private ListView listViewChoosenItems;
+    private EditText titleAdvert;
+    private ArrayAdapter<String> arrayAdapterChoose;
+    private ArrayAdapter<String> arrayAdapterChoosenItems;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,109 +58,88 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
         binding = ActivityGetterCreateNewAdvertismentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Button button_ready = binding.readyToCreate;
-        Button button_back = binding.buttonBack;
-        Button button_re = binding.reAdvertisment;
-        ListView listViewChoose = binding.productChoice;
-        ListView listViewChoosenItems = binding.productChoosenItems;
-        EditText titleAdvert = binding.getterAdvertInputTitle;
+        button_ready = binding.readyToCreate;
+        button_back = binding.buttonBack;
+        listViewChoose = binding.productChoice;
+        listViewChoosenItems = binding.productChoosenItems;
+        titleAdvert = binding.getterAdvertInputTitle;
 
-        ArrayAdapter<String> arrayAdapterChoose = new ArrayAdapter<String>(this, R.layout.item_getter_product_name, this.productItems);
-        ArrayAdapter<String> arrayAdapterChoosenItems = new ArrayAdapter<String>(this, R.layout.item_getter_product_done_name, this.userProductItems);
+        arrayAdapterChoose = new ArrayAdapter<String>(this, R.layout.item_getter_product_name, this.productItems);
+        arrayAdapterChoosenItems = new ArrayAdapter<String>(this, R.layout.item_getter_product_done_name, this.userProductItems);
 
         listViewChoose.setAdapter(arrayAdapterChoose);
         listViewChoosenItems.setAdapter(arrayAdapterChoosenItems);
 
         listViewChoose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String result = productItems[position];
-                if (userProductItems.size() >= 5) {
-                    Toast.makeText(GetterNewAdvert_Activity.this, "Вы не можете добавлять больше 5 продуктов", Toast.LENGTH_SHORT).show();
-                } else if (!userProductItems.contains(result)) {
-                    userProductItems.add(result);
-                    arrayAdapterChoosenItems.notifyDataSetChanged();
-//                    Snackbar.make(getCurrentFocus(), "Добавлено!", Snackbar.LENGTH_SHORT).show();
-                    Toast.makeText(GetterNewAdvert_Activity.this, "Добавлено!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(GetterNewAdvert_Activity.this, "Вы уже добавили этот продукт", Toast.LENGTH_SHORT).show();
-                }
-            }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { chooseItem(position); }
         });
 
-        // пофиксить удаление
         listViewChoosenItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String result = productItems[position];
-                if (userProductItems.contains(result)) {
-                    for (int i = 0; i < userProductItems.size(); i++) {
-                        if (userProductItems.get(i).equals(result)) {
-                            userProductItems.remove(i);
-                            arrayAdapterChoosenItems.notifyDataSetChanged();
-                            break;
-                        }
-                    }
-                    Toast.makeText(GetterNewAdvert_Activity.this, "Удалено!", Toast.LENGTH_SHORT).show();
-                }
+                userProductItems.remove(position);
+                arrayAdapterChoosenItems.notifyDataSetChanged();
+
+                Toast.makeText(GetterNewAdvert_Activity.this, "Удалено!", Toast.LENGTH_SHORT).show();
             }
         });
 
         button_back.setOnClickListener(View -> finish());
-
-
-        button_ready.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (titleAdvert.getText().toString().length() == 0) {
-                    Toast.makeText(GetterNewAdvert_Activity.this, "Введите название!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Getter result = getUserInfo();
-                    Advertisement advertisement = new Advertisement(titleAdvert.getText().toString(), result.getX5_Id(), result.getLogin());
-                    advertisement.setGettingProductID(Advertisement.generateID());
-                    if (userProductItems.size() > 0) advertisement.setListProductsCustom(userProductItems);
-
-                    button_ready.setEnabled(false);
-                    AdvertsRepository.createAdvert(advertisement).enqueue(new Callback<Advertisement>() {
-                        @Override
-                        public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                            Advertisement result = response.body();
-                            if (response.code() == 400) {
-                                Toast.makeText(GetterNewAdvert_Activity.this, "Возникли проблемы. Попробуйте еще раз!", Toast.LENGTH_SHORT).show();
-                                button_ready.setEnabled(true);
-                            } else {
-                                Toast.makeText(getApplicationContext(),
-                                        R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Advertisement> call, Throwable t) {
-                            button_ready.setEnabled(true);
-                            Toast.makeText(getApplicationContext(),
-                                    R.string.smth_not_good, Toast.LENGTH_SHORT).show();
-                            t.printStackTrace();
-                        }
-                    });
-                }
-            }
-        });
-
-
-
-        button_re.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //ОТПРАВИТЬ ДАНЫЕ НА СЕРВЕР
-                Toast.makeText(getApplicationContext(),
-                        R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
+        button_ready.setOnClickListener(View -> pushData());
     }
 
-    public Getter getUserInfo() {
+    private void pushData() {
+        if (userProductItems.size() == 0)
+            Toast.makeText(GetterNewAdvert_Activity.this, "Добавьте в список хотя бы один продукт", Toast.LENGTH_SHORT).show();
+        else if (titleAdvert.getText().toString().length() == 0) {
+            Toast.makeText(GetterNewAdvert_Activity.this, "Введите название!", Toast.LENGTH_SHORT).show();
+        } else {
+            Getter result = getUserInfo();
+            Advertisement advertisement = new Advertisement(titleAdvert.getText().toString(), result.getX5_Id(), result.getLogin());
+            advertisement.setGettingProductID(Advertisement.generateID());
+            if (userProductItems.size() > 0) advertisement.setListProductsCustom(userProductItems);
+
+            button_ready.setEnabled(false);
+            AdvertsRepository.createAdvert(advertisement).enqueue(new Callback<Advertisement>() {
+                @Override
+                public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
+                    Advertisement result = response.body();
+                    if (response.code() == 400) {
+                        Toast.makeText(GetterNewAdvert_Activity.this, "Возникли проблемы. Попробуйте еще раз!", Toast.LENGTH_SHORT).show();
+                        button_ready.setEnabled(true);
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Advertisement> call, Throwable t) {
+                    button_ready.setEnabled(true);
+                    Toast.makeText(getApplicationContext(),
+                            R.string.smth_not_good, Toast.LENGTH_SHORT).show();
+                    t.printStackTrace();
+                }
+            });
+        }
+    }
+
+    private void chooseItem(int position) {
+        String result = productItems[position];
+        if (userProductItems.size() > 3) {
+            Toast.makeText(GetterNewAdvert_Activity.this, "Вы не можете добавлять больше 3 продуктов", Toast.LENGTH_SHORT).show();
+        } else if (!userProductItems.contains(result)) {
+            userProductItems.add(result);
+            arrayAdapterChoosenItems.notifyDataSetChanged();
+            Toast.makeText(GetterNewAdvert_Activity.this, "Добавлено!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(GetterNewAdvert_Activity.this, "Вы уже добавили этот продукт", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private Getter getUserInfo() {
         try {
             MasterKey masterKey = new MasterKey.Builder(getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)

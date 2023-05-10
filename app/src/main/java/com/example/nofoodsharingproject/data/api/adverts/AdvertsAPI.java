@@ -1,10 +1,7 @@
 package com.example.nofoodsharingproject.data.api.adverts;
 
 import com.example.nofoodsharingproject.data.repository.ResponseHistoryAdverts;
-import com.example.nofoodsharingproject.fragments.getter.RequestTakingProduct;
 import com.example.nofoodsharingproject.models.Advertisement;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
