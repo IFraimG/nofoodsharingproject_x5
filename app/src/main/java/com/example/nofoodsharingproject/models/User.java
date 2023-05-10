@@ -22,6 +22,10 @@ public abstract class User {
     @Expose
     String marketName;
 
+    @SerializedName("fcmToken")
+    @Expose
+    String tokenFCM;
+
     public User() {}
     public User(String phone, String login, String password) {
         this.login = login;
@@ -40,6 +44,22 @@ public abstract class User {
 
     public String getLogin() {
         return login;
+    }
+
+    public void setMarketName(String marketName) {
+        this.marketName = marketName;
+    }
+
+    public String getMarketName() {
+        return marketName;
+    }
+
+    public void setTokenFCM(String tokenFCM) {
+        this.tokenFCM = tokenFCM;
+    }
+
+    public String getTokenFCM() {
+        return tokenFCM;
     }
 
     public String getPassword() {

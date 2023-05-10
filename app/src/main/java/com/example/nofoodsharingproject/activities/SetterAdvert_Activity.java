@@ -17,8 +17,10 @@ import androidx.security.crypto.MasterKey;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.adverts.RequestDoneAdvert;
+import com.example.nofoodsharingproject.data.api.notifications.ResponseFCMToken;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
-import com.example.nofoodsharingproject.databinding.ActivityMainBinding;
+import com.example.nofoodsharingproject.data.repository.GetterRepository;
+import com.example.nofoodsharingproject.data.repository.NotificationRepository;
 import com.example.nofoodsharingproject.databinding.ActivitySetterAdvertBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 
@@ -27,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +44,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
     private TextView authorName;
     private TextView title;
     private TextView dateAdvert;
+    private String fcmToken;
 
     private ArrayAdapter<String> productsAdapter;
 
@@ -96,6 +100,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                     acceptBtn.setEnabled(true);
                     Toast.makeText(getApplicationContext(), R.string.smth_not_good_try_again, Toast.LENGTH_SHORT).show();
                 } else {
+                    getFCMTokenByUserID();
                     finish();
                 }
             }
@@ -106,6 +111,51 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void getFCMTokenByUserID() {
+        GetterRepository.getFCMtoken(advertisement.getAuthorID()).enqueue(new Callback<ResponseFCMToken>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
+                if (response.code() == 400) Toast.makeText(SetterAdvert_Activity.this, "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                if (response.code() == 200) {
+                    fcmToken = response.body().getFcmToken();
+                    sendNotification();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseFCMToken> call, Throwable t) {
+                Toast.makeText(SetterAdvert_Activity.this, "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void sendNotification() {
+            NotificationRepository.requestNotifyDonateCall(fcmToken, "На ваше объявление откликнулись!", "Заберите продукты как можно скорее.").enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(SetterAdvert_Activity.this, "Уведомление успешно отправлено!", Toast.LENGTH_SHORT).show();
+                    } else Toast.makeText(SetterAdvert_Activity.this, "Возникла проблема", Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(SetterAdvert_Activity.this, "Возникла проблема", Toast.LENGTH_SHORT).show();
+                    t.printStackTrace();
+                }
+            });
+
+//            RequestBody requestBody = RequestBody.create(JSON, notification.toString());
+//            Request request = new Request.Builder()
+//                    .url("https://fcm.googleapis.com/fcm/send")
+//                    .post(requestBody)
+//                    .addHeader("Content-Type", "application/json")
+//                    .addHeader("Authorization", "key=<YOUR_SERVER_KEY>")
+//                    .build();
     }
 
     private String getSetterID() {

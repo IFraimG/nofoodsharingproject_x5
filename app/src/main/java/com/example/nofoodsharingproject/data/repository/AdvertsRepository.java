@@ -6,6 +6,7 @@ import com.example.nofoodsharingproject.data.api.adverts.RequestDoneAdvert;
 import com.example.nofoodsharingproject.data.api.adverts.ResponseActiveAdverts;
 import com.example.nofoodsharingproject.data.api.adverts.ResponseDeleteAdvert;
 import com.example.nofoodsharingproject.data.api.adverts.RequestTakingProduct;
+import com.example.nofoodsharingproject.data.api.adverts.ResponseHistoryAdverts;
 import com.example.nofoodsharingproject.models.Advertisement;
 
 import retrofit2.Call;

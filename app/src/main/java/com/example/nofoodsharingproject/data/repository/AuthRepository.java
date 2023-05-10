@@ -14,8 +14,8 @@ public class AuthRepository {
         return AuthApiService.getInstance().getterLogin(new SignUpInformation(phone, login, password));
     }
 
-    public static Call<SignUpResponseI<Getter>> getterRegistration(String phone, String login, String password) {
-        return AuthApiService.getInstance().getterRegistration(new SignUpInformation(phone, login, password));
+    public static Call<SignUpResponseI<Getter>> getterRegistration(String phone, String login, String password, String tokenFCM) {
+        return AuthApiService.getInstance().getterRegistration(new SignUpInformation(phone, login, password, tokenFCM));
     }
 
     public static Call<CheckAuthI> checkAuthGetter(String token) {
@@ -26,8 +26,8 @@ public class AuthRepository {
         return AuthApiService.getInstance().setterLogin(new SignUpInformation(login, password));
     }
 
-    public static Call<SignUpResponseI<Setter>> setterRegistration(String phone, String login, String password) {
-        return AuthApiService.getInstance().setterRegistration(new SignUpInformation(phone, login, password));
+    public static Call<SignUpResponseI<Setter>> setterRegistration(String phone, String login, String password, String tokenFCM) {
+        return AuthApiService.getInstance().setterRegistration(new SignUpInformation(phone, login, password, tokenFCM));
     }
 
     public static Call<CheckAuthI> checkAuthSetter(String token) {

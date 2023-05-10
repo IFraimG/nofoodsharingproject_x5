@@ -12,41 +12,41 @@ import java.util.Random;
 public class Advertisement {
     @SerializedName("title")
     @Expose
-    public String title;
+    private String title;
 
-    public ArrayList<Product> fullListProducts;
+    private ArrayList<Product> fullListProducts;
 
     @SerializedName("listProducts")
     @Expose
-    public String[] listProducts;
+    private String[] listProducts;
 
     @SerializedName("advertsID")
     @Expose
-    public String advertsID;
+    private String advertsID;
 
     @SerializedName("authorName")
     @Expose
-    public String authorName;
+    private String authorName;
 
     @SerializedName("gettingProductID")
     @Expose
-    public String gettingProductID;
+    private String gettingProductID;
 
     @SerializedName("authorID")
     @Expose
-    public final String authorID;
+    private final String authorID;
 
     @SerializedName("dateOfCreated")
     @Expose
-    public String dateOfCreated;
+    private String dateOfCreated;
 
     @SerializedName("dateOfExpires")
     @Expose
-    public String dateOfExpires;
+    private String dateOfExpires;
 
     @SerializedName("isSuccessDone")
     @Expose
-    public boolean isDone = false;
+    private boolean isDone = false;
 
     public Advertisement(String title, String authorID, String authorName) {
         this.title = title;
@@ -75,7 +75,6 @@ public class Advertisement {
 //        this.adversID = adversID;
 //        this.gettingProductID = gettingProductID;
 //    }
-
 
     public boolean isDone() {
         return isDone;

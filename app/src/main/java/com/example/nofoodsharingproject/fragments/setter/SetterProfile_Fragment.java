@@ -25,11 +25,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
-import com.example.nofoodsharingproject.data.repository.ResponseHistoryAdverts;
+import com.example.nofoodsharingproject.data.api.adverts.ResponseHistoryAdverts;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Setter;
 
@@ -129,7 +128,7 @@ public class SetterProfile_Fragment extends Fragment {
 
                     advertisementsHistory = new String[result.length];
                     for (int i = 0; i < result.length; i++) {
-                        advertisementsHistory[i] = result[i].getTitle() + " - " + result[i].getListProducts().length + " продукта - " + result[i].dateOfCreated;
+                        advertisementsHistory[i] = result[i].getTitle() + " - " + result[i].getListProducts().length + " продукта - " + result[i].getDateOfCreated();
                     }
 
                     arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advertisementsHistory);

@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void redirectToAuth() {
-//        Toast.makeText(getApplicationContext(), "Вы не авторизованы", Toast.LENGTH_SHORT).show();
         Intent intentAuth = new Intent(getApplicationContext(), MainAuth_Activity.class);
         startActivity(intentAuth);
         finish();

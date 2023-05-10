@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.security.crypto.EncryptedSharedPreferences;
@@ -23,6 +24,9 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpResponseI;
 import com.example.nofoodsharingproject.data.repository.AuthRepository;
 import com.example.nofoodsharingproject.models.Getter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,12 +38,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Getter_Auth_Fragment extends Fragment {
-    EditText phone = null;
-    EditText login = null;
-    EditText password = null;
-    Button btnSignup = null;
-    Button btnLogin = null;
-    ImageView btnBack = null;
+    private EditText phone = null;
+    private EditText login = null;
+    private EditText password = null;
+    private Button btnSignup = null;
+    private Button btnLogin = null;
+    private ImageView btnBack = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,8 @@ public class Getter_Auth_Fragment extends Fragment {
         btnSignup = view.findViewById(R.id.auth_getter_create);
         btnBack = view.findViewById(R.id.auth_getter_signup_back);
 
-        btnSignup.setOnClickListener(View -> signup());
+        // сначала токен для уведомлений, затем регистрация
+        btnSignup.setOnClickListener(View -> sendToNotifyAccount());
         btnLogin.setOnClickListener(View -> login());
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +106,7 @@ public class Getter_Auth_Fragment extends Fragment {
             editor.putString("phone", result.user.getPhone());
             editor.putString("X5_id", result.user.getX5_Id());
             editor.putString("token", result.token);
+            editor.putString("FCMtoken", result.user.getTokenFCM());
             editor.apply();
 
             Intent intent = new Intent(getContext(), MainActivity.class);
@@ -146,9 +152,9 @@ public class Getter_Auth_Fragment extends Fragment {
         }
     }
 
-    public void signup() {
+    public void signup(String tokenFCM) {
         btnSignup.setEnabled(false);
-        AuthRepository.getterRegistration(phone.getText().toString(), login.getText().toString(), password.getText().toString()).enqueue(new Callback<SignUpResponseI<Getter>>() {
+        AuthRepository.getterRegistration(phone.getText().toString(), login.getText().toString(), password.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                 SignUpResponseI<Getter> result = response.body();
@@ -162,6 +168,20 @@ public class Getter_Auth_Fragment extends Fragment {
             public void onFailure(Call<SignUpResponseI<Getter>> call, Throwable t) {
                 btnSignup.setEnabled(true);
                 t.printStackTrace();
+            }
+        });
+    }
+
+    private void sendToNotifyAccount() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("err", "Fetching FCM registration token failed", task.getException());
+                    signup("");
+                    return;
+                }
+                signup(task.getResult());
             }
         });
     }

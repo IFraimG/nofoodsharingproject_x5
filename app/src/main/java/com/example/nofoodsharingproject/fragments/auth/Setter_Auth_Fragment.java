@@ -39,12 +39,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Setter_Auth_Fragment extends Fragment {
-    EditText phone = null;
-    EditText login = null;
-    EditText password = null;
-    Button btnLogin = null;
-    Button btnRegistration = null;
-    ImageView btnBack = null;
+    private EditText phone = null;
+    private EditText login = null;
+    private EditText password = null;
+    private Button btnLogin = null;
+    private Button btnRegistration = null;
+    private ImageView btnBack = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,19 +77,19 @@ public class Setter_Auth_Fragment extends Fragment {
             }
         });
 
-        btnLogin.setOnClickListener(View -> signup());
+        btnLogin.setOnClickListener(View -> sendToNotifyAccount());
 
         return view;
     }
 
-    public void signup() {
+    public void signup(String tokenFCM) {
         if (validate()) {
             btnLogin.setEnabled(false);
-            AuthRepository.setterRegistration(phone.getText().toString(), login.getText().toString(), password.getText().toString()).enqueue(new Callback<SignUpResponseI<Setter>>() {
+            AuthRepository.setterRegistration(phone.getText().toString(), login.getText().toString(), password.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
                     SignUpResponseI<Setter> result = response.body();
-                    if (response.code() == 401 || result.token.length() == 0) {
+                    if (response.code() == 401 || result.token == null) {
                         Toast.makeText(getContext(), "Произошла ошибка при авторизации. Попробуйте еще раз!", Toast.LENGTH_LONG).show();
                         btnLogin.setEnabled(true);
                     } else if (response.code() == 400 || result.token.length() == 0) {
@@ -139,9 +139,9 @@ public class Setter_Auth_Fragment extends Fragment {
             editor.putString("X5_id", result.user.getX5_Id());
             editor.putString("auth_id", result.user.getAuthID());
             editor.putString("token", result.token);
+            editor.putString("FCMtoken", result.user.getTokenFCM());
             editor.apply();
 
-            sendToNotifyAccount();
             startActivity(intent);
             getActivity().finish();
 
@@ -157,12 +157,10 @@ public class Setter_Auth_Fragment extends Fragment {
             public void onComplete(@NonNull Task<String> task) {
                 if (!task.isSuccessful()) {
                     Log.w("err", "Fetching FCM registration token failed", task.getException());
+                    signup("");
                     return;
                 }
-
-                String token = task.getResult();
-                Log.d("msg", token);
-//                Toast.makeText(getContext(), token, Toast.LENGTH_SHORT).show();
+                signup(task.getResult());
             }
         });
     }

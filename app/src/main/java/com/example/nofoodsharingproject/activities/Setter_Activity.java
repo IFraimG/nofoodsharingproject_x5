@@ -36,35 +36,22 @@ public class Setter_Activity extends AppCompatActivity {
     private PendingIntent pendingIntent;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        MapKitFactory.setApiKey(BuildConfig.apiKey);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySetterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        MapKitFactory.setApiKey(BuildConfig.apiKey);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_setter_fragment);
         navController = navHostFragment.getNavController();
 
         BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.setter_navigation);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("token", "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
-
-                        String token = task.getResult();
-                        Log.d("token", token);
-                        Log.d("token", token);
-                        Log.d("token", token);
-                        Log.d("token", token);
-                        Log.d("token", token);
-                        Toast.makeText(Setter_Activity.this, token, Toast.LENGTH_SHORT).show();
-                    }
-                });
 
         DateNowChecker dateNowChecker = new DateNowChecker();
         if (dateNowChecker.getHour() >= 10 && dateNowChecker.getHour() < 21) {
