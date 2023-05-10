@@ -16,7 +16,7 @@ public interface NotificationAPI {
             "Content-Type: application/json",
             "Authorization: key=" + BuildConfig.fmcKey
     })
-    @POST("fmc/send")
+    @POST("fcm/send")
     Call<ResponseBody> notifyUserAboutDonate(@Body FMCMessage message);
 
 }
