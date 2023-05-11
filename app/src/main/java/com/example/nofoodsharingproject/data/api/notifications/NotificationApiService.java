@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.api.getter;
+package com.example.nofoodsharingproject.data.api.notifications;
 
 import com.example.nofoodsharingproject.data.RetrofitNotificationService;
 import com.example.nofoodsharingproject.data.api.notifications.NotificationAPI;

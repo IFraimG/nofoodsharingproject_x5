@@ -1,8 +1,11 @@
 package com.example.nofoodsharingproject.models;
 
+import com.yandex.mapkit.geometry.Point;
+
+import java.util.Objects;
+
 public class Market {
-    double latitude;
-    double longitude;
+    Point point;
     String title;
     public boolean isReal = true;
 
@@ -11,20 +14,25 @@ public class Market {
         this.title = title;
     }
     public Market(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.point = new Point(latitude, longitude);
     }
     public Market(String title, double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.point = new Point(latitude, longitude);
         this.title = title;
     }
 
     public Market(String title, double latitude, double longitude, boolean isReal) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.point = new Point(latitude, longitude);
         this.title = title;
         this.isReal = isReal;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
     }
 
     public void setReal(boolean real) {
@@ -36,19 +44,11 @@ public class Market {
     }
 
     public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+        return point.getLatitude();
     }
 
     public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+        return point.getLongitude();
     }
 
     public String getTitle() {
@@ -57,5 +57,11 @@ public class Market {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Market market = (Market) o;
+        return Objects.equals(point, market.point);
     }
 }

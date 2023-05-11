@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PointF;
 import android.location.LocationManager;
 import android.os.Bundle;
 
@@ -36,6 +38,15 @@ import com.example.nofoodsharingproject.data.api.map.MarketTitleResponse;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.GeoObjectCollection;
 import com.yandex.mapkit.MapKitFactory;
+import com.yandex.mapkit.RequestPoint;
+import com.yandex.mapkit.RequestPointType;
+import com.yandex.mapkit.directions.DirectionsFactory;
+import com.yandex.mapkit.directions.driving.DrivingOptions;
+import com.yandex.mapkit.directions.driving.DrivingRoute;
+import com.yandex.mapkit.directions.driving.DrivingRouter;
+import com.yandex.mapkit.directions.driving.DrivingSession;
+import com.yandex.mapkit.directions.driving.DrivingSummarySession;
+import com.yandex.mapkit.directions.driving.VehicleOptions;
 import com.yandex.mapkit.geometry.Point;
 import com.yandex.mapkit.layers.GeoObjectTapEvent;
 import com.yandex.mapkit.layers.GeoObjectTapListener;
@@ -43,10 +54,16 @@ import com.yandex.mapkit.layers.ObjectEvent;
 import com.yandex.mapkit.map.CameraListener;
 import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.map.CameraUpdateReason;
+import com.yandex.mapkit.map.CompositeIcon;
 import com.yandex.mapkit.map.GeoObjectSelectionMetadata;
+import com.yandex.mapkit.map.IconStyle;
 import com.yandex.mapkit.map.InputListener;
 import com.yandex.mapkit.map.Map;
+import com.yandex.mapkit.map.MapObject;
 import com.yandex.mapkit.map.MapObjectCollection;
+import com.yandex.mapkit.map.MapObjectTapListener;
+import com.yandex.mapkit.map.PlacemarkMapObject;
+import com.yandex.mapkit.map.RotationType;
 import com.yandex.mapkit.map.VisibleRegionUtils;
 import com.yandex.mapkit.mapview.MapView;
 import com.yandex.mapkit.search.Response;
@@ -67,13 +84,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 
-// MapObjectTapListener потом добавить
-public class MarketsMap_Fragment extends Fragment implements Session.SearchListener, CameraListener,
-        GeoObjectTapListener, InputListener, UserLocationObjectListener {
+// GeoObjectTapListener, CameraListener не используются
+public class MarketsMap_Fragment extends Fragment implements Session.SearchListener,
+        UserLocationObjectListener, MapObjectTapListener, DrivingSession.DrivingRouteListener {
 
     MapView mapView;
     int firstPermission;
@@ -81,7 +101,7 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
     private SearchManager searchManager;
     private LocationManager locationManager;
     private CustomLocationListener locationListener;
-    private Session searchSession;
+//    private Session searchSession;
     private UserLocationLayer userLocationLayer;
 
     private Button setMarketBtn;
@@ -90,29 +110,40 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
     private String choosenMarket;
     ArrayAdapter<String> adapter;
     private int oldPosition = -1;
+    private MapObjectCollection mapObjects;
     private String[] listMarkets;
+    private DrivingRouter drivingRouter;
+    private DrivingSession drivingSession;
+
     private final Market[] fullListMarkets = new Market[]{
             new Market("Выберите магазин", 0, 0, false),
             new Market("Большая Андроньевская улица, 22", 55.740813, 37.670078),
-            new Market("Большая Андроньевская улицаd, 22", 55.740813, 37.670078),
-            new Market("Большая Андроfeньевская улицeefа, 22", 55.740813, 37.670078),
-            new Market("Большая Андроньевсwdwdкая уwwлица, 22", 55.740813, 37.670078),
-            new Market("Большая Андроньfefefeевская улица, 22", 55.740813, 37.670078),
-            new Market("Большая Андроньевсefedкая улица, 22", 55.740813, 37.670078)
+            new Market("1, микрорайон Парковый, Котельники", 55.660216, 37.875793),
+            new Market("Ковров пер., 8, стр. 1", 55.740582, 37.681854),
+            new Market("Нижегородская улица, 34", 55.736351, 37.695708)
     };
 
-    // координаты экземпляра Пятерочки 55.740813, 37.670078
+    private final List<Point> marketPoints = Arrays.asList(
+            fullListMarkets[0].getPoint(),
+            fullListMarkets[1].getPoint(),
+            fullListMarkets[2].getPoint(),
+            fullListMarkets[3].getPoint(),
+            fullListMarkets[4].getPoint()
+    );;
+
     final Point moscowPoint = new Point(55.71989101308894, 37.5689757769603);
     final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         requestPermissions();
 
         MapKitFactory.initialize(getContext());
         SearchFactory.initialize(getContext());
+        DirectionsFactory.initialize(getContext());
+
+        super.onCreate(savedInstanceState);
+
     }
     @Override
     public void onStart() {
@@ -238,13 +269,13 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
 
     @SuppressLint("MissingPermission")
     private void setUpLocationListener() {
-//        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-//        locationListener = new CustomLocationListener();
-//
-//        if (checkLocationPermissions()) {
-//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 25,  locationListener);
-//            locationListener.setLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
-//        }
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new CustomLocationListener();
+
+        if (checkLocationPermissions()) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 25,  locationListener);
+            locationListener.setLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+        }
     }
 
     private void initMap() {
@@ -253,12 +284,8 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
         searchManager = SearchFactory.getInstance().createSearchManager(SearchManagerType.COMBINED);
 
         setUpLocationListener();
-        mapView.getMap().addCameraListener(this);
-        mapView.getMap().addTapListener(this);
-        mapView.getMap().addInputListener(this);
 
         MapKitFactory.getInstance().resetLocationManagerToDefault();
-
         mapView.getMap().setRotateGesturesEnabled(false);
 
         userLocationLayer = MapKitFactory.getInstance().createUserLocationLayer(mapView.getMapWindow());
@@ -266,21 +293,30 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
         userLocationLayer.setHeadingEnabled(true);
         userLocationLayer.setObjectListener(this);
 
+        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter();
+        mapObjects = mapView.getMap().getMapObjects().addCollection();
+
+        ImageProvider imageProvider = ImageProvider.fromResource(getContext(), R.drawable.location_on1);
+
+        for (Point point : marketPoints) {
+            PlacemarkMapObject placemark = mapObjects.addPlacemark(point, imageProvider);
+            placemark.addTapListener(this);
+        }
+
+
         if (checkLocationPermissions()) {
             try {
-//                Log.d("mapInfo", locationListener.getLocation().getLongitude() + " " + locationListener.getLocation().getLongitude());
-//                double lat = CustomLocationListener.location.getLatitude();
-//                double longt = CustomLocationListener.location.getLongitude();
+                setUpLocationListener();
+                double lat = locationListener.getLocation().getLatitude();
+                double longt = locationListener.getLocation().getLongitude();
 
-//                mapView.getMap().move(new CameraPosition(new Point(lat, longt), 14, 0, 0),  new Animation(Animation.Type.SMOOTH, 0), null);
-                this.mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
+                createRoute(new Point(lat, longt));
+
+                mapView.getMap().move(new CameraPosition(new Point(lat, longt), 14, 0, 0),  new Animation(Animation.Type.SMOOTH, 0), null);
             } catch (NullPointerException err) {
                 this.mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
             }
         } else this.mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
-
-        submitQuery("Пятёрочка");
-        submitQuery("Перекрёсток");
     }
 
     private void initListMarkets() {
@@ -296,10 +332,22 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
+    }
+
+    private void handleMarkerTap(Point point) {
+        for (int i = 0; i < fullListMarkets.length; i++) {
+            Point pointMarket = fullListMarkets[i].getPoint();
+//            if (Double.compare(fullListMarkets[i].getPoint().getLatitude(), point.getLatitude()) == 0 &&
+//                    Double.compare(fullListMarkets[i].getPoint().getLongitude(), point.getLongitude()) == 0) {
+//
+//            }
+            if (Math.abs(pointMarket.getLatitude() - point.getLatitude()) < 0.001 &&
+                    Math.abs(pointMarket.getLongitude() - point.getLongitude()) < 0.001) {
+                Toast.makeText(getContext(), "Магазин: " + fullListMarkets[i].getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private Pair<String, Boolean> defineTypeUser() {
@@ -320,17 +368,61 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
         return null;
     }
 
-    private void submitQuery(String query) {
-        searchSession = searchManager.submit(
-                query,
-                VisibleRegionUtils.toPolygon(mapView.getMap().getVisibleRegion()),
-                new SearchOptions(),
-                this
-        );
+    private void createRoute(Point myPoint) {
+        Point resPoint = marketPoints.get(0);
+        if (choosenMarket.length() == 0) {
+            double minLat = myPoint.getLatitude() - marketPoints.get(0).getLatitude();
+            double minLong = myPoint.getLongitude() - marketPoints.get(0).getLongitude();
+
+            for (int i = 1; i < marketPoints.size(); i++) {
+                double lat = myPoint.getLatitude() - marketPoints.get(0).getLatitude();
+                double longt = myPoint.getLongitude() - marketPoints.get(0).getLongitude();
+
+                if (lat < minLat && longt < minLong) {
+                    resPoint = marketPoints.get(i);
+                    minLat = lat;
+                    minLong = longt;
+                }
+            }
+        } else {
+            for (Market item: fullListMarkets) {
+                if (item.getTitle().equals(this.choosenMarket)) {
+                    resPoint = item.getPoint();
+                    break;
+                }
+            }
+        }
+
+        DrivingOptions drivingOptions = new DrivingOptions();
+        VehicleOptions vehicleOptions = new VehicleOptions();
+        ArrayList<RequestPoint> requestPoints = new ArrayList<>();
+
+        requestPoints.add(new RequestPoint(myPoint, RequestPointType.WAYPOINT, null));
+        requestPoints.add(new RequestPoint(resPoint, RequestPointType.WAYPOINT, null));
+
+        drivingSession = drivingRouter.requestRoutes(requestPoints, drivingOptions, vehicleOptions, this);
     }
 
-//    private void submitQueryWithCoords(Point point) {
-//        searchSession = searchManager.submit(point, 11, new SearchOptions(), this);
+    @Override
+    public void onDrivingRoutes(@NonNull List<DrivingRoute> list) {
+        for (DrivingRoute route : list) {
+            mapObjects.addPolyline(route.getGeometry());
+        }
+    }
+
+    @Override
+    public void onDrivingRoutesError(@NonNull Error error) {
+        Toast.makeText(getContext(), "Произошла ошибка при построении маршрута", Toast.LENGTH_SHORT).show();
+    }
+
+    // не используется
+//    private void submitQuery(String query) {
+//        searchSession = searchManager.submit(
+//                query,
+//                VisibleRegionUtils.toPolygon(mapView.getMap().getVisibleRegion()),
+//                new SearchOptions(),
+//                this
+//        );
 //    }
 
     public boolean checkLocationPermissions() {
@@ -368,40 +460,30 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
         Log.i("MapErr", errorMessage);
     }
 
-    @Override
-    public void onCameraPositionChanged(@NonNull Map map, @NonNull CameraPosition cameraPosition, @NonNull CameraUpdateReason cameraUpdateReason, boolean finished) {
-        if (finished) {
-            submitQuery("Пятёрочка");
-            submitQuery("Перекрёсток");
-        }
-    }
+//    @Override
+//    public void onCameraPositionChanged(@NonNull Map map, @NonNull CameraPosition cameraPosition, @NonNull CameraUpdateReason cameraUpdateReason, boolean finished) {
+//        if (finished) {
+////            submitQuery("Пятёрочка");
+////            submitQuery("Перекрёсток");
+//        }
+//    }
 
     // ________________ GeoObjectTapListener ________________
 
-    @Override
-    public boolean onObjectTap(@NonNull GeoObjectTapEvent geoObjectTapEvent) {
-        final GeoObjectSelectionMetadata selectionMetadata = geoObjectTapEvent
-                .getGeoObject()
-                .getMetadataContainer()
-                .getItem(GeoObjectSelectionMetadata.class);
 
-        if (selectionMetadata != null) {
-            mapView.getMap().selectGeoObject(selectionMetadata.getId(), selectionMetadata.getLayerId());
+    @Override
+    public boolean onMapObjectTap(@NonNull MapObject mapObject, @NonNull Point point) {
+        if (mapObject instanceof PlacemarkMapObject) {
+//            Log.d("msg", Double.toString(markerPoint.getLatitude()));
+//            Log.d("msg", Double.toString(markerPoint.getLatitude()));
+//            Log.d("msg", Double.toString(markerPoint.getLatitude()));
+//            Log.d("msg", Double.toString(markerPoint.getLatitude()));
+            handleMarkerTap(point);
+            return true;
         }
 
-        return selectionMetadata != null;
+        return false;
     }
-
-
-    // при нажатии на любой объект
-    @Override
-    public void onMapTap(@NonNull Map map, @NonNull Point point) {
-        mapView.getMap().deselectGeoObject();
-//        Log.i("coords", Double.toString(point.getLatitude()));
-    }
-    @Override
-    public void onMapLongTap(@NonNull Map map, @NonNull Point point) {}
-
 
 
     //________________  UserLocationObjectListener отображение метки пользователя ________________
@@ -409,22 +491,22 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
     @Override
     public void onObjectAdded(UserLocationView userLocationView) {
         //нужно
-//        userLocationLayer.setAnchor(
-//                new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.5)),
-//                new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.83)));
-//
-//        userLocationView.getArrow().setIcon(ImageProvider.fromResource(getContext(), R.drawable.location_on));
-//        CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
-//
-//        pinIcon.setIcon(
-//                "icon",
-//                ImageProvider.fromResource(getContext(), R.drawable.location_on),
-//                new IconStyle().setAnchor(new PointF(0f, 0f))
-//                        .setRotationType(RotationType.ROTATE)
-//                        .setZIndex(0f)
-//                        .setScale(1f)
-//        );
-//        userLocationView.getAccuracyCircle().setFillColor(Color.BLUE & 0x99ffffff);
+        userLocationLayer.setAnchor(
+                new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.5)),
+                new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.83)));
+
+        userLocationView.getArrow().setIcon(ImageProvider.fromResource(getContext(), R.drawable.baseline_emoji_people_24));
+        CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
+
+        pinIcon.setIcon(
+                "icon",
+                ImageProvider.fromResource(getContext(), R.drawable.baseline_emoji_people_24),
+                new IconStyle().setAnchor(new PointF(0.5f, 0.5f))
+                        .setRotationType(RotationType.ROTATE)
+                        .setZIndex(0f)
+                        .setScale(1f)
+        );
+        userLocationView.getAccuracyCircle().setFillColor(Color.BLUE & 0x99ffffff);
 
         // ненужно
 //        pinIcon.setIcon(
@@ -445,18 +527,4 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
     public void onObjectUpdated(UserLocationView view, ObjectEvent event) {
     }
 
-    // ________________ MapObjectTapListener ________________
-//
-//    @Override
-//    public boolean onMapObjectTap(@NonNull MapObject mapObject, @NonNull Point point) {
-//        GeoObject geoObject = (GeoObject) mapObject;
-//        ToponymObjectMetadata metadata = geoObject.getMetadataContainer().getItem(ToponymObjectMetadata.class);
-//        if (metadata != null) {
-//            String toponym = metadata.getFormerName();
-//            Log.i("msg",  toponym);
-//            submitQuery(toponym);
-//        }
-//
-//        return false;
-//    }
 }

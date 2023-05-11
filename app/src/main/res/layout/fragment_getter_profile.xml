@@ -65,21 +65,26 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:hint="@string/login_hint"
-                    android:textColorLink="@color/green_pastel"
+                    android:minHeight="64dp"
+                    android:inputType="text"
                     android:textSize="15sp" />
                 <EditText
                     android:id="@+id/getter_profile_edit_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
+                    android:minHeight="64dp"
                     android:hint="@string/telephone_hint"
+                    android:inputType="phone"
                     android:layout_marginTop="90dp" />
                 <EditText
                     android:id="@+id/getter_profile_edit_old_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
+                    android:minHeight="64dp"
                     android:layout_marginTop="140dp"
+                    android:inputType="textPassword"
                     android:hint="@string/enter_existing_password_hint"/>
 
                 <EditText
@@ -87,7 +92,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
+                    android:minHeight="64dp"
                     android:layout_marginTop="190dp"
+                    android:inputType="textPassword"
                     android:hint="@string/new_password_hint"/>
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -95,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
-                    android:layout_marginTop="380dp"
+                    android:layout_marginTop="280dp"
                     android:background="@drawable/style2"
                     android:text="@string/update_profile_data_text"
                     android:layout_gravity="center|bottom"

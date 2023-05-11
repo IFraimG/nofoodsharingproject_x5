@@ -143,7 +143,7 @@ public class Setter_Auth_Fragment extends Fragment {
             editor.apply();
 
             startActivity(intent);
-            getActivity().finish();
+//            getActivity().finish();
 
         } catch (IOException | GeneralSecurityException err) {
             Log.e("auth error", err.toString());

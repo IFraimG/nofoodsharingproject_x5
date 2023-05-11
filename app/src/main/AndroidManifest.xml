@@ -39,9 +39,9 @@
         <activity android:exported="true" android:name=".activities.MainAuth_Activity">
         </activity>
         <activity android:name=".activities.GetterNewAdvert_Activity" android:exported="true" />
-        <activity android:name=".activities.Setter_Activity" android:exported="true" />
+        <activity android:configChanges="orientation|screenSize" android:name=".activities.Setter_Activity" android:exported="true" />
         <activity android:name=".activities.SetterAdvert_Activity" android:exported="true" />
-        <activity android:name=".activities.Getter_Activity" android:exported="true" />
+        <activity android:configChanges="orientation|screenSize" android:name=".activities.Getter_Activity" android:exported="true" />
 
         <receiver android:exported="false" android:name=".services.LocationUpdateReceiver" >
             <intent-filter>

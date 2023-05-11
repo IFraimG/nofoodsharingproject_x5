@@ -81,7 +81,7 @@ public class Setter_LoginAuth_Fragment extends Fragment {
                         saveData(response.body());
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         startActivity(intent);
-                        getActivity().finish();
+//                        getActivity().finish();
                     }
                 }
 

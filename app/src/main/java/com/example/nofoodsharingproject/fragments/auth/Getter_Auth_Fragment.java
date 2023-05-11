@@ -111,7 +111,7 @@ public class Getter_Auth_Fragment extends Fragment {
 
             Intent intent = new Intent(getContext(), MainActivity.class);
             startActivity(intent);
-            getActivity().finish();
+//            getActivity().finish();
 
         } catch (IOException | GeneralSecurityException err) {
             Log.e("auth error", err.toString());
