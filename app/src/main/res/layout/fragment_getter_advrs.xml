@@ -49,11 +49,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:text="@string/adress_shop_text_hint"
                 android:id="@+id/address_shop"
                 android:visibility="invisible"
-                android:layout_marginRight="5dp"/>
+                android:layout_marginEnd="5dp"/>
         </LinearLayout>
     </FrameLayout>
 
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/timer_to_advert"
-            android:layout_marginLeft="2.5dp"
+            android:layout_marginStart="2.5dp"
             android:text="@string/time_text_hint"/>
 
     </LinearLayout>
@@ -101,8 +101,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/adv_text_hint"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginStart="20dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -118,7 +119,7 @@
                 android:id="@+id/getter_advert_title_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Название объявления"
+                android:text="@string/name_advert_text"
                 android:textSize="20sp"/>
             <ListView
                 android:id="@+id/getter_advert_products"
@@ -137,12 +138,8 @@
             <!--    Когда не найден setter-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/stop_advert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/stop_adv_text"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:background="@drawable/style1"
+                style="@style/grey_500_button"
                 android:visibility="visible"
                 />
 
@@ -150,12 +147,8 @@
             <!--    Когда найден setter-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/pick_up_order"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/adv_zabor_text"
-                android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:background="@drawable/style1"
+                style="@style/grey_500_button"
                 android:visibility="invisible"
                 android:layout_marginTop="20dp"
                 />
@@ -164,12 +157,8 @@
             <!--    Когда объявление неактивно-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/create_new_request"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/style1"
                 android:text="@string/add_new_request_button"
-                android:textColor="@color/white"
-                android:layout_gravity="center"
+                style="@style/grey_500_button"
                 android:visibility="invisible"
                 />
 

@@ -92,4 +92,5 @@
     <string name="name_of_shop_text">Название магазина</string>
     <string name="detailed_text">Подробнее</string>
     <string name="go_over_text">Перейти</string>
+    <string name="name_advert_text">Название объявления</string>
 </resources>
