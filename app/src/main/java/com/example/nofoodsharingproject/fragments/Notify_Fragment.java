@@ -21,6 +21,7 @@ import com.example.nofoodsharingproject.adapters.GetterNotificationsAdapter;
 import com.example.nofoodsharingproject.databinding.FragmentGetterNotifyBinding;
 import com.example.nofoodsharingproject.models.Notification;
 import com.example.nofoodsharingproject.view_models.Notifications_ViewModel;
+import com.example.nofoodsharingproject.databinding.FragmentGetterNotifyBinding;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

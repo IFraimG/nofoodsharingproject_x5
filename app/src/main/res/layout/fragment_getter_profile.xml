@@ -8,13 +8,7 @@
     tools:context=".fragments.getter.GetterProfile_Fragment">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="25sp"
-        android:background="@drawable/style5"
-        android:textSize="25sp"
-        android:textColor="@color/grey_500"
+        style="@style/heading_getter_fragments"
         android:text="@string/profile_text"/>
 
     <TextView

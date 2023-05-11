@@ -9,6 +9,4 @@
     android:text="@string/name_of_product_text"
     android:textSize="15sp"
     android:layout_marginBottom="20dp"
-    android:textColor="@color/black"
-    android:background="@drawable/custom_round_border"
-    />
+    style="@style/item_recycler_style"/>

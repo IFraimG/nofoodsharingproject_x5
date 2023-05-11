@@ -10,13 +10,7 @@
     android:id="@+id/fragment_getter_advrs">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/style5"
-        android:textSize="25sp"
-        android:layout_marginTop="25sp"
-        android:textColor="@color/grey_500"
+        style="@style/heading_getter_fragments"
         android:text="@string/adv_text"/>
 
     <!-- Только кода есть заказ -->
