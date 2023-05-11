@@ -29,25 +29,16 @@
     </LinearLayout>
     <EditText
         android:id="@+id/auth_setter_login_login"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:background="@drawable/custom_round_border"
         android:hint="@string/write_name_text"
-        android:paddingLeft="20dp"
-        android:layout_marginTop="50dp"
+        style="@style/style_auth_edittext"
         />
 
     <EditText
         android:id="@+id/auth_setter_login_password"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:background="@drawable/custom_round_border"
+        style="@style/style_auth_edittext"
         android:hint="@string/write_password_text"
         android:paddingLeft="20dp"
         android:inputType="textPassword"
-        android:layout_marginTop="50dp"
         />
 
     <Button

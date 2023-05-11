@@ -32,36 +32,21 @@
 
     <EditText
         android:id="@+id/setter_auth_phone"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:background="@drawable/custom_round_border"
         android:hint="@string/write_number_phone_text_hint"
-        android:paddingLeft="20dp"
-        android:layout_marginTop="50dp"
+        style="@style/style_auth_edittext"
         />
 
     <EditText
         android:id="@+id/setter_auth_login"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:background="@drawable/custom_round_border"
+        style="@style/style_auth_edittext"
         android:hint="@string/write_name_text_hint"
-        android:paddingLeft="20dp"
-        android:layout_marginTop="50dp"
         />
 
     <EditText
         android:id="@+id/setter_auth_password"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:background="@drawable/custom_round_border"
+        style="@style/style_auth_edittext"
         android:hint="@string/write_password_text_hint"
-        android:paddingLeft="20dp"
         android:inputType="textPassword"
-        android:layout_marginTop="50dp"
         />
 
     <Button
