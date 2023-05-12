@@ -15,7 +15,7 @@
             android:id="@+id/auth_setter_login_back"
             android:layout_width="64dp"
             android:layout_height="48dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:background="@drawable/custom_round_border"
             android:src="@drawable/ic_baseline_chevron_left_24" />
 
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_gravity="center"
             android:text="@string/enter_to_getter_text" />
     </LinearLayout>
@@ -37,7 +37,7 @@
         android:id="@+id/auth_setter_login_password"
         style="@style/style_auth_edittext"
         android:hint="@string/write_password_text"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
         android:inputType="textPassword"
         />
 

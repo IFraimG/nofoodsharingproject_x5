@@ -10,7 +10,7 @@
         android:id="@+id/notify_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Название объявления"
+        android:text="@string/name_advert_text"
         android:textSize="20sp"
         android:textColor="@color/black"/>
 
@@ -18,7 +18,7 @@
         android:id="@+id/notify_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="00.00.00"
+        android:text="@string/Id_now_what_is_it_text"
         android:textSize="16sp"/>
 
     <TextView
@@ -26,6 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Описание уведомления"
+        android:text="@string/notyfy_description"
         android:textSize="18sp"/>
 </LinearLayout>

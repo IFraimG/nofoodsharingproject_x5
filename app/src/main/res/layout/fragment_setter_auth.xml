@@ -15,7 +15,7 @@
             android:id="@+id/auth_setter_signup_back"
             android:layout_width="64dp"
             android:layout_height="48dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:background="@drawable/custom_round_border"
             android:src="@drawable/ic_baseline_chevron_left_24" />
 
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
 
             android:layout_gravity="center"
             android:text="@string/setter_account_text" />
