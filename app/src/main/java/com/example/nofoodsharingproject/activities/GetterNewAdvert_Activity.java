@@ -81,7 +81,7 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
                 userProductItems.remove(position);
                 arrayAdapterChoosenItems.notifyDataSetChanged();
 
-                Toast.makeText(GetterNewAdvert_Activity.this, "Удалено!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GetterNewAdvert_Activity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -91,9 +91,9 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
 
     private void pushData() {
         if (userProductItems.size() == 0)
-            Toast.makeText(GetterNewAdvert_Activity.this, "Добавьте в список хотя бы один продукт", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GetterNewAdvert_Activity.this, R.string.add_to_list_product, Toast.LENGTH_SHORT).show();
         else if (titleAdvert.getText().toString().length() == 0) {
-            Toast.makeText(GetterNewAdvert_Activity.this, "Введите название!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GetterNewAdvert_Activity.this, R.string.edit_name, Toast.LENGTH_SHORT).show();
         } else {
             Getter result = getUserInfo();
             Advertisement advertisement = new Advertisement(titleAdvert.getText().toString(), result.getX5_Id(), result.getLogin());
@@ -106,7 +106,7 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
                 public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                     Advertisement result = response.body();
                     if (response.code() == 400) {
-                        Toast.makeText(GetterNewAdvert_Activity.this, "Возникли проблемы. Попробуйте еще раз!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GetterNewAdvert_Activity.this, R.string.problems, Toast.LENGTH_SHORT).show();
                         button_ready.setEnabled(true);
                     } else {
                         Toast.makeText(getApplicationContext(),
@@ -129,13 +129,13 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
     private void chooseItem(int position) {
         String result = productItems[position];
         if (userProductItems.size() > 3) {
-            Toast.makeText(GetterNewAdvert_Activity.this, "Вы не можете добавлять больше 3 продуктов", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GetterNewAdvert_Activity.this, R.string.lot_of_product, Toast.LENGTH_SHORT).show();
         } else if (!userProductItems.contains(result)) {
             userProductItems.add(result);
             arrayAdapterChoosenItems.notifyDataSetChanged();
-            Toast.makeText(GetterNewAdvert_Activity.this, "Добавлено!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GetterNewAdvert_Activity.this, R.string.added, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(GetterNewAdvert_Activity.this, "Вы уже добавили этот продукт", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GetterNewAdvert_Activity.this, R.string.this_product_added, Toast.LENGTH_SHORT).show();
         }
     }
 

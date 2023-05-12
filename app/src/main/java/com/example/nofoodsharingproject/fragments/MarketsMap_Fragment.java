@@ -45,32 +45,22 @@ import com.yandex.mapkit.directions.driving.DrivingOptions;
 import com.yandex.mapkit.directions.driving.DrivingRoute;
 import com.yandex.mapkit.directions.driving.DrivingRouter;
 import com.yandex.mapkit.directions.driving.DrivingSession;
-import com.yandex.mapkit.directions.driving.DrivingSummarySession;
 import com.yandex.mapkit.directions.driving.VehicleOptions;
 import com.yandex.mapkit.geometry.Point;
-import com.yandex.mapkit.layers.GeoObjectTapEvent;
-import com.yandex.mapkit.layers.GeoObjectTapListener;
 import com.yandex.mapkit.layers.ObjectEvent;
-import com.yandex.mapkit.map.CameraListener;
 import com.yandex.mapkit.map.CameraPosition;
-import com.yandex.mapkit.map.CameraUpdateReason;
 import com.yandex.mapkit.map.CompositeIcon;
-import com.yandex.mapkit.map.GeoObjectSelectionMetadata;
 import com.yandex.mapkit.map.IconStyle;
-import com.yandex.mapkit.map.InputListener;
-import com.yandex.mapkit.map.Map;
 import com.yandex.mapkit.map.MapObject;
 import com.yandex.mapkit.map.MapObjectCollection;
 import com.yandex.mapkit.map.MapObjectTapListener;
 import com.yandex.mapkit.map.PlacemarkMapObject;
 import com.yandex.mapkit.map.RotationType;
-import com.yandex.mapkit.map.VisibleRegionUtils;
 import com.yandex.mapkit.mapview.MapView;
 import com.yandex.mapkit.search.Response;
 import com.yandex.mapkit.search.SearchFactory;
 import com.yandex.mapkit.search.SearchManager;
 import com.yandex.mapkit.search.SearchManagerType;
-import com.yandex.mapkit.search.SearchOptions;
 import com.yandex.mapkit.search.Session;
 import com.yandex.mapkit.user_location.UserLocationLayer;
 import com.yandex.mapkit.user_location.UserLocationObjectListener;
@@ -183,14 +173,14 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
                     @Override
                     public void onResponse(@NotNull Call<Getter> call, @NotNull retrofit2.Response<Getter> response) {
                         if (response.code() == 200) {
-                            Toast.makeText(getContext(), "Успешно!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.sucses, Toast.LENGTH_SHORT).show();
                             if (oldPosition != -1) listMarketsSpinner.setSelection(oldPosition);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Getter> call, Throwable t) {
-                        Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                     }
                 });
             } else if (!userData.second) {
@@ -198,14 +188,14 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
                     @Override
                     public void onResponse(@NotNull Call<Setter> call, @NotNull retrofit2.Response<Setter> response) {
                         if (response.code() == 200) {
-                            Toast.makeText(getContext(), "Успешно!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.sucses, Toast.LENGTH_SHORT).show();
                             if (oldPosition != -1) listMarketsSpinner.setSelection(oldPosition);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Setter> call, Throwable t) {
-                        Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -236,7 +226,7 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
                     listMarkets = new String[fullListMarkets.length];
                     for (int i = 0; i < fullListMarkets.length; i++) listMarkets[i] = fullListMarkets[i].getTitle();
                 }
-                else if (response.code() == 400) Toast.makeText(getContext(), "Что-то пошло не так!", Toast.LENGTH_SHORT).show();
+                else if (response.code() == 400) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 else {
                     listMarkets = new String[fullListMarkets.length - 1];
                     listMarkets[0] = response.body().market;
@@ -261,7 +251,7 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
             @Override
             public void onFailure(Call<MarketTitleResponse> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(getContext(), "Что-то пошло не так!!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -362,7 +352,7 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
             boolean isUser = sharedPreferences.getBoolean("isGetter", false);
             return new Pair<>(userID, isUser);
         } catch (GeneralSecurityException | IOException err) {
-            Toast.makeText(getContext(), "Непредвиденная ошибка!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
             Log.e("esp_error", err.getMessage());
         }
         return null;
@@ -412,7 +402,7 @@ public class MarketsMap_Fragment extends Fragment implements Session.SearchListe
 
     @Override
     public void onDrivingRoutesError(@NonNull Error error) {
-        Toast.makeText(getContext(), "Произошла ошибка при построении маршрута", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.error_on_route, Toast.LENGTH_SHORT).show();
     }
 
     // не используется

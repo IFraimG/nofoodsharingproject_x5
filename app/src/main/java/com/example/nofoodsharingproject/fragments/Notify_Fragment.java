@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.adapters.GetterNotificationsAdapter;
 import com.example.nofoodsharingproject.databinding.FragmentGetterNotifyBinding;
 import com.example.nofoodsharingproject.models.Notification;
@@ -71,7 +72,7 @@ public class Notify_Fragment extends Fragment {
             boolean isUser = sharedPreferences.getBoolean("isGetter", false);
             return new Pair<>(userID, isUser);
         } catch (GeneralSecurityException | IOException err) {
-            Toast.makeText(getContext(), "Непредвиденная ошибка!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
             Log.e("esp_error", err.toString());
         }
         return null;

@@ -90,7 +90,7 @@ public class Setter_Auth_Fragment extends Fragment {
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
                     SignUpResponseI<Setter> result = response.body();
                     if (response.code() == 401 || result.token == null) {
-                        Toast.makeText(getContext(), "Произошла ошибка при авторизации. Попробуйте еще раз!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), R.string.prodlem_on_autorization, Toast.LENGTH_LONG).show();
                         btnLogin.setEnabled(true);
                     } else if (response.code() == 400 || result.token.length() == 0) {
                         Toast.makeText(getContext(), R.string.account_created, Toast.LENGTH_LONG).show();

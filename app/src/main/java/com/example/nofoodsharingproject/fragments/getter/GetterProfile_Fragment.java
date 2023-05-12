@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,9 +113,9 @@ public class GetterProfile_Fragment extends Fragment {
             GetterRepository.editProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Getter>() {
                 @Override
                 public void onResponse(@NotNull Call<Getter> call, @NotNull Response<Getter> response) {
-                    if (response.code() == 400) Toast.makeText(getContext(), "Ваш старый пароль введен неверно", Toast.LENGTH_SHORT).show();
+                    if (response.code() == 400) Toast.makeText(getContext(), R.string.your_password_uncorrect, Toast.LENGTH_SHORT).show();
                     if (response.code() == 201) {
-                        Toast.makeText(getContext(), "Успешно!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.sucses, Toast.LENGTH_SHORT).show();
                         login.setText(response.body().getLogin());
                         phone.setText(response.body().getPhone());
 
@@ -138,7 +137,7 @@ public class GetterProfile_Fragment extends Fragment {
                 public void onFailure(Call<Getter> call, Throwable t) {
                     t.printStackTrace();
                     btnSave.setEnabled(true);
-                    Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 }
             });
         }

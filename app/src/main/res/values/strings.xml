@@ -96,4 +96,24 @@
     <string name="phone_number_text">Номер телефона</string>
     <string name="Id_now_what_is_it_text">00.00.00</string>
     <string name="notyfy_description">Описание уведомления</string>
+    <string name="lot_of_product">Вы не можете добавлять больше 3 продуктов</string>
+    <string name="added">Добавлено!</string>
+    <string name="this_product_added">Вы уже добавили этот продукт</string>
+    <string name="problems">Возникли проблемы. Попробуйте еще раз!</string>
+    <string name="edit_name">Введите название!</string>
+    <string name="add_to_list_product">Добавьте в список хотя бы один продукт</string>
+    <string name="deleted">Удалено!</string>
+    <string name="response">На ваше объявление откликнулись!</string>
+    <string name="smth_wrong">Что-то пошло не так</string>
+    <string name="sucses_notyfy_send">Уведомление успешно отправлено!</string>
+    <string name="smth_problrs">Возникла проблема</string>
+    <string name="prodlem_on_autorization">Произошла ошибка при авторизации. Попробуйте еще раз!</string>
+    <string name="error_on_delated">Произошла ошибка при удалении</string>
+    <string name="deal_correct">Поздравляем с успешно совершенной сделкой!</string>
+    <string name="unvisinle_error">Непредвиденная ошибка!</string>
+    <string name="sucsesfully_deleted">Успешно удалено!</string>
+    <string name="time_is_up">Время вышло! Объявление отменится само</string>
+    <string name="your_password_uncorrect">Ваш старый пароль введен неверно</string>
+    <string name="sucses">Успешно!</string>
+    <string name="error_on_route">Произошла ошибка при построении маршрута"</string>
 </resources>

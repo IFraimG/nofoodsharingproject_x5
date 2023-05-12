@@ -124,7 +124,7 @@ public class GetterAdvrs_Fragment extends Fragment {
             }
             @Override
             public void onFinish() {
-                timeAdvert.setText("Время вышло! Объявление отменится само");
+                timeAdvert.setText(R.string.time_is_up);
             }
         };
     }
@@ -135,7 +135,7 @@ public class GetterAdvrs_Fragment extends Fragment {
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.code() == 400) {
                     buttonNewAdvertisement.setVisibility(View.VISIBLE);
-                    Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 }
                 if (response.code() == 404) {
                     buttonNewAdvertisement.setVisibility(View.VISIBLE);
@@ -146,7 +146,7 @@ public class GetterAdvrs_Fragment extends Fragment {
             @Override
             public void onFailure(Call<Advertisement> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -156,14 +156,14 @@ public class GetterAdvrs_Fragment extends Fragment {
             @Override
             public void onResponse(@NotNull Call<ResponseDeleteAdvert> call, @NotNull Response<ResponseDeleteAdvert> response) {
                 if (response.code() != 400 && response.body().isDelete) {
-                    Toast.makeText(getContext(), "Успешно удалено!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.sucsesfully_deleted, Toast.LENGTH_SHORT).show();
                     hideAdvertisementElements();
-                } else Toast.makeText(getContext(), "Произошла ошибка при удалении", Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(getContext(), R.string.error_on_delated, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<ResponseDeleteAdvert> call, Throwable t) {
-                Toast.makeText(getContext(), "Произошла ошибка при удалении", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_on_delated, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -172,16 +172,16 @@ public class GetterAdvrs_Fragment extends Fragment {
         AdvertsRepository.takingProducts(defineTypeUser().first).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                if (response.code() == 404) Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                if (response.code() == 404) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 else if (response.code() == 201) {
-                    Toast.makeText(getContext(), "Поздравляем с успешно совершенной сделкой!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.deal_correct, Toast.LENGTH_LONG).show();
                     hideAdvertisementElements();
                 }
             }
 
             @Override
             public void onFailure(Call<Advertisement> call, Throwable t) {
-                Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -202,7 +202,7 @@ public class GetterAdvrs_Fragment extends Fragment {
 
             @Override
             public void onFailure(Call<MarketTitleResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -243,7 +243,7 @@ public class GetterAdvrs_Fragment extends Fragment {
             boolean isUser = sharedPreferences.getBoolean("isGetter", false);
             return new Pair<>(userID, isUser);
         } catch (GeneralSecurityException | IOException err) {
-            Toast.makeText(getContext(), "Непредвиденная ошибка!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
             Log.e("esp_error", err.toString());
         }
         return null;
