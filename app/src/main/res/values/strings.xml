@@ -33,7 +33,7 @@
     <string name="time_text">Оставшееся время:</string>
     <string name="time_text_hint">00:00:00</string>
     <string name="create_adv_text">Состояние объявления:</string>
-    <string name="adv_text_hint">Объявление не активно</string>
+    <string name="adv_text_hint">Нет активных объявлений</string>
     <string name="stop_adv_text">Удалить объявление</string>
     <string name="adv_zabor_text">Забираю продукты</string>
     <string name="setter_text">Отдающий пользователь</string>

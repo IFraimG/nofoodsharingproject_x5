@@ -85,6 +85,8 @@ public class GetterAdvrs_Fragment extends Fragment {
         getAdvertisement();
         timerInit();
 
+
+        textNewAdvert.setVisibility(View.INVISIBLE);
         buttonStopAdvert.setVisibility(View.INVISIBLE);
         getterAdvertLayout.setVisibility(View.INVISIBLE);
 
@@ -215,6 +217,7 @@ public class GetterAdvrs_Fragment extends Fragment {
         arrayAdapter.notifyDataSetChanged();
         buttonTakenProducts.setVisibility(View.INVISIBLE);
         numberAdvertisement.setVisibility(View.INVISIBLE);
+        textNewAdvert.setVisibility(View.INVISIBLE);
     }
     private void showAdvertisementElements(Advertisement advert) {
         titleAdvert.setText(advert.getTitle());
@@ -227,6 +230,7 @@ public class GetterAdvrs_Fragment extends Fragment {
         if (advert.getGettingProductID() != null && advert.getGettingProductID().length() > 0) {
             buttonTakenProducts.setVisibility(View.VISIBLE);
             numberAdvertisement.setVisibility(View.VISIBLE);
+            textNewAdvert.setVisibility(View.VISIBLE);
             numberAdvertisement.setText(advert.getGettingProductID());
         }
     }
