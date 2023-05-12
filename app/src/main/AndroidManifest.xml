@@ -45,11 +45,11 @@
         <activity android:name=".activities.SetterHelpFinish_Activity" android:exported="true" />
         <activity android:configChanges="orientation|screenSize" android:name=".activities.Getter_Activity" android:exported="true" />
 
-        <receiver android:exported="false" android:name=".services.LocationUpdateReceiver" >
-            <intent-filter>
-                <action android:name="com.example.nofoodsharingproject.LOCATION_READY" />
-            </intent-filter>
-        </receiver>
+<!--        <receiver android:exported="false" android:name=".services.LocationUpdateReceiver" >-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.example.nofoodsharingproject.LOCATION_READY" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
         <receiver android:name='com.example.nofoodsharingproject.services.AlarmManagerBroadcastReceiver' />
 
         <service
@@ -57,11 +57,10 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
-
             </intent-filter>
         </service>
-<!--        в разработке -->
-<!--        <service android:name=".services.LocationTrackingService" />-->
+
+        <service android:name=".services.LocationTrackingService" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/notifications_active" />

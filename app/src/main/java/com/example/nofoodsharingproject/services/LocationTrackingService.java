@@ -35,15 +35,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-// в разработке
 public class LocationTrackingService extends Service implements LocationListener {
 
     private LocationManager locationManager;
+    private SharedPreferences sharedPreferences;
+
     private NotificationManager notificationManager;
     private NotificationManagerCompat notificationManagerCompat;
     private NotificationChannel channel;
@@ -61,7 +65,53 @@ public class LocationTrackingService extends Service implements LocationListener
     public void onCreate() {
         super.onCreate();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        sharedPreferences = getSharedPreferences("dateSettings", Context.MODE_PRIVATE);
 
+        getMarket();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return START_NOT_STICKY;
+        }
+
+        getMarket();
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+
+        return START_STICKY;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location.distanceTo(compareCoords) < 50 && checkTimer() && titleMarket.length() != 0) {
+            Advertisement advert = getRandomGetterAdvert();
+            createNotification(advert);
+        }
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    private void getMarket() {
         Pair<String, Boolean> userData = defineUser();
         MapRepository.getPinMarket(userData.second ? "getter" : "setter", userData.first).enqueue(new Callback<MarketTitleResponse>() {
             @Override
@@ -86,47 +136,6 @@ public class LocationTrackingService extends Service implements LocationListener
             }
         });
     }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return START_NOT_STICKY;
-        }
-
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-
-        return START_STICKY;
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        if (location.distanceTo(compareCoords) < 50 && checkTimer()) {
-            Advertisement advert = getRandomGetterAdvert();
-            createNotification(advert);
-        }
-
-        // сравнить с прикрепленным магазином и отправить уведомление пользователю, затем включить таймер, чтобы уведомления каждую секунду не отправлялись
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
     private Pair<String, Boolean> defineUser() {
         try {
             MasterKey masterKey = new MasterKey.Builder(getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
@@ -147,7 +156,20 @@ public class LocationTrackingService extends Service implements LocationListener
     }
 
     private boolean checkTimer() {
-        return false;
+        String dateLocation = sharedPreferences.getString("locationDate", "");
+        if (dateLocation.length() == 0) return true;
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date1 = dateFormat.parse(dateLocation);
+
+            long diffInMilliseconds = new Date().getTime() - date1.getTime();
+            Log.d("msg", Long.toString(diffInMilliseconds));
+
+            return diffInMilliseconds > 1200000;
+        } catch (ParseException err) {
+            return true;
+        }
     }
 
     private Advertisement getRandomGetterAdvert() {
@@ -156,10 +178,18 @@ public class LocationTrackingService extends Service implements LocationListener
 
     private void createNotification(Advertisement advert) {
         Notification notification = new Notification("Вы находитесь рядом с магазином!", "Тестовое уведомление", defineUser().first);
+        notification.setTypeOfUser("setter");
+        showNotification();
         NotificationRepository.createNotification(notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
-                if (response.code() == 201) showNotification();
+                if (response.code() == 201) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String result = dateFormat.format(new Date());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("locationDate", result);
+                    editor.apply();
+                }
             }
 
             @Override

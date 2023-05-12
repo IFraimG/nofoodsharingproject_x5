@@ -4,10 +4,12 @@ import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -17,10 +19,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKey;
 
 import com.example.nofoodsharingproject.BuildConfig;
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.data.api.map.MarketTitleResponse;
+import com.example.nofoodsharingproject.data.repository.MapRepository;
 import com.example.nofoodsharingproject.databinding.ActivitySetterBinding;
+import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.services.LocationTrackingService;
 import com.example.nofoodsharingproject.utils.DateNowChecker;
 import com.example.nofoodsharingproject.services.LocationUpdateReceiver;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +36,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.yandex.mapkit.MapKitFactory;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Setter_Activity extends AppCompatActivity {
     NavController navController;
@@ -47,6 +62,7 @@ public class Setter_Activity extends AppCompatActivity {
         binding = ActivitySetterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        startLocationObserver();
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_setter_fragment);
         navController = navHostFragment.getNavController();
@@ -87,5 +103,38 @@ public class Setter_Activity extends AppCompatActivity {
 
     private void removeLocation() {
         if (locationManager != null) locationManager.removeUpdates(pendingIntent);
+    }
+
+    private void startLocationObserver() {
+        MapRepository.getPinMarket("setter", getUserID()).enqueue(new Callback<MarketTitleResponse>() {
+            @Override
+            public void onResponse(Call<MarketTitleResponse> call, Response<MarketTitleResponse> response) {
+                if (response.code() == 200) {
+                    Intent serviceLocation = new Intent(Setter_Activity.this, LocationTrackingService.class);
+                    startForegroundService(serviceLocation);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MarketTitleResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private String getUserID() {
+        try {
+            MasterKey masterKey = new MasterKey.Builder(getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build();
+            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getApplicationContext(), "user", masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
+
+            return sharedPreferences.getString("X5_id", "");
+        } catch (GeneralSecurityException | IOException err) {
+            Toast.makeText(getApplicationContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
+            Log.e("esp_error", err.toString());
+        }
+        return null;
     }
 }

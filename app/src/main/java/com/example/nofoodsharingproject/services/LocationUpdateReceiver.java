@@ -19,6 +19,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.nofoodsharingproject.R;
 
+// не используется
 public class LocationUpdateReceiver extends BroadcastReceiver {
     private static final int NOTIFICATION_ID = 1;
 
