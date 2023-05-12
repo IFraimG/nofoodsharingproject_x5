@@ -109,53 +109,55 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center">
+
             <TextView
                 android:id="@+id/getter_advert_title_products"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/name_advert_text"
                 android:textSize="20sp"
-                android:gravity="center"/>
+                android:textColor="@color/grey_500"/>
             <ListView
+                android:layout_gravity="center"
                 android:id="@+id/getter_advert_products"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="20dp" />
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
-            <!--    Когда не найден setter-->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/stop_advert"
-                android:text="@string/stop_adv_text"
-                style="@style/grey_500_button"
-                android:visibility="visible"
-                android:layout_marginStart="40dp"
-                />
-
-
-            <!--    Когда найден setter-->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/pick_up_order"
-                android:text="@string/adv_zabor_text"
-                style="@style/grey_500_button"
-                android:visibility="invisible"
-                />
+        <!--    Когда не найден setter-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/stop_advert"
+            style="@style/grey_500_button"
+            android:layout_marginStart="40dp"
+            android:text="@string/stop_adv_text"
+            android:visibility="visible" />
 
 
-            <!--    Когда объявление неактивно-->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/create_new_request"
-                android:text="@string/add_new_request_button"
-                style="@style/grey_500_button"
-                android:visibility="invisible"
-                />
-        </FrameLayout>
+        <!--    Когда найден setter-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/pick_up_order"
+            style="@style/grey_500_button"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="50dp"
+            android:text="@string/adv_zabor_text"
+            android:visibility="invisible" />
+
+
+        <!--    Когда объявление неактивно-->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/create_new_request"
+            style="@style/grey_500_button"
+            android:text="@string/add_new_request_button"
+            android:visibility="invisible" />
+    </FrameLayout>
 </LinearLayout>
 
