@@ -42,6 +42,7 @@ android {
     }
 }
 
+
 dependencies {
     // navigation
     implementation "androidx.navigation:navigation-fragment:2.5.3"
@@ -81,7 +82,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging'
 
-    // location observer
-//    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    // vk sdk
+    implementation 'com.vk:android-sdk-core:4.0.1'
+    implementation 'com.vk:android-sdk-api:4.0.1'
 
 }

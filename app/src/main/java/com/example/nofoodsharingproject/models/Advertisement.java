@@ -34,7 +34,7 @@ public class Advertisement {
 
     @SerializedName("authorID")
     @Expose
-    private final String authorID;
+    private String authorID;
 
     @SerializedName("dateOfCreated")
     @Expose
@@ -47,6 +47,8 @@ public class Advertisement {
     @SerializedName("isSuccessDone")
     @Expose
     private boolean isDone = false;
+
+    public Advertisement() {}
 
     public Advertisement(String title, String authorID, String authorName) {
         this.title = title;

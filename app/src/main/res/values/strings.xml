@@ -1,4 +1,5 @@
 <resources>
+    <integer name="com_vk_sdk_AppId">7550574</integer>
     <string name="app_name">Покупай — Помогай</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_new_request_button">Создать новое объявление</string>
@@ -115,5 +116,9 @@
     <string name="time_is_up">Время вышло! Объявление отменится само</string>
     <string name="your_password_uncorrect">Ваш старый пароль введен неверно</string>
     <string name="sucses">Успешно!</string>
-    <string name="error_on_route">Произошла ошибка при построении маршрута"</string>
+    <string name="error_on_route">Произошла ошибка при построении маршрута</string>
+    <string name="celebrate_help">Если вы хотите получить дополнительные бонусы, отсканируйте штрих код вашего чека и загрузите в сервис SuperUp (Вконтакте)</string>
+    <string name="celebrate_help_title">Поздравляем с успешной передачей продуктов!</string>
+    <string name="open_vk">Отсканировать чек в VK</string>
+    <string name="no_image_warnings">...</string>
 </resources>

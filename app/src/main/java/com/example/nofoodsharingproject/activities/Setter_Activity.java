@@ -47,6 +47,7 @@ public class Setter_Activity extends AppCompatActivity {
         binding = ActivitySetterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_setter_fragment);
         navController = navHostFragment.getNavController();
 

@@ -1,12 +1,15 @@
 package com.example.nofoodsharingproject.fragments.setter;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -29,6 +32,7 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.data.api.adverts.ResponseHistoryAdverts;
+import com.example.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Setter;
 
@@ -41,8 +45,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class SetterProfile_Fragment extends Fragment {
     private SharedPreferences settings;
+    private FragmentSetterProfileBinding binding;
     private SwitchCompat switchLocation;
     private SwitchCompat switchNotification;
     private ListView historyList;
@@ -50,6 +56,8 @@ public class SetterProfile_Fragment extends Fragment {
     private String[] advertisementsHistory;
     private TextView userName;
     private TextView successProducts;
+    private Button openVk;
+    private Button logoutBtn;
     private ArrayAdapter<String> arrayAdapter;
 
     private Setter user;
@@ -79,22 +87,23 @@ public class SetterProfile_Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setter_profile, container, false);
+        binding = FragmentSetterProfileBinding.inflate(inflater);
 
-        Button logoutBtn = (Button) view.findViewById(R.id.setter_profile_logout);
-        logoutBtn.setOnClickListener(View -> logout());
-
-        switchLocation = (SwitchCompat) view.findViewById(R.id.setter_profile_location);
-        switchNotification = (SwitchCompat) view.findViewById(R.id.setter_profile_notifications);
-        historyList = (ListView) view.findViewById(R.id.setter_profile_history_list);
-        userName = (TextView) view.findViewById(R.id.setter_profile_name);
-        successProducts = (TextView) view.findViewById(R.id.setter_profile_count);
+        logoutBtn = binding.setterProfileLogout;
+        switchLocation = binding.setterProfileLocation;
+        switchNotification = binding.setterProfileNotifications;
+        historyList = binding.setterProfileHistoryList;
+        userName = binding.setterProfileName;
+        successProducts = binding.setterProfileCount;
+        openVk = binding.setterOpenVk;
 
         this.user = defineUser();
         userName.setText(user.getLogin());
 
         getHistoryList();
 
+        openVk.setOnClickListener(View -> vkLoad());
+        logoutBtn.setOnClickListener(View -> logout());
         switchLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -114,7 +123,7 @@ public class SetterProfile_Fragment extends Fragment {
             }
         });
 
-        return view;
+        return binding.getRoot();
     }
 
     private void getHistoryList() {
@@ -144,7 +153,7 @@ public class SetterProfile_Fragment extends Fragment {
         });
     }
 
-    public boolean checkLocationPermissions() {
+    private boolean checkLocationPermissions() {
         int firstPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         int secondPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
 
@@ -164,7 +173,7 @@ public class SetterProfile_Fragment extends Fragment {
         }
     }
 
-    public Setter defineUser() {
+    private Setter defineUser() {
         try {
             MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
@@ -189,7 +198,7 @@ public class SetterProfile_Fragment extends Fragment {
         return null;
     }
 
-    public void logout() {
+    private void logout() {
         try {
             MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build();
@@ -204,6 +213,15 @@ public class SetterProfile_Fragment extends Fragment {
             getActivity().finish();
         } catch (IOException | GeneralSecurityException err) {
             err.printStackTrace();
+        }
+    }
+
+    private void vkLoad() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/app7550574"));
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
         }
     }
 }

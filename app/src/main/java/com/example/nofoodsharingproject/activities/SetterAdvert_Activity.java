@@ -1,5 +1,6 @@
 package com.example.nofoodsharingproject.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -104,6 +105,8 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), R.string.smth_not_good_try_again, Toast.LENGTH_SHORT).show();
                 } else {
                     saveMessageForUser();
+                    Intent intent = new Intent(SetterAdvert_Activity.this, SetterHelpFinish_Activity.class);
+                    startActivity(intent);
                     finish();
                 }
             }
@@ -182,7 +185,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
             return sharedPreferences.getString("X5_id", "");
         } catch (IOException | GeneralSecurityException err) {
-            Log.e("getting info error", err.toString());
+            Log.e(getString(R.string.unvisinle_error), err.toString());
             err.printStackTrace();
         }
 

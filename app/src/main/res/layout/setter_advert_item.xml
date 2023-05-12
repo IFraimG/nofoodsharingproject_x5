@@ -26,7 +26,7 @@
         android:layout_weight="1"
         android:layout_margin="10dp"
         android:textSize="24sp"
-        tools:text="Имя нуждающегося" />
+        android:text="Имя нуждающегося" />
 
     <ListView
         android:id="@+id/setter_advert_product_list"
