@@ -88,7 +88,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Advertisement> call, Throwable t) {
+            public void onFailure(@NotNull Call<Advertisement> call, @NotNull Throwable t) {
                 Toast.makeText(SetterAdvert_Activity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
             }
         });
@@ -112,7 +112,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RequestDoneAdvert> call, Throwable t) {
+            public void onFailure(@NotNull Call<RequestDoneAdvert> call, @NotNull Throwable t) {
                 acceptBtn.setEnabled(true);
                 t.printStackTrace();
             }
@@ -131,7 +131,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseFCMToken> call, Throwable t) {
+            public void onFailure(@NotNull Call<ResponseFCMToken> call, @NotNull Throwable t) {
                 Toast.makeText(SetterAdvert_Activity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
@@ -169,7 +169,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Notification> call, Throwable t) {
+            public void onFailure(@NotNull Call<Notification> call, @NotNull Throwable t) {
                 Toast.makeText(SetterAdvert_Activity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }

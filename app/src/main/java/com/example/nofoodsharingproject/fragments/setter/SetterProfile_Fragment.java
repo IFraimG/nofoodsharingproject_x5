@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -65,7 +67,7 @@ public class SetterProfile_Fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        settings = getActivity().getSharedPreferences("prms", Context.MODE_PRIVATE);
+        settings = requireActivity().getSharedPreferences("prms", Context.MODE_PRIVATE);
     }
 
 
@@ -85,7 +87,7 @@ public class SetterProfile_Fragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterProfileBinding.inflate(inflater);
 
         logoutBtn = binding.setterProfileLogout;
@@ -103,24 +105,16 @@ public class SetterProfile_Fragment extends Fragment {
 
         openVk.setOnClickListener(View -> vkLoad());
         logoutBtn.setOnClickListener(View -> logout());
-        switchLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    requestPermissions();
-                    setToPreferences("location", checkLocationPermissions());
-                } else setToPreferences("location", false);
+        switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) requestPermissions();
+                setToPreferences("location", checkLocationPermissions());
+            } else setToPreferences("location", false);
 
-                switchLocation.setChecked(isChecked);
-            }
+            switchLocation.setChecked(isChecked);
         });
 
-        switchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setToPreferences("notification", isChecked);
-            }
-        });
+        switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> setToPreferences("notification", isChecked));
 
         return binding.getRoot();
     }
@@ -130,7 +124,7 @@ public class SetterProfile_Fragment extends Fragment {
             @Override
             public void onResponse(@NotNull Call<ResponseHistoryAdverts> call, @NotNull Response<ResponseHistoryAdverts> response) {
                 if (response.code() == 400) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                else if (response.code() != 404) {
+                else if (response.code() != 404 && response.body() != null) {
                     Advertisement[] result = response.body().getAdvertisements();
                     successProducts.setText(Integer.toString(result.length) + getString(R.string.some_success_products));
 
@@ -159,25 +153,26 @@ public class SetterProfile_Fragment extends Fragment {
         return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void requestPermissions() {
-        ActivityCompat.requestPermissions(getActivity(),
+        ActivityCompat.requestPermissions(requireActivity(),
                 new String[]{
                         android.Manifest.permission.ACCESS_FINE_LOCATION,
                         android.Manifest.permission.ACCESS_FINE_LOCATION,
                 }, 200);
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
+            ActivityCompat.requestPermissions(requireActivity(),
                     new String[]{ android.Manifest.permission.ACCESS_BACKGROUND_LOCATION }, 201);
         }
     }
 
     private Setter defineUser() {
         try {
-            MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
                     .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getActivity().getApplicationContext(), "user", masterKey,
+            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
             String login = sharedPreferences.getString("login", "");
             String phone = sharedPreferences.getString("phone", "");
@@ -194,22 +189,22 @@ public class SetterProfile_Fragment extends Fragment {
             err.printStackTrace();
         }
 
-        return null;
+        return new Setter();
     }
 
     private void logout() {
         try {
-            MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getActivity().getApplicationContext(), "user", masterKey,
+            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.apply();
 
-            Intent intent = new Intent(getActivity(), MainAuth_Activity.class);
+            Intent intent = new Intent(requireActivity(), MainAuth_Activity.class);
             startActivity(intent);
-            getActivity().finish();
+            requireActivity().finish();
         } catch (IOException | GeneralSecurityException err) {
             err.printStackTrace();
         }

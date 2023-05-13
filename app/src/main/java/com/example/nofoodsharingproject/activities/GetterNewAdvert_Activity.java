@@ -66,19 +66,13 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
         listViewChoose.setAdapter(arrayAdapterChoose);
         listViewChoosenItems.setAdapter(arrayAdapterChoosenItems);
 
-        listViewChoose.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { chooseItem(position); }
-        });
+        listViewChoose.setOnItemClickListener((parent, view, position, id) -> chooseItem(position));
 
-        listViewChoosenItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                userProductItems.remove(position);
-                arrayAdapterChoosenItems.notifyDataSetChanged();
+        listViewChoosenItems.setOnItemClickListener((parent, view, position, id) -> {
+            userProductItems.remove(position);
+            arrayAdapterChoosenItems.notifyDataSetChanged();
 
-                Toast.makeText(GetterNewAdvert_Activity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(GetterNewAdvert_Activity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
         });
 
         button_back.setOnClickListener(View -> finish());
@@ -112,7 +106,7 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Advertisement> call, Throwable t) {
+                public void onFailure(@NotNull Call<Advertisement> call, @NotNull Throwable t) {
                     button_ready.setEnabled(true);
                     Toast.makeText(getApplicationContext(),
                             R.string.smth_not_good, Toast.LENGTH_SHORT).show();
@@ -155,6 +149,6 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
             err.printStackTrace();
         }
 
-        return null;
+        return new Getter();
     }
 }

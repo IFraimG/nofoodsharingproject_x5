@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseActiveAdverts;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.models.Advertisement;
-import com.example.nofoodsharingproject.utils.LoaderStatus;
+import com.example.nofoodsharingproject.models.LoaderStatus;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +27,6 @@ public class AdvertisementList_ViewModel extends AndroidViewModel {
     public List<Advertisement> adverts = new ArrayList<>();
     private final MutableLiveData<List<Advertisement>> _adverts = new MutableLiveData<>();
     private final MutableLiveData<LoaderStatus> _status = new MutableLiveData<>();
-    public LiveData<LoaderStatus> status = _status;
 
     public AdvertisementList_ViewModel(@NonNull Application application) {
         super(application);
@@ -39,8 +38,8 @@ public class AdvertisementList_ViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NotNull Call<ResponseActiveAdverts> call, @NotNull Response<ResponseActiveAdverts> response) {
                 if (response.body() != null) {
-                    _status.setValue(LoaderStatus.LOADED);
                     _adverts.setValue(Arrays.asList(response.body().getAdvertisements()));
+                    _status.setValue(LoaderStatus.LOADED);
                 }
             }
 
@@ -51,5 +50,9 @@ public class AdvertisementList_ViewModel extends AndroidViewModel {
             }
         });
         return _adverts;
+    }
+
+    public LiveData<LoaderStatus> getLoaderStatus() {
+        return _status;
     }
 }
