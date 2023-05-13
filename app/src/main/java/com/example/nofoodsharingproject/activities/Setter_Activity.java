@@ -23,18 +23,15 @@ public class Setter_Activity extends AppCompatActivity {
     private NavController navController;
     private ActivitySetterBinding binding;
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        MapKitFactory.setApiKey(BuildConfig.apiKey);
-        MapKitFactory.initialize(getApplicationContext());
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySetterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        MapKitFactory.setApiKey(BuildConfig.apiKey);
+        MapKitFactory.initialize(getApplicationContext());
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_setter_fragment);
         navController = navHostFragment.getNavController();

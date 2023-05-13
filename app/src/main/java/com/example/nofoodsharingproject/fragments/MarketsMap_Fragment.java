@@ -1,14 +1,11 @@
 package com.example.nofoodsharingproject.fragments;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,7 +32,6 @@ import com.example.nofoodsharingproject.databinding.FragmentMarketsMapBinding;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Market;
 import com.example.nofoodsharingproject.models.Setter;
-import com.example.nofoodsharingproject.utils.CustomLocationListener;
 import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
@@ -49,6 +45,10 @@ import com.yandex.mapkit.directions.driving.DrivingSession;
 import com.yandex.mapkit.directions.driving.VehicleOptions;
 import com.yandex.mapkit.geometry.Point;
 import com.yandex.mapkit.layers.ObjectEvent;
+import com.yandex.mapkit.location.FilteringMode;
+import com.yandex.mapkit.location.LocationListener;
+import com.yandex.mapkit.location.LocationManager;
+import com.yandex.mapkit.location.LocationStatus;
 import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.map.CompositeIcon;
 import com.yandex.mapkit.map.IconStyle;
@@ -82,7 +82,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     private MapView mapView;
     int firstPermission;
     int secondPermission;
-    private CustomLocationListener locationListener;
+    private com.yandex.mapkit.location.LocationListener locationListener;
     private UserLocationLayer userLocationLayer;
     private Spinner listMarketsSpinner;
     private String choosenMarket;
@@ -91,6 +91,8 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     private String[] listMarkets;
     private DrivingRouter drivingRouter;
     private DrivingSession drivingSession;
+    private boolean isAvailableLocation = false;
+    private LocationManager locationManager;
 
     private final Market[] fullListMarkets = new Market[]{
             new Market("Выберите магазин", 0, 0, false),
@@ -101,27 +103,26 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     };
 
     private final List<Point> marketPoints = Arrays.asList(
-            fullListMarkets[0].getPoint(),
             fullListMarkets[1].getPoint(),
             fullListMarkets[2].getPoint(),
             fullListMarkets[3].getPoint(),
             fullListMarkets[4].getPoint()
     );
 
-    final Point moscowPoint = new Point(55.71989101308894, 37.5689757769603);
-    final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
+    private final Point moscowPoint = new Point(55.71989101308894, 37.5689757769603);
+    private final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
+    private Point myPoint;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         requestPermissions();
 
-        MapKitFactory.initialize(requireContext());
         SearchFactory.initialize(requireContext());
         DirectionsFactory.initialize(requireContext());
-
         super.onCreate(savedInstanceState);
-
     }
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -133,6 +134,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     public void onStop() {
         mapView.onStop();
         MapKitFactory.getInstance().onStop();
+        locationManager.unsubscribe(locationListener);
         super.onStop();
     }
 
@@ -142,14 +144,57 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
 
         this.mapView = binding.mapview;
         Button setMarketBtn = binding.mapSetMarketBtn;
+        Button makeRouteBtn = binding.mapMakeRoute;
         this.listMarketsSpinner = binding.mapListMarkets;
 
+        initLocation();
         initMap();
         getPinnedMarketInfo();
 
         setMarketBtn.setOnClickListener(View -> updateMarket());
+        makeRouteBtn.setOnClickListener(View -> createRoute());
 
         return binding.getRoot();
+    }
+
+    private void initLocation() {
+        if (checkLocationPermissions()) {
+            locationListener = new LocationListener(){
+                @Override
+                public void onLocationStatusUpdated(@NonNull LocationStatus locationStatus) {
+                    if (locationStatus == LocationStatus.AVAILABLE) isAvailableLocation = true;
+                }
+                @Override
+                public void onLocationUpdated(@NonNull com.yandex.mapkit.location.Location location) {
+                    myPoint = location.getPosition();
+                }
+            };
+
+            locationManager = MapKitFactory.getInstance().createLocationManager();
+            locationManager.subscribeForLocationUpdates(0, 0, 0,false, FilteringMode.OFF, locationListener);
+        }
+    }
+
+    private void initMap() {
+        requestPermissions();
+
+        mapView.getMap().setRotateGesturesEnabled(false);
+
+        userLocationLayer = MapKitFactory.getInstance().createUserLocationLayer(mapView.getMapWindow());
+        userLocationLayer.setVisible(true);
+        userLocationLayer.setHeadingEnabled(true);
+        userLocationLayer.setObjectListener(this);
+
+        mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0),  pingAnimation, null);
+
+        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter();
+        mapObjects = mapView.getMap().getMapObjects().addCollection();
+
+        ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.location_on1);
+        for (Point point : marketPoints) {
+            PlacemarkMapObject placemark = mapObjects.addPlacemark(point, imageProvider);
+            placemark.addTapListener(this);
+        }
     }
 
     private void updateMarket() {
@@ -189,18 +234,6 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
         }
     }
 
-    private void requestPermissions() {
-        firstPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        secondPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-
-        if (firstPermission != PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 200);
-        } else if (firstPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION }, 200);
-        } else if (secondPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION }, 200);
-        }
-    }
     private void getPinnedMarketInfo() {
         Pair<String, Boolean> userData = defineTypeUser();
         String userType = userData.second ? "getter" : "setter";
@@ -211,9 +244,9 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
                 if (response.code() == 404) {
                     choosenMarket = "";
                     listMarkets = new String[fullListMarkets.length];
-                    for (int i = 0; i < fullListMarkets.length; i++) listMarkets[i] = fullListMarkets[i].getTitle();
-                }
-                else if (response.code() == 400) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                    for (int i = 0; i < fullListMarkets.length; i++)
+                        listMarkets[i] = fullListMarkets[i].getTitle();
+                } else if (response.code() == 400) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 else {
                     if (response.body() != null) {
                         listMarkets = new String[fullListMarkets.length - 1];
@@ -237,6 +270,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
 
                 initListMarkets();
             }
+
             @Override
             public void onFailure(@NotNull Call<MarketTitleResponse> call, @NotNull Throwable t) {
                 t.printStackTrace();
@@ -244,56 +278,6 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
 
             }
         });
-    }
-
-    @SuppressLint("MissingPermission")
-    private void setUpLocationListener() {
-        LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new CustomLocationListener();
-
-        if (checkLocationPermissions()) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 25,  locationListener);
-            locationListener.setLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
-        }
-    }
-
-    private void initMap() {
-        requestPermissions();
-
-        setUpLocationListener();
-
-        MapKitFactory.getInstance().resetLocationManagerToDefault();
-        mapView.getMap().setRotateGesturesEnabled(false);
-
-        userLocationLayer = MapKitFactory.getInstance().createUserLocationLayer(mapView.getMapWindow());
-        userLocationLayer.setVisible(true);
-        userLocationLayer.setHeadingEnabled(true);
-        userLocationLayer.setObjectListener(this);
-
-        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter();
-        mapObjects = mapView.getMap().getMapObjects().addCollection();
-
-        ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.location_on1);
-
-        for (Point point : marketPoints) {
-            PlacemarkMapObject placemark = mapObjects.addPlacemark(point, imageProvider);
-            placemark.addTapListener(this);
-        }
-
-
-        if (checkLocationPermissions()) {
-            try {
-                setUpLocationListener();
-                double lat = locationListener.getLocation().getLatitude();
-                double longt = locationListener.getLocation().getLongitude();
-
-                createRoute(new Point(lat, longt));
-
-                mapView.getMap().move(new CameraPosition(new Point(lat, longt), 14, 0, 0),  new Animation(Animation.Type.SMOOTH, 0), null);
-            } catch (NullPointerException err) {
-                this.mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
-            }
-        } else this.mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
     }
 
     private void initListMarkets() {
@@ -323,72 +307,47 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
         }
     }
 
-    private Pair<String, Boolean> defineTypeUser() {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
+    private void createRoute() {
+        if (isAvailableLocation) {
+            Location myLocation = new Location("");
+            myLocation.setLatitude(myPoint.getLatitude());
+            myLocation.setLongitude(myPoint.getLongitude());
 
-            String userID = sharedPreferences.getString("X5_id", "");
-            boolean isUser = sharedPreferences.getBoolean("isGetter", false);
+            Point resultPoint = marketPoints.get(0);
 
-            return new Pair<>(userID, isUser);
-        } catch (GeneralSecurityException | IOException err) {
-            Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-            Log.e("esp_error", err.getMessage());
-        }
-        return new Pair<>("", false);
-    }
+            Location resultLocation = new Location("");
+            resultLocation.setLatitude(resultPoint.getLatitude());
+            resultLocation.setLongitude(resultPoint.getLongitude());
 
-    private void createRoute(Point myPoint) {
-        Location myLocation = new Location("");
-        myLocation.setLatitude(myPoint.getLatitude());
-        myLocation.setLongitude(myPoint.getLongitude());
-
-        Point resPoint = marketPoints.get(0);
-        if (choosenMarket.length() == 0) {
-            Location firstLocation = new Location("");
-            firstLocation.setLatitude(resPoint.getLatitude());
-            firstLocation.setLongitude(resPoint.getLongitude());
-
-            double minDistance = myLocation.distanceTo(firstLocation);
+            double minDistance = myLocation.distanceTo(resultLocation);
 
             for (int i = 1; i < marketPoints.size(); i++) {
-                Point testPoint = marketPoints.get(i);
+                Point intermediatePoint = marketPoints.get(i);
 
-                Location testLocation = new Location("");
-                testLocation.setLatitude(testPoint.getLatitude());
-                testLocation.setLongitude(testPoint.getLongitude());
+                Location intermediateLocation = new Location("");
+                intermediateLocation.setLatitude(intermediatePoint.getLatitude());
+                intermediateLocation.setLongitude(intermediatePoint.getLongitude());
 
-                if (myLocation.distanceTo(testLocation) < minDistance) {
-                    minDistance = myLocation.distanceTo(testLocation);
-                    resPoint = testPoint;
+                if (myLocation.distanceTo(intermediateLocation) < minDistance) {
+                    minDistance = myLocation.distanceTo(intermediateLocation);
+                    resultPoint = intermediatePoint;
                 }
             }
-        } else {
-            for (Market item: fullListMarkets) {
-                if (item.getTitle().equals(this.choosenMarket)) {
-                    resPoint = item.getPoint();
-                    break;
-                }
-            }
-        }
 
-        DrivingOptions drivingOptions = new DrivingOptions();
-        VehicleOptions vehicleOptions = new VehicleOptions();
-        ArrayList<RequestPoint> requestPoints = new ArrayList<>();
+            DrivingOptions drivingOptions = new DrivingOptions();
+            VehicleOptions vehicleOptions = new VehicleOptions();
+            ArrayList<RequestPoint> requestPoints = new ArrayList<>();
 
-        requestPoints.add(new RequestPoint(myPoint, RequestPointType.WAYPOINT, null));
-        requestPoints.add(new RequestPoint(resPoint, RequestPointType.WAYPOINT, null));
+            requestPoints.add(new RequestPoint(myPoint, RequestPointType.WAYPOINT, null));
+            requestPoints.add(new RequestPoint(resultPoint, RequestPointType.WAYPOINT, null));
 
-        this.drivingSession = drivingRouter.requestRoutes(requestPoints, drivingOptions, vehicleOptions, this);
+            this.drivingSession = drivingRouter.requestRoutes(requestPoints, drivingOptions, vehicleOptions, this);
+        } else Toast.makeText(requireContext(), getString(R.string.open_location), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDrivingRoutes(@NonNull List<DrivingRoute> list) {
-        for (DrivingRoute route : list) {
+        for (DrivingRoute route: list) {
             mapObjects.addPolyline(route.getGeometry());
         }
     }
@@ -396,13 +355,6 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     @Override
     public void onDrivingRoutesError(@NonNull Error error) {
         Toast.makeText(getContext(), R.string.error_on_route, Toast.LENGTH_SHORT).show();
-    }
-
-    private boolean checkLocationPermissions() {
-        firstPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        secondPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-
-        return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
@@ -440,4 +392,43 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
 
     @Override
     public void onObjectUpdated(@NotNull UserLocationView view, @NotNull ObjectEvent event) {}
+
+    private boolean checkLocationPermissions() {
+        firstPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        secondPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+
+        return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermissions() {
+        firstPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        secondPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (firstPermission != PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+        } else if (firstPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 200);
+        } else if (secondPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+        }
+    }
+
+    private Pair<String, Boolean> defineTypeUser() {
+        try {
+            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build();
+            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
+
+            String userID = sharedPreferences.getString("X5_id", "");
+            boolean isUser = sharedPreferences.getBoolean("isGetter", false);
+
+            return new Pair<>(userID, isUser);
+        } catch (GeneralSecurityException | IOException err) {
+            Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
+            Log.e("esp_error", err.getMessage());
+        }
+        return new Pair<>("", false);
+    }
 }

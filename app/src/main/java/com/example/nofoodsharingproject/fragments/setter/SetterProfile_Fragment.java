@@ -123,7 +123,7 @@ public class SetterProfile_Fragment extends Fragment {
         AdvertsRepository.findSetterAdvertisements(this.user.getX5_Id()).enqueue(new Callback<ResponseHistoryAdverts>() {
             @Override
             public void onResponse(@NotNull Call<ResponseHistoryAdverts> call, @NotNull Response<ResponseHistoryAdverts> response) {
-                if (response.code() == 400) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                if (response.code() == 400) Toast.makeText(requireContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 else if (response.code() != 404 && response.body() != null) {
                     Advertisement[] result = response.body().getAdvertisements();
                     successProducts.setText(Integer.toString(result.length) + getString(R.string.some_success_products));
