@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.api.map;
+package com.example.nofoodsharingproject.data.api.map.dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

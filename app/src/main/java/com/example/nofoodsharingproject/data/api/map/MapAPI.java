@@ -1,5 +1,7 @@
 package com.example.nofoodsharingproject.data.api.map;
 
+import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
+import com.example.nofoodsharingproject.data.api.map.dto.RequestMarketInfo;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Setter;
 

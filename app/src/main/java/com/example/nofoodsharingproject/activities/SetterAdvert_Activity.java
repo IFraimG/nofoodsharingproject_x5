@@ -17,8 +17,8 @@ import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.data.api.adverts.RequestDoneAdvert;
-import com.example.nofoodsharingproject.data.api.notifications.ResponseFCMToken;
+import com.example.nofoodsharingproject.data.api.adverts.dto.RequestDoneAdvert;
+import com.example.nofoodsharingproject.data.api.notifications.dto.ResponseFCMToken;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.data.repository.GetterRepository;
 import com.example.nofoodsharingproject.data.repository.NotificationRepository;
@@ -138,7 +138,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
         });
     }
 
-    public void sendNotification() {
+    private void sendNotification() {
             NotificationRepository.requestNotifyDonateCall(fcmToken, successTitle, successBody).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {

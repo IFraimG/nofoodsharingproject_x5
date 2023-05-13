@@ -1,9 +1,9 @@
 package com.example.nofoodsharingproject.data.repository;
 
 import com.example.nofoodsharingproject.data.api.auth.AuthApiService;
-import com.example.nofoodsharingproject.data.api.auth.interfaces.CheckAuthI;
-import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpInformation;
-import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpResponseI;
+import com.example.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
+import com.example.nofoodsharingproject.data.api.auth.dto.SignUpInformation;
+import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Setter;
 

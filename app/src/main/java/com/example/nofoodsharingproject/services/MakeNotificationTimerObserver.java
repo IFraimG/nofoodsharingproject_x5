@@ -2,7 +2,6 @@ package com.example.nofoodsharingproject.services;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +14,9 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+// не используется
 public class MakeNotificationTimerObserver extends BroadcastReceiver {
         final public static String ONE_TIME = "onetime";
-
         @Override
         public void onReceive(Context context, Intent intent) {
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);

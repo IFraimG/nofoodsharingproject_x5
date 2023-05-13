@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <TextView
         android:id="@+id/setter_notify_item_title"
@@ -12,7 +11,7 @@
         android:layout_weight="1"
         android:textSize="32sp"
         android:layout_margin="10dp"
-        tools:text="Название уведомления" />
+        android:text="@string/name_notification" />
     <TextView
         android:id="@+id/setter_notify_item_date"
         android:layout_width="wrap_content"
@@ -20,7 +19,7 @@
         android:layout_weight="1"
         android:textSize="16sp"
         android:layout_margin="10dp"
-        tools:text="24.05.23" />
+        android:text="@string/Id_now_what_is_it_text" />
 
     <TextView
         android:id="@+id/setter_notify_item_desc"
@@ -29,7 +28,7 @@
         android:layout_weight="1"
         android:textSize="18sp"
         android:layout_margin="10dp"
-        tools:text="Описание" />
+        android:text="@string/description_text" />
 
     <Button
         android:id="@+id/setter_notify_item_link"

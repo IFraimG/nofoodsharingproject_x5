@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.api.auth.interfaces;
+package com.example.nofoodsharingproject.data.api.auth.dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

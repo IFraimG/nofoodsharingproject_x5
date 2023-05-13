@@ -16,6 +16,7 @@
             android:id="@+id/setter_advert_back"
             android:layout_width="64dp"
             android:layout_height="48dp"
+            android:contentDescription="@string/no_image_warnings"
             android:background="@drawable/custom_round_border"
             app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
         <TextView

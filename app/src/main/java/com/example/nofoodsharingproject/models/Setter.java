@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName;
 public class Setter extends User {
     @SerializedName("id")
     @Expose
-    String X5_Id;
+    private String X5_Id;
     @SerializedName("successHistory")
     @Expose
-    Advertisement[] successHistory;
+    private Advertisement[] successHistory;
 
     @SerializedName("authID")
-    String authID;
+    private String authID;
 
     public Setter() {
 

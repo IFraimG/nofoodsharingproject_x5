@@ -14,7 +14,6 @@ public class MainAuth_Activity extends AppCompatActivity {
 
         binding = ActivityMainAuthBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
     }
 
 }

@@ -11,33 +11,27 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.databinding.FragmentGetterAuthBinding;
+import com.example.nofoodsharingproject.databinding.FragmentMainAuthBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 
 public class MainAuth_Fragment extends Fragment {
 
+    private FragmentMainAuthBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//
-//        Button btnGetter = getActivity().findViewById(R.id.main_auth_btn_getter);
-//        Button btnSetter = getActivity().findViewById(R.id.main_auth_btn_setter);
-
-//        btnGetter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_getterAuthF);
-//            }
-//        });
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_auth, container, false);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentMainAuthBinding.inflate(inflater);
 
-        Button btnGetter = (Button) view.findViewById(R.id.main_auth_btn_getter);
-        Button btnSetter = (Button) view.findViewById(R.id.main_auth_btn_setter);
+        Button btnGetter = binding.mainAuthBtnGetter;
+        Button btnSetter = binding.mainAuthBtnSetter;
 
         btnSetter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +47,7 @@ public class MainAuth_Fragment extends Fragment {
             }
         });
 
-        return view;
+        return binding.getRoot();
     }
 
 

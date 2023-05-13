@@ -1,10 +1,10 @@
 package com.example.nofoodsharingproject.data.repository;
 
 import com.example.nofoodsharingproject.data.api.map.MapApiService;
-import com.example.nofoodsharingproject.data.api.map.RequestMarketInfo;
+import com.example.nofoodsharingproject.data.api.map.dto.RequestMarketInfo;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Setter;
-import com.example.nofoodsharingproject.data.api.map.MarketTitleResponse;
+import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
 
 import retrofit2.Call;
 

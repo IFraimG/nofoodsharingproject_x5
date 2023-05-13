@@ -12,11 +12,13 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minHeight="52dp"
         android:inputType="text"
         android:textSize="15sp"
         android:layout_gravity="center|top"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/style8"
+        android:autofillHints=""
         android:id="@+id/getter_advert_input_title"
         android:hint="@string/getter_creating_title" />
 
@@ -45,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:textSize="15sp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="180dp"
             android:textColor="@color/grey_500"
             android:text="@string/getter_result_list"/>
@@ -73,9 +76,6 @@
             android:layout_marginBottom="10dp"
             android:background="@color/grey_500"/>
 
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,9 +84,9 @@
             android:layout_marginBottom="10dp">
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:text="@string/back_text"
                 style="@style/grey_500_button"
@@ -104,8 +104,4 @@
                 android:background="@drawable/style1"/>
         </LinearLayout>
     </LinearLayout>
-
-
-
-
 </FrameLayout>

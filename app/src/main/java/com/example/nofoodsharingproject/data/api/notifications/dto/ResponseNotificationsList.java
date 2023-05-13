@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.api.notifications;
+package com.example.nofoodsharingproject.data.api.notifications.dto;
 
 import com.example.nofoodsharingproject.models.Notification;
 import com.google.gson.annotations.Expose;

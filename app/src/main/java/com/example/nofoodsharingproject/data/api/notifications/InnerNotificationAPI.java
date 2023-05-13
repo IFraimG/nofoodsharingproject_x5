@@ -1,5 +1,7 @@
 package com.example.nofoodsharingproject.data.api.notifications;
 
+import com.example.nofoodsharingproject.data.api.notifications.dto.RequestSetRead;
+import com.example.nofoodsharingproject.data.api.notifications.dto.ResponseNotificationsList;
 import com.example.nofoodsharingproject.models.Notification;
 
 import retrofit2.Call;

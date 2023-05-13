@@ -1,5 +1,10 @@
 package com.example.nofoodsharingproject.data.api.adverts;
 
+import com.example.nofoodsharingproject.data.api.adverts.dto.RequestDoneAdvert;
+import com.example.nofoodsharingproject.data.api.adverts.dto.RequestTakingProduct;
+import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseActiveAdverts;
+import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;
+import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseHistoryAdverts;
 import com.example.nofoodsharingproject.models.Advertisement;
 
 import retrofit2.Call;
@@ -13,7 +18,6 @@ import retrofit2.http.Path;
 public interface AdvertsAPI {
     @GET("/advertisements/get_active")
     Call<ResponseActiveAdverts> getListAdvertisements();
-
     @POST("/advertisements/create")
     Call<Advertisement> createAdvert(@Body Advertisement advert);
 

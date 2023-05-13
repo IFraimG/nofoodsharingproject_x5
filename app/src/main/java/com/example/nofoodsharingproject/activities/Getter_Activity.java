@@ -12,12 +12,11 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.nofoodsharingproject.BuildConfig;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.databinding.ActivityGetterBinding;
-import com.example.nofoodsharingproject.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.yandex.mapkit.MapKitFactory;
 
 public class Getter_Activity extends AppCompatActivity {
-    NavController navController;
+    private NavController navController;
     private ActivityGetterBinding binding;
 
     @Override
@@ -27,6 +26,7 @@ public class Getter_Activity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         MapKitFactory.setApiKey(BuildConfig.apiKey);
+        MapKitFactory.initialize(getApplicationContext());
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_getter_fragment);
         navController = navHostFragment.getNavController();

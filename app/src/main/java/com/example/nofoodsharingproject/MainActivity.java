@@ -12,7 +12,7 @@ import android.util.Log;
 import com.example.nofoodsharingproject.activities.Getter_Activity;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 import com.example.nofoodsharingproject.activities.Setter_Activity;
-import com.example.nofoodsharingproject.data.api.auth.interfaces.CheckAuthI;
+import com.example.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
 import com.example.nofoodsharingproject.data.repository.AuthRepository;
 import com.example.nofoodsharingproject.databinding.ActivityMainBinding;
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         AuthRepository.checkAuthSetter(sharedPreferences.getString("token", "")).enqueue(new Callback<CheckAuthI>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
-                if (!response.body().getIsAuth()) redirectToAuth();
+                if (response.body() != null && !response.body().getIsAuth()) redirectToAuth();
                 else {
                     Intent intentSetter = new Intent(getApplicationContext(), Setter_Activity.class);
                     startActivity(intentSetter);
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CheckAuthI> call, Throwable t) {
+            public void onFailure(@NotNull Call<CheckAuthI> call, @NotNull Throwable t) {
                 redirectToAuth();
             }
         });
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<CheckAuthI> call, Throwable t) {
+            public void onFailure(@NotNull Call<CheckAuthI> call, @NotNull Throwable t) {
                 redirectToAuth();
             }
         });

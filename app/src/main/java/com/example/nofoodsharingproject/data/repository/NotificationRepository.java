@@ -1,11 +1,11 @@
 package com.example.nofoodsharingproject.data.repository;
 
 import com.example.nofoodsharingproject.data.api.notifications.NotificationApiService;
-import com.example.nofoodsharingproject.data.api.notifications.FMCMessage;
-import com.example.nofoodsharingproject.data.api.notifications.FMCNotification;
+import com.example.nofoodsharingproject.data.api.notifications.dto.FMCMessage;
+import com.example.nofoodsharingproject.data.api.notifications.dto.FMCNotification;
 import com.example.nofoodsharingproject.data.api.notifications.InnerNotificationService;
-import com.example.nofoodsharingproject.data.api.notifications.RequestSetRead;
-import com.example.nofoodsharingproject.data.api.notifications.ResponseNotificationsList;
+import com.example.nofoodsharingproject.data.api.notifications.dto.RequestSetRead;
+import com.example.nofoodsharingproject.data.api.notifications.dto.ResponseNotificationsList;
 import com.example.nofoodsharingproject.models.Notification;
 
 import okhttp3.ResponseBody;

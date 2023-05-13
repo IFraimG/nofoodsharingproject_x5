@@ -4,10 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Getter extends User {
-//    boolean isCreatedAdvst;
     @SerializedName("_id")
     @Expose
-    String X5_Id;
+    private String X5_Id;
 
     public Getter() {
 
@@ -42,10 +41,5 @@ public class Getter extends User {
     @Override
     public void setLogin(String login) {
         super.setLogin(login);
-    }
-
-    public boolean removeAdvertisement() {
-
-        return false;
     }
 }

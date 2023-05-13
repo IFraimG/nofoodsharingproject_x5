@@ -21,8 +21,9 @@ import android.widget.Toast;
 
 import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpResponseI;
+import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.repository.AuthRepository;
+import com.example.nofoodsharingproject.databinding.FragmentSetterAuthBinding;
 import com.example.nofoodsharingproject.models.Setter;
 import com.example.nofoodsharingproject.utils.ValidateUser;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Setter_Auth_Fragment extends Fragment {
+    private FragmentSetterAuthBinding binding;
     private EditText phone = null;
     private EditText login = null;
     private EditText password = null;
@@ -53,15 +55,15 @@ public class Setter_Auth_Fragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setter_auth, container, false);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentSetterAuthBinding.inflate(inflater);
 
-        btnRegistration = (Button) view.findViewById(R.id.setter_auth_btn_reg);
-        btnBack = (ImageView) view.findViewById(R.id.auth_setter_signup_back);
-        btnLogin = (Button) view.findViewById(R.id.setter_auth_btn_login);
-        phone = (EditText) view.findViewById(R.id.setter_auth_phone);
-        login = (EditText) view.findViewById(R.id.setter_auth_login);
-        password = (EditText) view.findViewById(R.id.setter_auth_password);
+        btnRegistration = binding.setterAuthBtnReg;
+        btnBack = binding.authSetterSignupBack;
+        btnLogin = binding.setterAuthBtnLogin;
+        phone = binding.setterAuthPhone;
+        login = binding.setterAuthLogin;
+        password = binding.setterAuthPassword;
 
         btnRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,10 +81,10 @@ public class Setter_Auth_Fragment extends Fragment {
 
         btnLogin.setOnClickListener(View -> sendToNotifyAccount());
 
-        return view;
+        return binding.getRoot();
     }
 
-    public void signup(String tokenFCM) {
+    private void signup(String tokenFCM) {
         if (validate()) {
             btnLogin.setEnabled(false);
             AuthRepository.setterRegistration(phone.getText().toString(), login.getText().toString(), password.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
@@ -99,7 +101,7 @@ public class Setter_Auth_Fragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<SignUpResponseI<Setter>> call, Throwable t) {
+                public void onFailure(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Throwable t) {
                     btnLogin.setEnabled(true);
                     t.printStackTrace();
                 }
@@ -107,7 +109,7 @@ public class Setter_Auth_Fragment extends Fragment {
         }
     }
 
-    public boolean validate() {
+    private boolean validate() {
         if (!ValidateUser.validatePhone(phone.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
             return false;
@@ -123,7 +125,7 @@ public class Setter_Auth_Fragment extends Fragment {
         return true;
     }
 
-    public void pushData(SignUpResponseI<Setter> result) {
+    private void pushData(SignUpResponseI<Setter> result) {
         try {
             Intent intent = new Intent(getContext(), MainActivity.class);
 

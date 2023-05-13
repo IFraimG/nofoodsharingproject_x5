@@ -18,18 +18,14 @@ import androidx.security.crypto.MasterKey;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.databinding.ActivityGetterCreateNewAdvertismentBinding;
-import com.example.nofoodsharingproject.models.GetterProductItem;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Getter;
-import com.example.nofoodsharingproject.models.Product;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;

@@ -8,25 +8,26 @@ import java.util.Date;
 public abstract class User {
     @SerializedName("phone")
     @Expose
-    String phone;
+    private String phone;
 
     @SerializedName("login")
     @Expose
-    String login;
+    private String login;
 
     @SerializedName("password")
     @Expose
-    String password;
+    private String password;
 
     @SerializedName("market")
     @Expose
-    String marketName;
+    private String marketName;
 
     @SerializedName("fcmToken")
     @Expose
-    String tokenFCM;
+    private String tokenFCM;
 
     public User() {}
+
     public User(String phone, String login, String password) {
         this.login = login;
         this.phone = phone;

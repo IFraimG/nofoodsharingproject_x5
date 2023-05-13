@@ -1,10 +1,10 @@
 package com.example.nofoodsharingproject.models;
 
 public class Product {
-    String title;
-    String type;
-    String id;
-    String cost;
+    private String title;
+    private String type;
+    private String id;
+    private String cost;
 
     public Product(String title) {
         this.title = title;

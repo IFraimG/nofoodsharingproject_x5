@@ -2,19 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--  геолокация  -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-<!--    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" tools:node="remove"/>-->
-    <!-- уведомления  -->
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
-    <!-- наблюдение за сроком годности -->
     <uses-permission android:name='android.permission.WAKE_LOCK'/>
 
     <application
@@ -33,24 +29,21 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:exported="true" android:name=".activities.MainAuth_Activity">
         </activity>
-        <activity android:name=".activities.GetterNewAdvert_Activity" android:exported="true" />
-        <activity android:configChanges="orientation|screenSize" android:name=".activities.Setter_Activity" android:exported="true" />
-        <activity android:name=".activities.SetterAdvert_Activity" android:exported="true" />
-        <activity android:name=".activities.SetterHelpFinish_Activity" android:exported="true" />
-        <activity android:configChanges="orientation|screenSize" android:name=".activities.Getter_Activity" android:exported="true" />
+        <activity android:name=".activities.GetterNewAdvert_Activity" android:exported="false" />
+        <activity android:configChanges="orientation|screenSize" android:name=".activities.Setter_Activity" android:exported="false" />
+        <activity android:name=".activities.SetterAdvert_Activity" android:exported="false" />
+        <activity android:name=".activities.SetterHelpFinish_Activity" android:exported="false" />
+        <activity android:configChanges="orientation|screenSize" android:name=".activities.Getter_Activity" android:exported="false" />
 
-<!--        <receiver android:exported="false" android:name=".services.LocationUpdateReceiver" >-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.example.nofoodsharingproject.LOCATION_READY" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
-        <receiver android:name='com.example.nofoodsharingproject.services.AlarmManagerBroadcastReceiver' />
+        <service
+            android:name=".services.LocationTrackingService"
+            android:enabled="false"
+            android:foregroundServiceType="location" />
 
         <service
             android:name=".services.CustomMessagingService"
@@ -59,17 +52,11 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service android:name=".services.LocationTrackingService" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/notifications_active" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/design_default_color_surface" />
-<!--        <meta-data-->
-<!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-<!--            android:value="@string/default_notification_channel_id" />-->
     </application>
-
 </manifest>

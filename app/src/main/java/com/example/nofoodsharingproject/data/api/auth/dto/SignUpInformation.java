@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.api.auth.interfaces;
+package com.example.nofoodsharingproject.data.api.auth.dto;
 
 // для отправки запроса
 public class SignUpInformation {

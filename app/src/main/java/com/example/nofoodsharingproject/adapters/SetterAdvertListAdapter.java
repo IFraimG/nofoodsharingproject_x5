@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertListAdapter.ViewHolder> {
-    final Context ctx;
+    private final Context ctx;
     private final List<Advertisement> advertisements = new ArrayList<>();
     private final LayoutInflater inflater;
     private final Intent intent;
@@ -67,21 +67,19 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
 
             notifyDataSetChanged();
         } catch (NullPointerException err) {
-            Log.e("msg", "null adverts");
+            Log.e("msg", ctx.getString(R.string.no_adverts));
         }}
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView title;
-//        final TextView desc;
-        final TextView authorName;
-        final Button link;
-        final ListView productList;
+        private final TextView title;
+        private final TextView authorName;
+        private final Button link;
+        private final ListView productList;
 
         public ViewHolder(View view) {
             super(view);
             this.title = (TextView) view.findViewById(R.id.setter_advert_item_title);
-//            заменить на отображение списка продуктов
-//            this.desc = (TextView) view.findViewById(R.id.setter_advert_item_desc);
+
             this.authorName = (TextView) view.findViewById(R.id.setter_advert_item_name);
             this.link = (Button) view.findViewById(R.id.setter_advert_item_link);
             this.productList = (ListView) view.findViewById(R.id.setter_advert_product_list);

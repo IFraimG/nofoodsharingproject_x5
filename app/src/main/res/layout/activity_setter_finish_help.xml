@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.SetterHelpFinish_Activity"
     android:padding="20dp"
@@ -31,7 +30,7 @@
         android:textSize="32sp"
         android:backgroundTint="@color/green_pastel"
         android:layout_marginBottom="20dp"
-        android:text="Перейти" />
+        android:text="@string/go_over_text" />
 
     <Button
         android:id="@+id/setter_finish_return"
@@ -39,6 +38,6 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:backgroundTint="@color/grey_light"
-        android:text="Вернуться на страницу объявлений"
+        android:text="@string/return_to_main_page"
         android:layout_marginBottom="20dp"/>
 </LinearLayout>

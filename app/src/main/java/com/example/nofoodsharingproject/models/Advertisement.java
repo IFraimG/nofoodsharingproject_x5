@@ -14,8 +14,6 @@ public class Advertisement {
     @Expose
     private String title;
 
-    private ArrayList<Product> fullListProducts;
-
     @SerializedName("listProducts")
     @Expose
     private String[] listProducts;
@@ -54,7 +52,6 @@ public class Advertisement {
         this.title = title;
         this.authorID = authorID;
         this.authorName = authorName;
-        // change
         this.dateOfExpires = Long.toString(new Date().getTime());
     }
 
@@ -70,13 +67,6 @@ public class Advertisement {
         }
         return sb.toString();
     }
-
-//    public Advertisement(String date, String authorID, String advertsID, String gettingProductID) {
-//        this.dateOfCreated = date;
-//        this.authorID = authorID;
-//        this.adversID = adversID;
-//        this.gettingProductID = gettingProductID;
-//    }
 
     public boolean isDone() {
         return isDone;
@@ -97,14 +87,6 @@ public class Advertisement {
         }
     }
 
-    public ArrayList<Product> getFullListProducts() {
-        return fullListProducts;
-    }
-
-    public void setFullListProducts(ArrayList<Product> fullListProducts) {
-        this.fullListProducts = fullListProducts;
-    }
-
     public String getDateOfCreated() {
         return this.dateOfCreated;
     }
@@ -114,8 +96,6 @@ public class Advertisement {
     }
 
     public String[] getListTitleProducts() {
-//        String[] arr = new String[this.listProducts.size()];
-//        for (int i = 0; i < listProducts.size(); i++) arr[i] = listProducts.get(i).getTitle();
         return getListProducts();
     }
 

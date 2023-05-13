@@ -1,15 +1,13 @@
 package com.example.nofoodsharingproject.view_models;
 
 import android.app.Application;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.nofoodsharingproject.data.api.notifications.ResponseNotificationsList;
+import com.example.nofoodsharingproject.data.api.notifications.dto.ResponseNotificationsList;
 import com.example.nofoodsharingproject.data.repository.NotificationRepository;
 import com.example.nofoodsharingproject.models.Notification;
 
@@ -17,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,14 +36,14 @@ public class Notifications_ViewModel extends AndroidViewModel {
         NotificationRepository.getNotifications(userID, typeOfUser).enqueue(new Callback<ResponseNotificationsList>() {
             @Override
             public void onResponse(@NotNull Call<ResponseNotificationsList> call, @NotNull Response<ResponseNotificationsList> response) {
-                if (response.code() != 404 && response.code() != 400) {
+                if (response.code() != 404 && response.code() != 400 && response.body() != null) {
                     List<Notification> notificationsRes = Arrays.asList(response.body().getResult());
                     _notifications.setValue(notificationsRes);
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseNotificationsList> call, Throwable t) {
+            public void onFailure(@NotNull Call<ResponseNotificationsList> call, @NotNull Throwable t) {
                 t.printStackTrace();
             }
         });

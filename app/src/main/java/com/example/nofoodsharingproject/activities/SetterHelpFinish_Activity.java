@@ -16,8 +16,6 @@ import com.example.nofoodsharingproject.databinding.ActivitySetterFinishHelpBind
 public class SetterHelpFinish_Activity extends AppCompatActivity {
 
     private ActivitySetterFinishHelpBinding binding;
-    private Button openVkButton;
-    private Button returnButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +23,8 @@ public class SetterHelpFinish_Activity extends AppCompatActivity {
         binding = ActivitySetterFinishHelpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        openVkButton = binding.setterFinishGotovk;
-        returnButton = binding.setterFinishReturn;
+        Button openVkButton = binding.setterFinishGotovk;
+        Button returnButton = binding.setterFinishReturn;
 
         openVkButton.setOnClickListener(View -> vkLoad());
         returnButton.setOnClickListener(View -> {
@@ -38,7 +36,7 @@ public class SetterHelpFinish_Activity extends AppCompatActivity {
 
     private void vkLoad() {
         try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/app7550574"));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.vk_link)));
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
             Toast.makeText(getApplicationContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();

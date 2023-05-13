@@ -1,19 +1,16 @@
-package com.example.nofoodsharingproject.data.api.adverts;
+package com.example.nofoodsharingproject.data.api.adverts.dto;
 
 import com.example.nofoodsharingproject.models.Advertisement;
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class ResponseActiveAdverts {
-    @SerializedName("result")
+public class ResponseHistoryAdverts {
+    @SerializedName("advertisements")
     Advertisement[] advertisements;
 
-    public ResponseActiveAdverts() {}
+    public ResponseHistoryAdverts() {}
 
-    public ResponseActiveAdverts(Advertisement[] advertisementList) {
-        this.advertisements = advertisementList;
+    public ResponseHistoryAdverts(Advertisement[] advertisements) {
+        this.advertisements = advertisements;
     }
 
     public Advertisement[] getAdvertisements() {

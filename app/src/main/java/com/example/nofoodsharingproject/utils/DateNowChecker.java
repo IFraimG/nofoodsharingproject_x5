@@ -5,9 +5,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateNowChecker {
-    String timeHMS;
-    String timeYMD;
-    ZonedDateTime dateTime;
+    private String timeHMS;
+    private String timeYMD;
+    private ZonedDateTime dateTime;
 
     public DateNowChecker() {
         this.dateNowUpdate();

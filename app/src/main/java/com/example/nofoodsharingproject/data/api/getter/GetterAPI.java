@@ -1,6 +1,7 @@
 package com.example.nofoodsharingproject.data.api.getter;
 
-import com.example.nofoodsharingproject.data.api.notifications.ResponseFCMToken;
+import com.example.nofoodsharingproject.data.api.getter.dto.RequestGetterEditProfile;
+import com.example.nofoodsharingproject.data.api.notifications.dto.ResponseFCMToken;
 import com.example.nofoodsharingproject.models.Getter;
 
 import retrofit2.Call;

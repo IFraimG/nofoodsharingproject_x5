@@ -21,7 +21,7 @@ import com.example.nofoodsharingproject.view_models.AdvertisementList_ViewModel;
 import java.util.List;
 
 public class SetterAdvrs_Fragment extends Fragment {
-    AdvertisementList_ViewModel viewModel;
+    private AdvertisementList_ViewModel viewModel;
     private FragmentSetterAdvrsBinding binding;
 
     @Override
@@ -51,21 +51,20 @@ public class SetterAdvrs_Fragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void renderStatus(LoaderStatus loaderStatus) {
-        // доделать
-        switch (loaderStatus) {
-            case LOADING:
-                binding.setterListAdvert.setVisibility(View.INVISIBLE);
-                binding.setterLoader.setVisibility(View.VISIBLE);
-                break;
-            case LOADED:
-                binding.setterListAdvert.setVisibility(View.VISIBLE);
-                binding.setterLoader.setVisibility(View.INVISIBLE);
-                break;
-            case FAILURE:
-                binding.setterListAdvert.setVisibility(View.INVISIBLE);
-                binding.setterLoader.setVisibility(View.INVISIBLE);
-                break;
-        }
-    }
+//    private void renderStatus(LoaderStatus loaderStatus) {
+//        switch (loaderStatus) {
+//            case LOADING:
+//                binding.setterListAdvert.setVisibility(View.INVISIBLE);
+//                binding.setterLoader.setVisibility(View.VISIBLE);
+//                break;
+//            case LOADED:
+//                binding.setterListAdvert.setVisibility(View.VISIBLE);
+//                binding.setterLoader.setVisibility(View.INVISIBLE);
+//                break;
+//            case FAILURE:
+//                binding.setterListAdvert.setVisibility(View.INVISIBLE);
+//                binding.setterLoader.setVisibility(View.INVISIBLE);
+//                break;
+//        }
+//    }
 }

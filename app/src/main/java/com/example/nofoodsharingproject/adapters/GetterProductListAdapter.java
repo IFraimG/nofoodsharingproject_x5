@@ -15,6 +15,7 @@ import com.example.nofoodsharingproject.models.Product;
 
 import java.util.List;
 
+// не используется
 public class GetterProductListAdapter extends RecyclerView.Adapter<GetterProductListAdapter.ViewHolder> {
     final private LayoutInflater inflater;
     final private List<Product> products;

@@ -19,7 +19,6 @@ public class RetrofitService {
 
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-//                .addConverterFactory(MoshiConverterFactory.create())
                 .baseUrl(BASE_URL)
                 .client(client.build())
                 .build();

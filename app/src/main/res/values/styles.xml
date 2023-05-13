@@ -3,7 +3,7 @@
     <style name="grey_500_button" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/style1</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_width">wrap_content</item>

@@ -1,14 +1,17 @@
 <resources>
     <integer name="com_vk_sdk_AppId">7550574</integer>
+    <string name="vk_link">https://vk.com/app7550574</string>
     <string name="app_name">Покупай — Помогай</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_new_request_button">Создать новое объявление</string>
     <string name="button_navigation_first">Объявления</string>
+    <string name="button_navigation_first_first">Объявление</string>
     <string name="button_navigation_notification">Уведомления</string>
     <string name="button_navigation_profile">Профиль</string>
     <string name="button_navigation_map">Карта</string>
     <string name="heading_ads">Объявления</string>
     <string name="Adres_your_magazin">Адрес вашего магазина:</string>
+    <string name="magazine_toast">Магазин: </string>
     <string name="map_error_search">С поиском магазинов произошли проблемы</string>
     <string name="create_new_adv_text">Создание объявления</string>
     <string name="your_last_adv_text">Ваш последний заказ:</string>
@@ -21,6 +24,7 @@
     <string name="back_text">назад</string>
     <string name="ready_text">Готово</string>
     <string name="named_advert_text">Название объявления</string>
+    <string name="name_notification">Название уведомления</string>
     <string name="name_autor_text">Имя автора</string>
     <string name="date_text">24.05.23</string>
     <string name="list_product_text">Список продуктов</string>
@@ -61,7 +65,10 @@
     <string name="enter_to_getter_text">Вход для отдающего</string>
     <string name="enter_text">Войти</string>
     <string name="name_text_hint">Имя профиля</string>
+    <string name="name_text_getter">Имя нуждающегося</string>
     <string name="broadcast_text_hint">N успешных передач продуктов</string>
+    <string name="some_success_products"> успешных передач продуктов</string>
+    <string name="product_text_success"> продукта - </string>
     <string name="geolocation_text">Включить геолокацию</string>
     <string name="on_notifications_text">Включить уведомления</string>
     <string name="leave_account_text">Выйти из аккаунта</string>
@@ -121,4 +128,7 @@
     <string name="celebrate_help_title">Поздравляем с успешной передачей продуктов!</string>
     <string name="open_vk">Отсканировать чек в VK</string>
     <string name="no_image_warnings">...</string>
+    <string name="no_adverts">Объявление отсутствует</string>
+    <string name="auth_wait">Немного подождите....</string>
+    <string name="return_to_main_page">Вернуться на страницу объявлений</string>
 </resources>

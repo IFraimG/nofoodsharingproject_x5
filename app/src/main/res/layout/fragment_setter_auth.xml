@@ -16,6 +16,7 @@
             android:layout_width="64dp"
             android:layout_height="48dp"
             android:layout_marginStart="20dp"
+            android:contentDescription="@string/no_image_warnings"
             android:background="@drawable/custom_round_border"
             android:src="@drawable/ic_baseline_chevron_left_24" />
 
@@ -24,7 +25,6 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:layout_marginStart="20dp"
-
             android:layout_gravity="center"
             android:text="@string/setter_account_text" />
     </LinearLayout>
@@ -34,12 +34,16 @@
         android:id="@+id/setter_auth_phone"
         android:hint="@string/write_number_phone_text_hint"
         style="@style/style_auth_edittext"
+        android:inputType="phone"
+        android:autofillHints=""
         />
 
     <EditText
         android:id="@+id/setter_auth_login"
         style="@style/style_auth_edittext"
         android:hint="@string/write_name_text_hint"
+        android:inputType="text"
+        android:autofillHints=""
         />
 
     <EditText
@@ -47,6 +51,7 @@
         style="@style/style_auth_edittext"
         android:hint="@string/write_password_text_hint"
         android:inputType="textPassword"
+        android:autofillHints=""
         />
 
     <Button

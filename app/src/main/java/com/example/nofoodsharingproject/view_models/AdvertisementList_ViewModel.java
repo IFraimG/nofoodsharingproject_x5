@@ -1,16 +1,13 @@
 package com.example.nofoodsharingproject.view_models;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
-import com.example.nofoodsharingproject.data.api.adverts.ResponseActiveAdverts;
+import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseActiveAdverts;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.utils.LoaderStatus;
@@ -48,7 +45,7 @@ public class AdvertisementList_ViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<ResponseActiveAdverts> call, Throwable t) {
+            public void onFailure(@NotNull Call<ResponseActiveAdverts> call, @NotNull Throwable t) {
                 _status.setValue(LoaderStatus.FAILURE);
                 t.printStackTrace();
             }

@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -31,7 +30,7 @@ import android.widget.Toast;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
-import com.example.nofoodsharingproject.data.api.adverts.ResponseHistoryAdverts;
+import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseHistoryAdverts;
 import com.example.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Setter;
@@ -133,11 +132,11 @@ public class SetterProfile_Fragment extends Fragment {
                 if (response.code() == 400) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 else if (response.code() != 404) {
                     Advertisement[] result = response.body().getAdvertisements();
-                    successProducts.setText(Integer.toString(result.length) + " успешных передач продуктов");
+                    successProducts.setText(Integer.toString(result.length) + getString(R.string.some_success_products));
 
                     advertisementsHistory = new String[result.length];
                     for (int i = 0; i < result.length; i++) {
-                        advertisementsHistory[i] = result[i].getTitle() + " - " + result[i].getListProducts().length + " продукта - " + result[i].getDateOfCreated();
+                        advertisementsHistory[i] = result[i].getTitle() + " - " + result[i].getListProducts().length + getString(R.string.product_text_success) + result[i].getDateOfCreated();
                     }
 
                     arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advertisementsHistory);
@@ -146,7 +145,7 @@ public class SetterProfile_Fragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ResponseHistoryAdverts> call, Throwable t) {
+            public void onFailure(@NotNull Call<ResponseHistoryAdverts> call, @NotNull Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
             }
@@ -218,10 +217,10 @@ public class SetterProfile_Fragment extends Fragment {
 
     private void vkLoad() {
         try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/app7550574"));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.vk_link)));
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(getContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.smth_wrong), Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -44,7 +44,6 @@ public class GetterProfile_Fragment extends Fragment {
     private TextView login;
     private TextView phone;
     private Getter user;
-
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -61,7 +60,7 @@ public class GetterProfile_Fragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGetterProfileBinding.inflate(inflater);
 
         buttonLogout = binding.getterProfileLogout;
@@ -134,7 +133,7 @@ public class GetterProfile_Fragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<Getter> call, Throwable t) {
+                public void onFailure(@NotNull Call<Getter> call, @NotNull Throwable t) {
                     t.printStackTrace();
                     btnSave.setEnabled(true);
                     Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();

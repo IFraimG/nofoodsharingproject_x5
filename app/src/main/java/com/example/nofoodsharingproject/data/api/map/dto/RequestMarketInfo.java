@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.api.map;
+package com.example.nofoodsharingproject.data.api.map.dto;
 
 public class RequestMarketInfo {
     String userID;

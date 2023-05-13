@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.api.notifications;
+package com.example.nofoodsharingproject.data.api.notifications.dto;
 
 public class FMCMessage {
     private String to;

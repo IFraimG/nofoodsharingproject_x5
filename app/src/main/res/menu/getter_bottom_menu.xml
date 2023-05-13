@@ -3,7 +3,7 @@
     <item
         android:id="@+id/getterAdvrsF"
         android:icon="@drawable/add"
-        android:title="@string/button_navigation_first"
+        android:title="@string/button_navigation_first_first"
         android:enabled="true" />
     <item
         android:id="@+id/getterNotifyF"

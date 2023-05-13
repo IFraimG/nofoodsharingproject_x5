@@ -21,9 +21,11 @@ import android.widget.Toast;
 
 import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpResponseI;
+import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.repository.AuthRepository;
+import com.example.nofoodsharingproject.databinding.FragmentGetterAuthBinding;
 import com.example.nofoodsharingproject.models.Getter;
+import com.example.nofoodsharingproject.utils.ValidateUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -38,6 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Getter_Auth_Fragment extends Fragment {
+    private FragmentGetterAuthBinding binding;
     private EditText phone = null;
     private EditText login = null;
     private EditText password = null;
@@ -48,21 +51,19 @@ public class Getter_Auth_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_getter_auth, container, false);
-        btnLogin = (Button) view.findViewById(R.id.auth_getter_btn_login);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentGetterAuthBinding.inflate(inflater);
 
-        phone = view.findViewById(R.id.auth_getter_signup_phone);
-        password = view.findViewById(R.id.auth_getter_signup_password);
-        login = view.findViewById(R.id.auth_getter_signup_login);
-        btnSignup = view.findViewById(R.id.auth_getter_create);
-        btnBack = view.findViewById(R.id.auth_getter_signup_back);
+        btnLogin = binding.authGetterBtnLogin;
+        phone = binding.authGetterSignupPhone;
+        password = binding.authGetterSignupPassword;
+        login = binding.authGetterSignupLogin;
+        btnSignup = binding.authGetterCreate;
+        btnBack = binding.authGetterSignupBack;
 
-        // сначала токен для уведомлений, затем регистрация
         btnSignup.setOnClickListener(View -> sendToNotifyAccount());
         btnLogin.setOnClickListener(View -> login());
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -72,20 +73,19 @@ public class Getter_Auth_Fragment extends Fragment {
             }
         });
 
-        return view;
+        return binding.getRoot();
     }
 
-    public boolean validate() {
-        String regexPhone = "^\\+?[0-9\\-\\s]*$";
-        if (!phone.getText().toString().matches(regexPhone)) {
+    private boolean validate() {
+        if (!ValidateUser.validatePhone(phone.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
             return false;
         }
-        if (login.getText().toString().length() < 4) {
+        if (!ValidateUser.validateLogin(login.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
             return false;
         }
-        if (password.getText().toString().length() < 8) {
+        if (!ValidateUser.validatePassword(password.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
             return false;
         }
@@ -93,7 +93,7 @@ public class Getter_Auth_Fragment extends Fragment {
     }
 
 
-    public void pushData(SignUpResponseI<Getter> result) {
+    private void pushData(SignUpResponseI<Getter> result) {
         try {
             MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
@@ -119,7 +119,7 @@ public class Getter_Auth_Fragment extends Fragment {
         }
     }
 
-    public void login() {
+    private void login() {
         if (validate()) {
             btnLogin.setEnabled(false);
             AuthRepository.getterLogin(phone.getText().toString(), login.getText().toString(), password.getText().toString()).enqueue(new Callback<SignUpResponseI<Getter>>() {
@@ -152,7 +152,7 @@ public class Getter_Auth_Fragment extends Fragment {
         }
     }
 
-    public void signup(String tokenFCM) {
+    private void signup(String tokenFCM) {
         btnSignup.setEnabled(false);
         AuthRepository.getterRegistration(phone.getText().toString(), login.getText().toString(), password.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
             @Override
@@ -165,7 +165,7 @@ public class Getter_Auth_Fragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<SignUpResponseI<Getter>> call, Throwable t) {
+            public void onFailure(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Throwable t) {
                 btnSignup.setEnabled(true);
                 t.printStackTrace();
             }
@@ -175,7 +175,7 @@ public class Getter_Auth_Fragment extends Fragment {
     private void sendToNotifyAccount() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
-            public void onComplete(@NonNull Task<String> task) {
+            public void onComplete(@NotNull Task<String> task) {
                 if (!task.isSuccessful()) {
                     Log.w("err", "Fetching FCM registration token failed", task.getException());
                     signup("");

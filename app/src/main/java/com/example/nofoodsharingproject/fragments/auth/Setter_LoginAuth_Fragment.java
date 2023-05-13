@@ -20,8 +20,9 @@ import android.widget.Toast;
 
 import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.data.api.auth.interfaces.SignUpResponseI;
+import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.repository.AuthRepository;
+import com.example.nofoodsharingproject.databinding.FragmentSetterLoginAuthBinding;
 import com.example.nofoodsharingproject.models.Setter;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,9 +35,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Setter_LoginAuth_Fragment extends Fragment {
-    Button btn = null;
-    EditText loginInput = null;
-    EditText passwordInput = null;
+    private FragmentSetterLoginAuthBinding binding;
+    private Button btn;
+    private EditText loginInput;
+    private EditText passwordInput;
+    private ImageView btnBack;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,13 +48,14 @@ public class Setter_LoginAuth_Fragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setter_login_auth, container, false);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentSetterLoginAuthBinding.inflate(inflater);
 
-        loginInput = view.findViewById(R.id.auth_setter_login_login);
-        passwordInput = view.findViewById(R.id.auth_setter_login_password);
+        loginInput = binding.authSetterLoginLogin;
+        passwordInput = binding.authSetterLoginPassword;
+        btn = binding.loginAuthBtn;
+        btnBack = binding.authSetterLoginBack;
 
-        ImageView btnBack = (ImageView) view.findViewById(R.id.auth_setter_login_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,13 +63,12 @@ public class Setter_LoginAuth_Fragment extends Fragment {
             }
         });
 
-        btn = (Button) view.findViewById(R.id.login_auth_btn);
         btn.setOnClickListener(View -> login());
 
-        return view;
+        return binding.getRoot();
     }
 
-    public void login() {
+    private void login() {
         if (loginInput.getText().toString().length() == 0 || passwordInput.getText().toString().length() == 0) {
             Toast.makeText(getContext(), R.string.not_full, Toast.LENGTH_LONG).show();
         } else {
@@ -81,12 +84,11 @@ public class Setter_LoginAuth_Fragment extends Fragment {
                         saveData(response.body());
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         startActivity(intent);
-//                        getActivity().finish();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<SignUpResponseI<Setter>> call, Throwable t) {
+                public void onFailure(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Throwable t) {
                     btn.setEnabled(true);
                     t.printStackTrace();
                 }
@@ -94,7 +96,7 @@ public class Setter_LoginAuth_Fragment extends Fragment {
         }
     }
 
-    public void saveData(SignUpResponseI<Setter> result) {
+    private void saveData(SignUpResponseI<Setter> result) {
         try {
             MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)

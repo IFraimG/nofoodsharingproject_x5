@@ -5,9 +5,9 @@ import com.yandex.mapkit.geometry.Point;
 import java.util.Objects;
 
 public class Market {
-    Point point;
-    String title;
-    public boolean isReal = true;
+    private Point point;
+    private String title;
+    private boolean isReal = true;
 
     public Market() {}
     public Market(String title) {

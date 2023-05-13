@@ -1,6 +1,7 @@
 package com.example.nofoodsharingproject.services;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
@@ -11,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -24,7 +26,7 @@ import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.data.api.map.MarketTitleResponse;
+import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
 import com.example.nofoodsharingproject.data.repository.MapRepository;
 import com.example.nofoodsharingproject.data.repository.NotificationRepository;
 import com.example.nofoodsharingproject.models.Advertisement;
@@ -76,17 +78,19 @@ public class LocationTrackingService extends Service implements LocationListener
             return START_NOT_STICKY;
         }
 
+        if (!defineUser().second) startForeground(1, notifySetter());
+
         getMarket();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        sharedPreferences = getSharedPreferences("dateSettings", Context.MODE_PRIVATE);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 
         return START_STICKY;
     }
-
     @Override
     public void onLocationChanged(Location location) {
-        if (location.distanceTo(compareCoords) < 50 && checkTimer() && titleMarket.length() != 0) {
+        if (location.distanceTo(compareCoords) < 3000 && checkTimer() && titleMarket.length() != 0) {
             Advertisement advert = getRandomGetterAdvert();
             createNotification(advert);
         }
@@ -130,7 +134,7 @@ public class LocationTrackingService extends Service implements LocationListener
             }
 
             @Override
-            public void onFailure(Call<MarketTitleResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<MarketTitleResponse> call, @NotNull Throwable t) {
                 Log.e("err", getString(R.string.unvisinle_error));
                 t.printStackTrace();
             }
@@ -152,7 +156,7 @@ public class LocationTrackingService extends Service implements LocationListener
             err.printStackTrace();
         }
 
-        return null;
+        return new Pair<>("", false);
     }
 
     private boolean checkTimer() {
@@ -160,13 +164,15 @@ public class LocationTrackingService extends Service implements LocationListener
         if (dateLocation.length() == 0) return true;
 
         try {
+            @SuppressLint("SimpleDateFormat")
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date1 = dateFormat.parse(dateLocation);
 
-            long diffInMilliseconds = new Date().getTime() - date1.getTime();
+            long diffInMilliseconds = Math.abs(new Date().getTime() - date1.getTime());
+
             Log.d("msg", Long.toString(diffInMilliseconds));
 
-            return diffInMilliseconds > 1200000;
+            return diffInMilliseconds > 12000000;
         } catch (ParseException err) {
             return true;
         }
@@ -184,8 +190,10 @@ public class LocationTrackingService extends Service implements LocationListener
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
                 if (response.code() == 201) {
+                    @SuppressLint("SimpleDateFormat")
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String result = dateFormat.format(new Date());
+
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("locationDate", result);
                     editor.apply();
@@ -193,7 +201,7 @@ public class LocationTrackingService extends Service implements LocationListener
             }
 
             @Override
-            public void onFailure(Call<Notification> call, Throwable t) {
+            public void onFailure(@NotNull Call<Notification> call, @NotNull Throwable t) {
                 Log.e("err", getString(R.string.unvisinle_error));
                 t.printStackTrace();
             }
@@ -216,5 +224,19 @@ public class LocationTrackingService extends Service implements LocationListener
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {}
 
         notificationManagerCompat.notify(1, builder.build());
+    }
+
+    private android.app.Notification notifySetter() {
+        NotificationChannel channel = new NotificationChannel("my_channel_id", "Location Observer", NotificationManager.IMPORTANCE_LOW);
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        manager.createNotificationChannel(channel);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "my_channel_id")
+                .setContentTitle("Спасибо, что используете наше приложение с умом!")
+                .setContentText("Когда вы будете рядом с вашим магазином, мы сообщим вам о нуждающемся")
+                .setSmallIcon(R.drawable.notifications_active)
+                .setPriority(NotificationCompat.PRIORITY_LOW);
+
+        return builder.build();
     }
 }

@@ -60,6 +60,7 @@
                     android:layout_marginTop="40dp"
                     android:hint="@string/login_hint"
                     android:minHeight="64dp"
+                    android:autofillHints=""
                     android:inputType="text"
                     android:textSize="15sp" />
                 <EditText
@@ -69,6 +70,7 @@
                     android:textSize="15sp"
                     android:minHeight="64dp"
                     android:hint="@string/telephone_hint"
+                    android:autofillHints=""
                     android:inputType="phone"
                     android:layout_marginTop="90dp" />
                 <EditText
@@ -78,6 +80,7 @@
                     android:textSize="15sp"
                     android:minHeight="64dp"
                     android:layout_marginTop="140dp"
+                    android:autofillHints=""
                     android:inputType="textPassword"
                     android:hint="@string/enter_existing_password_hint"/>
 
@@ -88,6 +91,7 @@
                     android:textSize="15sp"
                     android:minHeight="64dp"
                     android:layout_marginTop="190dp"
+                    android:autofillHints=""
                     android:inputType="textPassword"
                     android:hint="@string/new_password_hint"/>
 
