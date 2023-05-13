@@ -14,11 +14,13 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.adapters.GetterNotificationsAdapter;
 import com.example.nofoodsharingproject.databinding.FragmentGetterNotifyBinding;
+import com.example.nofoodsharingproject.models.LoaderStatus;
 import com.example.nofoodsharingproject.view_models.Notifications_ViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +31,8 @@ import java.security.GeneralSecurityException;
 public class Notify_Fragment extends Fragment {
     private Notifications_ViewModel viewModel;
     private FragmentGetterNotifyBinding binding;
+    private ProgressBar loader;
+    private RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,9 +42,12 @@ public class Notify_Fragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGetterNotifyBinding.inflate(inflater);
 
-        RecyclerView recyclerView = binding.notifyRecycler;
+        recyclerView = binding.notifyRecycler;
+        loader = binding.getterNotifyLoader;
+
         GetterNotificationsAdapter getterNotificationsAdapter = new GetterNotificationsAdapter(getContext());
         recyclerView.setAdapter(getterNotificationsAdapter);
+
 
         viewModel = new ViewModelProvider(
                 requireActivity(),
@@ -48,6 +55,7 @@ public class Notify_Fragment extends Fragment {
                 .get(Notifications_ViewModel.class);
 
         viewModel.getAllNotifications(defineTypeUser().first, defineTypeUser().second ? "getter" : "setter").observe(requireActivity(), getterNotificationsAdapter::updateNotifications);
+        viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
 
         return binding.getRoot();
     }
@@ -68,6 +76,23 @@ public class Notify_Fragment extends Fragment {
             Log.e("esp_error", err.toString());
         }
         return new Pair<>("", false);
+    }
+
+    private void renderStatus(LoaderStatus loaderStatus) {
+        switch (loaderStatus.getStatus()) {
+            case LOADING:
+                recyclerView.setVisibility(View.INVISIBLE);
+                loader.setVisibility(View.VISIBLE);
+                break;
+            case LOADED:
+                recyclerView.setVisibility(View.VISIBLE);
+                loader.setVisibility(View.INVISIBLE);
+                break;
+            case FAILURE:
+                recyclerView.setVisibility(View.INVISIBLE);
+                loader.setVisibility(View.INVISIBLE);
+                break;
+        }
     }
 
 }
