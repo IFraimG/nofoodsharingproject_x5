@@ -11,8 +11,8 @@
                 android:shape="rectangle">
                 <stroke android:width="2sp" android:color="@color/red"/>
                 <corners android:radius="6sp" />
-                <padding android:left="10dp"/>
-                <padding android:right="10dp"/>
+                <padding android:left="@dimen/standard_size_small"/>
+                <padding android:right="@dimen/standard_size_small"/>
             </shape>
         </item>
     </ripple>

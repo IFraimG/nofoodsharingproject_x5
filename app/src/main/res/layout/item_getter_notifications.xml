@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="@style/item_recycler_style"
-    android:layout_marginTop="15dp"
+    android:layout_marginTop="@dimen/standard_size_medium"
     android:orientation="vertical">
     <TextView
         android:id="@+id/notify_title"
@@ -24,8 +24,8 @@
         android:id="@+id/notify_body"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="@dimen/standard_size_medium"
+        android:layout_marginBottom="@dimen/standard_size_little"
         android:text="@string/notyfy_description"
         android:textSize="16sp"/>
 </LinearLayout>

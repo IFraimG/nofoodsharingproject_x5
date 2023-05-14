@@ -8,10 +8,10 @@
         <item>
             <shape android:shape="rectangle"
                 android:tint="@color/main_color">
-                <corners android:radius="25dp"/>
+                <corners android:radius="@dimen/standard_size_very_medium"/>
                 <solid android:color="#FFFFFF"/>
-                <padding android:left="10dp"/>
-                <padding android:right="10dp"/>
+                <padding android:left="@dimen/standard_size_small"/>
+                <padding android:right="@dimen/standard_size_small"/>
             </shape>
         </item>
     </ripple>

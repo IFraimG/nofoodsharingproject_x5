@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
+    android:paddingLeft="@dimen/standard_size_small"
+    android:paddingRight="@dimen/standard_size_small"
     android:orientation="vertical">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="24sp"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/standard_size_small"
         android:textColor="@color/black"
         android:layout_marginBottom="40dp"
         android:text="@string/name_enter_text" />
@@ -21,9 +21,9 @@
     <TextView
         android:id="@+id/setter_advert_item_name"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/very_big"
         android:layout_weight="1"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/standard_size_small"
         android:textSize="20sp"
         android:text="@string/name_text_getter" />
 
@@ -36,7 +36,7 @@
         android:id="@+id/setter_advert_item_link"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/standard_size_small"
         android:text="@string/detailed_text"
         android:textSize="16sp"
         app:backgroundTint="@color/green_pastel" />
@@ -44,6 +44,6 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/standard_size_small"
         android:background="@color/grey_light"/>
 </LinearLayout>

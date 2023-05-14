@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
+    android:paddingStart="@dimen/standard_size_very_medium"
+    android:paddingEnd="@dimen/standard_size_very_medium"
     tools:context=".fragments.setter.SetterAdvrs_Fragment">
 
     <LinearLayout
@@ -19,7 +19,7 @@
             android:id="@+id/setter_advert_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/standard_size_small"
             android:layout_weight="1"
             android:textColor="@color/black"
             android:text="@string/active_adv_text"

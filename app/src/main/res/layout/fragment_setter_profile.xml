@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
+    android:paddingStart="@dimen/standard_size_very_medium"
+    android:paddingEnd="@dimen/standard_size_very_medium"
     tools:context=".fragments.setter.SetterProfile_Fragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -18,8 +18,8 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="@dimen/standard_size_very_medium"
+        android:layout_marginEnd="@dimen/standard_size_very_medium"
         android:layout_marginTop="11dp"
         android:background="@color/grey_light"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_margin="20dp">
+        android:layout_margin="@dimen/standard_size_very_medium">
 
         <ImageView
             android:id="@+id/setter_logo"
@@ -39,27 +39,27 @@
             android:layout_height="80dp"
             android:layout_weight="1"
             android:contentDescription="@string/no_image_warnings"
-            android:maxWidth="64dp"
+            android:maxWidth="@dimen/size_64"
             app:srcCompat="@drawable/person_outline" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginTop="@dimen/standard_size_very_medium"
+            android:layout_marginBottom="@dimen/standard_size_very_medium">
             <TextView
                 android:id="@+id/setter_profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/standard_size_small"
                 android:text="@string/name_text_hint" />
             <TextView
                 android:id="@+id/setter_profile_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="@dimen/standard_size_small"
                 android:layout_weight="1"
                 android:text="@string/setter_text"
                 />
@@ -75,9 +75,9 @@
     <Button
         android:id="@+id/setter_open_vk"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/very_big"
         android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/standard_size_very_medium"
         android:text="@string/open_vk"
         android:textSize="18sp"
         app:backgroundTint="@color/green_pastel" />

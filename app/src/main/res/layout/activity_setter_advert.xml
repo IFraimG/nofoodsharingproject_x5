@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="20dp"
+    android:padding="@dimen/standard_size_very_medium"
     android:orientation="vertical"
     tools:context=".activities.SetterAdvert_Activity">
     <LinearLayout
@@ -14,7 +14,7 @@
         tools:context=".activities.SetterAdvert_Activity">
         <ImageView
             android:id="@+id/setter_advert_back"
-            android:layout_width="64dp"
+            android:layout_width="@dimen/size_64"
             android:layout_height="wrap_content"
             android:contentDescription="@string/no_image_warnings"
             app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
@@ -23,15 +23,15 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="@color/black"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/standard_size_very_medium"
             android:text="@string/button_navigation_first_first"
             />
     </LinearLayout>
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="@dimen/standard_size_small"
+        android:layout_marginBottom="@dimen/standard_size_very_medium"
         android:backgroundTint="@color/grey_light"/>
     <TextView
         android:id="@+id/setter_advert_title"
@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="@dimen/standard_size_very_medium">
         <TextView
             android:id="@+id/setter_advert_author"
             android:layout_width="match_parent"
@@ -68,7 +68,7 @@
         android:id="@+id/setter_advert_product_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
         android:layout_weight="1"
         android:text="@string/list_product_text"
         android:textSize="32sp" />
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/setter_advert_accept"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="100dp"

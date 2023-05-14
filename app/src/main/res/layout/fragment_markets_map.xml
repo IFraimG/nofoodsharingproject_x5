@@ -15,17 +15,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="@dimen/standard_size_small"
         android:background="@color/white"
         android:layout_marginBottom="40dp">
         <Spinner
             android:id="@+id/map_list_markets"
             android:layout_width="match_parent"
-            android:minHeight="48dp"
+            android:minHeight="@dimen/size_48"
             android:popupBackground="@color/white"
             android:layout_height="wrap_content" />
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/standard_size_very_medium"
             android:id="@+id/map_set_market_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/map_make_route"
             style="@style/grey_500_button"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/standard_size_small"
             android:text="@string/set_route_near_market"/>
     </LinearLayout>
 </FrameLayout>

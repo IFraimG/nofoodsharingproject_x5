@@ -3,4 +3,12 @@
     <dimen name="normal_margin">25dp</dimen>
     <dimen name="default_text_size">16sp</dimen>
     <dimen name="normal_button_size">24dp</dimen>
+    <dimen name="standard_size_little">5dp</dimen>
+    <dimen name="standard_size_small">10dp</dimen>
+    <dimen name="standard_size_medium">15dp</dimen>
+    <dimen name="standard_size_very_medium">20dp</dimen>
+    <dimen name="very_big">50dp</dimen>
+    <dimen name="size_48">48dp</dimen>
+    <dimen name="size_64">64dp</dimen>
+
 </resources>

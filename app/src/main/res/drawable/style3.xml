@@ -2,9 +2,9 @@
     android:thickness="0dp"
     android:shape="rectangle">
     <solid android:color="@color/grey_light"/>
-    <corners android:radius="10dp"/>
+    <corners android:radius="@dimen/standard_size_small"/>
     <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" />
-    <padding android:left="10dp"/>
-    <padding android:right="10dp"/>
+    <padding android:left="@dimen/standard_size_small"/>
+    <padding android:right="@dimen/standard_size_small"/>
     <corners />
 </shape>

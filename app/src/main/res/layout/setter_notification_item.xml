@@ -7,34 +7,34 @@
     <TextView
         android:id="@+id/setter_notify_item_title"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/very_big"
         android:layout_weight="1"
         android:textSize="32sp"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/standard_size_small"
         android:text="@string/name_notification" />
     <TextView
         android:id="@+id/setter_notify_item_date"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/very_big"
         android:layout_weight="1"
         android:textSize="16sp"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/standard_size_small"
         android:text="@string/Id_now_what_is_it_text" />
 
     <TextView
         android:id="@+id/setter_notify_item_desc"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/very_big"
         android:layout_weight="1"
         android:textSize="18sp"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/standard_size_small"
         android:text="@string/description_text" />
 
     <Button
         android:id="@+id/setter_notify_item_link"
         android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
+        android:layout_height="@dimen/very_big"
+        android:layout_margin="@dimen/standard_size_small"
         android:text="@string/go_over_text"
         android:textSize="18sp"
         app:backgroundTint="@color/green_pastel" />
@@ -42,6 +42,6 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/standard_size_small"
         android:background="@color/black"/>
 </LinearLayout>

@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/main_color"
     android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
+    android:paddingLeft="@dimen/standard_size_very_medium"
+    android:paddingRight="@dimen/standard_size_very_medium"
     android:id="@+id/fragment_getter_advrs">
 
     <TextView
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/number_adv_text"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
         android:layout_gravity="center"
         android:textColor="@color/grey_500"
         android:id="@+id/text_number_of_advert" />
@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
         android:text="@string/number_adv_text_hint6"
         android:layout_gravity="center"
         android:textSize="48sp"
@@ -37,7 +37,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="@dimen/standard_size_very_medium">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -45,12 +45,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/adress_shop_text"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
                 android:textColor="@color/grey_500"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/standard_size_small"
                 android:text="@string/adress_shop_text_hint"
                 android:id="@+id/address_shop"
                 android:visibility="invisible"/>
@@ -60,15 +60,15 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="@dimen/standard_size_small"
+        android:layout_marginLeft="@dimen/standard_size_very_medium"
+        android:layout_marginRight="@dimen/standard_size_very_medium"
         android:background="@color/grey_light"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/standard_size_small"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
@@ -123,14 +123,14 @@
             android:id="@+id/getter_advert_products"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="@dimen/standard_size_very_medium" />
     </LinearLayout>
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/standard_size_small"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatButton
@@ -145,7 +145,7 @@
             android:id="@+id/pick_up_order"
             style="@style/grey_500_button"
             android:layout_gravity="center|top"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="@dimen/very_big"
             android:text="@string/adv_zabor_text"
             android:visibility="invisible" />
 

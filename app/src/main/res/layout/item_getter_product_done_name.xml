@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="20sp"
     android:layout_marginRight="20sp"
-    android:padding="10dp"
+    android:padding="@dimen/standard_size_small"
     android:text="@string/name_of_product_text"
     android:textSize="15sp"
-    android:layout_marginBottom="20dp"
+    android:layout_marginBottom="@dimen/standard_size_very_medium"
     style="@style/item_recycler_style"/>
