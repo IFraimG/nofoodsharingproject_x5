@@ -15,16 +15,14 @@
             android:id="@+id/auth_setter_login_back"
             android:layout_width="64dp"
             android:layout_height="48dp"
-            android:layout_marginStart="20dp"
             android:contentDescription="@string/no_image_warnings"
-            android:background="@drawable/custom_round_border"
             android:src="@drawable/ic_baseline_chevron_left_24" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_marginStart="20dp"
+            android:textColor="@color/black"
             android:layout_gravity="center"
             android:text="@string/enter_to_getter_text" />
     </LinearLayout>
@@ -47,7 +45,7 @@
         />
 
     <Button
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:id="@+id/login_auth_btn"
         android:layout_width="300dp"
         android:layout_height="80dp"
@@ -55,5 +53,4 @@
         android:layout_gravity="center"
         android:textSize="24sp"
         android:text="@string/enter_text" />
-
 </LinearLayout>

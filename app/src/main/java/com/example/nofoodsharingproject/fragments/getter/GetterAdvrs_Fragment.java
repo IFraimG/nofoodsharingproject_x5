@@ -79,7 +79,6 @@ public class GetterAdvrs_Fragment extends Fragment {
         getAddress();
         getAdvertisement();
 
-
         textNewAdvert.setVisibility(View.INVISIBLE);
         buttonStopAdvert.setVisibility(View.INVISIBLE);
         getterAdvertLayout.setVisibility(View.INVISIBLE);
@@ -90,40 +89,6 @@ public class GetterAdvrs_Fragment extends Fragment {
 
         return binding.getRoot();
     }
-
-//    private void timerInit() {
-//        timerView = new CountDownTimer(3600000 * 2, 1000){
-//            @Override
-//            public void onTick(long l) {
-//                l /= 1000;
-//                int seconds = (int) l % 60;
-//                l /= 60;
-//                int minuts = (int) l % 60;
-//                l /= 60;
-//                int hours = (int) l % 60;
-//
-//                String timer = hours + ":";
-//
-//                if(minuts < 10){
-//                    timer += "0" + minuts + ":";
-//                }else{
-//                    timer += minuts + ":";
-//                }
-//                if(seconds < 10){
-//                    timer += "0" + seconds;
-//                }else{
-//                    timer+= seconds;
-//                }
-//
-//                timeAdvert.setText(timer);
-//
-//            }
-//            @Override
-//            public void onFinish() {
-//                timeAdvert.setText(R.string.time_is_up);
-//            }
-//        };
-//    }
 
     private void getAdvertisement() {
         AdvertsRepository.getOwnAdvert(defineTypeUser().first).enqueue(new Callback<Advertisement>() {

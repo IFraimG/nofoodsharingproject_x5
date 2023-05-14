@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,8 @@ public class SetterAdvrs_Fragment extends Fragment {
     private AdvertisementList_ViewModel viewModel;
     private FragmentSetterAdvrsBinding binding;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +38,8 @@ public class SetterAdvrs_Fragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterAdvrsBinding.inflate(inflater);
         RecyclerView recyclerView = binding.setterListAdvert;
+        swipeRefreshLayout = binding.setterAdvertSwiper;
+
         SetterAdvertListAdapter setterAdvertListAdapter = new SetterAdvertListAdapter(getContext());
         recyclerView.setAdapter(setterAdvertListAdapter);
         recyclerView.setVerticalScrollBarEnabled(true);
@@ -45,6 +50,12 @@ public class SetterAdvrs_Fragment extends Fragment {
 
         viewModel.getAllAdverts().observe(requireActivity(), setterAdvertListAdapter::updateAdverts);
         viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            viewModel.getAllAdverts().observe(requireActivity(), setterAdvertListAdapter::updateAdverts);
+            swipeRefreshLayout.setRefreshing(false);
+        });
+
 
         return binding.getRoot();
     }
@@ -58,10 +69,12 @@ public class SetterAdvrs_Fragment extends Fragment {
             case LOADED:
                 binding.setterListAdvert.setVisibility(View.VISIBLE);
                 binding.setterLoader.setVisibility(View.INVISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
                 break;
             case FAILURE:
                 binding.setterListAdvert.setVisibility(View.INVISIBLE);
                 binding.setterLoader.setVisibility(View.INVISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
                 break;
         }
     }

@@ -86,4 +86,7 @@ dependencies {
     implementation 'com.vk:android-sdk-core:4.0.1'
     implementation 'com.vk:android-sdk-api:4.0.1'
 
+    // layout for updating data
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
 }

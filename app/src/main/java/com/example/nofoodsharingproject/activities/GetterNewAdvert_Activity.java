@@ -98,6 +98,7 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
                     if (response.code() == 400) {
                         Toast.makeText(GetterNewAdvert_Activity.this, R.string.problems, Toast.LENGTH_SHORT).show();
                         button_ready.setEnabled(true);
+
                     } else {
                         Toast.makeText(getApplicationContext(),
                                 R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();

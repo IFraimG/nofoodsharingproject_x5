@@ -6,11 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".fragments.auth.MainAuth_Fragment">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="68dp"
+        android:contentDescription="@string/no_image_warnings"
+        android:src="@drawable/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="220dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,7 +34,8 @@
             android:layout_gravity="center"
             android:layout_marginBottom="100dp"
             android:text="@string/Authorization_text"
-            android:textSize="48sp"
+            android:textColor="@color/black"
+            android:textSize="32sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,22 +59,5 @@
 
             android:textSize="24sp"
             app:backgroundTint="@color/green_pastel" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="86dp"
-            android:layout_height="86dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="40dp"
-            android:contentDescription="@string/no_image_warnings"
-            android:src="@drawable/logo" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

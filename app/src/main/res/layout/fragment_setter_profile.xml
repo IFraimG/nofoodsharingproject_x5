@@ -3,82 +3,106 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
     tools:context=".fragments.setter.SetterProfile_Fragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/setter_profile_toolbar"
+        android:layout_width="match_parent"
+        app:title="@string/profile_text"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="11dp"
+        android:background="@color/grey_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getter_notify_title" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_marginBottom="20dp">
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
 
         <ImageView
             android:id="@+id/setter_logo"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_weight="1"
             android:contentDescription="@string/no_image_warnings"
+            android:maxWidth="64dp"
             app:srcCompat="@drawable/person_outline" />
 
-        <TextView
-            android:id="@+id/setter_profile_name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginBottom="10dp"
-            android:text="@string/name_text_hint" />
-        <TextView
-            android:id="@+id/setter_profile_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
-            android:text="@string/setter_text"
-            />
-        <TextView
-            android:id="@+id/setter_profile_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/broadcast_text_hint" />
-
-        <Button
-            android:id="@+id/setter_open_vk"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:text="@string/open_vk"
-            android:textSize="18sp"
-            app:backgroundTint="@color/green_pastel" />
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
+            <TextView
+                android:id="@+id/setter_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="10dp"
+                android:text="@string/name_text_hint" />
+            <TextView
+                android:id="@+id/setter_profile_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:text="@string/setter_text"
+                />
+            <TextView
+                android:id="@+id/setter_profile_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/broadcast_text_hint" />
+        </LinearLayout>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/setter_open_vk"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:text="@string/open_vk"
+        android:textSize="18sp"
+        app:backgroundTint="@color/green_pastel" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/setter_profile_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="@string/geolocation_text" />
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/setter_profile_notifications"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="@string/on_notifications_text" />
 
-    <Button
-        android:id="@+id/setter_profile_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:text="@string/leave_account_text"
-        android:textSize="18sp"
-        app:backgroundTint="@color/green_pastel" />
-    <ListView
-        android:id="@+id/setter_profile_history_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/setter_profile_swiper">
+        <ListView
+            android:id="@+id/setter_profile_history_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
         />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

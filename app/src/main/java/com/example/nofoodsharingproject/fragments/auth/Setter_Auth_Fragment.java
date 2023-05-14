@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.MainActivity;
@@ -45,7 +46,7 @@ public class Setter_Auth_Fragment extends Fragment {
     private EditText login = null;
     private EditText password = null;
     private Button btnLogin = null;
-    private Button btnRegistration = null;
+    private TextView btnRegistration = null;
     private ImageView btnBack = null;
 
     @Override

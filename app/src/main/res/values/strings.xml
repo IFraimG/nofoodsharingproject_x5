@@ -57,6 +57,7 @@
     <string name="i_setter_text">Я - отдающий</string>
     <string name="active_adv_text">Активные объявления</string>
     <string name="setter_account_text">Отдающий пользователь</string>
+    <string name="getter_account_text">Нуждающийся пользователь</string>
     <string name="write_number_phone_text_hint">Введите номер телефона…</string>
     <string name="write_name_text_hint">Введите имя…</string>
     <string name="write_password_text_hint">Введите пароль…</string>
@@ -133,4 +134,5 @@
     <string name="return_to_main_page">Вернуться на страницу объявлений</string>
     <string name="set_route_near_market">Построить маршрут до ближайшего магазина</string>
     <string name="open_location">Включите геолокацию!</string>
+    <string name="edit_profile">Редактировать настройки аккаунта</string>
 </resources>

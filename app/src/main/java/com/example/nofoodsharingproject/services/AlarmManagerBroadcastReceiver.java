@@ -25,8 +25,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         Bundle extras = intent.getExtras();
         StringBuilder msgStr = new StringBuilder();
 
-        if(extras != null && extras.getBoolean(ONE_TIME, Boolean.FALSE)){
-            //Make sure this intent has been sent by the one-time timer button.
+        if(extras != null && extras.getBoolean(ONE_TIME, Boolean.FALSE)) {
             msgStr.append("One time Timer : ");
         }
         Format formatter = new SimpleDateFormat("hh:mm:ss a");

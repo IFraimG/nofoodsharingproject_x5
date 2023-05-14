@@ -10,21 +10,29 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,14 +67,16 @@ public class SetterProfile_Fragment extends Fragment {
     private TextView successProducts;
     private Button openVk;
     private Button logoutBtn;
+    private Toolbar toolbar;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayAdapter<String> arrayAdapter;
-
     private Setter user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
         settings = requireActivity().getSharedPreferences("prms", Context.MODE_PRIVATE);
     }
 
@@ -97,6 +107,26 @@ public class SetterProfile_Fragment extends Fragment {
         userName = binding.setterProfileName;
         successProducts = binding.setterProfileCount;
         openVk = binding.setterOpenVk;
+        toolbar = binding.setterProfileToolbar;
+        swipeRefreshLayout = binding.setterProfileSwiper;
+
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.profile_leave:
+                        logout();
+                        break;
+                    case R.id.edit_settings:
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
 
         this.user = defineUser();
         userName.setText(user.getLogin());
@@ -116,7 +146,17 @@ public class SetterProfile_Fragment extends Fragment {
 
         switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> setToPreferences("notification", isChecked));
 
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            getHistoryList();
+        });
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        requireActivity().getMenuInflater().inflate(R.menu.profile_left_panel_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void getHistoryList() {
@@ -135,6 +175,8 @@ public class SetterProfile_Fragment extends Fragment {
 
                     arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advertisementsHistory);
                     historyList.setAdapter(arrayAdapter);
+
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
 
@@ -142,6 +184,7 @@ public class SetterProfile_Fragment extends Fragment {
             public void onFailure(@NotNull Call<ResponseHistoryAdverts> call, @NotNull Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

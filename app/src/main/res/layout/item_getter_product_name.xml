@@ -10,5 +10,5 @@
         android:textSize="15sp"
         android:layout_marginBottom="20dp"
         android:textColor="@color/black"
-        android:background="@drawable/custom_round_border"
+        android:background="@color/grey_100"
         />
