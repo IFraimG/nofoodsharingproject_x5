@@ -100,7 +100,6 @@ public class SetterProfile_Fragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterProfileBinding.inflate(inflater);
 
-        logoutBtn = binding.setterProfileLogout;
         switchLocation = binding.setterProfileLocation;
         switchNotification = binding.setterProfileNotifications;
         historyList = binding.setterProfileHistoryList;
@@ -134,7 +133,6 @@ public class SetterProfile_Fragment extends Fragment {
         getHistoryList();
 
         openVk.setOnClickListener(View -> vkLoad());
-        logoutBtn.setOnClickListener(View -> logout());
         switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) requestPermissions();

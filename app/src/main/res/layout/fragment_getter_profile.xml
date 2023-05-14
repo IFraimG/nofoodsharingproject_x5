@@ -29,6 +29,16 @@
         android:text="@string/phone_number_text"
         android:textSize="20sp" />
 
+    <ImageButton
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/getter_profile_logout"
+        android:src="@drawable/baseline_logout_24"
+        android:backgroundTint="@color/white"
+        android:importantForAccessibility="yes"
+        android:contentDescription="@string/log_out" />
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -107,17 +117,4 @@
                     />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
-
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/getter_profile_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/white"
-        android:background="@drawable/style1"
-        android:text="@string/exit_from_account_text"
-        android:textSize="14sp"
-        />
 </LinearLayout>

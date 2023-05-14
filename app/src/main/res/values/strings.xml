@@ -135,4 +135,5 @@
     <string name="set_route_near_market">Построить маршрут до ближайшего магазина</string>
     <string name="open_location">Включите геолокацию!</string>
     <string name="edit_profile">Редактировать настройки аккаунта</string>
+    <string name="log_out">Выйти из аккаунта</string>
 </resources>
