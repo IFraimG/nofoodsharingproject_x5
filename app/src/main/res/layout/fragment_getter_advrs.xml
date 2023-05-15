@@ -15,8 +15,8 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="@dimen/standard_size_small"
+        android:layout_marginBottom="@dimen/standard_size_small"
         android:background="@color/grey_100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
         android:visibility="invisible"/>
 
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/standard_size_very_medium">
@@ -58,7 +58,7 @@
             android:text="@string/adress_shop_text_hint"
             android:id="@+id/address_shop"
             android:visibility="invisible"/>
-    </FrameLayout>
+    </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/timer_to_advert"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/standard_size_small"
             android:text="@string/time_text_hint"/>
     </LinearLayout>
 
@@ -92,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="20dp">
+        android:layout_marginStart="@dimen/standard_size_very_medium">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -103,8 +103,8 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="@dimen/standard_size_small"
+        android:layout_marginBottom="@dimen/standard_size_small"
         android:layout_marginStart="@dimen/standard_size_very_medium"
         android:layout_marginEnd="@dimen/standard_size_very_medium"
         android:background="@color/grey_100"
@@ -155,7 +155,7 @@
             android:id="@+id/pick_up_order"
             style="@style/grey_500_button"
             android:layout_gravity="center|top"
-            android:layout_marginTop="@dimen/very_big"
+            android:layout_marginTop="55dp"
             android:text="@string/adv_zabor_text"
             android:visibility="invisible" />
 
