@@ -20,6 +20,7 @@
             android:id="@+id/action_getterProfileF_to_marketsMapF"
             app:destination="@id/marketsMapF" />
     </fragment>
+
     <fragment
         android:id="@+id/getterAdvrsF"
         android:name="com.example.nofoodsharingproject.fragments.getter.GetterAdvrs_Fragment"

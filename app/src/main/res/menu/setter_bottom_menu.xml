@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/setterAdvrsF"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/baseline_view_list_24"
         android:title="@string/button_navigation_first"
         android:enabled="true" />
     <item
         android:id="@+id/getterNotifyF"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/notifications_active"
         android:title="@string/button_navigation_notification" />
     <item
         android:id="@+id/setterProfileF"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/baseline_person_24"
         android:title="@string/button_navigation_profile" />
     <item
         android:id="@+id/marketsMapF"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/location_on"
         android:title="@string/button_navigation_map" />
 </menu>

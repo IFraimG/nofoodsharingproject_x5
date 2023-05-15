@@ -33,13 +33,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/not_found"
-        android:layout_marginTop="80dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/getter_notify_swiper"
         android:layout_width="match_parent"

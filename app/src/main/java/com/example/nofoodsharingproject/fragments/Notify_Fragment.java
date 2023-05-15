@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
@@ -35,7 +36,6 @@ public class Notify_Fragment extends Fragment {
     private ProgressBar loader;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +51,6 @@ public class Notify_Fragment extends Fragment {
         GetterNotificationsAdapter getterNotificationsAdapter = new GetterNotificationsAdapter(getContext());
         recyclerView.setAdapter(getterNotificationsAdapter);
 
-
         viewModel = new ViewModelProvider(
                 requireActivity(),
                 (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
@@ -64,6 +63,7 @@ public class Notify_Fragment extends Fragment {
             viewModel.getAllNotifications(defineTypeUser().first, defineTypeUser().second ? "getter" : "setter").observe(requireActivity(), getterNotificationsAdapter::updateNotifications);
             viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
         });
+
 
         return binding.getRoot();
     }

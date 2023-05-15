@@ -21,8 +21,10 @@
         android:id="@+id/setter_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemIconTint="@color/green_pastel"
-        app:itemTextColor="@color/black"
+        android:background="@drawable/style2"
+        app:itemIconTint="@color/green"
+        android:windowSoftInputMode="adjustResize|stateHidden"
+        app:itemTextColor="@color/green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/setter_bottom_menu" />

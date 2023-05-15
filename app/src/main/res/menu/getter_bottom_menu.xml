@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/getterAdvrsF"
-        android:icon="@drawable/add"
+        android:icon="@drawable/baseline_view_list_24"
         android:title="@string/button_navigation_first_first"
         android:enabled="true" />
     <item
