@@ -22,7 +22,7 @@ import com.yandex.mapkit.MapKitFactory;
 public class Setter_Activity extends AppCompatActivity {
     private NavController navController;
     private ActivitySetterBinding binding;
-
+    private boolean isInitMap = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +30,11 @@ public class Setter_Activity extends AppCompatActivity {
         binding = ActivitySetterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        MapKitFactory.setApiKey(BuildConfig.apiKey);
-        MapKitFactory.initialize(getApplicationContext());
+        if (!isInitMap) {
+            MapKitFactory.setApiKey(BuildConfig.apiKey);
+            MapKitFactory.initialize(getApplicationContext());
+            isInitMap = true;
+        }
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_setter_fragment);
         navController = navHostFragment.getNavController();

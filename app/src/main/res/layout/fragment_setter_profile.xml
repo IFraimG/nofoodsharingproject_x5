@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingStart="@dimen/standard_size_very_medium"
-    android:paddingEnd="@dimen/standard_size_very_medium"
     tools:context=".fragments.setter.SetterProfile_Fragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -18,9 +16,6 @@
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginStart="@dimen/standard_size_very_medium"
-        android:layout_marginEnd="@dimen/standard_size_very_medium"
-        android:layout_marginTop="11dp"
         android:background="@color/grey_light"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/getter_notify_title" />
@@ -56,6 +51,13 @@
                 android:layout_marginBottom="@dimen/standard_size_small"
                 android:text="@string/name_text_hint" />
             <TextView
+                android:id="@+id/setter_profile_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/standard_size_small"
+                android:text="@string/phone_number_text" />
+            <TextView
                 android:id="@+id/setter_profile_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,19 +84,104 @@
         android:textSize="18sp"
         app:backgroundTint="@color/green_pastel" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/setter_profile_location"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/setter_profile_edit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/geolocation_text" />
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/setter_profile_notifications"
-        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="@string/edit_profile_data_text"/>
+        <EditText
+            android:id="@+id/setter_profile_edit_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/login_hint"
+            android:minHeight="@dimen/size_64"
+            android:autofillHints=""
+            android:inputType="text"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/setter_profile_edit_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:minHeight="@dimen/size_64"
+            android:hint="@string/telephone_hint"
+            android:autofillHints=""
+            android:inputType="phone" />
+        <EditText
+            android:id="@+id/setter_profile_edit_old_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:minHeight="@dimen/size_64"
+            android:autofillHints=""
+            android:inputType="textPassword"
+            android:hint="@string/enter_existing_password_hint"/>
+        <EditText
+            android:id="@+id/setter_profile_edit_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:minHeight="@dimen/size_64"
+            android:autofillHints=""
+            android:inputType="textPassword"
+            android:hint="@string/new_password_hint"/>
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/setter_profile_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/geolocation_text" />
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/setter_profile_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/on_notifications_text" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/setter_profile_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:background="@drawable/style2"
+                android:backgroundTint="@color/green_pastel"
+                android:text="@string/update"
+                />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/setter_profile_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:textSize="16sp"
+                android:background="@drawable/style2"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/setter_profile_history_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/on_notifications_text" />
-
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/black"
+        android:text="@string/history_transfer_text"/>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

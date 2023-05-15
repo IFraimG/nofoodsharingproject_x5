@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="@dimen/standard_size_small"
-    android:paddingRight="@dimen/standard_size_small"
+    android:paddingLeft="@dimen/standard_size_very_medium"
+    android:paddingRight="@dimen/standard_size_very_medium"
     android:orientation="vertical">
 
     <TextView
+        android:layout_marginTop="@dimen/standard_size_very_medium"
         android:id="@+id/setter_advert_item_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="24sp"
-        android:layout_margin="@dimen/standard_size_small"
         android:textColor="@color/black"
         android:layout_marginBottom="40dp"
         android:text="@string/name_enter_text" />
@@ -23,27 +23,28 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/very_big"
         android:layout_weight="1"
-        android:layout_margin="@dimen/standard_size_small"
         android:textSize="20sp"
         android:text="@string/name_text_getter" />
 
     <ListView
         android:id="@+id/setter_advert_product_list"
         android:layout_width="match_parent"
+        android:dividerHeight="10dp"
+        android:divider="@color/white"
         android:layout_height="150dp" />
 
     <Button
         android:id="@+id/setter_advert_item_link"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/standard_size_small"
         android:text="@string/detailed_text"
+        android:layout_marginTop="@dimen/standard_size_small"
         android:textSize="16sp"
         app:backgroundTint="@color/green_pastel" />
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/standard_size_small"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
         android:background="@color/grey_light"/>
 </LinearLayout>

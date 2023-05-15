@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.util.Pair;
@@ -33,6 +34,7 @@ public class Notify_Fragment extends Fragment {
     private FragmentGetterNotifyBinding binding;
     private ProgressBar loader;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class Notify_Fragment extends Fragment {
 
         recyclerView = binding.notifyRecycler;
         loader = binding.getterNotifyLoader;
+        swipeRefreshLayout = binding.getterNotifySwiper;
 
         GetterNotificationsAdapter getterNotificationsAdapter = new GetterNotificationsAdapter(getContext());
         recyclerView.setAdapter(getterNotificationsAdapter);
@@ -56,6 +59,11 @@ public class Notify_Fragment extends Fragment {
 
         viewModel.getAllNotifications(defineTypeUser().first, defineTypeUser().second ? "getter" : "setter").observe(requireActivity(), getterNotificationsAdapter::updateNotifications);
         viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            viewModel.getAllNotifications(defineTypeUser().first, defineTypeUser().second ? "getter" : "setter").observe(requireActivity(), getterNotificationsAdapter::updateNotifications);
+            viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
+        });
 
         return binding.getRoot();
     }
@@ -87,10 +95,12 @@ public class Notify_Fragment extends Fragment {
             case LOADED:
                 recyclerView.setVisibility(View.VISIBLE);
                 loader.setVisibility(View.INVISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
                 break;
             case FAILURE:
                 recyclerView.setVisibility(View.INVISIBLE);
                 loader.setVisibility(View.INVISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
                 break;
         }
     }

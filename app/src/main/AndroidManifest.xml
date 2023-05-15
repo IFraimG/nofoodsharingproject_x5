@@ -38,6 +38,7 @@
         <activity android:configChanges="orientation|screenSize" android:name=".activities.Setter_Activity" android:exported="false" />
         <activity android:name=".activities.SetterAdvert_Activity" android:exported="false" />
         <activity android:name=".activities.SetterHelpFinish_Activity" android:exported="false" />
+        <activity android:name=".activities.Faq_Activity" android:exported="false" />
         <activity android:configChanges="orientation|screenSize" android:name=".activities.Getter_Activity" android:exported="false" />
 
         <service

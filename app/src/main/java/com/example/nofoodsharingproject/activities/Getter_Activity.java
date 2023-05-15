@@ -18,6 +18,7 @@ import com.yandex.mapkit.MapKitFactory;
 public class Getter_Activity extends AppCompatActivity {
     private NavController navController;
     private ActivityGetterBinding binding;
+    private boolean isInitMap = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +26,11 @@ public class Getter_Activity extends AppCompatActivity {
         binding = ActivityGetterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        MapKitFactory.setApiKey(BuildConfig.apiKey);
-        MapKitFactory.initialize(getApplicationContext());
-
+        if (!isInitMap) {
+            MapKitFactory.setApiKey(BuildConfig.apiKey);
+            MapKitFactory.initialize(getApplicationContext());
+            isInitMap = true;
+        }
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_getter_fragment);
         navController = navHostFragment.getNavController();
 

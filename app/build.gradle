@@ -82,11 +82,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging'
 
-    // vk sdk
-    implementation 'com.vk:android-sdk-core:4.0.1'
-    implementation 'com.vk:android-sdk-api:4.0.1'
-
-    // layout for updating data
+    // layout for updating datax
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
 }

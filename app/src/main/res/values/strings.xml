@@ -90,7 +90,7 @@
     <string name="error">Пароль введен некорректно, либо такого пользователя не существует</string>
     <string name="getter_result_list">Итоговый набор продуктов:</string>
     <string name="connect_to_this_shop_market_map_text">Прикрепиться к этому магазину</string>
-    <string name="edit_profile_data_text">Здесь можно редактировать ваш профиль:</string>
+    <string name="edit_profile_data_text">Редактировать профиль</string>
     <string name="login_hint">Логин</string>
     <string name="telephone_hint">Телефон</string>
     <string name="enter_existing_password_hint">Введите существующий пароль</string>
@@ -136,4 +136,7 @@
     <string name="open_location">Включите геолокацию!</string>
     <string name="edit_profile">Редактировать настройки аккаунта</string>
     <string name="log_out">Выйти из аккаунта</string>
+    <string name="update">Обновить</string>
+    <string name="cancel">Отменить</string>
+    <string name="faq_link">FAQ?</string>
 </resources>

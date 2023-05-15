@@ -12,7 +12,6 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         app:defaultNavHost="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,10 +21,10 @@
         android:id="@+id/getter_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/style3"
+        android:background="@drawable/style2"
         app:itemIconTint="@color/green"
         android:windowSoftInputMode="adjustResize|stateHidden"
-        app:itemTextColor="@color/grey_500"
+        app:itemTextColor="@color/green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/getter_bottom_menu" />

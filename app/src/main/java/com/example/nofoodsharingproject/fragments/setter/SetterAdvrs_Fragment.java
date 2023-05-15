@@ -12,6 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.nofoodsharingproject.adapters.SetterAdvertListAdapter;
 import com.example.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
@@ -28,6 +29,7 @@ public class SetterAdvrs_Fragment extends Fragment {
     private FragmentSetterAdvrsBinding binding;
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView linkFAQ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class SetterAdvrs_Fragment extends Fragment {
         binding = FragmentSetterAdvrsBinding.inflate(inflater);
         RecyclerView recyclerView = binding.setterListAdvert;
         swipeRefreshLayout = binding.setterAdvertSwiper;
+        linkFAQ = binding.setterAdvertFaq;
 
         SetterAdvertListAdapter setterAdvertListAdapter = new SetterAdvertListAdapter(getContext());
         recyclerView.setAdapter(setterAdvertListAdapter);
@@ -56,6 +59,9 @@ public class SetterAdvrs_Fragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
         });
 
+        linkFAQ.setOnClickListener(View -> {
+
+        });
 
         return binding.getRoot();
     }

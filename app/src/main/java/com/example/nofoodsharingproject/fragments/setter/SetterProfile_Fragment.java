@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -24,7 +23,6 @@ import androidx.security.crypto.MasterKey;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +31,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,9 +41,11 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseHistoryAdverts;
+import com.example.nofoodsharingproject.data.repository.SetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.utils.ValidateUser;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -61,23 +63,47 @@ public class SetterProfile_Fragment extends Fragment {
     private SwitchCompat switchLocation;
     private SwitchCompat switchNotification;
     private ListView historyList;
-
+    private SharedPreferences encryptSharedPreferences;
     private String[] advertisementsHistory;
     private TextView userName;
+    private TextView userPhone;
     private TextView successProducts;
+    private TextView historyTitle;
     private Button openVk;
-    private Button logoutBtn;
+    private Button cancelEditButton;
     private Toolbar toolbar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayAdapter<String> arrayAdapter;
+    private LinearLayout editElements;
+    private EditText editLogin;
+    private EditText editPhone;
+    private EditText editPassword;
+    private EditText editNewPassword;
+    private Button saveEdit;
     private Setter user;
+    private boolean isCheckedLocation;
+    private boolean isCheckedNotification;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        try {
+            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build();
+            encryptSharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
+        } catch (IOException | GeneralSecurityException err) {
+            Log.e("auth error", err.toString());
+            err.printStackTrace();
+        }
+
         setHasOptionsMenu(true);
+
         settings = requireActivity().getSharedPreferences("prms", Context.MODE_PRIVATE);
+        isCheckedLocation = settings.getBoolean("location", false);
+        isCheckedNotification = settings.getBoolean("notificaiton", false);
     }
 
 
@@ -108,45 +134,37 @@ public class SetterProfile_Fragment extends Fragment {
         openVk = binding.setterOpenVk;
         toolbar = binding.setterProfileToolbar;
         swipeRefreshLayout = binding.setterProfileSwiper;
+        editElements = binding.setterProfileEdit;
+        editLogin = binding.setterProfileEditLogin;
+        editPhone = binding.setterProfileEditPhone;
+        editPassword = binding.setterProfileEditOldPassword;
+        editNewPassword = binding.setterProfileEditPassword;
+        saveEdit = binding.setterProfileSave;
+        userPhone = binding.setterProfilePhone;
+        historyTitle = binding.setterProfileHistoryTitle;
+        cancelEditButton = binding.setterProfileCancel;
 
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         appCompatActivity.setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.profile_leave:
-                        logout();
-                        break;
-                    case R.id.edit_settings:
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
 
         this.user = defineUser();
         userName.setText(user.getLogin());
 
         getHistoryList();
 
+        toolbar.setOnMenuItemClickListener(this::toolbarHandle);
+        saveEdit.setOnClickListener(View -> closeEdit());
+        cancelEditButton.setOnClickListener(View -> removeEdit());
+
+        swipeRefreshLayout.setOnRefreshListener(this::getHistoryList);
+
         openVk.setOnClickListener(View -> vkLoad());
+
         switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) requestPermissions();
-                setToPreferences("location", checkLocationPermissions());
-            } else setToPreferences("location", false);
-
-            switchLocation.setChecked(isChecked);
+            if (isChecked) requestPermissions();
+            isCheckedLocation = isChecked && checkLocationPermissions();
         });
-
-        switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> setToPreferences("notification", isChecked));
-
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            getHistoryList();
-        });
+        switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckedNotification = isChecked);
 
         return binding.getRoot();
     }
@@ -156,6 +174,21 @@ public class SetterProfile_Fragment extends Fragment {
         requireActivity().getMenuInflater().inflate(R.menu.profile_left_panel_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
+    private boolean toolbarHandle(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.profile_leave:
+                logout();
+                break;
+            case R.id.edit_settings:
+                editProfile();
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
 
     private void getHistoryList() {
         AdvertsRepository.findSetterAdvertisements(this.user.getX5_Id()).enqueue(new Callback<ResponseHistoryAdverts>() {
@@ -187,6 +220,77 @@ public class SetterProfile_Fragment extends Fragment {
         });
     }
 
+    private void editProfile() {
+        this.historyList.setVisibility(View.GONE);
+        this.openVk.setVisibility(View.GONE);
+        this.historyTitle.setVisibility(View.GONE);
+        this.editElements.setVisibility(View.VISIBLE);
+    }
+
+    private void closeEdit() {
+        if (!ValidateUser.validatePhone(editPhone.getText().toString())) {
+            Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
+        } else if (!ValidateUser.validateLogin(editLogin.getText().toString())) {
+            Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
+        } else if (!ValidateUser.validatePassword(editPassword.getText().toString())) {
+            Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
+        } else {
+            saveEdit.setEnabled(false);
+            switchLocation.setEnabled(false);
+            switchNotification.setEnabled(false);
+
+            setToPreferences("location", isCheckedLocation);
+            setToPreferences("notification", isCheckedNotification);
+            String newLogin = editLogin.getText().toString();
+            String newPhone = editPhone.getText().toString();
+            String newPassword = editNewPassword.getText().toString();
+            String oldPasswordText = editPassword.getText().toString();
+            SetterRepository.editProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Setter>() {
+                @Override
+                public void onResponse(@NotNull Call<Setter> call, @NotNull Response<Setter> response) {
+                    if (response.code() == 400) Toast.makeText(getContext(), R.string.your_password_uncorrect, Toast.LENGTH_SHORT).show();
+                    if (response.code() == 201) {
+                        Toast.makeText(getContext(), R.string.sucses, Toast.LENGTH_SHORT).show();
+                        userName.setText(response.body().getLogin());
+                        userPhone.setText(response.body().getPhone());
+
+                        SharedPreferences.Editor editor = encryptSharedPreferences.edit();
+                        editor.putString("login", response.body().getLogin());
+                        editor.putString("phone", response.body().getPhone());
+
+                        editor.apply();
+                    }
+
+                    saveEdit.setEnabled(true);
+                    switchLocation.setEnabled(true);
+                    switchNotification.setEnabled(true);
+                    removeEdit();
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<Setter> call, @NotNull Throwable t) {
+                    t.printStackTrace();
+                    saveEdit.setEnabled(true);
+                    switchLocation.setEnabled(true);
+                    switchNotification.setEnabled(true);
+                    Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void removeEdit() {
+        editLogin.setText("");
+        editNewPassword.setText("");
+        editPhone.setText("");
+        editPassword.setText("");
+
+        this.historyList.setVisibility(View.VISIBLE);
+        this.openVk.setVisibility(View.VISIBLE);
+        this.historyTitle.setVisibility(View.VISIBLE);
+        this.editElements.setVisibility(View.GONE);
+    }
+
     private boolean checkLocationPermissions() {
         int firstPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
         int secondPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
@@ -194,7 +298,6 @@ public class SetterProfile_Fragment extends Fragment {
         return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void requestPermissions() {
         ActivityCompat.requestPermissions(requireActivity(),
                 new String[]{
@@ -209,28 +312,16 @@ public class SetterProfile_Fragment extends Fragment {
     }
 
     private Setter defineUser() {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            String login = sharedPreferences.getString("login", "");
-            String phone = sharedPreferences.getString("phone", "");
-            String userID = sharedPreferences.getString("X5_id", "");
+        String login = encryptSharedPreferences.getString("login", "");
+        String phone = encryptSharedPreferences.getString("phone", "");
+        String userID = encryptSharedPreferences.getString("X5_id", "");
 
-            Setter user = new Setter();
-            user.setLogin(login);
-            user.setPhone(phone);
-            user.setX5_Id(userID);
+        Setter user = new Setter();
+        user.setLogin(login);
+        user.setPhone(phone);
+        user.setX5_Id(userID);
 
-            return user;
-        } catch (IOException | GeneralSecurityException err) {
-            Log.e("auth error", err.toString());
-            err.printStackTrace();
-        }
-
-        return new Setter();
+        return user;
     }
 
     private void logout() {
