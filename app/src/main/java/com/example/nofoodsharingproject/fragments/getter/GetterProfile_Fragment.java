@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.activities.Faq_Activity;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 import com.example.nofoodsharingproject.data.repository.GetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterProfileBinding;
@@ -47,6 +48,8 @@ public class GetterProfile_Fragment extends Fragment {
     private Getter user;
     private SharedPreferences sharedPreferences;
 
+    private Button linkFaq;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,7 @@ public class GetterProfile_Fragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGetterProfileBinding.inflate(inflater);
 
+        linkFaq = binding.getterProfileFaq;
         buttonLogout = binding.getterProfileLogout;
         editLogin = binding.getterProfileEditLogin;
         editPhone = binding.getterProfileEditPhone;
@@ -80,6 +84,11 @@ public class GetterProfile_Fragment extends Fragment {
 
         buttonLogout.setOnClickListener(View -> logout());
         btnSave.setOnClickListener(View -> editProfile());
+
+        linkFaq.setOnClickListener(View -> {
+            Intent intent = new Intent(getContext(), Faq_Activity.class);
+            startActivity(intent);
+        });
 
         return binding.getRoot();
     }

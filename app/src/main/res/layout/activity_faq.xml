@@ -21,14 +21,14 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/standard_size_small"
                     android:layout_marginStart="@dimen/standard_size_very_medium"
                     android:src="@drawable/ic_baseline_chevron_left_24" />
                 <TextView
                     android:id="@+id/getter_notify_title"
                     style="@style/heading_getter_fragments"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="@dimen/standard_size_small"
+                    android:layout_marginStart="@dimen/standard_size_small"
                     android:layout_gravity="center"
                     android:text="@string/faq_link" />
             </LinearLayout>

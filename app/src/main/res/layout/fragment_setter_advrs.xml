@@ -34,7 +34,7 @@
             android:layout_gravity="center|end"
             android:textColor="@color/black"
             android:text="@string/faq_link"
-            android:padding="10dp"
+            android:padding="@dimen/standard_size_small"
             android:textStyle="bold"
             android:background="@color/grey_100"
             android:textSize="20sp" />

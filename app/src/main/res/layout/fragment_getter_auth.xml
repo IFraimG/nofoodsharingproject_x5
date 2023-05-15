@@ -58,7 +58,7 @@
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/fk_size"
         android:text="@string/create_new_account_text"
         android:textSize="18sp"
         android:visibility="gone"
@@ -66,7 +66,7 @@
 
     <Button
         android:id="@+id/auth_getter_btn_login"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/fk_size"
         android:layout_width="300dp"
         android:layout_height="80dp"
         app:backgroundTint="@color/light_orange"

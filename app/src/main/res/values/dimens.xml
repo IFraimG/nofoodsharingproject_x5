@@ -10,5 +10,6 @@
     <dimen name="very_big">50dp</dimen>
     <dimen name="size_48">48dp</dimen>
     <dimen name="size_64">64dp</dimen>
+    <dimen name="fk_size">40dp</dimen>
 
 </resources>

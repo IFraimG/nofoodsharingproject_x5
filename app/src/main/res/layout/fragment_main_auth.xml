@@ -44,7 +44,7 @@
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="@dimen/fk_size"
             android:text="@string/i_getter_text"
             android:textSize="24sp"
             app:backgroundTint="@color/light_orange" />
@@ -54,7 +54,7 @@
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="@dimen/fk_size"
             android:text="@string/i_setter_text"
 
             android:textSize="24sp"

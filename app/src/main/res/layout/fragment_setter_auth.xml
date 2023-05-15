@@ -55,7 +55,7 @@
         android:autofillHints=""
         />
     <Button
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/fk_size"
         android:id="@+id/setter_auth_btn_login"
         android:layout_width="300dp"
         android:layout_height="80dp"

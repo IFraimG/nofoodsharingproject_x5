@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     style="@style/item_recycler_style"
     android:layout_marginTop="@dimen/standard_size_medium"
-    android:padding="10dp"
+    android:padding="@dimen/standard_size_small"
     android:orientation="vertical">
     <TextView
         android:id="@+id/notify_title"

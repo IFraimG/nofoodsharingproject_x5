@@ -15,7 +15,7 @@
         android:layout_weight="1"
         android:textSize="24sp"
         android:textColor="@color/black"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="@dimen/fk_size"
         android:text="@string/name_enter_text" />
 
     <TextView
@@ -29,7 +29,7 @@
     <ListView
         android:id="@+id/setter_advert_product_list"
         android:layout_width="match_parent"
-        android:dividerHeight="10dp"
+        android:dividerHeight="@dimen/standard_size_small"
         android:divider="@color/white"
         android:layout_height="150dp" />
 

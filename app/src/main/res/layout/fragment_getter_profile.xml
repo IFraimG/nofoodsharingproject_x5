@@ -23,7 +23,7 @@
         android:text="@string/name_text"
         android:layout_gravity="center"
         android:textSize="32sp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/fk_size"
         android:textColor="@color/grey_500"
         android:id="@+id/getter_profile_login" />
 
@@ -63,7 +63,7 @@
                     android:id="@+id/getter_profile_edit_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="@dimen/fk_size"
                     android:hint="@string/login_hint"
                     android:minHeight="@dimen/size_64"
                     android:autofillHints=""
@@ -119,7 +119,7 @@
                         android:layout_gravity="center"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/standard_size_small"
                         android:id="@+id/getter_profile_logout"
                         android:src="@drawable/baseline_logout_24"
                         android:backgroundTint="@color/white"
@@ -128,4 +128,10 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        style="@style/grey_500_button"
+        android:id="@+id/getter_profile_faq"
+        android:text="@string/faq_text"
+        android:layout_gravity="center|bottom"
+        android:layout_marginTop="@dimen/standard_size_very_medium"/>
 </LinearLayout>

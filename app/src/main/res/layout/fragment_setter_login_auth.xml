@@ -45,7 +45,7 @@
         />
 
     <Button
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/fk_size"
         android:id="@+id/login_auth_btn"
         android:layout_width="300dp"
         android:layout_height="80dp"
