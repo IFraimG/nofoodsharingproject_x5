@@ -28,13 +28,14 @@ public class Setter_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySetterBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
         if (!isInitMap) {
             MapKitFactory.setApiKey(BuildConfig.apiKey);
             MapKitFactory.initialize(getApplicationContext());
             isInitMap = true;
         }
+
+        setContentView(binding.getRoot());
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_setter_fragment);
         navController = navHostFragment.getNavController();

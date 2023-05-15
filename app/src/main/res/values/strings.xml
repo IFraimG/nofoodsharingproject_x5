@@ -140,4 +140,5 @@
     <string name="cancel">Отменить</string>
     <string name="faq_link">FAQ?</string>
     <string name="question">Вопрос</string>
+    <string name="not_found">Ничего не найдено!</string>
 </resources>

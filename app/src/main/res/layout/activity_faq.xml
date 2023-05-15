@@ -1,42 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     tools:context=".activities.Faq_Activity">
-    <TextView
-        android:id="@+id/getter_notify_title"
-        style="@style/heading_getter_fragments"
-        android:text="@string/faq_link" />
-
-    <com.google.android.material.divider.MaterialDivider
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/standard_size_very_medium"
-        android:background="@color/grey_100"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/faq_return"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="@dimen/standard_size_very_medium"
+                    android:src="@drawable/ic_baseline_chevron_left_24" />
+                <TextView
+                    android:id="@+id/getter_notify_title"
+                    style="@style/heading_getter_fragments"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center"
+                    android:text="@string/faq_link" />
+            </LinearLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:background="@color/grey_100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:layout_margin="@dimen/standard_size_very_medium"
-        android:text="@string/getter_account_text"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:layout_margin="@dimen/standard_size_very_medium"
+                android:text="@string/getter_account_text"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/faq_setter_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_faq" />
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:textSize="24sp"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:text="@string/setter_account_text"/>-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/faq_setter_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_faq" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:layout_margin="@dimen/standard_size_very_medium"
+                android:text="@string/setter_account_text"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/faq_getter_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_faq" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -79,9 +79,9 @@ public class GetterAdvrs_Fragment extends Fragment {
         getAddress();
         getAdvertisement();
 
-        textNewAdvert.setVisibility(View.INVISIBLE);
-        buttonStopAdvert.setVisibility(View.INVISIBLE);
-        getterAdvertLayout.setVisibility(View.INVISIBLE);
+        textNewAdvert.setVisibility(View.GONE);
+        buttonStopAdvert.setVisibility(View.GONE);
+        getterAdvertLayout.setVisibility(View.GONE);
 
         buttonNewAdvertisement.setOnClickListener(View -> startActivity(new Intent(getActivity(), GetterNewAdvert_Activity.class)));
         buttonStopAdvert.setOnClickListener(View -> removeAdvertisement());
@@ -170,15 +170,16 @@ public class GetterAdvrs_Fragment extends Fragment {
     private void hideAdvertisementElements() {
         advertisement = null;
         statusAdvert.setVisibility(View.VISIBLE);
-        buttonStopAdvert.setVisibility(View.INVISIBLE);
+        buttonStopAdvert.setVisibility(View.GONE);
         arrayAdapter.notifyDataSetChanged();
-        buttonTakenProducts.setVisibility(View.INVISIBLE);
-        numberAdvertisement.setVisibility(View.INVISIBLE);
-        textNewAdvert.setVisibility(View.INVISIBLE);
+        buttonTakenProducts.setVisibility(View.GONE);
+        numberAdvertisement.setVisibility(View.GONE);
+        textNewAdvert.setVisibility(View.GONE);
+        getterAdvertLayout.setVisibility(View.GONE);
     }
     private void showAdvertisementElements(Advertisement advert) {
         titleAdvert.setText(advert.getTitle());
-        statusAdvert.setVisibility(View.INVISIBLE);
+        statusAdvert.setVisibility(View.GONE);
         buttonStopAdvert.setVisibility(View.VISIBLE);
         arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advert.getListTitleProducts());
         listViewProducts.setAdapter(arrayAdapter);
