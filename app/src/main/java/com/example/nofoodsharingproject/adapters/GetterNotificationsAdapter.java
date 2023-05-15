@@ -52,7 +52,7 @@ public class GetterNotificationsAdapter extends RecyclerView.Adapter<GetterNotif
             this.notifications.addAll(notifications);
             notifyDataSetChanged();
         } catch (NullPointerException err) {
-            Log.e("msg", "null notifications");
+            Log.e("msg", ctx.getString(R.string.unvisinle_error));
         }
     }
 

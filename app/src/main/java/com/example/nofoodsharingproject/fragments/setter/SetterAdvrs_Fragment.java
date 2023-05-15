@@ -1,5 +1,6 @@
 package com.example.nofoodsharingproject.fragments.setter;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.nofoodsharingproject.activities.Faq_Activity;
 import com.example.nofoodsharingproject.adapters.SetterAdvertListAdapter;
 import com.example.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
@@ -60,7 +62,8 @@ public class SetterAdvrs_Fragment extends Fragment {
         });
 
         linkFAQ.setOnClickListener(View -> {
-
+            Intent intent = new Intent(getContext(), Faq_Activity.class);
+            startActivity(intent);
         });
 
         return binding.getRoot();
