@@ -97,7 +97,6 @@
                     android:textSize="15sp"
                     android:minHeight="@dimen/size_64"
                     android:layout_marginTop="190dp"
-                    android:autofillHints=""
                     android:inputType="textPassword"
                     android:hint="@string/new_password_hint"/>
 
