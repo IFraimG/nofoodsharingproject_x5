@@ -14,27 +14,10 @@ public class Setter extends User {
     @SerializedName("authID")
     private String authID;
 
-    public Setter() {
-
-    }
+    public Setter() {}
 
     public Setter(String phone, String login, String password) {
         super(phone, login, password);
-    }
-
-    @Override
-    public String getLogin() {
-        return super.getLogin();
-    }
-
-    @Override
-    public String getPassword() {
-        return super.getPassword();
-    }
-
-    @Override
-    public String getPhone() {
-        return super.getPhone();
     }
 
     public String getX5_Id() {

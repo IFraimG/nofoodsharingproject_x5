@@ -6,12 +6,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="32sp"
+        android:textSize="48sp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/very_big"
         android:gravity="center"
+        android:textColor="@color/black"
+        android:text="@string/loading" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
+        android:gravity="center"
+        android:textColor="@color/grey_500"
         android:text="@string/auth_wait" />
+
+    <ProgressBar
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        />
 </LinearLayout>

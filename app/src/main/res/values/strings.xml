@@ -130,7 +130,8 @@
     <string name="open_vk">Отсканировать чек в VK</string>
     <string name="no_image_warnings">...</string>
     <string name="no_adverts">Объявление отсутствует</string>
-    <string name="auth_wait">Немного подождите....</string>
+    <string name="auth_wait">Немного подождите</string>
+    <string name="loading">Загрузка</string>
     <string name="return_to_main_page">Вернуться на страницу объявлений</string>
     <string name="set_route_near_market">Построить маршрут до ближайшего магазина</string>
     <string name="open_location">Включите геолокацию!</string>

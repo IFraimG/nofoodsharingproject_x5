@@ -1,10 +1,12 @@
 package com.example.nofoodsharingproject.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +22,7 @@ import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
 import com.example.nofoodsharingproject.databinding.ActivityGetterCreateNewAdvertismentBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Getter;
+import com.example.nofoodsharingproject.services.AdvertisementExpires;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -98,10 +101,10 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
                     if (response.code() == 400) {
                         Toast.makeText(GetterNewAdvert_Activity.this, R.string.problems, Toast.LENGTH_SHORT).show();
                         button_ready.setEnabled(true);
-
                     } else {
                         Toast.makeText(getApplicationContext(),
                                 R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
+                        setAlarm();
                         finish();
                     }
                 }
@@ -151,5 +154,15 @@ public class GetterNewAdvert_Activity extends AppCompatActivity {
         }
 
         return new Getter();
+    }
+
+    private void setAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AdvertisementExpires.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        long triggerAtMillis = System.currentTimeMillis() + (2 * 60 * 60 * 1000);
+
+        if (alarmManager != null) alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
     }
 }

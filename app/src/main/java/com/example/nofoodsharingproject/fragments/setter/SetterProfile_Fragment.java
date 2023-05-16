@@ -149,6 +149,7 @@ public class SetterProfile_Fragment extends Fragment {
 
         this.user = defineUser();
         userName.setText(user.getLogin());
+        userPhone.setText(user.getPhone());
 
         getHistoryList();
 
