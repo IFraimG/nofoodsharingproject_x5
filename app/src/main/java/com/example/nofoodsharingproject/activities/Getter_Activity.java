@@ -15,7 +15,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class Getter_Activity extends AppCompatActivity {
     private NavController navController;
     private ActivityGetterBinding binding;
-    private boolean isInitMap = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

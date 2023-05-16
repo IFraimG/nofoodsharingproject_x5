@@ -89,7 +89,7 @@ public class LocationTrackingService extends Service implements LocationListener
     }
     @Override
     public void onLocationChanged(Location location) {
-        if (location.distanceTo(compareCoords) < 100 && checkTimer() && titleMarket.length() != 0) {
+        if (location != null && compareCoords != null && location.distanceTo(compareCoords) < 100 && checkTimer() && titleMarket.length() != 0) {
             Advertisement advert = getRandomGetterAdvert();
             createNotification(advert);
         }
