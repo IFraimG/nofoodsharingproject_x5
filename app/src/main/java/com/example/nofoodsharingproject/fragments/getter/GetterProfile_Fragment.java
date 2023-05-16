@@ -22,6 +22,7 @@ import com.example.nofoodsharingproject.activities.Faq_Activity;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 import com.example.nofoodsharingproject.data.api.getter.GetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterProfileBinding;
+import com.example.nofoodsharingproject.utils.DefineUser;
 import com.example.nofoodsharingproject.utils.ValidateUser;
 import com.example.nofoodsharingproject.models.Getter;
 
@@ -47,12 +48,13 @@ public class GetterProfile_Fragment extends Fragment {
     private TextView phone;
     private Getter user;
     private SharedPreferences sharedPreferences;
-
+    private DefineUser defineUser;
     private Button linkFaq;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        defineUser = new DefineUser(requireActivity());
         try {
             MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build();
@@ -153,11 +155,14 @@ public class GetterProfile_Fragment extends Fragment {
     }
 
     public void logout() {
+        defineUser.clearData();
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        Intent intent = new Intent(getActivity().getApplicationContext(), MainAuth_Activity.class);
+
+        Intent intent = new Intent(requireActivity().getApplicationContext(), MainAuth_Activity.class);
         startActivity(intent);
-        getActivity().finish();
+        requireActivity().finish();
     }
 }

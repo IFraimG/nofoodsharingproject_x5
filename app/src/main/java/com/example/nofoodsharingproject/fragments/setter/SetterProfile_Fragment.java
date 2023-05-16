@@ -296,9 +296,8 @@ public class SetterProfile_Fragment extends Fragment {
     }
 
     private void logout() {
-        SharedPreferences.Editor editor = encryptSharedPreferences.edit();
-        editor.clear();
-        editor.apply();
+        defineUser.clearData();
+        settings.edit().clear().apply();
 
         Intent intent = new Intent(requireActivity(), MainAuth_Activity.class);
         startActivity(intent);

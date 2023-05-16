@@ -85,4 +85,10 @@ public class DefineUser {
         }
         return new Pair<>("", false);
     }
+
+    public void clearData() {
+        SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
 }
