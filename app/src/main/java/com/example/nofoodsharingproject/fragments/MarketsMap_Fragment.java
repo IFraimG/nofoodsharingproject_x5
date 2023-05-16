@@ -82,7 +82,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     private MapView mapView;
     int firstPermission;
     int secondPermission;
-    private com.yandex.mapkit.location.LocationListener locationListener;
+    private LocationListener locationListener;
     private UserLocationLayer userLocationLayer;
     private Spinner listMarketsSpinner;
     private String choosenMarket;
@@ -134,7 +134,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     public void onStop() {
         mapView.onStop();
         MapKitFactory.getInstance().onStop();
-        locationManager.unsubscribe(locationListener);
+        if (locationListener != null) locationManager.unsubscribe(locationListener);
         super.onStop();
     }
 
@@ -171,7 +171,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
             };
 
             locationManager = MapKitFactory.getInstance().createLocationManager();
-            locationManager.subscribeForLocationUpdates(0, 0, 0,false, FilteringMode.OFF, locationListener);
+            if (locationListener != null) locationManager.subscribeForLocationUpdates(0, 0, 0,false, FilteringMode.OFF, locationListener);
         }
     }
 

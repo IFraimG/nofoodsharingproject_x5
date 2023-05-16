@@ -44,6 +44,7 @@ import com.example.nofoodsharingproject.databinding.FragmentSetterProfileBinding
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Setter;
 import com.example.nofoodsharingproject.utils.ValidateUser;
+import com.github.javafaker.Bool;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -106,15 +107,6 @@ public class SetterProfile_Fragment extends Fragment {
         isCheckedNotification = settings.getBoolean("notificaiton", false);
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        switchLocation.setChecked(checkLocationPermissions() && settings.getBoolean("location", false));
-        switchNotification.setChecked(settings.getBoolean("notification", true));
-    }
-
     private void setToPreferences(String key, boolean value) {
         SharedPreferences.Editor editor = settings.edit();
 
@@ -144,6 +136,7 @@ public class SetterProfile_Fragment extends Fragment {
         switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) requestPermissions();
             isCheckedLocation = isChecked && checkLocationPermissions();
+            switchLocation.setChecked(isCheckedLocation);
         });
         switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckedNotification = isChecked);
 
@@ -191,6 +184,7 @@ public class SetterProfile_Fragment extends Fragment {
 
         userName.setText(user.getLogin());
         userPhone.setText(user.getPhone());
+        switchLocation.setChecked(isCheckedLocation);
     }
 
     private void getHistoryList() {
@@ -231,11 +225,23 @@ public class SetterProfile_Fragment extends Fragment {
     }
 
     private void closeEdit() {
-        if (!ValidateUser.validatePhone(editPhone.getText().toString())) {
+        String editPhoneString = editPhone.getText().toString();
+        String editLoginString = editLogin.getText().toString();
+        String editPasswordString = editPassword.getText().toString();
+
+        if (editLoginString.length() == 0 && editPhoneString.length() == 0 && editPasswordString.length() == 0) {
+            setToPreferences("location", isCheckedLocation);
+            setToPreferences("notification", isCheckedNotification);
+            removeEdit();
+
+            return;
+        }
+
+        if (!ValidateUser.validatePhone(editPhoneString)) {
             Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
-        } else if (!ValidateUser.validateLogin(editLogin.getText().toString())) {
+        } else if (!ValidateUser.validateLogin(editLoginString)) {
             Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
-        } else if (!ValidateUser.validatePassword(editPassword.getText().toString())) {
+        } else if (!ValidateUser.validatePassword(editPasswordString)) {
             Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
         } else {
             enabledButton(false);
@@ -310,10 +316,10 @@ public class SetterProfile_Fragment extends Fragment {
         ActivityCompat.requestPermissions(requireActivity(),
                 new String[]{
                         android.Manifest.permission.ACCESS_FINE_LOCATION,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION,
                 }, 200);
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(),
                     new String[]{ android.Manifest.permission.ACCESS_BACKGROUND_LOCATION }, 201);
         }
