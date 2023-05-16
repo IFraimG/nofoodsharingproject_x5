@@ -150,11 +150,12 @@ public class Getter_Auth_Fragment extends Fragment {
         AuthRepository.getterRegistration(phone.getText().toString(), login.getText().toString(), password.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
-                SignUpResponseI<Getter> result = response.body();
-                if (result.token.length() == 0 || response.code() == 400) {
+                if (response.code() == 400) {
                     Toast.makeText(getContext(), R.string.account_created, Toast.LENGTH_SHORT).show();
                     btnSignup.setEnabled(true);
-                } else pushData(result);
+                } else {
+                    if (response.body() != null && response.body().token != null) pushData(response.body());
+                }
             }
 
             @Override
