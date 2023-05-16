@@ -43,13 +43,10 @@ import com.example.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.utils.DefineUser;
+import com.example.nofoodsharingproject.utils.PermissionHandler;
 import com.example.nofoodsharingproject.utils.ValidateUser;
-import com.github.javafaker.Bool;
-
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,24 +80,17 @@ public class SetterProfile_Fragment extends Fragment {
     private boolean isCheckedLocation;
     private boolean isCheckedNotification;
 
+    private DefineUser defineUser;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            encryptSharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-        } catch (IOException | GeneralSecurityException err) {
-            Log.e("auth error", err.toString());
-            err.printStackTrace();
-        }
+        defineUser = new DefineUser(requireActivity());
 
         setHasOptionsMenu(true);
 
-        this.user = defineUser();
+        this.user = defineUser.defineSetter();
 
         settings = requireActivity().getSharedPreferences("prms", Context.MODE_PRIVATE);
         isCheckedLocation = settings.getBoolean("location", false);
@@ -134,8 +124,8 @@ public class SetterProfile_Fragment extends Fragment {
         openVk.setOnClickListener(View -> vkLoad());
 
         switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) requestPermissions();
-            isCheckedLocation = isChecked && checkLocationPermissions();
+            if (isChecked) PermissionHandler.requestPermissions(requireActivity(), requireContext());
+            isCheckedLocation = isChecked && PermissionHandler.checkPermissions(requireContext());
             switchLocation.setChecked(isCheckedLocation);
         });
         switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckedNotification = isChecked);
@@ -303,39 +293,6 @@ public class SetterProfile_Fragment extends Fragment {
         this.openVk.setVisibility(View.VISIBLE);
         this.historyTitle.setVisibility(View.VISIBLE);
         this.editElements.setVisibility(View.GONE);
-    }
-
-    private boolean checkLocationPermissions() {
-        int firstPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        int secondPermission = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-
-        return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestPermissions() {
-        ActivityCompat.requestPermissions(requireActivity(),
-                new String[]{
-                        android.Manifest.permission.ACCESS_FINE_LOCATION,
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                }, 200);
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(),
-                    new String[]{ android.Manifest.permission.ACCESS_BACKGROUND_LOCATION }, 201);
-        }
-    }
-
-    private Setter defineUser() {
-        String login = encryptSharedPreferences.getString("login", "");
-        String phone = encryptSharedPreferences.getString("phone", "");
-        String userID = encryptSharedPreferences.getString("X5_id", "");
-
-        Setter user = new Setter();
-        user.setLogin(login);
-        user.setPhone(phone);
-        user.setX5_Id(userID);
-
-        return user;
     }
 
     private void logout() {

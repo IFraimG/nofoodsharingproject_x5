@@ -124,26 +124,20 @@ public class Getter_Auth_Fragment extends Fragment {
             AuthRepository.getterLogin(phone.getText().toString(), login.getText().toString(), password.getText().toString()).enqueue(new Callback<SignUpResponseI<Getter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
-                    SignUpResponseI<Getter> result = response.body();
-                    try {
-                        if (response.code() == 400) {
-                            btnLogin.setEnabled(true);
-                            Toast.makeText(getContext(), R.string.not_right_password, Toast.LENGTH_SHORT).show();
-                        } else if (result.token.length() == 0 || response.code() == 404) {
-                            Toast.makeText(getContext(), R.string.account_not_exist, Toast.LENGTH_SHORT).show();
-                            btnLogin.setEnabled(true);
-                            btnSignup.setVisibility(View.VISIBLE);
-                        } else pushData(result);
-                    } catch (NullPointerException err) {
+                    if (response.code() == 400) {
+                        btnLogin.setEnabled(true);
+                        Toast.makeText(getContext(), R.string.not_right_password, Toast.LENGTH_SHORT).show();
+                    } else if (response.code() == 404) {
                         Toast.makeText(getContext(), R.string.account_not_exist, Toast.LENGTH_SHORT).show();
                         btnLogin.setEnabled(true);
                         btnSignup.setVisibility(View.VISIBLE);
+                    } else {
+                        if (response.body() != null && response.body().token != null) pushData(response.body());
                     }
-
                 }
 
                 @Override
-                public void onFailure(Call<SignUpResponseI<Getter>> call, Throwable t) {
+                public void onFailure(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Throwable t) {
                     btnLogin.setEnabled(true);
                     t.printStackTrace();
                 }

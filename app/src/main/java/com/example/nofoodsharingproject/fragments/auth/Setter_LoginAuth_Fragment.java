@@ -76,14 +76,15 @@ public class Setter_LoginAuth_Fragment extends Fragment {
             AuthRepository.setterLogin(loginInput.getText().toString(), passwordInput.getText().toString()).enqueue(new Callback<SignUpResponseI<Setter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
-                    SignUpResponseI<Setter> result = response.body();
-                    if (response.code() == 404 || response.code() == 400 || result.getToken().length() == 0) {
+                    if (response.code() == 404 || response.code() == 400) {
                         Toast.makeText(getContext(), R.string.error, Toast.LENGTH_SHORT).show();
                         btn.setEnabled(true);
                     } else {
-                        saveData(response.body());
-                        Intent intent = new Intent(getContext(), Main_Activity.class);
-                        startActivity(intent);
+                        if (response.body() != null && response.body().token != null) {
+                            saveData(response.body());
+                            Intent intent = new Intent(getContext(), Main_Activity.class);
+                            startActivity(intent);
+                        }
                     }
                 }
 
