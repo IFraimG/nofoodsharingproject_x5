@@ -1,11 +1,16 @@
 package com.example.nofoodsharingproject.utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.util.Pair;
+import android.widget.Toast;
 
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
+import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Setter;
 
@@ -62,5 +67,22 @@ public class DefineUser {
         return user;
     }
 
+    public Pair<String, Boolean> getTypeUser(Activity activity, Context ctx) {
+        try {
+            MasterKey masterKey = new MasterKey.Builder(activity.getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build();
+            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(activity.getApplicationContext(), "user", masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
 
+            String userID = sharedPreferences.getString("X5_id", "");
+            boolean isUser = sharedPreferences.getBoolean("isGetter", false);
+
+            return new Pair<>(userID, isUser);
+        } catch (GeneralSecurityException | IOException err) {
+            Toast.makeText(ctx, R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
+            Log.e("esp_error", err.getMessage());
+        }
+        return new Pair<>("", false);
+    }
 }

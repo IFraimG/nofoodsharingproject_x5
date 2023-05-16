@@ -65,12 +65,7 @@ public class Getter_Auth_Fragment extends Fragment {
 
         btnSignup.setOnClickListener(View -> sendToNotifyAccount());
         btnLogin.setOnClickListener(View -> login());
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_getterAuthF_to_mainAuthF);
-            }
-        });
+        btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_getterAuthF_to_mainAuthF));
 
         return binding.getRoot();
     }
@@ -94,10 +89,10 @@ public class Getter_Auth_Fragment extends Fragment {
 
     private void pushData(SignUpResponseI<Getter> result) {
         try {
-            MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+            MasterKey masterKey = new MasterKey.Builder(requireContext().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
                     .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getActivity().getApplicationContext(), "user", masterKey,
+            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireContext().getApplicationContext(), "user", masterKey,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("isGetter", true);
@@ -110,7 +105,6 @@ public class Getter_Auth_Fragment extends Fragment {
 
             Intent intent = new Intent(getContext(), Main_Activity.class);
             startActivity(intent);
-//            getActivity().finish();
 
         } catch (IOException | GeneralSecurityException err) {
             Log.e("auth error", err.toString());
@@ -167,16 +161,13 @@ public class Getter_Auth_Fragment extends Fragment {
     }
 
     private void sendToNotifyAccount() {
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NotNull Task<String> task) {
-                if (!task.isSuccessful()) {
-                    Log.w("err", "Fetching FCM registration token failed", task.getException());
-                    signup("");
-                    return;
-                }
-                signup(task.getResult());
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.w("err", "Fetching FCM registration token failed", task.getException());
+                signup("");
+                return;
             }
+            signup(task.getResult());
         });
     }
 }

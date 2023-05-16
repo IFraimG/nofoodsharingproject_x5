@@ -1,21 +1,13 @@
 package com.example.nofoodsharingproject.fragments;
 
-import android.Manifest;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
 
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +25,8 @@ import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Market;
 import com.example.nofoodsharingproject.models.Setter;
 import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
+import com.example.nofoodsharingproject.utils.DefineUser;
+import com.example.nofoodsharingproject.utils.PermissionHandler;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.RequestPoint;
@@ -67,8 +61,6 @@ import com.yandex.runtime.image.ImageProvider;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,8 +72,6 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
 
     private FragmentMarketsMapBinding binding;
     private MapView mapView;
-    int firstPermission;
-    int secondPermission;
     private LocationListener locationListener;
     private UserLocationLayer userLocationLayer;
     private Spinner listMarketsSpinner;
@@ -112,13 +102,15 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     private final Point moscowPoint = new Point(55.71989101308894, 37.5689757769603);
     private final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
     private Point myPoint;
-
+    private DefineUser defineUser;
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        requestPermissions();
+        PermissionHandler.requestMapPermissions(requireActivity(), requireContext());
 
         SearchFactory.initialize(requireContext());
         DirectionsFactory.initialize(requireContext());
+
+        defineUser = new DefineUser(requireActivity());
         super.onCreate(savedInstanceState);
     }
 
@@ -158,7 +150,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     }
 
     private void initLocation() {
-        if (checkLocationPermissions()) {
+        if (PermissionHandler.checkPermissions(requireContext())) {
             locationListener = new LocationListener(){
                 @Override
                 public void onLocationStatusUpdated(@NonNull LocationStatus locationStatus) {
@@ -176,7 +168,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     }
 
     private void initMap() {
-        requestPermissions();
+        PermissionHandler.requestMapPermissions(requireActivity(), requireContext());
 
         mapView.getMap().setRotateGesturesEnabled(false);
 
@@ -198,7 +190,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     }
 
     private void updateMarket() {
-        Pair<String, Boolean> userData = defineTypeUser();
+        Pair<String, Boolean> userData = defineUser.getTypeUser(requireActivity(), requireContext());
         if (!choosenMarket.equals(getString(R.string.cchoose_shop_text))) {
             if (userData.second) {
                 MapRepository.setGetterMarket(userData.first, choosenMarket).enqueue(new Callback<Getter>() {
@@ -235,7 +227,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     }
 
     private void getPinnedMarketInfo() {
-        Pair<String, Boolean> userData = defineTypeUser();
+        Pair<String, Boolean> userData = defineUser.getTypeUser(requireActivity(), requireContext());
         String userType = userData.second ? "getter" : "setter";
 
         MapRepository.getPinMarket(userType, userData.first).enqueue(new Callback<MarketTitleResponse>() {
@@ -393,42 +385,4 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     @Override
     public void onObjectUpdated(@NotNull UserLocationView view, @NotNull ObjectEvent event) {}
 
-    private boolean checkLocationPermissions() {
-        firstPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        secondPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-
-        return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestPermissions() {
-        firstPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        secondPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-
-        if (firstPermission != PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 200);
-        } else if (firstPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 200);
-        } else if (secondPermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 200);
-        }
-    }
-
-    private Pair<String, Boolean> defineTypeUser() {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-
-            String userID = sharedPreferences.getString("X5_id", "");
-            boolean isUser = sharedPreferences.getBoolean("isGetter", false);
-
-            return new Pair<>(userID, isUser);
-        } catch (GeneralSecurityException | IOException err) {
-            Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-            Log.e("esp_error", err.getMessage());
-        }
-        return new Pair<>("", false);
-    }
 }

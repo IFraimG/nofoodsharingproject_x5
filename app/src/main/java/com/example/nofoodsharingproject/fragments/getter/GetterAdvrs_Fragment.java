@@ -1,14 +1,8 @@
 package com.example.nofoodsharingproject.fragments.getter;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
-
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +22,9 @@ import com.example.nofoodsharingproject.data.api.map.MapRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterAdvrsBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
+import com.example.nofoodsharingproject.utils.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,10 +46,14 @@ public class GetterAdvrs_Fragment extends Fragment {
     private Advertisement advertisement;
     private ArrayAdapter<String> arrayAdapter;
     private String market;
+    private Pair<String, Boolean> userType;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DefineUser defineUser = new DefineUser(requireActivity());
+        userType = defineUser.getTypeUser(requireActivity(), requireContext());
     }
 
     @Override
@@ -94,7 +90,7 @@ public class GetterAdvrs_Fragment extends Fragment {
     }
 
     private void getAdvertisement() {
-        AdvertsRepository.getOwnAdvert(defineTypeUser().first).enqueue(new Callback<Advertisement>() {
+        AdvertsRepository.getOwnAdvert(userType.first).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.code() == 400) {
@@ -131,7 +127,7 @@ public class GetterAdvrs_Fragment extends Fragment {
     }
 
     private void takeProducts() {
-        AdvertsRepository.takingProducts(defineTypeUser().first).enqueue(new Callback<Advertisement>() {
+        AdvertsRepository.takingProducts(userType.first).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.code() == 404) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
@@ -149,10 +145,9 @@ public class GetterAdvrs_Fragment extends Fragment {
     }
 
     private void getAddress() {
-        Pair<String, Boolean> userData = defineTypeUser();
-        String userType = userData.second ? "getter" : "setter";
+        String userData = userType.second ? "getter" : "setter";
 
-        MapRepository.getPinMarket(userType, userData.first).enqueue(new Callback<MarketTitleResponse>() {
+        MapRepository.getPinMarket(userData, userType.first).enqueue(new Callback<MarketTitleResponse>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                 if (response.code() != 404 && response.code() != 400 && response.body() != null) {
@@ -180,6 +175,7 @@ public class GetterAdvrs_Fragment extends Fragment {
         textNewAdvert.setVisibility(View.GONE);
         getterAdvertLayout.setVisibility(View.GONE);
     }
+
     private void showAdvertisementElements(Advertisement advert) {
         titleAdvert.setText(advert.getTitle());
         statusAdvert.setVisibility(View.GONE);
@@ -188,29 +184,12 @@ public class GetterAdvrs_Fragment extends Fragment {
         listViewProducts.setAdapter(arrayAdapter);
         getterAdvertLayout.setVisibility(View.VISIBLE);
         advertisement = advert;
+
         if (advert.getGettingProductID() != null && advert.getGettingProductID().length() > 0) {
             buttonTakenProducts.setVisibility(View.VISIBLE);
             numberAdvertisement.setVisibility(View.VISIBLE);
             textNewAdvert.setVisibility(View.VISIBLE);
             numberAdvertisement.setText(advert.getGettingProductID());
         }
-    }
-
-    private Pair<String, Boolean> defineTypeUser() {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-
-            String userID = sharedPreferences.getString("X5_id", "");
-            boolean isUser = sharedPreferences.getBoolean("isGetter", false);
-            return new Pair<>(userID, isUser);
-        } catch (GeneralSecurityException | IOException err) {
-            Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-            Log.e("esp_error", err.toString());
-        }
-        return new Pair<>("", false);
     }
 }
