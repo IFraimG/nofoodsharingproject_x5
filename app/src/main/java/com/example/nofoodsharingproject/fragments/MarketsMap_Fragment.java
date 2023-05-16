@@ -190,7 +190,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
         drivingRouter = DirectionsFactory.getInstance().createDrivingRouter();
         mapObjects = mapView.getMap().getMapObjects().addCollection();
 
-        ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.location_on1);
+        ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.location_on2);
         for (Point point : marketPoints) {
             PlacemarkMapObject placemark = mapObjects.addPlacemark(point, imageProvider);
             placemark.addTapListener(this);
