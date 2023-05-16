@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject;
+package com.example.nofoodsharingproject.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
@@ -9,9 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.nofoodsharingproject.activities.Getter_Activity;
-import com.example.nofoodsharingproject.activities.MainAuth_Activity;
-import com.example.nofoodsharingproject.activities.Setter_Activity;
 import com.example.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.example.nofoodsharingproject.databinding.ActivityMainBinding;
@@ -25,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class Main_Activity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private SharedPreferences sharedPreferences;
 

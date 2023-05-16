@@ -15,6 +15,7 @@
     <uses-permission android:name='android.permission.WAKE_LOCK'/>
 
     <application
+        android:name=".ApplicationCore"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -26,7 +27,7 @@
         android:theme="@style/Theme.Nofoodsharingproject"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.Main_Activity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

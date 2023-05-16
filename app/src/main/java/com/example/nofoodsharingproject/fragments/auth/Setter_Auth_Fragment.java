@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nofoodsharingproject.MainActivity;
+import com.example.nofoodsharingproject.activities.Main_Activity;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
@@ -128,7 +128,7 @@ public class Setter_Auth_Fragment extends Fragment {
 
     private void pushData(SignUpResponseI<Setter> result) {
         try {
-            Intent intent = new Intent(getContext(), MainActivity.class);
+            Intent intent = new Intent(getContext(), Main_Activity.class);
 
             MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)

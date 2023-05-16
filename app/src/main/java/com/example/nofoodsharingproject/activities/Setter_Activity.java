@@ -11,29 +11,20 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.nofoodsharingproject.BuildConfig;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.databinding.ActivitySetterBinding;
 import com.example.nofoodsharingproject.services.LocationTrackingService;
 import com.example.nofoodsharingproject.utils.DateNowChecker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.yandex.mapkit.MapKitFactory;
 
 public class Setter_Activity extends AppCompatActivity {
     private NavController navController;
     private ActivitySetterBinding binding;
-    private boolean isInitMap = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySetterBinding.inflate(getLayoutInflater());
-
-        if (!isInitMap) {
-            MapKitFactory.setApiKey(BuildConfig.apiKey);
-            MapKitFactory.initialize(getApplicationContext());
-            isInitMap = true;
-        }
 
         setContentView(binding.getRoot());
 

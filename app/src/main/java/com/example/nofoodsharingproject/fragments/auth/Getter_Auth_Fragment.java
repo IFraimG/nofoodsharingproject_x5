@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.nofoodsharingproject.MainActivity;
+import com.example.nofoodsharingproject.activities.Main_Activity;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
@@ -108,7 +108,7 @@ public class Getter_Auth_Fragment extends Fragment {
             editor.putString("FCMtoken", result.user.getTokenFCM());
             editor.apply();
 
-            Intent intent = new Intent(getContext(), MainActivity.class);
+            Intent intent = new Intent(getContext(), Main_Activity.class);
             startActivity(intent);
 //            getActivity().finish();
 
