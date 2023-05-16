@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.security.crypto.EncryptedSharedPreferences;
@@ -22,7 +21,7 @@ import android.widget.Toast;
 import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
-import com.example.nofoodsharingproject.data.repository.AuthRepository;
+import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterAuthBinding;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.utils.ValidateUser;

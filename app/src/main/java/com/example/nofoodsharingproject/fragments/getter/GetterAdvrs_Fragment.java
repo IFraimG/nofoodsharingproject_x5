@@ -23,8 +23,8 @@ import android.widget.Toast;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.GetterNewAdvert_Activity;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;
-import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
-import com.example.nofoodsharingproject.data.repository.MapRepository;
+import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
+import com.example.nofoodsharingproject.data.api.map.MapRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterAdvrsBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
@@ -83,7 +83,10 @@ public class GetterAdvrs_Fragment extends Fragment {
         buttonStopAdvert.setVisibility(View.GONE);
         getterAdvertLayout.setVisibility(View.GONE);
 
-        buttonNewAdvertisement.setOnClickListener(View -> startActivity(new Intent(getActivity(), GetterNewAdvert_Activity.class)));
+        buttonNewAdvertisement.setOnClickListener(View -> {
+            if (market == null || market.length() == 0) Toast.makeText(getContext(), getString(R.string.pin_market), Toast.LENGTH_LONG).show();
+            else startActivity(new Intent(getActivity(), GetterNewAdvert_Activity.class));
+        });
         buttonStopAdvert.setOnClickListener(View -> removeAdvertisement());
         buttonTakenProducts.setOnClickListener(View -> takeProducts());
 

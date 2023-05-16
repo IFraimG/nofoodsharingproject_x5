@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.Faq_Activity;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
-import com.example.nofoodsharingproject.data.repository.GetterRepository;
+import com.example.nofoodsharingproject.data.api.getter.GetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterProfileBinding;
 import com.example.nofoodsharingproject.utils.ValidateUser;
 import com.example.nofoodsharingproject.models.Getter;

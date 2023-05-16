@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
@@ -39,9 +37,9 @@ import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
-import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
+import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseHistoryAdverts;
-import com.example.nofoodsharingproject.data.repository.SetterRepository;
+import com.example.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Setter;
@@ -101,6 +99,8 @@ public class SetterProfile_Fragment extends Fragment {
 
         setHasOptionsMenu(true);
 
+        this.user = defineUser();
+
         settings = requireActivity().getSharedPreferences("prms", Context.MODE_PRIVATE);
         isCheckedLocation = settings.getBoolean("location", false);
         isCheckedNotification = settings.getBoolean("notificaiton", false);
@@ -126,30 +126,10 @@ public class SetterProfile_Fragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterProfileBinding.inflate(inflater);
 
-        switchLocation = binding.setterProfileLocation;
-        switchNotification = binding.setterProfileNotifications;
-        historyList = binding.setterProfileHistoryList;
-        userName = binding.setterProfileName;
-        successProducts = binding.setterProfileCount;
-        openVk = binding.setterOpenVk;
-        toolbar = binding.setterProfileToolbar;
-        swipeRefreshLayout = binding.setterProfileSwiper;
-        editElements = binding.setterProfileEdit;
-        editLogin = binding.setterProfileEditLogin;
-        editPhone = binding.setterProfileEditPhone;
-        editPassword = binding.setterProfileEditOldPassword;
-        editNewPassword = binding.setterProfileEditPassword;
-        saveEdit = binding.setterProfileSave;
-        userPhone = binding.setterProfilePhone;
-        historyTitle = binding.setterProfileHistoryTitle;
-        cancelEditButton = binding.setterProfileCancel;
+        importElements();
 
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         appCompatActivity.setSupportActionBar(toolbar);
-
-        this.user = defineUser();
-        userName.setText(user.getLogin());
-        userPhone.setText(user.getPhone());
 
         getHistoryList();
 
@@ -190,6 +170,28 @@ public class SetterProfile_Fragment extends Fragment {
         return false;
     }
 
+    private void importElements() {
+        switchLocation = binding.setterProfileLocation;
+        switchNotification = binding.setterProfileNotifications;
+        historyList = binding.setterProfileHistoryList;
+        userName = binding.setterProfileName;
+        successProducts = binding.setterProfileCount;
+        openVk = binding.setterOpenVk;
+        toolbar = binding.setterProfileToolbar;
+        swipeRefreshLayout = binding.setterProfileSwiper;
+        editElements = binding.setterProfileEdit;
+        editLogin = binding.setterProfileEditLogin;
+        editPhone = binding.setterProfileEditPhone;
+        editPassword = binding.setterProfileEditOldPassword;
+        editNewPassword = binding.setterProfileEditPassword;
+        saveEdit = binding.setterProfileSave;
+        userPhone = binding.setterProfilePhone;
+        historyTitle = binding.setterProfileHistoryTitle;
+        cancelEditButton = binding.setterProfileCancel;
+
+        userName.setText(user.getLogin());
+        userPhone.setText(user.getPhone());
+    }
 
     private void getHistoryList() {
         AdvertsRepository.findSetterAdvertisements(this.user.getX5_Id()).enqueue(new Callback<ResponseHistoryAdverts>() {
@@ -236,48 +238,53 @@ public class SetterProfile_Fragment extends Fragment {
         } else if (!ValidateUser.validatePassword(editPassword.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
         } else {
-            saveEdit.setEnabled(false);
-            switchLocation.setEnabled(false);
-            switchNotification.setEnabled(false);
+            enabledButton(false);
 
             setToPreferences("location", isCheckedLocation);
             setToPreferences("notification", isCheckedNotification);
-            String newLogin = editLogin.getText().toString();
-            String newPhone = editPhone.getText().toString();
-            String newPassword = editNewPassword.getText().toString();
-            String oldPasswordText = editPassword.getText().toString();
-            SetterRepository.editProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Setter>() {
-                @Override
-                public void onResponse(@NotNull Call<Setter> call, @NotNull Response<Setter> response) {
-                    if (response.code() == 400) Toast.makeText(getContext(), R.string.your_password_uncorrect, Toast.LENGTH_SHORT).show();
-                    if (response.code() == 201) {
-                        Toast.makeText(getContext(), R.string.sucses, Toast.LENGTH_SHORT).show();
-                        userName.setText(response.body().getLogin());
-                        userPhone.setText(response.body().getPhone());
 
-                        SharedPreferences.Editor editor = encryptSharedPreferences.edit();
-                        editor.putString("login", response.body().getLogin());
-                        editor.putString("phone", response.body().getPhone());
-
-                        editor.apply();
-                    }
-
-                    saveEdit.setEnabled(true);
-                    switchLocation.setEnabled(true);
-                    switchNotification.setEnabled(true);
-                    removeEdit();
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<Setter> call, @NotNull Throwable t) {
-                    t.printStackTrace();
-                    saveEdit.setEnabled(true);
-                    switchLocation.setEnabled(true);
-                    switchNotification.setEnabled(true);
-                    Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                }
-            });
+            saveEditProfile();
         }
+    }
+
+    private void saveEditProfile() {
+        String newLogin = editLogin.getText().toString();
+        String newPhone = editPhone.getText().toString();
+        String newPassword = editNewPassword.getText().toString();
+        String oldPasswordText = editPassword.getText().toString();
+        SetterRepository.editProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Setter>() {
+            @Override
+            public void onResponse(@NotNull Call<Setter> call, @NotNull Response<Setter> response) {
+                if (response.code() == 400) Toast.makeText(getContext(), R.string.your_password_uncorrect, Toast.LENGTH_SHORT).show();
+                if (response.code() == 201) {
+                    Toast.makeText(getContext(), R.string.sucses, Toast.LENGTH_SHORT).show();
+                    userName.setText(response.body().getLogin());
+                    userPhone.setText(response.body().getPhone());
+
+                    SharedPreferences.Editor editor = encryptSharedPreferences.edit();
+                    editor.putString("login", response.body().getLogin());
+                    editor.putString("phone", response.body().getPhone());
+
+                    editor.apply();
+                }
+
+                enabledButton(true);
+                removeEdit();
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Setter> call, @NotNull Throwable t) {
+                t.printStackTrace();
+                enabledButton(true);
+                Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void enabledButton(boolean isEnable) {
+        saveEdit.setEnabled(isEnable);
+        switchLocation.setEnabled(isEnable);
+        switchNotification.setEnabled(isEnable);
     }
 
     private void removeEdit() {
@@ -326,21 +333,13 @@ public class SetterProfile_Fragment extends Fragment {
     }
 
     private void logout() {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.clear();
-            editor.apply();
+        SharedPreferences.Editor editor = encryptSharedPreferences.edit();
+        editor.clear();
+        editor.apply();
 
-            Intent intent = new Intent(requireActivity(), MainAuth_Activity.class);
-            startActivity(intent);
-            requireActivity().finish();
-        } catch (IOException | GeneralSecurityException err) {
-            err.printStackTrace();
-        }
+        Intent intent = new Intent(requireActivity(), MainAuth_Activity.class);
+        startActivity(intent);
+        requireActivity().finish();
     }
 
     private void vkLoad() {

@@ -18,10 +18,11 @@ import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
+import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.databinding.ActivityGetterCreateNewAdvertismentBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Getter;
+import com.example.nofoodsharingproject.models.Market;
 import com.example.nofoodsharingproject.services.AdvertisementExpires;
 
 import org.jetbrains.annotations.NotNull;

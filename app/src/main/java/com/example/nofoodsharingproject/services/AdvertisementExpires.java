@@ -11,7 +11,7 @@ import androidx.security.crypto.MasterKey;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;
-import com.example.nofoodsharingproject.data.repository.AdvertsRepository;
+import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.models.Advertisement;
 
 import org.jetbrains.annotations.NotNull;

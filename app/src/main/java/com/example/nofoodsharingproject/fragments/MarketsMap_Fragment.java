@@ -27,7 +27,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.data.repository.MapRepository;
+import com.example.nofoodsharingproject.data.api.map.MapRepository;
 import com.example.nofoodsharingproject.databinding.FragmentMarketsMapBinding;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Market;

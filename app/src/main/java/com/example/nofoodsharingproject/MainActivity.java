@@ -13,7 +13,7 @@ import com.example.nofoodsharingproject.activities.Getter_Activity;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 import com.example.nofoodsharingproject.activities.Setter_Activity;
 import com.example.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
-import com.example.nofoodsharingproject.data.repository.AuthRepository;
+import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.example.nofoodsharingproject.databinding.ActivityMainBinding;
 
 import org.jetbrains.annotations.NotNull;

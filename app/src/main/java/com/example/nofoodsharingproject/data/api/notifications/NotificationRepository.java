@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.repository;
+package com.example.nofoodsharingproject.data.api.notifications;
 
 import com.example.nofoodsharingproject.data.api.notifications.NotificationApiService;
 import com.example.nofoodsharingproject.data.api.notifications.dto.FMCMessage;

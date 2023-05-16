@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.repository;
+package com.example.nofoodsharingproject.data.api.adverts;
 
 
 import com.example.nofoodsharingproject.data.api.adverts.AdvertsApiService;
@@ -13,8 +13,8 @@ import retrofit2.Call;
 
 public class AdvertsRepository {
 
-    public static Call<ResponseActiveAdverts> getListAdverts() {
-        return AdvertsApiService.getInstance().getListAdvertisements();
+    public static Call<ResponseActiveAdverts> getListAdverts(String market) {
+        return AdvertsApiService.getInstance().getListAdvertisements(market);
     }
 
     public static Call<Advertisement> createAdvert(Advertisement advert) {

@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.repository;
+package com.example.nofoodsharingproject.data.api.auth;
 
 import com.example.nofoodsharingproject.data.api.auth.AuthApiService;
 import com.example.nofoodsharingproject.data.api.auth.dto.CheckAuthI;

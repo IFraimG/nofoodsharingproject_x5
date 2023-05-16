@@ -16,8 +16,8 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface AdvertsAPI {
-    @GET("/advertisements/get_active")
-    Call<ResponseActiveAdverts> getListAdvertisements();
+    @GET("/advertisements/get_active/{market}")
+    Call<ResponseActiveAdverts> getListAdvertisements(@Path("market") String market);
     @POST("/advertisements/create")
     Call<Advertisement> createAdvert(@Body Advertisement advert);
 

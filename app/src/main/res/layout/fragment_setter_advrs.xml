@@ -45,6 +45,22 @@
             android:background="@color/grey_light" />
     </LinearLayout>
 
+    <Spinner
+        android:id="@+id/setter_advert_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="64dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:spinnerMode="dropdown"
+        android:background="@color/grey_100"
+        />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:backgroundTint="@color/grey_500"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/setter_advert_swiper"
         android:layout_width="match_parent"

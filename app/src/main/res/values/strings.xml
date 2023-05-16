@@ -143,4 +143,5 @@
     <string name="question">Вопрос</string>
     <string name="not_found">Ничего не найдено!</string>
     <string name="faq_text">Ответы на часто задаваемые вопросы</string>
+    <string name="pin_market">Прикрепитесь к магазину!</string>
 </resources>

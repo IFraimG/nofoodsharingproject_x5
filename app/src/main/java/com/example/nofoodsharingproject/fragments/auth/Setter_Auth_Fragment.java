@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.example.nofoodsharingproject.MainActivity;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
-import com.example.nofoodsharingproject.data.repository.AuthRepository;
+import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.example.nofoodsharingproject.databinding.FragmentSetterAuthBinding;
 import com.example.nofoodsharingproject.models.Setter;
 import com.example.nofoodsharingproject.utils.ValidateUser;

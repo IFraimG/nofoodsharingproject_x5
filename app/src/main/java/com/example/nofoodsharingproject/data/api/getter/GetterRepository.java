@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.repository;
+package com.example.nofoodsharingproject.data.api.getter;
 
 import com.example.nofoodsharingproject.data.api.getter.GetterApiService;
 import com.example.nofoodsharingproject.data.api.getter.dto.RequestGetterEditProfile;

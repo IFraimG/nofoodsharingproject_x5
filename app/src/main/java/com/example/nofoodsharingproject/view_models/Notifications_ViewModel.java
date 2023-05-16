@@ -1,7 +1,6 @@
 package com.example.nofoodsharingproject.view_models;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -9,7 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.nofoodsharingproject.data.api.notifications.dto.ResponseNotificationsList;
-import com.example.nofoodsharingproject.data.repository.NotificationRepository;
+import com.example.nofoodsharingproject.data.api.notifications.NotificationRepository;
 import com.example.nofoodsharingproject.models.LoaderStatus;
 import com.example.nofoodsharingproject.models.Notification;
 

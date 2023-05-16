@@ -1,4 +1,4 @@
-package com.example.nofoodsharingproject.data.repository;
+package com.example.nofoodsharingproject.data.api.map;
 
 import com.example.nofoodsharingproject.data.api.map.MapApiService;
 import com.example.nofoodsharingproject.data.api.map.dto.RequestMarketInfo;
