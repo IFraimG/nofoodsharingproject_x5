@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/number_adv_text"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/standard_size_very_medium"
         android:textColor="@color/grey_500"
         android:id="@+id/text_number_of_advert" />
 
@@ -71,7 +71,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_marginTop="@dimen/standard_size_small"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="@dimen/standard_size_very_medium"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
@@ -146,7 +146,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/stop_advert"
             style="@style/grey_500_button"
-            android:layout_gravity="center"
+            android:layout_gravity="center|top"
             android:text="@string/stop_adv_text"
             android:visibility="invisible" />
 

@@ -179,7 +179,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:gravity="center"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/standard_size_very_medium"
         android:textColor="@color/black"
         android:text="@string/history_transfer_text"/>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

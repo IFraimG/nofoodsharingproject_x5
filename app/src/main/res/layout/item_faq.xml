@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="@dimen/standard_size_very_medium"
+        android:layout_marginEnd="@dimen/standard_size_very_medium"
         android:layout_gravity="center">
         <TextView
             android:id="@+id/faq_item_question"
@@ -23,14 +23,14 @@
 
         <ImageView
             android:id="@+id/faq_item_show"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/standard_size_very_medium"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/baseline_add_circle_outline_24" />
 
         <ImageView
             android:id="@+id/faq_item_remove"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/standard_size_very_medium"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:visibility="gone"
