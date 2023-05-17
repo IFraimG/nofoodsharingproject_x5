@@ -11,7 +11,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 public class PermissionHandler {
-    public PermissionHandler() {};
+    public PermissionHandler() {}
 
     public static boolean checkPermissions(Context ctx) {
         int firstPermission = ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION);
@@ -20,7 +20,6 @@ public class PermissionHandler {
         return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     public static void requestPermissions(Activity activity) {
         ActivityCompat.requestPermissions(activity,
                 new String[]{
