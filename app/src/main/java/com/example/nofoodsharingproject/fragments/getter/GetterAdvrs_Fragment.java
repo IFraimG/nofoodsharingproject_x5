@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.activities.Faq_Activity;
 import com.example.nofoodsharingproject.activities.GetterNewAdvert_Activity;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;
 import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
@@ -49,6 +50,7 @@ public class GetterAdvrs_Fragment extends Fragment {
     private String market;
     private Pair<String, Boolean> userType;
     private DefineUser<Getter> defineUser;
+    private TextView linkFaq;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class GetterAdvrs_Fragment extends Fragment {
         listViewProducts = binding.getterAdvertProducts;
         statusAdvert = binding.getterAdvertStatus;
         getterAdvertLayout = binding.getterAdvertLayout;
+        linkFaq = binding.getterAdvertFaq;
 
         getAddress();
         getAdvertisement();
@@ -87,6 +90,12 @@ public class GetterAdvrs_Fragment extends Fragment {
         });
         buttonStopAdvert.setOnClickListener(View -> removeAdvertisement());
         buttonTakenProducts.setOnClickListener(View -> takeProducts());
+
+        linkFaq.setOnClickListener(View -> {
+            Intent intent = new Intent(getContext(), Faq_Activity.class);
+            startActivity(intent);
+        });
+
 
         return binding.getRoot();
     }

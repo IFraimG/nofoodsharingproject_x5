@@ -21,12 +21,12 @@
     <style name="heading_getter_fragments" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:layout_marginTop">@dimen/normal_margin</item>
+        <item name="android:layout_marginTop">@dimen/standard_size_very_medium</item>
         <item name="android:layout_marginStart">@dimen/standard_size_very_medium</item>
         <item name="android:layout_marginEnd">@dimen/standard_size_very_medium</item>
-        <item name="android:layout_gravity">center|top</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_width">match_parent</item>
+
+<!--        <item name="android:gravity">center</item>-->
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 

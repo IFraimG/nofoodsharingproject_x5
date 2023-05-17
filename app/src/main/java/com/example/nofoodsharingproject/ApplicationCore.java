@@ -1,8 +1,6 @@
 package com.example.nofoodsharingproject;
 
 import android.app.Application;
-
-import com.example.nofoodsharingproject.BuildConfig;
 import com.yandex.mapkit.MapKitFactory;
 
 public class ApplicationCore extends Application {

@@ -51,7 +51,6 @@ public class Setter_LoginAuth_Fragment extends Fragment {
         btnBack = binding.authSetterLoginBack;
 
         btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterLoginAuthF_to_setterAuthF));
-
         btn.setOnClickListener(View -> login());
 
         return binding.getRoot();

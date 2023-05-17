@@ -2,8 +2,6 @@ package com.example.nofoodsharingproject.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -25,8 +23,6 @@ import com.example.nofoodsharingproject.databinding.FragmentSetterAuthBinding;
 import com.example.nofoodsharingproject.models.Setter;
 import com.example.nofoodsharingproject.utils.DefineUser;
 import com.example.nofoodsharingproject.utils.ValidateUser;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.jetbrains.annotations.NotNull;

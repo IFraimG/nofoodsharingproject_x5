@@ -1,169 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/main_color"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_getter_advrs">
-
-    <TextView
-        style="@style/heading_getter_fragments"
-        android:text="@string/button_navigation_first_first" />
-
-    <com.google.android.material.divider.MaterialDivider
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/standard_size_small"
-        android:layout_marginBottom="@dimen/standard_size_small"
-        android:background="@color/grey_100"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/number_adv_text"
-        android:layout_marginStart="@dimen/standard_size_very_medium"
-        android:textColor="@color/grey_500"
-        android:id="@+id/text_number_of_advert" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/standard_size_very_medium"
-        android:text="@string/number_adv_text_hint6"
-        android:layout_gravity="center"
-        android:textSize="48sp"
-        android:id="@+id/number_of_advertisement"
-        android:textColor="@color/grey_500"
-        android:visibility="invisible"/>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/standard_size_very_medium">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/adress_shop_text"
-            android:layout_marginStart="@dimen/standard_size_very_medium"
-            android:textColor="@color/grey_500"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/standard_size_small"
-            android:text="@string/adress_shop_text_hint"
-            android:id="@+id/address_shop"
-            android:visibility="invisible"/>
-    </LinearLayout>
-
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/standard_size_small"
-        android:layout_marginLeft="@dimen/standard_size_very_medium"
-        android:layout_marginRight="@dimen/standard_size_very_medium"
-        android:background="@color/grey_light"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/standard_size_small"
-        android:layout_marginStart="@dimen/standard_size_very_medium"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/time_text"/>
-        <TextView
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/timer_to_advert"
-            android:layout_marginStart="@dimen/standard_size_small"
-            android:text="@string/time_text_hint"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/getter_advert_status"
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="@dimen/standard_size_very_medium">
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/adv_text_hint"
-            android:textColor="@color/grey_500"/>
-    </LinearLayout>
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/standard_size_small"
-        android:layout_marginBottom="@dimen/standard_size_small"
-        android:layout_marginStart="@dimen/standard_size_very_medium"
-        android:layout_marginEnd="@dimen/standard_size_very_medium"
-        android:background="@color/grey_100"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/textView"
+                    style="@style/heading_getter_fragments"
+                    android:text="@string/button_navigation_first_first"
+                 />
 
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:id="@+id/getter_advert_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_gravity="center">
-        <TextView
-            android:id="@+id/getter_advert_title_products"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/name_advert_text"
-            android:textSize="20sp"
-            android:layout_gravity="center"
-            android:textColor="@color/grey_500"/>
-        <ListView
-            android:layout_gravity="center"
-            android:id="@+id/getter_advert_products"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="@dimen/standard_size_very_medium" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/getter_advert_faq"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|top"
+                    android:gravity="center|end"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/faq_link"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/standard_size_small"
+                android:layout_marginBottom="@dimen/standard_size_small"
+                android:background="@color/grey_100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/standard_size_small"
-        android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_adv_text"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:textColor="@color/grey_500"
+                android:id="@+id/text_number_of_advert" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/stop_advert"
-            style="@style/grey_500_button"
-            android:layout_gravity="center|top"
-            android:text="@string/stop_adv_text"
-            android:visibility="invisible" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:text="@string/number_adv_text_hint6"
+                android:layout_gravity="center"
+                android:textSize="48sp"
+                android:id="@+id/number_of_advertisement"
+                android:textColor="@color/grey_500"
+                android:visibility="invisible"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adress_shop_text"
+                    android:textColor="@color/grey_500"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/standard_size_small"
+                    android:text="@string/adress_shop_text_hint"
+                    android:id="@+id/address_shop"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/standard_size_small"
+                android:layout_marginLeft="@dimen/standard_size_very_medium"
+                android:layout_marginRight="@dimen/standard_size_very_medium"
+                android:background="@color/grey_light"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/standard_size_small"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_text"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/timer_to_advert"
+                    android:layout_marginStart="@dimen/standard_size_small"
+                    android:text="@string/time_text_hint"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/getter_advert_status"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="@dimen/standard_size_very_medium">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adv_text_hint"
+                    android:textColor="@color/grey_500"/>
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/standard_size_small"
+                android:layout_marginBottom="@dimen/standard_size_small"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium"
+                android:background="@color/grey_100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:id="@+id/getter_advert_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_gravity="center">
+                <TextView
+                    android:id="@+id/getter_advert_title_products"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/name_advert_text"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/grey_500"/>
+                <ListView
+                    android:layout_gravity="center"
+                    android:id="@+id/getter_advert_products"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="@dimen/standard_size_very_medium" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/standard_size_small"
+                android:layout_marginBottom="80dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/stop_advert"
+                    style="@style/grey_500_button"
+                    android:layout_gravity="center|top"
+                    android:text="@string/stop_adv_text"
+                    android:visibility="invisible" />
 
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/pick_up_order"
-            style="@style/grey_500_button"
-            android:layout_gravity="center|top"
-            android:layout_marginTop="55dp"
-            android:text="@string/adv_zabor_text"
-            android:visibility="invisible" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/pick_up_order"
+                    style="@style/grey_500_button"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="55dp"
+                    android:text="@string/adv_zabor_text"
+                    android:visibility="invisible" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/create_new_request"
-            style="@style/grey_500_button"
-            android:text="@string/add_new_request_button"
-            android:visibility="invisible" />
-    </FrameLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/create_new_request"
+                    style="@style/grey_500_button"
+                    android:text="@string/add_new_request_button"
+                    android:visibility="invisible" />
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
 
