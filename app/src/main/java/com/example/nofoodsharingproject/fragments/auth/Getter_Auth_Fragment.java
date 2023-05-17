@@ -1,14 +1,9 @@
 package com.example.nofoodsharingproject.fragments.auth;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,14 +21,9 @@ import com.example.nofoodsharingproject.databinding.FragmentGetterAuthBinding;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.utils.DefineUser;
 import com.example.nofoodsharingproject.utils.ValidateUser;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 import retrofit2.Call;
 import retrofit2.Callback;

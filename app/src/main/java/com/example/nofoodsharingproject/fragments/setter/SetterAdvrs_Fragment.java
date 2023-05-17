@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-//import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.security.crypto.EncryptedSharedPreferences;
@@ -14,7 +12,6 @@ import androidx.security.crypto.MasterKey;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,16 +25,11 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.Faq_Activity;
 import com.example.nofoodsharingproject.adapters.SetterAdvertListAdapter;
 import com.example.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
-import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.LoaderStatus;
-import com.example.nofoodsharingproject.models.Market;
 import com.example.nofoodsharingproject.view_models.AdvertisementList_ViewModel;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.List;
 
 public class SetterAdvrs_Fragment extends Fragment {
     private AdvertisementList_ViewModel viewModel;

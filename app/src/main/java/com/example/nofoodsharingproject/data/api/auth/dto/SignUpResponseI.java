@@ -7,6 +7,7 @@ public class SignUpResponseI<T> {
     @SerializedName("token")
     @Expose
     public String token;
+
     @SerializedName("user")
     @Expose
     public T user;

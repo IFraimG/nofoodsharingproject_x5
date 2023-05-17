@@ -62,19 +62,8 @@ public class Setter_Auth_Fragment extends Fragment {
         login = binding.setterAuthLogin;
         password = binding.setterAuthPassword;
 
-        btnRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_setterAuthF_to_setterLoginAuthF);
-            }
-        });
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_setterAuthF_to_mainAuthF);
-            }
-        });
+        btnRegistration.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterAuthF_to_setterLoginAuthF));
+        btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterAuthF_to_mainAuthF));
 
         btnLogin.setOnClickListener(View -> sendToNotifyAccount());
 
@@ -91,13 +80,14 @@ public class Setter_Auth_Fragment extends Fragment {
                         Toast.makeText(getContext(), R.string.prodlem_on_autorization, Toast.LENGTH_LONG).show();
                         btnLogin.setEnabled(true);
                     } else if (response.code() == 400) {
-                        Toast.makeText(getContext(), R.string.account_created, Toast.LENGTH_LONG).show();
-                        btnLogin.setEnabled(true);
-                    } else {
-                        if (response.body() != null && response.body().token != null) pushData(response.body());
+                            Toast.makeText(getContext(), R.string.account_created, Toast.LENGTH_LONG).show();
+                            btnLogin.setEnabled(true);
+                        } else {
+                            if (response.body() != null) {
+                                if (response.body().getToken() != null) pushData(response.body());
+                            }
+                        }
                     }
-                }
-
                 @Override
                 public void onFailure(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Throwable t) {
                     btnLogin.setEnabled(true);
@@ -133,16 +123,13 @@ public class Setter_Auth_Fragment extends Fragment {
     }
 
     private void sendToNotifyAccount() {
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if (!task.isSuccessful()) {
-                    Log.w("err", "Fetching FCM registration token failed", task.getException());
-                    signup("");
-                    return;
-                }
-                signup(task.getResult());
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.w("err", "Fetching FCM registration token failed", task.getException());
+                signup("");
+                return;
             }
+            signup(task.getResult());
         });
     }
 }

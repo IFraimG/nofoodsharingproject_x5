@@ -12,12 +12,14 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -71,6 +73,7 @@ public class LocationTrackingService extends Service implements LocationListener
         getMarket();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -87,6 +90,7 @@ public class LocationTrackingService extends Service implements LocationListener
 
         return START_STICKY;
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onLocationChanged(Location location) {
         if (location != null && compareCoords != null && location.distanceTo(compareCoords) < 100 && checkTimer() && titleMarket.length() != 0) {
@@ -181,6 +185,7 @@ public class LocationTrackingService extends Service implements LocationListener
         return new Advertisement();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNotification(Advertisement advert) {
         Notification notification = new Notification("Вы находитесь рядом с магазином!", "Тестовое уведомление", defineUser().first);
         notification.setTypeOfUser("setter");
@@ -207,6 +212,7 @@ public class LocationTrackingService extends Service implements LocationListener
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void showNotification() {
         channel = new NotificationChannel("my_channel_id", "My Channel", NotificationManager.IMPORTANCE_DEFAULT);
         notificationManager = getSystemService(NotificationManager.class);
@@ -225,6 +231,7 @@ public class LocationTrackingService extends Service implements LocationListener
         notificationManagerCompat.notify(1, builder.build());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private android.app.Notification notifySetter() {
         NotificationChannel channel = new NotificationChannel("my_channel_id", "Location Observer", NotificationManager.IMPORTANCE_LOW);
         NotificationManager manager = getSystemService(NotificationManager.class);

@@ -22,7 +22,6 @@ import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.databinding.ActivityGetterCreateNewAdvertismentBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Getter;
-import com.example.nofoodsharingproject.models.Market;
 import com.example.nofoodsharingproject.services.AdvertisementExpires;
 
 import org.jetbrains.annotations.NotNull;

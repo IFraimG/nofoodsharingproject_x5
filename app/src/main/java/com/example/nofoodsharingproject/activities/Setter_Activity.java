@@ -50,7 +50,9 @@ public class Setter_Activity extends AppCompatActivity {
         if (!PermissionHandler.checkPermissions(getApplicationContext())) PermissionHandler.requestPermissions(this);
         else {
             Intent serviceIntent = new Intent(this, LocationTrackingService.class);
-            startForegroundService(serviceIntent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(serviceIntent);
+            } else startService(serviceIntent);
         }
     }
 }
