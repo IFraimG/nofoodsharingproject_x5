@@ -50,8 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="64dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:paddingStart="@dimen/standard_size_very_medium"
+        android:paddingEnd="@dimen/standard_size_very_medium"
         android:spinnerMode="dropdown"
         android:background="@color/grey_100"
         />
