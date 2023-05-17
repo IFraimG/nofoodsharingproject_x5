@@ -22,6 +22,7 @@ import com.example.nofoodsharingproject.data.api.map.MapRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterAdvrsBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
+import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.utils.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,13 +48,14 @@ public class GetterAdvrs_Fragment extends Fragment {
     private ArrayAdapter<String> arrayAdapter;
     private String market;
     private Pair<String, Boolean> userType;
+    private DefineUser<Getter> defineUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DefineUser defineUser = new DefineUser(requireActivity());
-        userType = defineUser.getTypeUser(requireActivity(), requireContext());
+        defineUser = new DefineUser<Getter>(requireActivity());
+        userType = defineUser.getTypeUser();
     }
 
     @Override

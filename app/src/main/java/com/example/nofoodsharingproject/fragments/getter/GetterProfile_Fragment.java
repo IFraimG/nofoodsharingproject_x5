@@ -1,12 +1,9 @@
 package com.example.nofoodsharingproject.fragments.getter;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +19,12 @@ import com.example.nofoodsharingproject.activities.Faq_Activity;
 import com.example.nofoodsharingproject.activities.MainAuth_Activity;
 import com.example.nofoodsharingproject.data.api.getter.GetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterProfileBinding;
+import com.example.nofoodsharingproject.models.ShortDataUser;
 import com.example.nofoodsharingproject.utils.DefineUser;
 import com.example.nofoodsharingproject.utils.ValidateUser;
 import com.example.nofoodsharingproject.models.Getter;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,23 +41,14 @@ public class GetterProfile_Fragment extends Fragment {
     private Button btnSave;
     private TextView login;
     private TextView phone;
-    private Getter user;
-    private SharedPreferences sharedPreferences;
-    private DefineUser defineUser;
+    private ShortDataUser user;
+    private DefineUser<Getter> defineUser;
     private Button linkFaq;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        defineUser = new DefineUser(requireActivity());
-        try {
-            MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build();
-            sharedPreferences = EncryptedSharedPreferences.create(getActivity().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-        } catch (IOException | GeneralSecurityException err) {
-            err.printStackTrace();
-        }
+        defineUser = new DefineUser<Getter>(requireActivity());
     }
 
     @Override
@@ -79,7 +65,7 @@ public class GetterProfile_Fragment extends Fragment {
         phone = binding.getterProfilePhone;
         oldPassword = binding.getterProfileEditOldPassword;
 
-        user = defineUser();
+        user = defineUser.getUser();
 
         login.setText(user.getLogin());
         phone.setText(user.getPhone());
@@ -95,32 +81,21 @@ public class GetterProfile_Fragment extends Fragment {
         return binding.getRoot();
     }
 
-    public Getter defineUser() {
-        String login = sharedPreferences.getString("login", "");
-        String phone = sharedPreferences.getString("phone", "");
-        String userID = sharedPreferences.getString("X5_id", "");
-
-        Getter user = new Getter();
-        user.setLogin(login);
-        user.setPhone(phone);
-        user.setX5_Id(userID);
-
-        return user;
-    }
 
     private void editProfile() {
-        if (!ValidateUser.validatePhone(editPhone.getText().toString())) {
+        String newLogin = editLogin.getText().toString();
+        String newPhone = editPhone.getText().toString();
+        String newPassword = editPassword.getText().toString();
+        String oldPasswordText = oldPassword.getText().toString();
+
+        if (!ValidateUser.validatePhone(newPhone)) {
             Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
-        } else if (!ValidateUser.validateLogin(editLogin.getText().toString())) {
+        } else if (!ValidateUser.validateLogin(newLogin)) {
             Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
-        } else if (!ValidateUser.validatePassword(editPassword.getText().toString())) {
+        } else if (!ValidateUser.validatePassword(newPassword)) {
             Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
         } else {
             btnSave.setEnabled(false);
-            String newLogin = editLogin.getText().toString();
-            String newPhone = editPhone.getText().toString();
-            String newPassword = editPassword.getText().toString();
-            String oldPasswordText = oldPassword.getText().toString();
             GetterRepository.editProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Getter>() {
                 @Override
                 public void onResponse(@NotNull Call<Getter> call, @NotNull Response<Getter> response) {
@@ -130,11 +105,7 @@ public class GetterProfile_Fragment extends Fragment {
                         login.setText(response.body().getLogin());
                         phone.setText(response.body().getPhone());
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("login", response.body().getLogin());
-                        editor.putString("phone", response.body().getPhone());
-
-                        editor.apply();
+                        defineUser.editProfileInfo(response.body().getLogin(), response.body().getPhone());
 
                         editLogin.setText("");
                         editPassword.setText("");
@@ -156,10 +127,6 @@ public class GetterProfile_Fragment extends Fragment {
 
     public void logout() {
         defineUser.clearData();
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
 
         Intent intent = new Intent(requireActivity().getApplicationContext(), MainAuth_Activity.class);
         startActivity(intent);

@@ -190,7 +190,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     }
 
     private void updateMarket() {
-        Pair<String, Boolean> userData = defineUser.getTypeUser(requireActivity(), requireContext());
+        Pair<String, Boolean> userData = defineUser.getTypeUser();
         if (!choosenMarket.equals(getString(R.string.cchoose_shop_text))) {
             if (userData.second) {
                 MapRepository.setGetterMarket(userData.first, choosenMarket).enqueue(new Callback<Getter>() {
@@ -227,7 +227,7 @@ public class MarketsMap_Fragment extends Fragment implements UserLocationObjectL
     }
 
     private void getPinnedMarketInfo() {
-        Pair<String, Boolean> userData = defineUser.getTypeUser(requireActivity(), requireContext());
+        Pair<String, Boolean> userData = defineUser.getTypeUser();
         String userType = userData.second ? "getter" : "setter";
 
         MapRepository.getPinMarket(userType, userData.first).enqueue(new Callback<MarketTitleResponse>() {

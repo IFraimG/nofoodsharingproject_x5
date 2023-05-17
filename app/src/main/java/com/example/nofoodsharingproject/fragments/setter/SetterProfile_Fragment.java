@@ -1,11 +1,7 @@
 package com.example.nofoodsharingproject.fragments.setter;
 
-import android.Manifest;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,14 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -54,12 +45,10 @@ import retrofit2.Response;
 
 
 public class SetterProfile_Fragment extends Fragment {
-    private SharedPreferences settings;
     private FragmentSetterProfileBinding binding;
     private SwitchCompat switchLocation;
     private SwitchCompat switchNotification;
     private ListView historyList;
-    private SharedPreferences encryptSharedPreferences;
     private String[] advertisementsHistory;
     private TextView userName;
     private TextView userPhone;
@@ -77,31 +66,23 @@ public class SetterProfile_Fragment extends Fragment {
     private EditText editNewPassword;
     private Button saveEdit;
     private Setter user;
-    private boolean isCheckedLocation;
-    private boolean isCheckedNotification;
+    private boolean isCheckedLocation = false;
+    private boolean isCheckedNotification = false;
 
-    private DefineUser defineUser;
+    private DefineUser<Setter> defineUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        defineUser = new DefineUser(requireActivity());
+        defineUser = new DefineUser<Setter>(requireActivity());
 
         setHasOptionsMenu(true);
 
         this.user = defineUser.defineSetter();
 
-        settings = requireActivity().getSharedPreferences("prms", Context.MODE_PRIVATE);
-        isCheckedLocation = settings.getBoolean("location", false);
-        isCheckedNotification = settings.getBoolean("notificaiton", false);
-    }
-
-    private void setToPreferences(String key, boolean value) {
-        SharedPreferences.Editor editor = settings.edit();
-
-        editor.putBoolean(key, value);
-        editor.apply();
+        isCheckedLocation = defineUser.getPreferences("location");
+        isCheckedNotification = defineUser.getPreferences("notificaiton");
     }
 
     @Override
@@ -109,26 +90,8 @@ public class SetterProfile_Fragment extends Fragment {
         binding = FragmentSetterProfileBinding.inflate(inflater);
 
         importElements();
-
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolbar);
-
         getHistoryList();
-
-        toolbar.setOnMenuItemClickListener(this::toolbarHandle);
-        saveEdit.setOnClickListener(View -> closeEdit());
-        cancelEditButton.setOnClickListener(View -> removeEdit());
-
-        swipeRefreshLayout.setOnRefreshListener(this::getHistoryList);
-
-        openVk.setOnClickListener(View -> vkLoad());
-
-        switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) PermissionHandler.requestPermissions(requireActivity(), requireContext());
-            isCheckedLocation = isChecked && PermissionHandler.checkPermissions(requireContext());
-            switchLocation.setChecked(isCheckedLocation);
-        });
-        switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckedNotification = isChecked);
+        handlers();
 
         return binding.getRoot();
     }
@@ -153,6 +116,24 @@ public class SetterProfile_Fragment extends Fragment {
         return false;
     }
 
+    private void handlers() {
+        toolbar.setOnMenuItemClickListener(this::toolbarHandle);
+        saveEdit.setOnClickListener(View -> closeEdit());
+        cancelEditButton.setOnClickListener(View -> removeEdit());
+
+        swipeRefreshLayout.setOnRefreshListener(this::getHistoryList);
+
+        openVk.setOnClickListener(View -> vkLoad());
+
+        switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) PermissionHandler.requestPermissions(requireActivity());
+            isCheckedLocation = isChecked && PermissionHandler.checkPermissions(requireContext());
+            switchLocation.setChecked(isCheckedLocation);
+        });
+
+        switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckedNotification = isChecked);
+    }
+
     private void importElements() {
         switchLocation = binding.setterProfileLocation;
         switchNotification = binding.setterProfileNotifications;
@@ -171,6 +152,9 @@ public class SetterProfile_Fragment extends Fragment {
         userPhone = binding.setterProfilePhone;
         historyTitle = binding.setterProfileHistoryTitle;
         cancelEditButton = binding.setterProfileCancel;
+
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(toolbar);
 
         userName.setText(user.getLogin());
         userPhone.setText(user.getPhone());
@@ -220,8 +204,8 @@ public class SetterProfile_Fragment extends Fragment {
         String editPasswordString = editPassword.getText().toString();
 
         if (editLoginString.length() == 0 && editPhoneString.length() == 0 && editPasswordString.length() == 0) {
-            setToPreferences("location", isCheckedLocation);
-            setToPreferences("notification", isCheckedNotification);
+            defineUser.setToPreferences("location", isCheckedLocation);
+            defineUser.setToPreferences("notification", isCheckedNotification);
             removeEdit();
 
             return;
@@ -236,8 +220,8 @@ public class SetterProfile_Fragment extends Fragment {
         } else {
             enabledButton(false);
 
-            setToPreferences("location", isCheckedLocation);
-            setToPreferences("notification", isCheckedNotification);
+            defineUser.setToPreferences("location", isCheckedLocation);
+            defineUser.setToPreferences("notification", isCheckedNotification);
 
             saveEditProfile();
         }
@@ -257,11 +241,7 @@ public class SetterProfile_Fragment extends Fragment {
                     userName.setText(response.body().getLogin());
                     userPhone.setText(response.body().getPhone());
 
-                    SharedPreferences.Editor editor = encryptSharedPreferences.edit();
-                    editor.putString("login", response.body().getLogin());
-                    editor.putString("phone", response.body().getPhone());
-
-                    editor.apply();
+                    defineUser.editProfileInfo(response.body().getLogin(), response.body().getPhone());
                 }
 
                 enabledButton(true);
@@ -297,7 +277,6 @@ public class SetterProfile_Fragment extends Fragment {
 
     private void logout() {
         defineUser.clearData();
-        settings.edit().clear().apply();
 
         Intent intent = new Intent(requireActivity(), MainAuth_Activity.class);
         startActivity(intent);

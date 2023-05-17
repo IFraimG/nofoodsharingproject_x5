@@ -24,6 +24,7 @@ import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.example.nofoodsharingproject.databinding.FragmentSetterLoginAuthBinding;
 import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.utils.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,11 +41,13 @@ public class Setter_LoginAuth_Fragment extends Fragment {
     private EditText loginInput;
     private EditText passwordInput;
     private ImageView btnBack;
+    private DefineUser<Setter> defineUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        defineUser = new DefineUser<Setter>(requireActivity());
     }
 
     @Override
@@ -56,12 +59,7 @@ public class Setter_LoginAuth_Fragment extends Fragment {
         btn = binding.loginAuthBtn;
         btnBack = binding.authSetterLoginBack;
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_setterLoginAuthF_to_setterAuthF);
-            }
-        });
+        btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterLoginAuthF_to_setterAuthF));
 
         btn.setOnClickListener(View -> login());
 
@@ -81,7 +79,7 @@ public class Setter_LoginAuth_Fragment extends Fragment {
                         btn.setEnabled(true);
                     } else {
                         if (response.body() != null && response.body().token != null) {
-                            saveData(response.body());
+                            defineUser.saveUserData(false, response.body().user.getX5_Id(), response.body());
                             Intent intent = new Intent(getContext(), Main_Activity.class);
                             startActivity(intent);
                         }
@@ -94,28 +92,6 @@ public class Setter_LoginAuth_Fragment extends Fragment {
                     t.printStackTrace();
                 }
             });
-        }
-    }
-
-    private void saveData(SignUpResponseI<Setter> result) {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getActivity().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-
-            editor.putBoolean("isGetter", false);
-            editor.putString("login", result.user.getLogin());
-            editor.putString("phone", result.user.getPhone());
-            editor.putString("X5_id", result.user.getX5_Id());
-            editor.putString("auth_id", result.user.getAuthID());
-            editor.putString("token", result.token);
-            editor.apply();
-        } catch (IOException | GeneralSecurityException err) {
-            Log.e("auth error", err.toString());
-            err.printStackTrace();
         }
     }
 }

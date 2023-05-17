@@ -1,14 +1,11 @@
 package com.example.nofoodsharingproject.fragments.auth;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,15 +23,13 @@ import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.example.nofoodsharingproject.databinding.FragmentSetterAuthBinding;
 import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.utils.DefineUser;
 import com.example.nofoodsharingproject.utils.ValidateUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,10 +43,12 @@ public class Setter_Auth_Fragment extends Fragment {
     private Button btnLogin = null;
     private TextView btnRegistration = null;
     private ImageView btnBack = null;
+    private DefineUser<Setter> defineUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        defineUser = new DefineUser<Setter>(requireActivity());
     }
 
     @Override
@@ -127,31 +124,12 @@ public class Setter_Auth_Fragment extends Fragment {
     }
 
     private void pushData(SignUpResponseI<Setter> result) {
-        try {
-            Intent intent = new Intent(getContext(), Main_Activity.class);
+        defineUser.saveUserData(false, result.user.getX5_Id(), result);
 
-            MasterKey masterKey = new MasterKey.Builder(getActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getActivity().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("isGetter", false);
-            editor.putString("login", result.user.getLogin());
-            editor.putString("phone", result.user.getPhone());
-            editor.putString("X5_id", result.user.getX5_Id());
-            editor.putString("auth_id", result.user.getAuthID());
-            editor.putString("token", result.token);
-            editor.putString("FCMtoken", result.user.getTokenFCM());
-            editor.apply();
+        Intent intent = new Intent(getContext(), Main_Activity.class);
 
-            startActivity(intent);
-//            getActivity().finish();
-
-        } catch (IOException | GeneralSecurityException err) {
-            Log.e("auth error", err.toString());
-            err.printStackTrace();
-        }
+        startActivity(intent);
+        requireActivity().finish();
     }
 
     private void sendToNotifyAccount() {

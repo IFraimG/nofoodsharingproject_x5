@@ -44,7 +44,7 @@ public class Setter_Activity extends AppCompatActivity {
     }
 
     private void initLocation() {
-        if (!PermissionHandler.checkPermissions(getApplicationContext())) PermissionHandler.requestPermissions(this, getApplicationContext());
+        if (!PermissionHandler.checkPermissions(getApplicationContext())) PermissionHandler.requestPermissions(this);
         else {
             Intent serviceIntent = new Intent(this, LocationTrackingService.class);
             startForegroundService(serviceIntent);

@@ -24,6 +24,7 @@ import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterAuthBinding;
 import com.example.nofoodsharingproject.models.Getter;
+import com.example.nofoodsharingproject.utils.DefineUser;
 import com.example.nofoodsharingproject.utils.ValidateUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -46,10 +47,12 @@ public class Getter_Auth_Fragment extends Fragment {
     private Button btnSignup = null;
     private Button btnLogin = null;
     private ImageView btnBack = null;
+    private DefineUser<Getter> defineUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        defineUser = new DefineUser<Getter>(requireActivity());
     }
 
     @Override
@@ -88,28 +91,10 @@ public class Getter_Auth_Fragment extends Fragment {
 
 
     private void pushData(SignUpResponseI<Getter> result) {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(requireContext().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireContext().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("isGetter", true);
-            editor.putString("login", result.user.getLogin());
-            editor.putString("phone", result.user.getPhone());
-            editor.putString("X5_id", result.user.getX5_Id());
-            editor.putString("token", result.token);
-            editor.putString("FCMtoken", result.user.getTokenFCM());
-            editor.apply();
+        defineUser.saveUserData(true, result.user.getX5_Id(), result);
 
-            Intent intent = new Intent(getContext(), Main_Activity.class);
-            startActivity(intent);
-
-        } catch (IOException | GeneralSecurityException err) {
-            Log.e("auth error", err.toString());
-            err.printStackTrace();
-        }
+        Intent intent = new Intent(getContext(), Main_Activity.class);
+        startActivity(intent);
     }
 
     private void login() {

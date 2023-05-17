@@ -45,7 +45,7 @@ public class Notify_Fragment extends Fragment {
                 (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
                 .get(Notifications_ViewModel.class);
 
-        Pair<String, Boolean> userType = defineUser.getTypeUser(requireActivity(), requireContext());
+        Pair<String, Boolean> userType = defineUser.getTypeUser();
 
         viewModel.getAllNotifications(userType.first, userType.second ? "getter" : "setter").observe(requireActivity(), getterNotificationsAdapter::updateNotifications);
         viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
