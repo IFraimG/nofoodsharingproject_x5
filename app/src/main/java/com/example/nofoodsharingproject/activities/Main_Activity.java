@@ -1,30 +1,22 @@
 package com.example.nofoodsharingproject.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.example.nofoodsharingproject.databinding.ActivityMainBinding;
+import com.example.nofoodsharingproject.utils.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Main_Activity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    private SharedPreferences sharedPreferences;
+    private DefineUser defineUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +24,17 @@ public class Main_Activity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        try {
-            MasterKey masterKey = new MasterKey.Builder(getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build();
-            sharedPreferences = EncryptedSharedPreferences.create(getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            if (sharedPreferences.contains("isGetter")) {
-                if (sharedPreferences.getBoolean("isGetter", false)) authGetter();
-                else authSetter();
-            } else redirectToAuth();
-        } catch (IOException | GeneralSecurityException err) {
-            Log.e("auth error", err.toString());
-            err.printStackTrace();
-        }
+        defineUser = new DefineUser(this);
+        String res = defineUser.isGetter();
+        if (res != null) {
+            if (res.equals("setter")) authSetter();
+            else if (res.equals("getter")) authGetter();
+            else redirectToAuth();
+        } else redirectToAuth();
     }
 
     public void authSetter() {
-        AuthRepository.checkAuthSetter(sharedPreferences.getString("token", "")).enqueue(new Callback<CheckAuthI>() {
+        AuthRepository.checkAuthSetter(defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() != null && !response.body().getIsAuth()) redirectToAuth();
@@ -67,7 +53,7 @@ public class Main_Activity extends AppCompatActivity {
     }
 
     public void authGetter() {
-        AuthRepository.checkAuthGetter(sharedPreferences.getString("token", "")).enqueue(new Callback<CheckAuthI>() {
+        AuthRepository.checkAuthGetter(defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() == null) redirectToAuth();

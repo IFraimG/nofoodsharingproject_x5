@@ -127,4 +127,14 @@ public class DefineUser<T extends User> {
     public boolean getPreferences(String key) {
         return sharedPreferences.getBoolean(key, false);
     }
+
+    public String isGetter() {
+        if (!encryptedSharedPreferences.contains("isGetter")) return null;
+
+        return encryptedSharedPreferences.getBoolean("isGetter", false) ? "getter" : "setter";
+    }
+
+    public String getToken() {
+        return encryptedSharedPreferences.getString("token", "");
+    }
 }
