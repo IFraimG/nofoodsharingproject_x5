@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.databinding.FragmentGetterAuthBinding;
 import com.example.nofoodsharingproject.databinding.FragmentMainAuthBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,19 +32,8 @@ public class MainAuth_Fragment extends Fragment {
         Button btnGetter = binding.mainAuthBtnGetter;
         Button btnSetter = binding.mainAuthBtnSetter;
 
-        btnSetter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_setterAuthF);
-            }
-        });
-
-        btnGetter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_getterAuthF);
-            }
-        });
+        btnSetter.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_setterAuthF));
+        btnGetter.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_getterAuthF));
 
         return binding.getRoot();
     }

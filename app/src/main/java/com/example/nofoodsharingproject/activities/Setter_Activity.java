@@ -1,6 +1,7 @@
 package com.example.nofoodsharingproject.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -33,8 +34,10 @@ public class Setter_Activity extends AppCompatActivity {
         BottomNavigationView navigationView = binding.setterNavigation;
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        DateNowChecker dateNowChecker = new DateNowChecker();
-        if (dateNowChecker.getHour() >= 10 && dateNowChecker.getHour() < 21) initLocation();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            DateNowChecker dateNowChecker = new DateNowChecker();
+            if (dateNowChecker.getHour() >= 10 && dateNowChecker.getHour() < 21) initLocation();
+        }
     }
 
     @Override
