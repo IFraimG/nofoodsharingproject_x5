@@ -7,6 +7,7 @@ public class AuthApiService {
     private static AuthAPI authAPI;
 
     public static AuthAPI create() {
+
         return RetrofitService.getInstance().create(AuthAPI.class);
     }
 

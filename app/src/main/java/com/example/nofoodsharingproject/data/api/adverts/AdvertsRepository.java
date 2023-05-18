@@ -1,7 +1,5 @@
 package com.example.nofoodsharingproject.data.api.adverts;
 
-
-import com.example.nofoodsharingproject.data.api.adverts.AdvertsApiService;
 import com.example.nofoodsharingproject.data.api.adverts.dto.RequestDoneAdvert;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseActiveAdverts;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;

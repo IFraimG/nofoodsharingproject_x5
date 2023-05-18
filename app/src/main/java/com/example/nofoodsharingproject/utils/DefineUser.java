@@ -29,6 +29,20 @@ public class DefineUser<T extends User> {
     public DefineUser(EncryptedSharedPreferences esp) {
         encryptedSharedPreferences = esp;
     }
+    public DefineUser(SharedPreferences sp) {
+        sharedPreferences = sp;
+    }
+
+    public void initBaseRetrofitPath(String path) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String result = "http://" + path + ":8080";
+        if (path.length() > 0) editor.putString("server_url", result).apply();
+        else editor.putString("server_url", "https://buy-help-server.onrender.com").apply();
+    }
+
+    public String getBaseForRetrofit() {
+        return sharedPreferences.getString("server_url", "https://buy-help-server.onrender.com");
+    }
 
     public void initEsp(Activity activity) {
         try {
@@ -136,5 +150,9 @@ public class DefineUser<T extends User> {
 
     public String getToken() {
         return encryptedSharedPreferences.getString("token", "");
+    }
+
+    public String getFCMToken() {
+        return encryptedSharedPreferences.getString("FCMtoken", "");
     }
 }

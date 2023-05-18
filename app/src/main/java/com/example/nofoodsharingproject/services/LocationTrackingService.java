@@ -182,6 +182,7 @@ public class LocationTrackingService extends Service implements LocationListener
     }
 
     private Advertisement getRandomGetterAdvert() {
+
         return new Advertisement();
     }
 

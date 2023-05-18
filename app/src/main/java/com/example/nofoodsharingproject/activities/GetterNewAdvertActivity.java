@@ -87,6 +87,8 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
             Toast.makeText(GetterNewAdvertActivity.this, R.string.add_to_list_product, Toast.LENGTH_SHORT).show();
         else if (titleAdvert.getText().toString().length() == 0) {
             Toast.makeText(GetterNewAdvertActivity.this, R.string.edit_name, Toast.LENGTH_SHORT).show();
+        } else if (userProductItems.size() > 3) {
+            Toast.makeText(GetterNewAdvertActivity.this, R.string.many_products, Toast.LENGTH_SHORT).show();
         } else {
             Getter result = getUserInfo();
             Advertisement advertisement = new Advertisement(titleAdvert.getText().toString(), result.getX5_Id(), result.getLogin());

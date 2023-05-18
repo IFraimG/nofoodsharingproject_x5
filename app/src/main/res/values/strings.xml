@@ -144,4 +144,6 @@
     <string name="not_found">Ничего не найдено!</string>
     <string name="faq_text">Ответы на часто задаваемые вопросы</string>
     <string name="pin_market">Прикрепитесь к магазину!</string>
+    <string name="many_products">Вы можете выбирать не более трех продуктов</string>
+    <string name="success_deal">Сделка прошла успешно!</string>
 </resources>

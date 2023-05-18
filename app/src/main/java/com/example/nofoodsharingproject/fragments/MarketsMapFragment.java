@@ -1,11 +1,14 @@
 package com.example.nofoodsharingproject.fragments;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Pair;
@@ -68,7 +71,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class MarketsMapFragment extends Fragment implements UserLocationObjectListener, MapObjectTapListener, DrivingSession.DrivingRouteListener {
+public class MarketsMapFragment extends Fragment implements UserLocationObjectListener,
+        MapObjectTapListener, DrivingSession.DrivingRouteListener {
 
     private FragmentMarketsMapBinding binding;
     private MapView mapView;
@@ -362,21 +366,34 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     @Override
     public void onObjectAdded(UserLocationView userLocationView) {
         userLocationLayer.setAnchor(
-                new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.5)),
-                new PointF((float)(mapView.getWidth() * 0.5), (float)(mapView.getHeight() * 0.83)));
+                new PointF((float)(mapView.getWidth() * 0.5), (float)
+                        (mapView.getHeight() * 0.5)),
+                new PointF((float)(mapView.getWidth() * 0.5), (float)
+                        (mapView.getHeight() * 0.83)));
 
-        userLocationView.getArrow().setIcon(ImageProvider.fromResource(requireContext(), R.drawable.baseline_emoji_people_24));
+        userLocationView.getArrow().setIcon(ImageProvider.fromResource(
+                requireContext(), R.drawable.person_outline));
+
         CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
 
         pinIcon.setIcon(
                 "icon",
-                ImageProvider.fromResource(requireContext(), R.drawable.baseline_emoji_people_24),
-                new IconStyle().setAnchor(new PointF(0.5f, 0.5f))
+                ImageProvider.fromResource(requireContext(), R.drawable.person_outline),
+                new IconStyle().setAnchor(new PointF(0f, 0f))
                         .setRotationType(RotationType.ROTATE)
                         .setZIndex(0f)
                         .setScale(1f)
         );
-        userLocationView.getAccuracyCircle().setFillColor(Color.BLUE & 0x99ffffff);
+
+        pinIcon.setIcon(
+                "pin",
+                ImageProvider.fromResource(requireContext(), R.drawable.person_outline),
+                new IconStyle().setAnchor(new PointF(0.5f, 0.5f))
+                        .setRotationType(RotationType.ROTATE)
+                        .setZIndex(1f)
+                        .setScale(0.5f)
+        );
+
     }
 
     @Override

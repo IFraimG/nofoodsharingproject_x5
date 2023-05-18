@@ -111,8 +111,8 @@
                         android:id="@+id/getter_profile_save"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:background="@drawable/style2"
+                        android:textSize="14sp"
+                        android:background="@drawable/style3"
                         android:text="@string/update_profile_data_text"
                         android:layout_gravity="center|bottom"
                         />

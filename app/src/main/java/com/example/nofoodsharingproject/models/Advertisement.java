@@ -44,6 +44,10 @@ public class Advertisement {
     @Expose
     private boolean isDone = false;
 
+    @SerializedName("userDoneID")
+    @Expose
+    private String userDoneID;
+
     public Advertisement() {}
 
     public Advertisement(String title, String authorID, String authorName) {
@@ -144,5 +148,13 @@ public class Advertisement {
 
     public void setDateOfExpires(String dateOfExpires) {
         this.dateOfExpires = dateOfExpires;
+    }
+
+    public void setUserDoneID(String userDoneID) {
+        this.userDoneID = userDoneID;
+    }
+
+    public String getUserDoneID() {
+        return userDoneID;
     }
 }

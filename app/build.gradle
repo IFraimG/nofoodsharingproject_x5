@@ -85,4 +85,6 @@ dependencies {
     // layout for updating data
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
+    // check errors
+    implementation 'com.instabug.library:instabug:11.11.0'
 }
