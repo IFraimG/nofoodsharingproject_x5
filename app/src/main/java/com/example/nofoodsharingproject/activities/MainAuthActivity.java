@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.nofoodsharingproject.databinding.ActivityMainAuthBinding;
 
-public class MainAuth_Activity extends AppCompatActivity {
+public class MainAuthActivity extends AppCompatActivity {
     private ActivityMainAuthBinding binding;
 
     @Override

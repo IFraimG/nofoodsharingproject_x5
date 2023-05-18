@@ -6,12 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/standard_size_very_medium"
     android:orientation="vertical"
-    tools:context=".activities.SetterAdvert_Activity">
+    tools:context=".activities.SetterAdvertActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        tools:context=".activities.SetterAdvert_Activity">
+        tools:context=".activities.SetterAdvertActivity">
         <ImageView
             android:id="@+id/setter_advert_back"
             android:layout_width="@dimen/size_64"

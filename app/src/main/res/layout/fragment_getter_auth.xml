@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.auth.Getter_Auth_Fragment">
+    tools:context=".fragments.auth.GetterAuthFragment">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

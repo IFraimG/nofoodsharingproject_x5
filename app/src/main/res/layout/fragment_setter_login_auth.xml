@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingTop="@dimen/very_big"
-    tools:context=".fragments.auth.Setter_LoginAuth_Fragment">
+    tools:context=".fragments.auth.SetterLoginAuthFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nofoodsharingproject.activities.Main_Activity;
+import com.example.nofoodsharingproject.activities.MainActivity;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
@@ -31,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Setter_Auth_Fragment extends Fragment {
+public class SetterAuthFragment extends Fragment {
     private FragmentSetterAuthBinding binding;
     private EditText phone = null;
     private EditText login = null;
@@ -112,7 +112,7 @@ public class Setter_Auth_Fragment extends Fragment {
     private void pushData(SignUpResponseI<Setter> result) {
         defineUser.saveUserData(false, result.user.getX5_Id(), result);
 
-        Intent intent = new Intent(getContext(), Main_Activity.class);
+        Intent intent = new Intent(getContext(), MainActivity.class);
 
         startActivity(intent);
         requireActivity().finish();

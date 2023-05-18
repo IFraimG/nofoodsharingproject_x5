@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.auth.MainAuth_Fragment">
+    tools:context=".fragments.auth.MainAuthFragment">
 
     <ImageView
         android:id="@+id/imageView"
@@ -46,7 +46,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/fk_size"
             android:text="@string/i_getter_text"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:backgroundTint="@color/light_orange" />
 
         <Button
@@ -57,7 +57,7 @@
             android:layout_marginBottom="@dimen/fk_size"
             android:text="@string/i_setter_text"
 
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:backgroundTint="@color/green_pastel" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

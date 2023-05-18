@@ -12,7 +12,7 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.databinding.ActivityGetterBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Getter_Activity extends AppCompatActivity {
+public class GetterActivity extends AppCompatActivity {
     private NavController navController;
     private ActivityGetterBinding binding;
 

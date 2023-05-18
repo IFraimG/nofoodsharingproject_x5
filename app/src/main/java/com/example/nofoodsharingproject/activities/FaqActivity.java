@@ -1,8 +1,6 @@
 package com.example.nofoodsharingproject.activities;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -15,7 +13,7 @@ import com.example.nofoodsharingproject.models.Faq;
 
 import java.util.Arrays;
 
-public class Faq_Activity extends AppCompatActivity {
+public class FaqActivity extends AppCompatActivity {
     private ActivityFaqBinding binding;
     private RecyclerView setterRecycler;
     private RecyclerView getterRecycler;

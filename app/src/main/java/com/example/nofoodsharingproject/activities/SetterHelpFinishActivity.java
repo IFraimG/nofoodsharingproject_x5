@@ -13,7 +13,7 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.databinding.ActivitySetterFinishHelpBinding;
 
 
-public class SetterHelpFinish_Activity extends AppCompatActivity {
+public class SetterHelpFinishActivity extends AppCompatActivity {
 
     private ActivitySetterFinishHelpBinding binding;
 
@@ -28,7 +28,7 @@ public class SetterHelpFinish_Activity extends AppCompatActivity {
 
         openVkButton.setOnClickListener(View -> vkLoad());
         returnButton.setOnClickListener(View -> {
-            Intent intent = new Intent(SetterHelpFinish_Activity.this, Setter_Activity.class);
+            Intent intent = new Intent(SetterHelpFinishActivity.this, SetterActivity.class);
             startActivity(intent);
             finish();
         });

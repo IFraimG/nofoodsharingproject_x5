@@ -18,7 +18,7 @@ import com.example.nofoodsharingproject.utils.DateNowChecker;
 import com.example.nofoodsharingproject.utils.PermissionHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Setter_Activity extends AppCompatActivity {
+public class SetterActivity extends AppCompatActivity {
     private NavController navController;
     private ActivitySetterBinding binding;
     @Override

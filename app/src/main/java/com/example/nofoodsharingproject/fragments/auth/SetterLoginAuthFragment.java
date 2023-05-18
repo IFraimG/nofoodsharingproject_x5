@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.nofoodsharingproject.activities.Main_Activity;
+import com.example.nofoodsharingproject.activities.MainActivity;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Setter_LoginAuth_Fragment extends Fragment {
+public class SetterLoginAuthFragment extends Fragment {
     private FragmentSetterLoginAuthBinding binding;
     private Button btn;
     private EditText loginInput;
@@ -70,7 +70,7 @@ public class Setter_LoginAuth_Fragment extends Fragment {
                     } else {
                         if (response.body() != null && response.body().token != null) {
                             defineUser.saveUserData(false, response.body().user.getX5_Id(), response.body());
-                            Intent intent = new Intent(getContext(), Main_Activity.class);
+                            Intent intent = new Intent(getContext(), MainActivity.class);
                             startActivity(intent);
                         }
                     }

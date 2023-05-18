@@ -16,7 +16,7 @@ import com.example.nofoodsharingproject.databinding.FragmentMainAuthBinding;
 import org.jetbrains.annotations.NotNull;
 
 
-public class MainAuth_Fragment extends Fragment {
+public class MainAuthFragment extends Fragment {
 
     private FragmentMainAuthBinding binding;
 

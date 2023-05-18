@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.activities.Faq_Activity;
-import com.example.nofoodsharingproject.activities.GetterNewAdvert_Activity;
+import com.example.nofoodsharingproject.activities.FaqActivity;
+import com.example.nofoodsharingproject.activities.GetterNewAdvertActivity;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;
 import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.data.api.map.MapRepository;
@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GetterAdvrs_Fragment extends Fragment {
+public class GetterAdvrsFragment extends Fragment {
     private FragmentGetterAdvrsBinding binding;
     private TextView addressShop;
     private TextView numberAdvertisement;
@@ -86,13 +86,13 @@ public class GetterAdvrs_Fragment extends Fragment {
 
         buttonNewAdvertisement.setOnClickListener(View -> {
             if (market == null || market.length() == 0) Toast.makeText(getContext(), getString(R.string.pin_market), Toast.LENGTH_LONG).show();
-            else startActivity(new Intent(getActivity(), GetterNewAdvert_Activity.class));
+            else startActivity(new Intent(getActivity(), GetterNewAdvertActivity.class));
         });
         buttonStopAdvert.setOnClickListener(View -> removeAdvertisement());
         buttonTakenProducts.setOnClickListener(View -> takeProducts());
 
         linkFaq.setOnClickListener(View -> {
-            Intent intent = new Intent(getContext(), Faq_Activity.class);
+            Intent intent = new Intent(getContext(), FaqActivity.class);
             startActivity(intent);
         });
 

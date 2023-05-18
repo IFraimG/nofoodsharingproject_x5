@@ -1,8 +1,6 @@
 package com.example.nofoodsharingproject.view_models;
 
 import android.app.Application;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -27,7 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class AdvertisementList_ViewModel extends AndroidViewModel {
+public class AdvertisementListViewModel extends AndroidViewModel {
     public List<Advertisement> adverts = new ArrayList<>();
     private final MutableLiveData<List<Advertisement>> _adverts = new MutableLiveData<>();
     private final MutableLiveData<LoaderStatus> _status = new MutableLiveData<>();
@@ -38,7 +36,7 @@ public class AdvertisementList_ViewModel extends AndroidViewModel {
             "Ковров пер., 8, стр. 1", "Нижегородская улица, 34"
     };
 
-    public AdvertisementList_ViewModel(@NonNull Application application) {
+    public AdvertisementListViewModel(@NonNull Application application) {
         super(application);
     }
 

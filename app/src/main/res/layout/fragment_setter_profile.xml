@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".fragments.setter.SetterProfile_Fragment">
+    tools:context=".fragments.setter.SetterProfileFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/setter_profile_toolbar"
@@ -81,7 +81,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/standard_size_very_medium"
         android:text="@string/open_vk"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:backgroundTint="@color/green_pastel" />
 
     <LinearLayout

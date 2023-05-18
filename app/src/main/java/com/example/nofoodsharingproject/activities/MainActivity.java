@@ -14,7 +14,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Main_Activity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private DefineUser defineUser;
 
@@ -39,7 +39,7 @@ public class Main_Activity extends AppCompatActivity {
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() != null && !response.body().getIsAuth()) redirectToAuth();
                 else {
-                    Intent intentSetter = new Intent(getApplicationContext(), Setter_Activity.class);
+                    Intent intentSetter = new Intent(getApplicationContext(), SetterActivity.class);
                     startActivity(intentSetter);
                     finish();
                 }
@@ -58,7 +58,7 @@ public class Main_Activity extends AppCompatActivity {
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() == null) redirectToAuth();
                 else if (response.body().getIsAuth()) {
-                    Intent intentGetter = new Intent(getApplicationContext(), Getter_Activity.class);
+                    Intent intentGetter = new Intent(getApplicationContext(), GetterActivity.class);
                     startActivity(intentGetter);
                     finish();
                 } else redirectToAuth();
@@ -72,7 +72,7 @@ public class Main_Activity extends AppCompatActivity {
     }
 
     public void redirectToAuth() {
-        Intent intentAuth = new Intent(getApplicationContext(), MainAuth_Activity.class);
+        Intent intentAuth = new Intent(getApplicationContext(), MainAuthActivity.class);
         startActivity(intentAuth);
         finish();
     }

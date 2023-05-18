@@ -176,6 +176,8 @@
                     style="@style/grey_500_button"
                     android:layout_gravity="center|top"
                     android:text="@string/stop_adv_text"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
                     android:visibility="invisible" />
 
 
@@ -183,13 +185,16 @@
                     android:id="@+id/pick_up_order"
                     style="@style/grey_500_button"
                     android:layout_gravity="center|top"
-                    android:layout_marginTop="55dp"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
                     android:text="@string/adv_zabor_text"
                     android:visibility="invisible" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/create_new_request"
                     style="@style/grey_500_button"
+                    android:layout_width="match_parent"
                     android:text="@string/add_new_request_button"
                     android:visibility="invisible" />
             </FrameLayout>

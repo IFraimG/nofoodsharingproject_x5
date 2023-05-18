@@ -4,14 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.Faq_Activity">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    android:orientation="vertical"
+    tools:context=".activities.FaqActivity">
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -48,13 +42,16 @@
                 android:layout_margin="@dimen/standard_size_very_medium"
                 android:text="@string/setter_account_text"/>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/faq_setter_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_faq" />
-
+        </ScrollView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,12 +60,14 @@
                 android:layout_margin="@dimen/standard_size_very_medium"
                 android:text="@string/getter_account_text"/>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/faq_getter_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_faq" />
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 </LinearLayout>

@@ -68,7 +68,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 
-public class MarketsMap_Fragment extends Fragment implements UserLocationObjectListener, MapObjectTapListener, DrivingSession.DrivingRouteListener {
+public class MarketsMapFragment extends Fragment implements UserLocationObjectListener, MapObjectTapListener, DrivingSession.DrivingRouteListener {
 
     private FragmentMarketsMapBinding binding;
     private MapView mapView;

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.activities.MainAuth_Activity;
+import com.example.nofoodsharingproject.activities.MainAuthActivity;
 import com.example.nofoodsharingproject.data.api.getter.GetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterProfileBinding;
 import com.example.nofoodsharingproject.models.ShortDataUser;
@@ -30,7 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class GetterProfile_Fragment extends Fragment {
+public class GetterProfileFragment extends Fragment {
     private FragmentGetterProfileBinding binding;
     private EditText editLogin;
     private EditText editPhone;
@@ -121,7 +121,7 @@ public class GetterProfile_Fragment extends Fragment {
     public void logout() {
         defineUser.clearData();
 
-        Intent intent = new Intent(requireActivity().getApplicationContext(), MainAuth_Activity.class);
+        Intent intent = new Intent(requireActivity().getApplicationContext(), MainAuthActivity.class);
         startActivity(intent);
         requireActivity().finish();
     }

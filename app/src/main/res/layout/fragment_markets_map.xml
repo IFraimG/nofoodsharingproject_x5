@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.MarketsMap_Fragment">
+    tools:context=".fragments.MarketsMapFragment">
 
     <com.yandex.mapkit.mapview.MapView
         android:id="@+id/mapview"
@@ -26,17 +26,20 @@
             android:layout_height="wrap_content" />
         <androidx.appcompat.widget.AppCompatButton
             android:layout_marginTop="@dimen/standard_size_very_medium"
+            android:layout_margin="20dp"
             android:id="@+id/map_set_market_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/style2"
             android:layout_gravity="center"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:text="@string/connect_to_this_shop_market_map_text"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/map_make_route"
             style="@style/grey_500_button"
-            android:layout_marginTop="@dimen/standard_size_small"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
             android:text="@string/set_route_near_market"/>
     </LinearLayout>
 </FrameLayout>

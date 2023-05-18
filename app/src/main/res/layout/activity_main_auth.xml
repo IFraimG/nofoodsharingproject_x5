@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".activities.MainAuth_Activity">
+    tools:context=".activities.MainAuthActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_auth_fragment"

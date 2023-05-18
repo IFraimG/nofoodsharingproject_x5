@@ -36,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SetterAdvert_Activity extends AppCompatActivity {
+public class SetterAdvertActivity extends AppCompatActivity {
     private ActivitySetterAdvertBinding binding;
     private ListView listProducts;
     private ImageView backButton;
@@ -89,7 +89,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NotNull Call<Advertisement> call, @NotNull Throwable t) {
-                Toast.makeText(SetterAdvert_Activity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SetterAdvertActivity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -105,7 +105,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), R.string.smth_not_good_try_again, Toast.LENGTH_SHORT).show();
                 } else {
                     saveMessageForUser();
-                    Intent intent = new Intent(SetterAdvert_Activity.this, SetterHelpFinish_Activity.class);
+                    Intent intent = new Intent(SetterAdvertActivity.this, SetterHelpFinishActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -123,7 +123,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
         GetterRepository.getFCMtoken(advertisement.getAuthorID()).enqueue(new Callback<ResponseFCMToken>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
-                if (response.code() == 400) Toast.makeText(SetterAdvert_Activity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                if (response.code() == 400) Toast.makeText(SetterAdvertActivity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 if (response.code() == 200) {
                     fcmToken = response.body().getFcmToken();
                     sendNotification();
@@ -132,7 +132,7 @@ public class SetterAdvert_Activity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NotNull Call<ResponseFCMToken> call, @NotNull Throwable t) {
-                Toast.makeText(SetterAdvert_Activity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SetterAdvertActivity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -143,14 +143,14 @@ public class SetterAdvert_Activity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        Toast.makeText(SetterAdvert_Activity.this, R.string.sucses_notyfy_send, Toast.LENGTH_SHORT).show();
-                    } else Toast.makeText(SetterAdvert_Activity.this, R.string.smth_problrs, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SetterAdvertActivity.this, R.string.sucses_notyfy_send, Toast.LENGTH_SHORT).show();
+                    } else Toast.makeText(SetterAdvertActivity.this, R.string.smth_problrs, Toast.LENGTH_SHORT).show();
 
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Toast.makeText(SetterAdvert_Activity.this, R.string.smth_problrs, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SetterAdvertActivity.this, R.string.smth_problrs, Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
                 }
             });
@@ -164,13 +164,13 @@ public class SetterAdvert_Activity extends AppCompatActivity {
         NotificationRepository.createNotification(notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
-                if (response.code() != 201) Toast.makeText(SetterAdvert_Activity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                if (response.code() != 201) Toast.makeText(SetterAdvertActivity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 else getFCMTokenByUserID();
             }
 
             @Override
             public void onFailure(@NotNull Call<Notification> call, @NotNull Throwable t) {
-                Toast.makeText(SetterAdvert_Activity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SetterAdvertActivity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });

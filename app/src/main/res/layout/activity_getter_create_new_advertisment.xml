@@ -1,107 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.GetterNewAdvert_Activity">
-
-    <TextView
-        style="@style/heading_getter_fragments"
-        android:text="@string/create_new_adv_text" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="52dp"
-        android:inputType="text"
-        android:textSize="15sp"
-        android:layout_gravity="center|top"
-        android:layout_marginTop="80dp"
-        android:background="@drawable/style8"
-        android:autofillHints=""
-        android:id="@+id/getter_advert_input_title"
-        android:hint="@string/getter_creating_title" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:textSize="15sp"
-        android:layout_marginTop="150dp"
-        android:textColor="@color/grey_500"
-        android:text="@string/chose_product_text"/>
-
-    <ListView
-        android:id="@+id/product_choice"
+    android:orientation="vertical"
+    tools:context=".activities.GetterNewAdvertActivity">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center|bottom"
-        android:layout_marginLeft="@dimen/standard_size_little"
-        android:layout_marginTop="180dp"
-        android:layout_marginRight="@dimen/standard_size_little"
-        android:layout_marginBottom="210dp"
-        />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:textSize="15sp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="180dp"
-            android:textColor="@color/grey_500"
-            android:text="@string/getter_result_list"/>
-
-
-    <ListView
-        android:id="@+id/product_choosen_items"
-        android:layout_width="match_parent"
-        android:layout_height="102dp"
-        android:layout_gravity="bottom|center"
-        android:layout_marginLeft="@dimen/standard_size_little"
-        android:layout_marginRight="@dimen/standard_size_little"
-        android:layout_marginBottom="70dp" />
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="bottom|center"
-        android:background="@color/white">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="center|bottom"
-            android:layout_marginBottom="@dimen/standard_size_small"
-            android:background="@color/grey_500"/>
-
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/standard_size_small">
-            <androidx.appcompat.widget.AppCompatButton
+            android:orientation="vertical">
+            <TextView
+                style="@style/heading_getter_fragments"
+                android:text="@string/create_new_adv_text" />
+
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/standard_size_very_medium"
-                android:layout_marginLeft="@dimen/standard_size_very_medium"
-                android:layout_gravity="bottom|center"
-                android:text="@string/back_text"
-                style="@style/grey_500_button"
-                android:id="@+id/button_back"/>
+                android:minHeight="50dp"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/style8"
+                android:autofillHints=""
+                android:id="@+id/getter_advert_input_title"
+                android:hint="@string/getter_creating_title" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top"
+                android:textSize="15sp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="@dimen/standard_size_very_medium"
+                android:textColor="@color/grey_500"
+                android:text="@string/chose_product_text"/>
+
+            <ListView
+                android:id="@+id/product_choice"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:minHeight="200dp"
+                android:dividerHeight="3dp"
+                android:divider="@color/white"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:textSize="16sp"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:layout_marginBottom="@dimen/standard_size_very_medium"
+                android:textColor="@color/grey_500"
+                android:text="@string/getter_result_list"/>
+
+            <ListView
+                android:id="@+id/product_choosen_items"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium"
+                android:dividerHeight="3dp"
+                android:divider="@color/white"
+                android:layout_marginBottom="@dimen/standard_size_very_medium" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/standard_size_very_medium"
+                android:background="@color/grey_500"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/standard_size_very_medium"
-                android:layout_marginLeft="@dimen/standard_size_very_medium"
-                android:layout_gravity="bottom|center"
-                android:text="@string/ready_text"
-                style="@style/grey_500_button"
-                android:id="@+id/ready_to_create"
-                android:background="@drawable/style1"/>
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/standard_size_very_medium">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:text="@string/back_text"
+                    style="@style/grey_500_button"
+                    android:layout_gravity="center"
+                    android:minHeight="48dp"
+                    android:layout_marginTop="@dimen/standard_size_very_medium"
+                    android:layout_marginBottom="@dimen/standard_size_very_medium"
+                    android:id="@+id/button_back"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/ready_text"
+                    style="@style/grey_500_button"
+                    android:minHeight="48dp"
+                    android:layout_marginTop="@dimen/standard_size_very_medium"
+                    android:layout_marginBottom="@dimen/standard_size_very_medium"
+                    android:id="@+id/ready_to_create"
+                    android:background="@drawable/style1" />
+                </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </ScrollView>
+</LinearLayout>

@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.activities.SetterAdvert_Activity;
+import com.example.nofoodsharingproject.activities.SetterAdvertActivity;
 import com.example.nofoodsharingproject.models.Advertisement;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
     public SetterAdvertListAdapter(Context context) {
         this.ctx = context;
         this.inflater = LayoutInflater.from(context);
-        this.intent = new Intent(this.ctx, SetterAdvert_Activity.class);
+        this.intent = new Intent(this.ctx, SetterAdvertActivity.class);
     }
 
     @Override

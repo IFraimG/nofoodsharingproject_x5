@@ -22,17 +22,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.activities.Faq_Activity;
+import com.example.nofoodsharingproject.activities.FaqActivity;
 import com.example.nofoodsharingproject.adapters.SetterAdvertListAdapter;
 import com.example.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
 import com.example.nofoodsharingproject.models.LoaderStatus;
-import com.example.nofoodsharingproject.view_models.AdvertisementList_ViewModel;
+import com.example.nofoodsharingproject.view_models.AdvertisementListViewModel;
 import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-public class SetterAdvrs_Fragment extends Fragment {
-    private AdvertisementList_ViewModel viewModel;
+public class SetterAdvrsFragment extends Fragment {
+    private AdvertisementListViewModel viewModel;
     private FragmentSetterAdvrsBinding binding;
 
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -58,7 +58,7 @@ public class SetterAdvrs_Fragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity(),
                 (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
-                .get(AdvertisementList_ViewModel.class);
+                .get(AdvertisementListViewModel.class);
 
         viewModel.getAllAdverts(getUserID()).observe(requireActivity(), setterAdvertListAdapter::updateAdverts);
         viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
@@ -69,7 +69,7 @@ public class SetterAdvrs_Fragment extends Fragment {
         });
 
         linkFAQ.setOnClickListener(View -> {
-            Intent intent = new Intent(getContext(), Faq_Activity.class);
+            Intent intent = new Intent(getContext(), FaqActivity.class);
             startActivity(intent);
         });
 

@@ -22,14 +22,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Notifications_ViewModel extends AndroidViewModel {
+public class NotificationsViewModel extends AndroidViewModel {
     public List<Notification> notifications = new ArrayList<>();
     private final MutableLiveData<List<Notification>> _notifications = new MutableLiveData<>();
     private final MutableLiveData<LoaderStatus> _status = new MutableLiveData<>();
 
 //    public LiveData<LoaderStatus> status = _status;
 
-    public Notifications_ViewModel(@NonNull Application application) {
+    public NotificationsViewModel(@NonNull Application application) {
         super(application);
     }
 

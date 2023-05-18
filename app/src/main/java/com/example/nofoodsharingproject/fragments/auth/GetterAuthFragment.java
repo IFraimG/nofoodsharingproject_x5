@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.nofoodsharingproject.activities.Main_Activity;
+import com.example.nofoodsharingproject.activities.MainActivity;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Getter_Auth_Fragment extends Fragment {
+public class GetterAuthFragment extends Fragment {
     private FragmentGetterAuthBinding binding;
     private EditText phone = null;
     private EditText login = null;
@@ -83,7 +83,7 @@ public class Getter_Auth_Fragment extends Fragment {
     private void pushData(SignUpResponseI<Getter> result) {
         defineUser.saveUserData(true, result.user.getX5_Id(), result);
 
-        Intent intent = new Intent(getContext(), Main_Activity.class);
+        Intent intent = new Intent(getContext(), MainActivity.class);
         startActivity(intent);
     }
 

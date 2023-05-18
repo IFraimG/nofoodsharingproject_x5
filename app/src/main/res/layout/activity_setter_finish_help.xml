@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.SetterHelpFinish_Activity"
+    tools:context=".activities.SetterHelpFinishActivity"
     android:padding="@dimen/standard_size_very_medium"
     android:orientation="vertical">
 

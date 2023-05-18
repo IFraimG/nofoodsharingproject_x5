@@ -27,7 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
-import com.example.nofoodsharingproject.activities.MainAuth_Activity;
+import com.example.nofoodsharingproject.activities.MainAuthActivity;
 import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseHistoryAdverts;
 import com.example.nofoodsharingproject.data.api.setter.SetterRepository;
@@ -44,7 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class SetterProfile_Fragment extends Fragment {
+public class SetterProfileFragment extends Fragment {
     private FragmentSetterProfileBinding binding;
     private SwitchCompat switchLocation;
     private SwitchCompat switchNotification;
@@ -278,7 +278,7 @@ public class SetterProfile_Fragment extends Fragment {
     private void logout() {
         defineUser.clearData();
 
-        Intent intent = new Intent(requireActivity(), MainAuth_Activity.class);
+        Intent intent = new Intent(requireActivity(), MainAuthActivity.class);
         startActivity(intent);
         requireActivity().finish();
     }

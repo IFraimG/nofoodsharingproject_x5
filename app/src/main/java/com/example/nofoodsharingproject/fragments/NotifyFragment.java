@@ -14,11 +14,11 @@ import com.example.nofoodsharingproject.adapters.GetterNotificationsAdapter;
 import com.example.nofoodsharingproject.databinding.FragmentGetterNotifyBinding;
 import com.example.nofoodsharingproject.models.LoaderStatus;
 import com.example.nofoodsharingproject.utils.DefineUser;
-import com.example.nofoodsharingproject.view_models.Notifications_ViewModel;
+import com.example.nofoodsharingproject.view_models.NotificationsViewModel;
 import org.jetbrains.annotations.NotNull;
 
-public class Notify_Fragment extends Fragment {
-    private Notifications_ViewModel viewModel;
+public class NotifyFragment extends Fragment {
+    private NotificationsViewModel viewModel;
     private FragmentGetterNotifyBinding binding;
     private ProgressBar loader;
     private RecyclerView recyclerView;
@@ -43,7 +43,7 @@ public class Notify_Fragment extends Fragment {
         viewModel = new ViewModelProvider(
                 requireActivity(),
                 (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
-                .get(Notifications_ViewModel.class);
+                .get(NotificationsViewModel.class);
 
         Pair<String, Boolean> userType = defineUser.getTypeUser();
 
