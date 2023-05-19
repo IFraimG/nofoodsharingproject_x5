@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import com.example.nofoodsharingproject.fragments.SecretFragment;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -30,12 +28,10 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MainAuthFragment extends Fragment {
-
     private FragmentMainAuthBinding binding;
     private int countClick = 0;
     private ScheduledFuture<String> future;
     private ScheduledExecutorService executor;
-
     private Toast toast;
     private boolean isOpen = false;
 

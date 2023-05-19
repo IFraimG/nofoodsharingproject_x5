@@ -8,9 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.activities.MainActivity;
@@ -31,48 +28,35 @@ import retrofit2.Response;
 
 public class GetterAuthFragment extends Fragment {
     private FragmentGetterAuthBinding binding;
-    private EditText phone = null;
-    private EditText login = null;
-    private EditText password = null;
-    private Button btnSignup = null;
-    private Button btnLogin = null;
-    private ImageView btnBack = null;
     private DefineUser<Getter> defineUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        defineUser = new DefineUser<Getter>(requireActivity());
+        defineUser = new DefineUser<>(requireActivity());
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGetterAuthBinding.inflate(inflater);
 
-        btnLogin = binding.authGetterBtnLogin;
-        phone = binding.authGetterSignupPhone;
-        password = binding.authGetterSignupPassword;
-        login = binding.authGetterSignupLogin;
-        btnSignup = binding.authGetterCreate;
-        btnBack = binding.authGetterSignupBack;
-
-        btnSignup.setOnClickListener(View -> sendToNotifyAccount());
-        btnLogin.setOnClickListener(View -> login());
-        btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_getterAuthF_to_mainAuthF));
+        binding.authGetterCreate.setOnClickListener(View -> sendToNotifyAccount());
+        binding.authGetterBtnLogin.setOnClickListener(View -> login());
+        binding.authGetterSignupBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_getterAuthF_to_mainAuthF));
 
         return binding.getRoot();
     }
 
     private boolean validate() {
-        if (!ValidateUser.validatePhone(phone.getText().toString())) {
+        if (!ValidateUser.validatePhone(binding.authGetterSignupPhone.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!ValidateUser.validateLogin(login.getText().toString())) {
+        if (!ValidateUser.validateLogin(binding.authGetterSignupLogin.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!ValidateUser.validatePassword(password.getText().toString())) {
+        if (!ValidateUser.validatePassword(binding.authGetterSignupPassword.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
             return false;
         }
@@ -89,25 +73,28 @@ public class GetterAuthFragment extends Fragment {
 
     private void login() {
         if (validate()) {
-            btnLogin.setEnabled(false);
-            AuthRepository.getterLogin(phone.getText().toString(), login.getText().toString(), password.getText().toString()).enqueue(new Callback<SignUpResponseI<Getter>>() {
+            binding.authGetterBtnLogin.setEnabled(false);
+            AuthRepository.getterLogin(binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString()).enqueue(new Callback<SignUpResponseI<Getter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                     if (response.code() == 400) {
-                        btnLogin.setEnabled(true);
+                        binding.authGetterBtnLogin.setEnabled(true);
                         Toast.makeText(getContext(), R.string.not_right_password, Toast.LENGTH_SHORT).show();
                     } else if (response.code() == 404) {
                         Toast.makeText(getContext(), R.string.account_not_exist, Toast.LENGTH_SHORT).show();
-                        btnLogin.setEnabled(true);
-                        btnSignup.setVisibility(View.VISIBLE);
-                    } else {
+                        binding.authGetterBtnLogin.setEnabled(true);
+                        binding.authGetterCreate.setVisibility(View.VISIBLE);
+                    } else if (response.isSuccessful()) {
                         if (response.body() != null && response.body().token != null) pushData(response.body());
+                    } else {
+                        binding.authGetterBtnLogin.setEnabled(true);
+                        Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Throwable t) {
-                    btnLogin.setEnabled(true);
+                    binding.authGetterBtnLogin.setEnabled(true);
                     t.printStackTrace();
                 }
             });
@@ -115,21 +102,23 @@ public class GetterAuthFragment extends Fragment {
     }
 
     private void signup(String tokenFCM) {
-        btnSignup.setEnabled(false);
-        AuthRepository.getterRegistration(phone.getText().toString(), login.getText().toString(), password.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
+        binding.authGetterCreate.setEnabled(false);
+        AuthRepository.getterRegistration(binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                 if (response.code() == 400) {
                     Toast.makeText(getContext(), R.string.account_created, Toast.LENGTH_SHORT).show();
-                    btnSignup.setEnabled(true);
-                } else {
+                    binding.authGetterCreate.setEnabled(true);
+                } else if (response.isSuccessful()) {
                     if (response.body() != null && response.body().token != null) pushData(response.body());
+                } else {
+                    Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Throwable t) {
-                btnSignup.setEnabled(true);
+                binding.authGetterCreate.setEnabled(true);
                 t.printStackTrace();
             }
         });
@@ -138,7 +127,7 @@ public class GetterAuthFragment extends Fragment {
     private void sendToNotifyAccount() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
-                Log.w("err", "Fetching FCM registration token failed", task.getException());
+                Log.w("err", getString(R.string.error_fmc), task.getException());
                 signup("");
                 return;
             }

@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +13,6 @@ import com.example.nofoodsharingproject.databinding.ActivitySetterFinishHelpBind
 
 
 public class SetterHelpFinishActivity extends AppCompatActivity {
-
     private ActivitySetterFinishHelpBinding binding;
 
     @Override
@@ -23,11 +21,8 @@ public class SetterHelpFinishActivity extends AppCompatActivity {
         binding = ActivitySetterFinishHelpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Button openVkButton = binding.setterFinishGotovk;
-        Button returnButton = binding.setterFinishReturn;
-
-        openVkButton.setOnClickListener(View -> vkLoad());
-        returnButton.setOnClickListener(View -> {
+        binding.setterFinishGotovk.setOnClickListener(View -> vkLoad());
+        binding.setterFinishReturn.setOnClickListener(View -> {
             Intent intent = new Intent(SetterHelpFinishActivity.this, SetterActivity.class);
             startActivity(intent);
             finish();

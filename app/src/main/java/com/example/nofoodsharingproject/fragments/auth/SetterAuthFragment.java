@@ -9,10 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.activities.MainActivity;
@@ -33,60 +29,48 @@ import retrofit2.Response;
 
 public class SetterAuthFragment extends Fragment {
     private FragmentSetterAuthBinding binding;
-    private EditText phone = null;
-    private EditText login = null;
-    private EditText password = null;
-    private Button btnLogin = null;
-    private TextView btnRegistration = null;
-    private ImageView btnBack = null;
     private DefineUser<Setter> defineUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        defineUser = new DefineUser<Setter>(requireActivity());
+        defineUser = new DefineUser<>(requireActivity());
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterAuthBinding.inflate(inflater);
 
-        btnRegistration = binding.setterAuthBtnReg;
-        btnBack = binding.authSetterSignupBack;
-        btnLogin = binding.setterAuthBtnLogin;
-        phone = binding.setterAuthPhone;
-        login = binding.setterAuthLogin;
-        password = binding.setterAuthPassword;
+        binding.setterAuthBtnReg.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterAuthF_to_setterLoginAuthF));
+        binding.authSetterSignupBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterAuthF_to_mainAuthF));
 
-        btnRegistration.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterAuthF_to_setterLoginAuthF));
-        btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterAuthF_to_mainAuthF));
-
-        btnLogin.setOnClickListener(View -> sendToNotifyAccount());
+        binding.setterAuthBtnLogin.setOnClickListener(View -> sendToNotifyAccount());
 
         return binding.getRoot();
     }
 
     private void signup(String tokenFCM) {
         if (validate()) {
-            btnLogin.setEnabled(false);
-            AuthRepository.setterRegistration(phone.getText().toString(), login.getText().toString(), password.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
+            binding.setterAuthBtnLogin.setEnabled(false);
+            AuthRepository.setterRegistration(binding.setterAuthPhone.getText().toString(), binding.setterAuthLogin.getText().toString(), binding.setterAuthPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
                     if (response.code() == 401) {
                         Toast.makeText(getContext(), R.string.prodlem_on_autorization, Toast.LENGTH_LONG).show();
-                        btnLogin.setEnabled(true);
+                        binding.setterAuthBtnLogin.setEnabled(true);
                     } else if (response.code() == 400) {
-                            Toast.makeText(getContext(), R.string.account_created, Toast.LENGTH_LONG).show();
-                            btnLogin.setEnabled(true);
-                        } else {
-                            if (response.body() != null) {
-                                if (response.body().getToken() != null) pushData(response.body());
-                            }
-                        }
+                        Toast.makeText(getContext(), R.string.account_created, Toast.LENGTH_LONG).show();
+                        binding.setterAuthBtnLogin.setEnabled(true);
+                    } else if (response.isSuccessful()) {
+                        if (response.body() != null && response.body().getToken() != null) pushData(response.body());
+                    } else {
+                        Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_LONG).show();
+                        binding.setterAuthBtnLogin.setEnabled(true);
                     }
+                }
                 @Override
                 public void onFailure(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Throwable t) {
-                    btnLogin.setEnabled(true);
+                    binding.setterAuthBtnLogin.setEnabled(true);
                     t.printStackTrace();
                 }
             });
@@ -94,15 +78,15 @@ public class SetterAuthFragment extends Fragment {
     }
 
     private boolean validate() {
-        if (!ValidateUser.validatePhone(phone.getText().toString())) {
+        if (!ValidateUser.validatePhone(binding.setterAuthPhone.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!ValidateUser.validateLogin(login.getText().toString())) {
+        if (!ValidateUser.validateLogin(binding.setterAuthLogin.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!ValidateUser.validatePassword(password.getText().toString())) {
+        if (!ValidateUser.validatePassword(binding.setterAuthPassword.getText().toString())) {
             Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
             return false;
         }
@@ -121,7 +105,7 @@ public class SetterAuthFragment extends Fragment {
     private void sendToNotifyAccount() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
-                Log.w("err", "Fetching FCM registration token failed", task.getException());
+                Log.w("err", getString(R.string.error_fmc), task.getException());
                 signup("");
                 return;
             }

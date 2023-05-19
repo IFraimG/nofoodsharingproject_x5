@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/messages_top_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="40dp"
@@ -22,43 +23,64 @@
         app:layout_constraintStart_toStartOf="@+id/messages_title"
         app:layout_constraintTop_toTopOf="@+id/messages_title" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/messages_bottom"
+        app:layout_constraintEnd_toEndOf="@+id/messages_bottom"
+        app:layout_constraintStart_toStartOf="@+id/messages_top_divider"
+        app:layout_constraintTop_toTopOf="@+id/messages_top_divider">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/messages_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_message" />
+    </ScrollView>
+
     <LinearLayout
+        android:id="@+id/messages_bottom"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:orientation="vertical"
         android:background="@color/white"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey_500"/>
+            android:background="@color/grey_500" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="horizontal"
             android:paddingStart="@dimen/standard_size_very_medium"
             android:paddingEnd="@dimen/standard_size_very_medium">
+
             <EditText
                 android:id="@+id/messages_input"
                 android:layout_width="wrap_content"
                 android:layout_height="64dp"
+                android:layout_gravity="center|start"
+                android:background="@drawable/custom_round_border"
+                android:hint="@string/enter_message"
                 android:inputType="text"
                 android:minWidth="250dp"
                 android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:background="@drawable/custom_round_border"
-                android:layout_gravity="center|start"
-                android:hint="@string/enter_message"/>
+                android:paddingEnd="10dp" />
+
             <ImageView
                 android:id="@+id/messages_send"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center|end"
                 android:layout_marginStart="@dimen/standard_size_very_medium"
-                android:src="@drawable/baseline_send_24"
-                android:background="@drawable/custom_round_border" />
+                android:background="@drawable/custom_round_border"
+                android:src="@drawable/baseline_send_24" />
         </LinearLayout>
     </LinearLayout>
 

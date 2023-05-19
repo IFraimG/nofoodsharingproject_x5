@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +26,6 @@ import io.socket.client.Socket;
 public class ChatsListActivity extends AppCompatActivity {
     private ActivityListChatsBinding binding;
     private DefineUser defineUser;
-    private ListView chatsList;
     private ArrayAdapter<String> arrayAdapter;
     private List<Chat> chats;
     private List<String> shortChats = new ArrayList<>();
@@ -40,7 +36,6 @@ public class ChatsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityListChatsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        chatsList = binding.chatList;
 
         defineUser = new DefineUser<>(this);
 
@@ -51,8 +46,8 @@ public class ChatsListActivity extends AppCompatActivity {
         getChatsList();
 
         arrayAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.item_chat, shortChats);
-        chatsList.setAdapter(arrayAdapter);
-        chatsList.setOnItemClickListener((parent, view, position, id) -> {
+        binding.chatList.setAdapter(arrayAdapter);
+        binding.chatList.setOnItemClickListener((parent, view, position, id) -> {
             Chat chat = chats.get(position);
 
             Intent intent = new Intent(ChatsListActivity.this, ChatActivity.class);

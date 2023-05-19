@@ -155,4 +155,7 @@
     <string name="chats_title">Список чатов</string>
     <string name="send_message">Отправить</string>
     <string name="no_input_message">Вы не ввели сообщение!</string>
+    <string name="success_advert">На ваше объявление откликнулись!</string>
+    <string name="success_advert_body">Заберите продукты как можно скорее.</string>
+    <string name="error_fmc">Fetching FCM registration token failed</string>
 </resources>

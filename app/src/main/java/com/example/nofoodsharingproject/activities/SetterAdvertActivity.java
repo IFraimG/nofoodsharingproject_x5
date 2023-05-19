@@ -1,20 +1,13 @@
 package com.example.nofoodsharingproject.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
 
 import com.example.nofoodsharingproject.ApplicationCore;
 import com.example.nofoodsharingproject.R;
@@ -26,13 +19,12 @@ import com.example.nofoodsharingproject.data.api.notifications.NotificationRepos
 import com.example.nofoodsharingproject.databinding.ActivitySetterAdvertBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Notification;
+import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.utils.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 import io.socket.client.Socket;
 import okhttp3.ResponseBody;
@@ -42,20 +34,11 @@ import retrofit2.Response;
 
 public class SetterAdvertActivity extends AppCompatActivity {
     private ActivitySetterAdvertBinding binding;
-    private ListView listProducts;
-    private ImageView backButton;
-    private Button acceptBtn;
     private Advertisement advertisement;
-    private TextView authorName;
-    private TextView title;
-    private TextView dateAdvert;
     private String fcmToken;
-    private Button createChatButton;
-
-    private String successTitle = "На ваше объявление откликнулись!";
-    private String successBody = "Заберите продукты как можно скорее.";
     private Socket socket;
     private ArrayAdapter<String> productsAdapter;
+    private DefineUser<Setter> defineUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,17 +46,11 @@ public class SetterAdvertActivity extends AppCompatActivity {
         binding = ActivitySetterAdvertBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        backButton = binding.setterAdvertBack;
-        listProducts = binding.setterAdvertProductItemListProducts;
-        acceptBtn = binding.setterAdvertAccept;
-        authorName = binding.setterAdvertAuthor;
-        title = binding.setterAdvertTitle;
-        dateAdvert = binding.setterAdvertDate;
-        createChatButton = binding.setterAdvertCreateChat;
+        this.defineUser = new DefineUser<>(this);
 
-        backButton.setOnClickListener(View -> finish());
-        acceptBtn.setOnClickListener(View -> makeHelp());
-        createChatButton.setOnClickListener(View -> createChat());
+        binding.setterAdvertBack.setOnClickListener(View -> finish());
+        binding.setterAdvertAccept.setOnClickListener(View -> makeHelp());
+        binding.setterAdvertCreateChat.setOnClickListener(View -> createChat());
 
         getAdvertisement(getIntent().getStringExtra("advertID"));
     }
@@ -94,10 +71,10 @@ public class SetterAdvertActivity extends AppCompatActivity {
                 else {
                     advertisement = response.body();
                     productsAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.item_getter_product_name, advertisement.getListProducts());
-                    listProducts.setAdapter(productsAdapter);
-                    authorName.setText(advertisement.getAuthorName());
-                    title.setText(advertisement.getTitle());
-                    dateAdvert.setText(advertisement.getDateOfCreated());
+                    binding.setterAdvertProductItemListProducts.setAdapter(productsAdapter);
+                    binding.setterAdvertAuthor.setText(advertisement.getAuthorName());
+                    binding.setterAdvertTitle.setText(advertisement.getTitle());
+                    binding.setterAdvertDate.setText(advertisement.getDateOfCreated());
                 }
             }
 
@@ -110,24 +87,24 @@ public class SetterAdvertActivity extends AppCompatActivity {
 
 
     private void makeHelp() {
-        acceptBtn.setEnabled(false);
-        AdvertsRepository.makeDoneAdvert(new RequestDoneAdvert(advertisement.getAuthorID(), getSetterID(), Advertisement.generateID())).enqueue(new Callback<RequestDoneAdvert>() {
+        binding.setterAdvertAccept.setEnabled(false);
+        AdvertsRepository.makeDoneAdvert(new RequestDoneAdvert(advertisement.getAuthorID(), defineUser.getTypeUser().first, Advertisement.generateID())).enqueue(new Callback<RequestDoneAdvert>() {
             @Override
             public void onResponse(@NotNull Call<RequestDoneAdvert> call, @NotNull Response<RequestDoneAdvert> response) {
-                if (response.code() == 400) {
-                    acceptBtn.setEnabled(true);
-                    Toast.makeText(getApplicationContext(), R.string.smth_not_good_try_again, Toast.LENGTH_SHORT).show();
-                } else {
+                if (response.isSuccessful()) {
                     saveMessageForUser();
                     Intent intent = new Intent(SetterAdvertActivity.this, SetterHelpFinishActivity.class);
                     startActivity(intent);
                     finish();
+                } else {
+                    binding.setterAdvertAccept.setEnabled(true);
+                    Toast.makeText(getApplicationContext(), R.string.smth_not_good_try_again, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<RequestDoneAdvert> call, @NotNull Throwable t) {
-                acceptBtn.setEnabled(true);
+                binding.setterAdvertAccept.setEnabled(true);
                 t.printStackTrace();
             }
         });
@@ -137,11 +114,10 @@ public class SetterAdvertActivity extends AppCompatActivity {
         GetterRepository.getFCMtoken(advertisement.getAuthorID()).enqueue(new Callback<ResponseFCMToken>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
-                if (response.code() == 400) Toast.makeText(SetterAdvertActivity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                if (response.code() == 200) {
+                if (response.isSuccessful() && response.body() != null) {
                     fcmToken = response.body().getFcmToken();
                     sendNotification();
-                }
+                } else Toast.makeText(SetterAdvertActivity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -153,7 +129,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
     }
 
     private void sendNotification() {
-            NotificationRepository.requestNotifyDonateCall(fcmToken, successTitle, successBody).enqueue(new Callback<ResponseBody>() {
+            NotificationRepository.requestNotifyDonateCall(fcmToken, getString(R.string.success_advert), getString(R.string.success_advert_body)).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
@@ -163,7 +139,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                     Toast.makeText(SetterAdvertActivity.this, R.string.smth_problrs, Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
                 }
@@ -171,8 +147,8 @@ public class SetterAdvertActivity extends AppCompatActivity {
     }
 
     private void saveMessageForUser() {
-        Notification notification = new Notification(successTitle, successBody, advertisement.getAuthorID());
-        notification.setFromUserID(getSetterID());
+        Notification notification = new Notification(getString(R.string.success_advert), getString(R.string.success_advert_body), advertisement.getAuthorID());
+        notification.setFromUserID(defineUser.getTypeUser().first);
         notification.setListItems(advertisement.getListProducts());
         notification.setTypeOfUser("getter");
         NotificationRepository.createNotification(notification).enqueue(new Callback<Notification>() {
@@ -190,29 +166,12 @@ public class SetterAdvertActivity extends AppCompatActivity {
         });
     }
 
-    private String getSetterID() {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            return sharedPreferences.getString("X5_id", "");
-        } catch (IOException | GeneralSecurityException err) {
-            Log.e(getString(R.string.unvisinle_error), err.toString());
-            err.printStackTrace();
-        }
-
-        return null;
-    }
-
-
     private void createChat() {
         ApplicationCore app = (ApplicationCore) getApplication();
         socket = app.getSocket();
         socket.connect();
         try {
-            JSONArray arr = new JSONArray(new String[]{getSetterID(), advertisement.getAuthorID()});
+            JSONArray arr = new JSONArray(new String[]{defineUser.getTypeUser().first, advertisement.getAuthorID()});
             socket.emit("create_chat", arr);
         } catch (JSONException err) {
             Log.d("msg", err.getMessage());
@@ -222,7 +181,5 @@ public class SetterAdvertActivity extends AppCompatActivity {
             Intent intent = new Intent(SetterAdvertActivity.this, ChatsListActivity.class);
             startActivity(intent);
         });
-
-
     }
 }

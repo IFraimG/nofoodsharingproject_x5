@@ -22,8 +22,6 @@ import io.socket.emitter.Emitter;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
-    private ImageView sendMessageButton;
-    private EditText messageInput;
     private Socket mSocket;
     private String chatID;
     private DefineUser defineUser;
@@ -41,10 +39,7 @@ public class ChatActivity extends AppCompatActivity {
         mSocket = app.getSocket();
         mSocket.connect();
 
-        sendMessageButton = binding.messagesSend;
-        messageInput = binding.messagesInput;
-
-        sendMessageButton.setOnClickListener(View -> sendMessage());
+        binding.messagesSend.setOnClickListener(View -> sendMessage());
 
         getMessages();
 
@@ -65,7 +60,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
     private void sendMessage() {
-        String body = messageInput.getText().toString();
+        String body = binding.messagesInput.getText().toString();
         if (body.length() == 0) Toast.makeText(this, getString(R.string.no_input_message), Toast.LENGTH_SHORT).show();
         else {
             try {
@@ -76,7 +71,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 mSocket.emit("save_message", jsonObject);
 
-                messageInput.setText("");
+                binding.messagesInput.setText("");
             } catch (JSONException err) {
                 err.printStackTrace();
             }

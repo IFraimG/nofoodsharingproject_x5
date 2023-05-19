@@ -1,13 +1,9 @@
 package com.example.nofoodsharingproject.activities;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.adapters.FaqAdapter;
@@ -18,9 +14,6 @@ import java.util.Arrays;
 
 public class FaqActivity extends AppCompatActivity {
     private ActivityFaqBinding binding;
-    private RecyclerView setterRecycler;
-    private RecyclerView getterRecycler;
-    private ImageView returnButton;
 
     private Faq[] getterQuesitons = new Faq[]{
             new Faq("Как создать объявление?", "Для создания объявления необходимо перейти на вкладку \"Объяления\", и проверить, что пункт \"Адрес магазина\" не пустой. Если же адреса нет, то вам необходимо прикрепиться к магазину. Читайте об этом ниже. Затем, необходимо нажать на кнопку \"Создать новое объявление\". В случае отсутствия данной кнопки, проверьте, есть ли у вас созданное активное объявление, и удалите его, посредством нажатия на кнопку \"Удалить объявление\", а затем нажмите  \"Создать новое объявление\". Затем, нажатием на названия продуктов, выберите необходимые вам товары. Помните, что их должно быть не более двух. В нижней части экрана отобразиться список товаров, выбранных вами. Также, не забудте ввести название вашего объявления. Затем, остаётся только нажать кнопку \"Готово\", и ваше объявление создано. Также, оно отобразится на экране \"Объявления\"."),
@@ -47,11 +40,7 @@ public class FaqActivity extends AppCompatActivity {
         binding = ActivityFaqBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setterRecycler = binding.faqSetterList;
-        getterRecycler = binding.faqGetterList;
-        returnButton = binding.faqReturn;
-
-        returnButton.setOnClickListener(View -> finish());
+        binding.faqReturn.setOnClickListener(View -> finish());
 
         FaqAdapter faqAdapterSetter = new FaqAdapter(getApplicationContext());
         FaqAdapter faqAdapterGetter = new FaqAdapter(getApplicationContext());
@@ -59,7 +48,7 @@ public class FaqActivity extends AppCompatActivity {
         faqAdapterSetter.loadFaq(Arrays.asList(setterQuesitons));
         faqAdapterGetter.loadFaq(Arrays.asList(getterQuesitons));
 
-        setterRecycler.setAdapter(faqAdapterSetter);
-        getterRecycler.setAdapter(faqAdapterGetter);
+        binding.faqSetterList.setAdapter(faqAdapterSetter);
+        binding.faqGetterList.setAdapter(faqAdapterGetter);
     }
 }

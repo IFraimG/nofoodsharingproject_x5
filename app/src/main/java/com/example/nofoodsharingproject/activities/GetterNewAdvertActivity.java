@@ -8,9 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,11 +39,6 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
             "Белокочанная капуста", "Морковь", "Яблоки", "Свинина", "Баранина", "Курица"};
     private final List<String> userProductItems = new ArrayList<String>();
     private ActivityGetterCreateNewAdvertismentBinding binding;
-    private Button button_ready;
-    private Button button_back;
-    private ListView listViewChoose;
-    private ListView listViewChoosenItems;
-    private EditText titleAdvert;
     private ArrayAdapter<String> arrayAdapterChoose;
     private ArrayAdapter<String> arrayAdapterChoosenItems;
 
@@ -57,52 +49,46 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
         binding = ActivityGetterCreateNewAdvertismentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        button_ready = binding.readyToCreate;
-        button_back = binding.buttonBack;
-        listViewChoose = binding.productChoice;
-        listViewChoosenItems = binding.productChoosenItems;
-        titleAdvert = binding.getterAdvertInputTitle;
-
         arrayAdapterChoose = new ArrayAdapter<String>(this, R.layout.item_getter_product_name, this.productItems);
         arrayAdapterChoosenItems = new ArrayAdapter<String>(this, R.layout.item_getter_product_done_name, this.userProductItems);
 
-        listViewChoose.setAdapter(arrayAdapterChoose);
-        listViewChoosenItems.setAdapter(arrayAdapterChoosenItems);
+        binding.productChoice.setAdapter(arrayAdapterChoose);
+        binding.productChoosenItems.setAdapter(arrayAdapterChoosenItems);
 
-        listViewChoose.setOnItemClickListener((parent, view, position, id) -> chooseItem(position));
+        binding.productChoice.setOnItemClickListener((parent, view, position, id) -> chooseItem(position));
 
-        listViewChoosenItems.setOnItemClickListener((parent, view, position, id) -> {
+        binding.productChoosenItems.setOnItemClickListener((parent, view, position, id) -> {
             userProductItems.remove(position);
             arrayAdapterChoosenItems.notifyDataSetChanged();
 
             Toast.makeText(GetterNewAdvertActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
         });
 
-        button_back.setOnClickListener(View -> finish());
-        button_ready.setOnClickListener(View -> pushData());
+        binding.buttonBack.setOnClickListener(View -> finish());
+        binding.readyToCreate.setOnClickListener(View -> pushData());
     }
 
     private void pushData() {
         if (userProductItems.size() == 0)
             Toast.makeText(GetterNewAdvertActivity.this, R.string.add_to_list_product, Toast.LENGTH_SHORT).show();
-        else if (titleAdvert.getText().toString().length() == 0) {
+        else if (binding.getterAdvertInputTitle.getText().toString().length() == 0) {
             Toast.makeText(GetterNewAdvertActivity.this, R.string.edit_name, Toast.LENGTH_SHORT).show();
         } else if (userProductItems.size() > 3) {
             Toast.makeText(GetterNewAdvertActivity.this, R.string.many_products, Toast.LENGTH_SHORT).show();
         } else {
             Getter result = getUserInfo();
-            Advertisement advertisement = new Advertisement(titleAdvert.getText().toString(), result.getX5_Id(), result.getLogin());
+            Advertisement advertisement = new Advertisement(binding.getterAdvertInputTitle.getText().toString(), result.getX5_Id(), result.getLogin());
             advertisement.setGettingProductID(Advertisement.generateID());
             if (userProductItems.size() > 0) advertisement.setListProductsCustom(userProductItems);
 
-            button_ready.setEnabled(false);
+            binding.readyToCreate.setEnabled(false);
             AdvertsRepository.createAdvert(advertisement).enqueue(new Callback<Advertisement>() {
                 @Override
                 public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                     Advertisement result = response.body();
                     if (response.code() == 400) {
                         Toast.makeText(GetterNewAdvertActivity.this, R.string.problems, Toast.LENGTH_SHORT).show();
-                        button_ready.setEnabled(true);
+                        binding.readyToCreate.setEnabled(true);
                     } else {
                         Toast.makeText(getApplicationContext(),
                                 R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
@@ -113,7 +99,7 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NotNull Call<Advertisement> call, @NotNull Throwable t) {
-                    button_ready.setEnabled(true);
+                    binding.readyToCreate.setEnabled(true);
                     Toast.makeText(getApplicationContext(),
                             R.string.smth_not_good, Toast.LENGTH_SHORT).show();
                     t.printStackTrace();
