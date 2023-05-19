@@ -44,6 +44,11 @@ public class DefineUser<T extends User> {
         return sharedPreferences.getString("server_url", "https://buy-help-server.onrender.com");
     }
 
+    public void setDefaultBasePathForRetrofit() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("server_url", "https://buy-help-server.onrender.com").apply();
+    }
+
     public void initEsp(Activity activity) {
         try {
             MasterKey masterKey = new MasterKey.Builder(activity.getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)

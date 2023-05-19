@@ -73,17 +73,31 @@
                 android:text="@string/broadcast_text_hint" />
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
+        android:layout_marginBottom="@dimen/standard_size_very_medium">
+        <ImageButton
+            android:id="@+id/setter_profile_open_chat_"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/standard_size_very_medium"
+            android:layout_marginEnd="@dimen/standard_size_very_medium"
+            android:src="@drawable/baseline_chat_24"
+            android:background="@drawable/custom_round_border"
+            android:contentDescription="@string/no_image_warnings"
+            />
 
-    <Button
-        android:id="@+id/setter_open_vk"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/very_big"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/standard_size_very_medium"
-        android:text="@string/open_vk"
-        android:textSize="14sp"
-        app:backgroundTint="@color/green_pastel" />
-
+        <Button
+            android:id="@+id/setter_open_vk"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/very_big"
+            android:text="@string/open_vk"
+            android:textSize="14sp"
+            app:backgroundTint="@color/green_pastel" />
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/setter_profile_edit"
         android:layout_width="match_parent"

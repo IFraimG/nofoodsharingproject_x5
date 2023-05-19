@@ -7,18 +7,38 @@
     android:orientation="vertical"
     tools:context=".activities.ChatActivity">
 
-    <TextView
+    <LinearLayout
         android:id="@+id/messages_title"
-        style="@style/heading_getter_fragments"
-        android:text="@string/chat_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/chat_return"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/standard_size_very_medium"
+            android:src="@drawable/ic_baseline_chevron_left_24"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/standard_size_very_medium"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="@string/chat_title"
+            />
+    </LinearLayout>
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/messages_top_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:background="@color/grey_100"
         app:layout_constraintStart_toStartOf="@+id/messages_title"
         app:layout_constraintTop_toTopOf="@+id/messages_title" />
@@ -64,20 +84,25 @@
 
             <EditText
                 android:id="@+id/messages_input"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center|start"
                 android:background="@drawable/custom_round_border"
                 android:hint="@string/enter_message"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:minWidth="250dp"
+                android:padding="5dp"
+                android:maxLines="8"
+                android:layout_weight="0.8"
+                android:maxLength="1000"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp" />
 
             <ImageView
                 android:id="@+id/messages_send"
-                android:layout_width="64dp"
+                android:layout_width="0dp"
                 android:layout_height="64dp"
+                android:layout_weight="0.2"
                 android:layout_gravity="center|end"
                 android:layout_marginStart="@dimen/standard_size_very_medium"
                 android:background="@drawable/custom_round_border"
