@@ -53,6 +53,7 @@ public class ChatActivity extends AppCompatActivity {
         mSocket.connect();
 
         binding.messagesSend.setOnClickListener(View -> sendMessage());
+        binding.chatReturn.setOnClickListener(View -> finish());
 
         mSocket.emit("get_messages", chatID);
         mSocket.on("set_messages", setMessages);

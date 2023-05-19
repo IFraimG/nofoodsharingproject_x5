@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.activities.ChatsListActivity;
 import com.example.nofoodsharingproject.activities.MainAuthActivity;
 import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseHistoryAdverts;
@@ -70,6 +71,7 @@ public class SetterProfileFragment extends Fragment {
         binding.setterProfileName.setText(user.getLogin());
         binding.setterProfilePhone.setText(user.getPhone());
         binding.setterProfileLocation.setChecked(isCheckedLocation);
+        binding.setterProfileOpenChat.setOnClickListener(View -> openChats());
 
         getHistoryList();
         handlers();
@@ -244,5 +246,10 @@ public class SetterProfileFragment extends Fragment {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(getContext(), getString(R.string.smth_wrong), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void openChats() {
+        Intent intent = new Intent(requireActivity(), ChatsListActivity.class);
+        startActivity(intent);
     }
 }

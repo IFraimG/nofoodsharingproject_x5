@@ -43,6 +43,9 @@ public class SecretFragment extends DialogFragment {
                     RetrofitService.changeBaseUrl(defineUser.getBaseForRetrofit());
                 })
                 .setNegativeButton("Отмена", (dialog, id) -> {
+                    DefineUser defineUser = new DefineUser(requireActivity());
+                    defineUser.setDefaultBasePathForRetrofit();
+                    RetrofitService.changeBaseUrl(defineUser.getBaseForRetrofit());
                 });
 
 
