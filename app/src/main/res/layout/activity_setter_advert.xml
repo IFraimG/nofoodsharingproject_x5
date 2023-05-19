@@ -44,7 +44,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginTop="@dimen/standard_size_very_medium">
         <TextView
             android:id="@+id/setter_advert_author"
@@ -67,9 +67,11 @@
             android:id="@+id/setter_advert_create_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_size_very_medium"
+            android:layout_marginBottom="@dimen/standard_size_very_medium"
             android:textSize="16sp"
             android:backgroundTint="@color/green_pastel"
-            android:text="Написать пользователю" />
+            android:text="@string/write_to_getter" />
     </LinearLayout>
     <TextView
         android:id="@+id/setter_advert_product_title"

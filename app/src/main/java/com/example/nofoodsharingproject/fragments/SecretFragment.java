@@ -2,16 +2,11 @@ package com.example.nofoodsharingproject.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -37,12 +32,6 @@ public class SecretFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-//        thread = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                getFreeAddresses();
-//            }
-//        });
         final EditText input = new EditText(requireContext());
 
 
@@ -65,16 +54,6 @@ public class SecretFragment extends DialogFragment {
 
         return builder.create();
     }
-
-
-    //    public SecretFragment(Context ctx) {
-//        super(ctx);
-//        binding = FragmentSecretBinding.inflate(getLayoutInflater());
-//
-//        setContentView(binding.getRoot());
-//
-//        secretList = binding.secretList;
-//    }
 
     private void getIpAddresses() {
         try {

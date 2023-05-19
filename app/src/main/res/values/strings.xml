@@ -158,4 +158,6 @@
     <string name="success_advert">На ваше объявление откликнулись!</string>
     <string name="success_advert_body">Заберите продукты как можно скорее.</string>
     <string name="error_fmc">Fetching FCM registration token failed</string>
+    <string name="time_default">00-00-0000 00:00:00</string>
+    <string name="write_to_getter">Сообщите нуждающемуся о покупке сами!</string>
 </resources>

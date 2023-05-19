@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,8 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
@@ -35,10 +32,6 @@ public class SetterAdvrsFragment extends Fragment {
     private AdvertisementListViewModel viewModel;
     private FragmentSetterAdvrsBinding binding;
 
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private TextView linkFAQ;
-    private Spinner filter;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +41,6 @@ public class SetterAdvrsFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterAdvrsBinding.inflate(inflater);
         RecyclerView recyclerView = binding.setterListAdvert;
-        swipeRefreshLayout = binding.setterAdvertSwiper;
-        linkFAQ = binding.setterAdvertFaq;
-        filter = binding.setterAdvertFilter;
 
         SetterAdvertListAdapter setterAdvertListAdapter = new SetterAdvertListAdapter(getContext());
         recyclerView.setAdapter(setterAdvertListAdapter);
@@ -63,12 +53,12 @@ public class SetterAdvrsFragment extends Fragment {
         viewModel.getAllAdverts(getUserID()).observe(requireActivity(), setterAdvertListAdapter::updateAdverts);
         viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
 
-        swipeRefreshLayout.setOnRefreshListener(() -> {
+        binding.setterAdvertSwiper.setOnRefreshListener(() -> {
             viewModel.getAllAdverts(getUserID()).observe(requireActivity(), setterAdvertListAdapter::updateAdverts);
-            swipeRefreshLayout.setRefreshing(false);
+            binding.setterAdvertSwiper.setRefreshing(false);
         });
 
-        linkFAQ.setOnClickListener(View -> {
+        binding.setterAdvertFaq.setOnClickListener(View -> {
             Intent intent = new Intent(getContext(), FaqActivity.class);
             startActivity(intent);
         });
@@ -87,12 +77,12 @@ public class SetterAdvrsFragment extends Fragment {
             case LOADED:
                 binding.setterListAdvert.setVisibility(View.VISIBLE);
                 binding.setterLoader.setVisibility(View.INVISIBLE);
-                swipeRefreshLayout.setRefreshing(false);
+                binding.setterAdvertSwiper.setRefreshing(false);
                 break;
             case FAILURE:
                 binding.setterListAdvert.setVisibility(View.INVISIBLE);
                 binding.setterLoader.setVisibility(View.INVISIBLE);
-                swipeRefreshLayout.setRefreshing(false);
+                binding.setterAdvertSwiper.setRefreshing(false);
                 break;
         }
     }
@@ -116,17 +106,17 @@ public class SetterAdvrsFragment extends Fragment {
     private void initFilter() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.market_item, viewModel.getFullListMarkets());
         adapter.setDropDownViewResource(R.layout.map_dropdown_text);
-        filter.setAdapter(adapter);
+        binding.setterAdvertFilter.setAdapter(adapter);
         viewModel.getMarket().observe(requireActivity(), s -> {
             int pos = viewModel.getActiveMarketPosition();
-            if (pos != -1) filter.setSelection(pos);
+            if (pos != -1) binding.setterAdvertFilter.setSelection(pos);
         });
 
-        filter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.setterAdvertFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 viewModel.setActiveMarket(position);
-                filter.setSelection(position);
+                binding.setterAdvertFilter.setSelection(position);
             }
 
             @Override

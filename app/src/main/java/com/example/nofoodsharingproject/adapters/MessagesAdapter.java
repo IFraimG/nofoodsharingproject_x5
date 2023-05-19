@@ -1,13 +1,16 @@
 package com.example.nofoodsharingproject.adapters;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nofoodsharingproject.R;
@@ -20,12 +23,15 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     private final Context ctx;
     private final List<Message> messages = new ArrayList<>();
     private final LayoutInflater inflater;
+    private final String userID;
 
-    public MessagesAdapter(Context context) {
+    public MessagesAdapter(Context context, String userID) {
         this.ctx = context;
+        this.userID = userID;
         this.inflater = LayoutInflater.from(context);
     }
 
+    @NonNull
     @Override
     public MessagesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_message, parent, false);
@@ -35,9 +41,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull MessagesAdapter.ViewHolder holder, int position) {
         Message message = messages.get(position);
-//        holder.title.setText(notification.getTitle());
-//        holder.desc.setText(notification.getDescription());
-//        holder.createdAt.setText(notification.getCreatedAt());
+
+        holder.body.setText(message.getBody());
+        holder.dateCreated.setText(message.getDateCreated());
+        if (message.getAuthorID().equals(userID)) holder.msgLayout.setBackground(AppCompatResources.getDrawable(ctx, R.drawable.custom_border_list));
     }
 
     @Override
@@ -47,7 +54,6 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     public void updateMessages(List<Message> messages) {
         try {
-            this.messages.clear();
             this.messages.addAll(messages);
             notifyDataSetChanged();
         } catch (NullPointerException err) {
@@ -55,16 +61,25 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         }
     }
 
+    public void updateMessage(Message message) {
+        try {
+            this.messages.add(message);
+            notifyDataSetChanged();
+        } catch (NullPointerException err) {
+            Log.e("msg", ctx.getString(R.string.unvisinle_error));
+        }
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-//        public final TextView title;
-//        public final TextView desc;
-//        public final TextView createdAt;
+        public final TextView body;
+        public final TextView dateCreated;
+        public final LinearLayout msgLayout;
 
         public ViewHolder(View view) {
             super(view);
-//            this.title = (TextView) view.findViewById(R.id.notify_title);
-//            this.desc = (TextView) view.findViewById(R.id.notify_body);
-//            this.createdAt = (TextView) view.findViewById(R.id.notify_date);
+            this.body = (TextView) view.findViewById(R.id.message_body);
+            this.dateCreated = (TextView) view.findViewById(R.id.message_date);
+            this.msgLayout = (LinearLayout) view.findViewById(R.id.message_layout);
         }
     }
 }
