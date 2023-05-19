@@ -94,6 +94,7 @@
     <string name="login_hint">Логин</string>
     <string name="telephone_hint">Телефон</string>
     <string name="enter_existing_password_hint">Введите существующий пароль</string>
+    <string name="enter_message">Введите сообщение...</string>
     <string name="new_password_hint">Новый пароль</string>
     <string name="update_profile_data_text">Обновить данные профиля</string>
     <string name="name_of_product_text">Название продукта</string>
@@ -150,4 +151,8 @@
     <string name="location_on_title">Спасибо, что используете наше приложение с умом!</string>
     <string name="location_on_body">Когда вы будете рядом с вашим магазином, мы сообщим вам о нуждающемся</string>
     <string name="help_getter">Помогите нуждающемуся.</string>
+    <string name="chat_title">Чат</string>
+    <string name="chats_title">Список чатов</string>
+    <string name="send_message">Отправить</string>
+    <string name="no_input_message">Вы не ввели сообщение!</string>
 </resources>

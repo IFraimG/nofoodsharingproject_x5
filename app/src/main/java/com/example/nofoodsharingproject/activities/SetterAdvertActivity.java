@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
+import com.example.nofoodsharingproject.ApplicationCore;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.adverts.dto.RequestDoneAdvert;
 import com.example.nofoodsharingproject.data.api.notifications.dto.ResponseFCMToken;
@@ -27,10 +28,13 @@ import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Notification;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import io.socket.client.Socket;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,10 +50,11 @@ public class SetterAdvertActivity extends AppCompatActivity {
     private TextView title;
     private TextView dateAdvert;
     private String fcmToken;
+    private Button createChatButton;
 
     private String successTitle = "На ваше объявление откликнулись!";
     private String successBody = "Заберите продукты как можно скорее.";
-
+    private Socket socket;
     private ArrayAdapter<String> productsAdapter;
 
     @Override
@@ -64,11 +69,20 @@ public class SetterAdvertActivity extends AppCompatActivity {
         authorName = binding.setterAdvertAuthor;
         title = binding.setterAdvertTitle;
         dateAdvert = binding.setterAdvertDate;
+        createChatButton = binding.setterAdvertCreateChat;
 
         backButton.setOnClickListener(View -> finish());
         acceptBtn.setOnClickListener(View -> makeHelp());
+        createChatButton.setOnClickListener(View -> createChat());
 
         getAdvertisement(getIntent().getStringExtra("advertID"));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (socket != null) socket.disconnect();
     }
 
     private void getAdvertisement(String advertID) {
@@ -190,5 +204,25 @@ public class SetterAdvertActivity extends AppCompatActivity {
         }
 
         return null;
+    }
+
+
+    private void createChat() {
+        ApplicationCore app = (ApplicationCore) getApplication();
+        socket = app.getSocket();
+        socket.connect();
+        try {
+            JSONArray arr = new JSONArray(new String[]{getSetterID(), advertisement.getAuthorID()});
+            socket.emit("create_chat", arr);
+        } catch (JSONException err) {
+            Log.d("msg", err.getMessage());
+        }
+
+        socket.on("getCreatedChat", args -> {
+            Intent intent = new Intent(SetterAdvertActivity.this, ChatsListActivity.class);
+            startActivity(intent);
+        });
+
+
     }
 }

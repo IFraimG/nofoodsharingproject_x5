@@ -1,7 +1,6 @@
 package com.example.nofoodsharingproject;
 
 import android.app.Application;
-import android.content.SharedPreferences;
 
 import com.example.nofoodsharingproject.data.RetrofitService;
 import com.example.nofoodsharingproject.utils.DefineUser;
@@ -10,8 +9,14 @@ import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.yandex.mapkit.MapKitFactory;
 
+import io.socket.client.Socket;
+import java.net.URI;
+
+import io.socket.client.IO;
+
 public class ApplicationCore extends Application {
     private boolean isInitMap = false;
+    private Socket mSocket;
 
     @Override
     public void onCreate() {
@@ -31,5 +36,11 @@ public class ApplicationCore extends Application {
         RetrofitService.changeBaseUrl(defineUser.getBaseForRetrofit());
 
         AndroidThreeTen.init(getApplicationContext());
+
+        mSocket = IO.socket(URI.create(defineUser.getBaseForRetrofit()));
+    }
+
+    public Socket getSocket() {
+        return mSocket;
     }
 }

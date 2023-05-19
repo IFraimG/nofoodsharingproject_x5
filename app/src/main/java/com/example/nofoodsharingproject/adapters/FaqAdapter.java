@@ -1,12 +1,15 @@
 package com.example.nofoodsharingproject.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +48,16 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
             holder.answerLayout.setVisibility(android.view.View.VISIBLE);
             holder.showAnswer.setVisibility(android.view.View.GONE);
             holder.removeAnswer.setVisibility(android.view.View.VISIBLE);
+
+            if (faqItem.getImages() != null && faqItem.getImages().length > 0) {
+                List<Integer> items = new ArrayList<>();
+                for (int item : faqItem.getImages()) items.add(item);
+
+                ArrayAdapter<Integer> arrayAdapter = new FaqImagesAdapter(ctx, items);
+                holder.imagesList.setAdapter(arrayAdapter);
+
+                holder.imagesList.setVisibility(android.view.View.VISIBLE);
+            }
         });
 
         holder.removeAnswer.setOnClickListener(View -> {
@@ -52,6 +65,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
             holder.answerLayout.setVisibility(android.view.View.GONE);
             holder.showAnswer.setVisibility(android.view.View.VISIBLE);
             holder.removeAnswer.setVisibility(android.view.View.GONE);
+            holder.imagesList.setVisibility(android.view.View.GONE);
         });
     }
 
@@ -77,6 +91,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
         public final ImageView showAnswer;
         public final LinearLayout answerLayout;
         public final ImageView removeAnswer;
+        public final ListView imagesList;
 
         public ViewHolder(View view) {
             super(view);
@@ -85,6 +100,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
             this.answer = (TextView) view.findViewById(R.id.faq_item_answer);
             this.answerLayout = (LinearLayout) view.findViewById(R.id.faq_item_show_answer);
             this.removeAnswer = (ImageView) view.findViewById(R.id.faq_item_remove);
+            this.imagesList = (ListView) view.findViewById(R.id.faq_item_images);
         }
     }
 }

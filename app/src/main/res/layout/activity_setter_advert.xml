@@ -63,6 +63,13 @@
             android:layout_weight="1"
             android:text="@string/date_text"
             android:textSize="18sp" />
+        <Button
+            android:id="@+id/setter_advert_create_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:backgroundTint="@color/green_pastel"
+            android:text="Написать пользователю" />
     </LinearLayout>
     <TextView
         android:id="@+id/setter_advert_product_title"
