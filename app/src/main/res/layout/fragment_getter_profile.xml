@@ -34,7 +34,11 @@
         android:layout_gravity="center"
         android:text="@string/phone_number_text"
         android:textSize="20sp" />
-
+    <Button
+        android:id="@+id/getter_profile_open_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Перейти в чат"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

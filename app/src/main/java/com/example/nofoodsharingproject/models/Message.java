@@ -2,12 +2,21 @@ package com.example.nofoodsharingproject.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 public class Message {
     @SerializedName("body")
     private String body;
 
     @SerializedName("chatID")
     private String chatID;
+
+    @SerializedName("_id")
+    private String messageID;
 
     @SerializedName("authorID")
     private String authorID;
@@ -54,5 +63,25 @@ public class Message {
 
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public void createDate() {
+        Calendar calendar = Calendar.getInstance();
+
+        TimeZone moscowTimeZone = TimeZone.getTimeZone("Europe/Moscow");
+        calendar.setTimeZone(moscowTimeZone);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        dateFormat.setTimeZone(moscowTimeZone);
+
+        this.dateCreated = dateFormat.format(calendar.getTime());
     }
 }

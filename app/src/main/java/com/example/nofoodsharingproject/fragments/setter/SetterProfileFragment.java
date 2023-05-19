@@ -7,10 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,11 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
@@ -46,25 +38,8 @@ import retrofit2.Response;
 
 public class SetterProfileFragment extends Fragment {
     private FragmentSetterProfileBinding binding;
-    private SwitchCompat switchLocation;
-    private SwitchCompat switchNotification;
-    private ListView historyList;
     private String[] advertisementsHistory;
-    private TextView userName;
-    private TextView userPhone;
-    private TextView successProducts;
-    private TextView historyTitle;
-    private Button openVk;
-    private Button cancelEditButton;
-    private Toolbar toolbar;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private ArrayAdapter<String> arrayAdapter;
-    private LinearLayout editElements;
-    private EditText editLogin;
-    private EditText editPhone;
-    private EditText editPassword;
-    private EditText editNewPassword;
-    private Button saveEdit;
     private Setter user;
     private boolean isCheckedLocation = false;
     private boolean isCheckedNotification = false;
@@ -75,7 +50,7 @@ public class SetterProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        defineUser = new DefineUser<Setter>(requireActivity());
+        defineUser = new DefineUser<>(requireActivity());
 
         setHasOptionsMenu(true);
 
@@ -89,7 +64,13 @@ public class SetterProfileFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterProfileBinding.inflate(inflater);
 
-        importElements();
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(binding.setterProfileToolbar);
+
+        binding.setterProfileName.setText(user.getLogin());
+        binding.setterProfilePhone.setText(user.getPhone());
+        binding.setterProfileLocation.setChecked(isCheckedLocation);
+
         getHistoryList();
         handlers();
 
@@ -117,48 +98,21 @@ public class SetterProfileFragment extends Fragment {
     }
 
     private void handlers() {
-        toolbar.setOnMenuItemClickListener(this::toolbarHandle);
-        saveEdit.setOnClickListener(View -> closeEdit());
-        cancelEditButton.setOnClickListener(View -> removeEdit());
+        binding.setterProfileToolbar.setOnMenuItemClickListener(this::toolbarHandle);
+        binding.setterProfileSave.setOnClickListener(View -> closeEdit());
+        binding.setterProfileCancel.setOnClickListener(View -> removeEdit());
 
-        swipeRefreshLayout.setOnRefreshListener(this::getHistoryList);
+        binding.setterProfileSwiper.setOnRefreshListener(this::getHistoryList);
 
-        openVk.setOnClickListener(View -> vkLoad());
+        binding.setterOpenVk.setOnClickListener(View -> vkLoad());
 
-        switchLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        binding.setterProfileLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) PermissionHandler.requestPermissions(requireActivity());
             isCheckedLocation = isChecked && PermissionHandler.checkPermissions(requireContext());
-            switchLocation.setChecked(isCheckedLocation);
+            binding.setterProfileLocation.setChecked(isCheckedLocation);
         });
 
-        switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckedNotification = isChecked);
-    }
-
-    private void importElements() {
-        switchLocation = binding.setterProfileLocation;
-        switchNotification = binding.setterProfileNotifications;
-        historyList = binding.setterProfileHistoryList;
-        userName = binding.setterProfileName;
-        successProducts = binding.setterProfileCount;
-        openVk = binding.setterOpenVk;
-        toolbar = binding.setterProfileToolbar;
-        swipeRefreshLayout = binding.setterProfileSwiper;
-        editElements = binding.setterProfileEdit;
-        editLogin = binding.setterProfileEditLogin;
-        editPhone = binding.setterProfileEditPhone;
-        editPassword = binding.setterProfileEditOldPassword;
-        editNewPassword = binding.setterProfileEditPassword;
-        saveEdit = binding.setterProfileSave;
-        userPhone = binding.setterProfilePhone;
-        historyTitle = binding.setterProfileHistoryTitle;
-        cancelEditButton = binding.setterProfileCancel;
-
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
-        appCompatActivity.setSupportActionBar(toolbar);
-
-        userName.setText(user.getLogin());
-        userPhone.setText(user.getPhone());
-        switchLocation.setChecked(isCheckedLocation);
+        binding.setterProfileNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckedNotification = isChecked);
     }
 
     private void getHistoryList() {
@@ -168,7 +122,7 @@ public class SetterProfileFragment extends Fragment {
                 if (response.code() == 400) Toast.makeText(requireContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 else if (response.code() != 404 && response.body() != null) {
                     Advertisement[] result = response.body().getAdvertisements();
-                    successProducts.setText(Integer.toString(result.length) + getString(R.string.some_success_products));
+                    binding.setterProfileCount.setText(Integer.toString(result.length) + getString(R.string.some_success_products));
 
                     advertisementsHistory = new String[result.length];
                     for (int i = 0; i < result.length; i++) {
@@ -176,9 +130,9 @@ public class SetterProfileFragment extends Fragment {
                     }
 
                     arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advertisementsHistory);
-                    historyList.setAdapter(arrayAdapter);
+                    binding.setterProfileHistoryList.setAdapter(arrayAdapter);
 
-                    swipeRefreshLayout.setRefreshing(false);
+                    binding.setterProfileSwiper.setRefreshing(false);
                 }
             }
 
@@ -186,22 +140,22 @@ public class SetterProfileFragment extends Fragment {
             public void onFailure(@NotNull Call<ResponseHistoryAdverts> call, @NotNull Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                swipeRefreshLayout.setRefreshing(false);
+                binding.setterProfileSwiper.setRefreshing(false);
             }
         });
     }
 
     private void editProfile() {
-        this.historyList.setVisibility(View.GONE);
-        this.openVk.setVisibility(View.GONE);
-        this.historyTitle.setVisibility(View.GONE);
-        this.editElements.setVisibility(View.VISIBLE);
+        this.binding.setterProfileHistoryList.setVisibility(View.GONE);
+        this.binding.setterOpenVk.setVisibility(View.GONE);
+        this.binding.setterProfileHistoryTitle.setVisibility(View.GONE);
+        this.binding.setterProfileEdit.setVisibility(View.VISIBLE);
     }
 
     private void closeEdit() {
-        String editPhoneString = editPhone.getText().toString();
-        String editLoginString = editLogin.getText().toString();
-        String editPasswordString = editPassword.getText().toString();
+        String editPhoneString = binding.setterProfileEditPhone.getText().toString();
+        String editLoginString = binding.setterProfileEditLogin.getText().toString();
+        String editPasswordString = binding.setterProfileEditOldPassword.getText().toString();
 
         if (editLoginString.length() == 0 && editPhoneString.length() == 0 && editPasswordString.length() == 0) {
             defineUser.setToPreferences("location", isCheckedLocation);
@@ -228,18 +182,18 @@ public class SetterProfileFragment extends Fragment {
     }
 
     private void saveEditProfile() {
-        String newLogin = editLogin.getText().toString();
-        String newPhone = editPhone.getText().toString();
-        String newPassword = editNewPassword.getText().toString();
-        String oldPasswordText = editPassword.getText().toString();
+        String newLogin = binding.setterProfileEditLogin.getText().toString();
+        String newPhone = binding.setterProfileEditPhone.getText().toString();
+        String newPassword = binding.setterProfileEditPassword.getText().toString();
+        String oldPasswordText = binding.setterProfileEditOldPassword.getText().toString();
         SetterRepository.editProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Setter>() {
             @Override
             public void onResponse(@NotNull Call<Setter> call, @NotNull Response<Setter> response) {
                 if (response.code() == 400) Toast.makeText(getContext(), R.string.your_password_uncorrect, Toast.LENGTH_SHORT).show();
                 if (response.code() == 201) {
                     Toast.makeText(getContext(), R.string.sucses, Toast.LENGTH_SHORT).show();
-                    userName.setText(response.body().getLogin());
-                    userPhone.setText(response.body().getPhone());
+                    binding.setterProfileName.setText(response.body().getLogin());
+                    binding.setterProfilePhone.setText(response.body().getPhone());
 
                     defineUser.editProfileInfo(response.body().getLogin(), response.body().getPhone());
                 }
@@ -258,21 +212,21 @@ public class SetterProfileFragment extends Fragment {
     }
 
     private void enabledButton(boolean isEnable) {
-        saveEdit.setEnabled(isEnable);
-        switchLocation.setEnabled(isEnable);
-        switchNotification.setEnabled(isEnable);
+        binding.setterProfileSave.setEnabled(isEnable);
+        binding.setterProfileLocation.setEnabled(isEnable);
+        binding.setterProfileNotifications.setEnabled(isEnable);
     }
 
     private void removeEdit() {
-        editLogin.setText("");
-        editNewPassword.setText("");
-        editPhone.setText("");
-        editPassword.setText("");
+        binding.setterProfileEditLogin.setText("");
+        binding.setterProfileEditPassword.setText("");
+        binding.setterProfileEditPhone.setText("");
+        binding.setterProfileEditOldPassword.setText("");
 
-        this.historyList.setVisibility(View.VISIBLE);
-        this.openVk.setVisibility(View.VISIBLE);
-        this.historyTitle.setVisibility(View.VISIBLE);
-        this.editElements.setVisibility(View.GONE);
+        this.binding.setterProfileHistoryList.setVisibility(View.VISIBLE);
+        this.binding.setterOpenVk.setVisibility(View.VISIBLE);
+        this.binding.setterProfileHistoryTitle.setVisibility(View.VISIBLE);
+        this.binding.setterProfileEdit.setVisibility(View.GONE);
     }
 
     private void logout() {

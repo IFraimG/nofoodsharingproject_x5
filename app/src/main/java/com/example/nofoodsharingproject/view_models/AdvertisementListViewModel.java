@@ -49,8 +49,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
                 @Override
                 public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                     if (response.code() == 404 || response.code() == 400) loadAdverts("");
-                    else if (response.code() == 200 && response.body() != null)
-                        loadAdverts(response.body().getMarket());
+                    else if (response.code() == 200 && response.body() != null) loadAdverts(response.body().getMarket());
                 }
 
                 @Override

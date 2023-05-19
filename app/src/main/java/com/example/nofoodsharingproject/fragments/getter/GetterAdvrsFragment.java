@@ -8,10 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nofoodsharingproject.R;
@@ -39,22 +35,11 @@ import retrofit2.Response;
 
 public class GetterAdvrsFragment extends Fragment {
     private FragmentGetterAdvrsBinding binding;
-    private TextView addressShop;
-    private TextView numberAdvertisement;
-    private Button buttonNewAdvertisement;
-    private Button buttonTakenProducts;
-    private Button buttonStopAdvert;
-    private TextView textNewAdvert;
-    private TextView titleAdvert;
-    private LinearLayout statusAdvert;
-    private ListView listViewProducts;
-    private LinearLayout getterAdvertLayout;
     private Advertisement advertisement;
     private ArrayAdapter<String> arrayAdapter;
     private String market;
     private Pair<String, Boolean> userType;
     private DefineUser<Getter> defineUser;
-    private TextView linkFaq;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +53,10 @@ public class GetterAdvrsFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         binding = FragmentGetterAdvrsBinding.inflate(inflater);
 
-        initElements();
+        binding.textNumberOfAdvert.setVisibility(View.GONE);
+        binding.stopAdvert.setVisibility(View.GONE);
+        binding.getterAdvertLayout.setVisibility(View.GONE);
+
         getAddress();
         getAdvertisement();
         initHandlers();
@@ -76,34 +64,16 @@ public class GetterAdvrsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void initElements() {
-        addressShop = binding.addressShop;
-        numberAdvertisement = binding.numberOfAdvertisement;
-        buttonNewAdvertisement = binding.createNewRequest;
-        buttonTakenProducts = binding.pickUpOrder;
-        buttonStopAdvert = binding.stopAdvert;
-        textNewAdvert = binding.textNumberOfAdvert;
-        titleAdvert = binding.getterAdvertTitleProducts;
-        listViewProducts = binding.getterAdvertProducts;
-        statusAdvert = binding.getterAdvertStatus;
-        getterAdvertLayout = binding.getterAdvertLayout;
-        linkFaq = binding.getterAdvertFaq;
-
-        textNewAdvert.setVisibility(View.GONE);
-        buttonStopAdvert.setVisibility(View.GONE);
-        getterAdvertLayout.setVisibility(View.GONE);
-    }
-
     private void initHandlers() {
-        buttonNewAdvertisement.setOnClickListener(View -> {
+        binding.createNewRequest.setOnClickListener(View -> {
             if (market == null || market.length() == 0) Toast.makeText(getContext(), getString(R.string.pin_market), Toast.LENGTH_LONG).show();
             else startActivity(new Intent(getActivity(), GetterNewAdvertActivity.class));
         });
 
-        buttonStopAdvert.setOnClickListener(View -> removeAdvertisement());
-        buttonTakenProducts.setOnClickListener(View -> takeProducts());
+        binding.stopAdvert.setOnClickListener(View -> removeAdvertisement());
+        binding.pickUpOrder.setOnClickListener(View -> takeProducts());
 
-        linkFaq.setOnClickListener(View -> {
+        binding.getterAdvertFaq.setOnClickListener(View -> {
             Intent intent = new Intent(getContext(), FaqActivity.class);
             startActivity(intent);
         });
@@ -111,29 +81,29 @@ public class GetterAdvrsFragment extends Fragment {
 
     private void hideAdvertisementElements() {
         advertisement = null;
-        statusAdvert.setVisibility(View.VISIBLE);
-        buttonStopAdvert.setVisibility(View.GONE);
+        binding.getterAdvertStatus.setVisibility(View.VISIBLE);
+        binding.stopAdvert.setVisibility(View.GONE);
         arrayAdapter.notifyDataSetChanged();
-        buttonTakenProducts.setVisibility(View.GONE);
-        numberAdvertisement.setVisibility(View.GONE);
-        textNewAdvert.setVisibility(View.GONE);
-        getterAdvertLayout.setVisibility(View.GONE);
+        binding.pickUpOrder.setVisibility(View.GONE);
+        binding.numberOfAdvertisement.setVisibility(View.GONE);
+        binding.textNumberOfAdvert.setVisibility(View.GONE);
+        binding.getterAdvertLayout.setVisibility(View.GONE);
     }
 
     private void showAdvertisementElements(Advertisement advert) {
-        titleAdvert.setText(advert.getTitle());
-        statusAdvert.setVisibility(View.GONE);
-        buttonStopAdvert.setVisibility(View.VISIBLE);
+        binding.getterAdvertTitleProducts.setText(advert.getTitle());
+        binding.getterAdvertStatus.setVisibility(View.GONE);
+        binding.stopAdvert.setVisibility(View.VISIBLE);
         arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advert.getListTitleProducts());
-        listViewProducts.setAdapter(arrayAdapter);
-        getterAdvertLayout.setVisibility(View.VISIBLE);
+        binding.getterAdvertProducts.setAdapter(arrayAdapter);
+        binding.getterAdvertLayout.setVisibility(View.VISIBLE);
         advertisement = advert;
 
         if (advert.getGettingProductID() != null && advert.getGettingProductID().length() > 0) {
-            buttonTakenProducts.setVisibility(View.VISIBLE);
-            numberAdvertisement.setVisibility(View.VISIBLE);
-            textNewAdvert.setVisibility(View.VISIBLE);
-            numberAdvertisement.setText(advert.getGettingProductID());
+            binding.pickUpOrder.setVisibility(View.VISIBLE);
+            binding.numberOfAdvertisement.setVisibility(View.VISIBLE);
+            binding.textNumberOfAdvert.setVisibility(View.VISIBLE);
+            binding.numberOfAdvertisement.setText(advert.getGettingProductID());
         }
     }
 
@@ -143,10 +113,10 @@ public class GetterAdvrsFragment extends Fragment {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.code() == 400) {
-                    buttonNewAdvertisement.setVisibility(View.VISIBLE);
+                    binding.createNewRequest.setVisibility(View.VISIBLE);
                     Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 }
-                if (response.code() == 404) buttonNewAdvertisement.setVisibility(View.VISIBLE);
+                if (response.code() == 404) binding.createNewRequest.setVisibility(View.VISIBLE);
                 if (response.code() == 200 && response.body() != null) showAdvertisementElements(response.body());
             }
 
@@ -265,8 +235,8 @@ public class GetterAdvrsFragment extends Fragment {
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                 if (response.code() != 404 && response.code() != 400 && response.body() != null) {
                     market = response.body().market;
-                    addressShop.setText(response.body().market);
-                    addressShop.setVisibility(View.VISIBLE);
+                    binding.addressShop.setText(response.body().market);
+                    binding.addressShop.setVisibility(View.VISIBLE);
                 }
             }
 

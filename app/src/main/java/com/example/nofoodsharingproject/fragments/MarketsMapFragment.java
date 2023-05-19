@@ -1,14 +1,10 @@
 package com.example.nofoodsharingproject.fragments;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.PointF;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Pair;

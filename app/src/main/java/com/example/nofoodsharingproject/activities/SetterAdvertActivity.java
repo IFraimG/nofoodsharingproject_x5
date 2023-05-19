@@ -94,6 +94,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     saveMessageForUser();
                     Intent intent = new Intent(SetterAdvertActivity.this, SetterHelpFinishActivity.class);
+                    intent.putExtra("getterID", advertisement.getAuthorID());
                     startActivity(intent);
                     finish();
                 } else {

@@ -26,6 +26,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="100dp"
+        android:paddingBottom="100dp"
         app:layout_constraintBottom_toTopOf="@+id/messages_bottom"
         app:layout_constraintEnd_toEndOf="@+id/messages_bottom"
         app:layout_constraintStart_toStartOf="@+id/messages_top_divider"
@@ -35,7 +37,6 @@
             android:id="@+id/messages_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_message" />
     </ScrollView>
 
