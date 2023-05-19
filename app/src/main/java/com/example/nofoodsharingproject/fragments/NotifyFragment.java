@@ -27,7 +27,7 @@ public class NotifyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        defineUser = new DefineUser(requireActivity());
+        defineUser = new DefineUser<>(requireActivity());
     }
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

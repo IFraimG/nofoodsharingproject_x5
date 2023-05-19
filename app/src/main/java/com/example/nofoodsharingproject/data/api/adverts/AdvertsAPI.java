@@ -14,6 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface AdvertsAPI {
     @GET("/advertisements/get_active/{market}")
@@ -38,4 +39,7 @@ public interface AdvertsAPI {
 
     @GET("/advertisements/find_setter_advertisements/{userID}")
     Call<ResponseHistoryAdverts> findSetterAdvertisements(@Path("userID") String userID);
+
+    @GET("/advertisements/get_active_by_market")
+    Call<Advertisement> getRandomAdvertByMarket(@Query("market") String market);
 }

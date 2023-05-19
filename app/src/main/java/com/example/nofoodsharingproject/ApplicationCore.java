@@ -7,6 +7,7 @@ import com.example.nofoodsharingproject.data.RetrofitService;
 import com.example.nofoodsharingproject.utils.DefineUser;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.yandex.mapkit.MapKitFactory;
 
 public class ApplicationCore extends Application {
@@ -28,5 +29,7 @@ public class ApplicationCore extends Application {
 
         DefineUser defineUser = new DefineUser(getSharedPreferences("prms", MODE_PRIVATE));
         RetrofitService.changeBaseUrl(defineUser.getBaseForRetrofit());
+
+        AndroidThreeTen.init(getApplicationContext());
     }
 }

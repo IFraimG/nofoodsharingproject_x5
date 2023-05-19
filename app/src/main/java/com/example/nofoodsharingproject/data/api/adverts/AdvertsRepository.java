@@ -42,4 +42,8 @@ public class AdvertsRepository {
     public static Call<ResponseHistoryAdverts> findSetterAdvertisements(String userID) {
         return AdvertsApiService.getInstance().findSetterAdvertisements(userID);
     }
+
+    public static Call<Advertisement> getRandomAdvertByMarket(String market) {
+        return AdvertsApiService.getInstance().getRandomAdvertByMarket(market);
+    }
 }

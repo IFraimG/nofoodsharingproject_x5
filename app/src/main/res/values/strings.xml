@@ -146,4 +146,8 @@
     <string name="pin_market">Прикрепитесь к магазину!</string>
     <string name="many_products">Вы можете выбирать не более трех продуктов</string>
     <string name="success_deal">Сделка прошла успешно!</string>
+    <string name="near_market">Вы находитесь рядом с магазином</string>
+    <string name="location_on_title">Спасибо, что используете наше приложение с умом!</string>
+    <string name="location_on_body">Когда вы будете рядом с вашим магазином, мы сообщим вам о нуждающемся</string>
+    <string name="help_getter">Помогите нуждающемуся.</string>
 </resources>

@@ -19,7 +19,6 @@ import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -27,6 +26,7 @@ import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
 import com.example.nofoodsharingproject.data.api.map.MapRepository;
 import com.example.nofoodsharingproject.data.api.notifications.NotificationRepository;
@@ -73,7 +73,6 @@ public class LocationTrackingService extends Service implements LocationListener
         getMarket();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -90,12 +89,11 @@ public class LocationTrackingService extends Service implements LocationListener
 
         return START_STICKY;
     }
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     public void onLocationChanged(Location location) {
-        if (location != null && compareCoords != null && location.distanceTo(compareCoords) < 100 && checkTimer() && titleMarket.length() != 0) {
-            Advertisement advert = getRandomGetterAdvert();
-            createNotification(advert);
+        if (location != null && compareCoords != null && location.distanceTo(compareCoords) < 3000 && checkTimer() && titleMarket.length() != 0) {
+            getRandomGetterAdvert();
         }
 
     }
@@ -153,7 +151,7 @@ public class LocationTrackingService extends Service implements LocationListener
             boolean isGetter = sharedPreferences.getBoolean("isGetter", false);
             String userID = sharedPreferences.getString("X5_id", "");
 
-            return new Pair<String, Boolean>(userID, isGetter);
+            return new Pair<>(userID, isGetter);
         } catch (IOException | GeneralSecurityException err) {
             Log.e("auth error", err.toString());
             err.printStackTrace();
@@ -173,24 +171,47 @@ public class LocationTrackingService extends Service implements LocationListener
 
             long diffInMilliseconds = Math.abs(new Date().getTime() - date1.getTime());
 
-            Log.d("msg", Long.toString(diffInMilliseconds));
-
-            return diffInMilliseconds > 12000000;
+            return diffInMilliseconds > 7200000;
         } catch (ParseException err) {
             return true;
         }
     }
 
-    private Advertisement getRandomGetterAdvert() {
+    private void getRandomGetterAdvert() {
+        AdvertsRepository.getRandomAdvertByMarket(titleMarket).enqueue(new Callback<Advertisement>() {
+            @Override
+            public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
+                if (response.code() == 404 || response.code() == 400 || response.body() == null) createNotification(new Advertisement());
+                else createNotification(response.body());
+            }
 
-        return new Advertisement();
+            @Override
+            public void onFailure(@NotNull Call<Advertisement> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNotification(Advertisement advert) {
-        Notification notification = new Notification("Вы находитесь рядом с магазином!", "Тестовое уведомление", defineUser().first);
+        String title = getString(R.string.near_market);
+        StringBuilder body = new StringBuilder();
+        if (advert.getAuthorName() != null) {
+            body.append(advert.getAuthorName()).append(" нуждается в продуктах");
+            if (advert.getListProducts().length > 0) {
+                StringBuilder listProducts = new StringBuilder();
+
+                listProducts.append(": ");
+                String[] result = advert.getListProducts();
+                for (int i = 0; i < result.length - 1; i++) listProducts.append(result[i]).append(", ");
+
+                listProducts.append(result[result.length - 1]).append(".");
+                body.append(listProducts);
+            }
+        } else body.append(getString(R.string.help_getter));
+
+        Notification notification = new Notification(title, body.toString(), defineUser().first);
         notification.setTypeOfUser("setter");
-        showNotification();
+        showNotification(title, body.toString());
         NotificationRepository.createNotification(notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
@@ -213,16 +234,17 @@ public class LocationTrackingService extends Service implements LocationListener
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void showNotification() {
-        channel = new NotificationChannel("my_channel_id", "My Channel", NotificationManager.IMPORTANCE_DEFAULT);
-        notificationManager = getSystemService(NotificationManager.class);
-        notificationManager.createNotificationChannel(channel);
+    private void showNotification(String title, String body) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            channel = new NotificationChannel("my_channel_id", "My Channel", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "my_channel_id")
                 .setSmallIcon(R.drawable.notifications_active)
-                .setContentTitle("Нуждающемуся нужна помощь!")
-                .setContentText("Рыба, мясо, колбаса")
+                .setContentTitle(title)
+                .setContentText(body)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         notificationManagerCompat = NotificationManagerCompat.from(this);
@@ -232,15 +254,16 @@ public class LocationTrackingService extends Service implements LocationListener
         notificationManagerCompat.notify(1, builder.build());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private android.app.Notification notifySetter() {
-        NotificationChannel channel = new NotificationChannel("my_channel_id", "Location Observer", NotificationManager.IMPORTANCE_LOW);
-        NotificationManager manager = getSystemService(NotificationManager.class);
-        manager.createNotificationChannel(channel);
 
+    private android.app.Notification notifySetter() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            channel = new NotificationChannel("my_channel_id", "Location Observer", NotificationManager.IMPORTANCE_LOW);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "my_channel_id")
-                .setContentTitle("Спасибо, что используете наше приложение с умом!")
-                .setContentText("Когда вы будете рядом с вашим магазином, мы сообщим вам о нуждающемся")
+                .setContentTitle(getString(R.string.location_on_title))
+                .setContentText(getString(R.string.location_on_body))
                 .setSmallIcon(R.drawable.notifications_active)
                 .setPriority(NotificationCompat.PRIORITY_LOW);
 

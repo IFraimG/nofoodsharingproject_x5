@@ -15,6 +15,7 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.databinding.ActivitySetterBinding;
 import com.example.nofoodsharingproject.services.LocationTrackingService;
 import com.example.nofoodsharingproject.utils.DateNowChecker;
+import com.example.nofoodsharingproject.utils.DateNowCheckerOld;
 import com.example.nofoodsharingproject.utils.PermissionHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,7 +37,10 @@ public class SetterActivity extends AppCompatActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DateNowChecker dateNowChecker = new DateNowChecker();
-            if (dateNowChecker.getHour() >= 10 && dateNowChecker.getHour() < 21) initLocation();
+            if (dateNowChecker.getHour() >= 10 && dateNowChecker.getHour() < 23) initLocation();
+        } else {
+            DateNowCheckerOld dateNowCheckerOld = new DateNowCheckerOld();
+            if (dateNowCheckerOld.getHour() >= 10 && dateNowCheckerOld.getHour() < 23) initLocation();
         }
     }
 
