@@ -3,6 +3,7 @@ package com.example.nofoodsharingproject.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;
@@ -25,12 +26,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         defineUser = new DefineUser(this);
-        String res = defineUser.isGetter();
+        String res = null;
+        try {
+            res = defineUser.isGetter();
+        }
+        catch(Exception e){
+                Log.i("ActivMain", e.getMessage());
+            }
         if (res != null) {
             if (res.equals("setter")) authSetter();
             else if (res.equals("getter")) authGetter();
             else redirectToAuth();
         } else redirectToAuth();
+
     }
 
     public void authSetter() {
