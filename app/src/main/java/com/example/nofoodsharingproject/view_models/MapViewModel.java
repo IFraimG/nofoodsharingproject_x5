@@ -45,7 +45,7 @@ public class MapViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<String>> getPinnedMarketInfo(String userType, String userID) {
-        MapRepository.getPinMarket(userType, userID).enqueue(new Callback<MarketTitleResponse>() {
+        MapRepository.getPinMarket(getApplication().getApplicationContext(), userType, userID).enqueue(new Callback<MarketTitleResponse>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull retrofit2.Response<MarketTitleResponse> response) {
                 if (response.code() == 404) {
@@ -94,7 +94,7 @@ public class MapViewModel extends AndroidViewModel {
     public void updateMarket(boolean isGetter, String userID) {
         if (!choosenMarket.equals("Выберите магазин")) {
             if (isGetter) {
-                MapRepository.setGetterMarket(userID, choosenMarket).enqueue(new Callback<Getter>() {
+                MapRepository.setGetterMarket(getApplication().getApplicationContext(), userID, choosenMarket).enqueue(new Callback<Getter>() {
                     @Override
                     public void onResponse(@NotNull Call<Getter> call, @NotNull retrofit2.Response<Getter> response) {}
 
@@ -104,7 +104,7 @@ public class MapViewModel extends AndroidViewModel {
                     }
                 });
             } else {
-                MapRepository.setSetterMarket(userID, choosenMarket).enqueue(new Callback<Setter>() {
+                MapRepository.setSetterMarket(getApplication().getApplicationContext(), userID, choosenMarket).enqueue(new Callback<Setter>() {
                     @Override
                     public void onResponse(@NotNull Call<Setter> call, @NotNull retrofit2.Response<Setter> response) {}
 

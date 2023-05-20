@@ -34,7 +34,7 @@ public class CustomMessagingService extends FirebaseMessagingService {
         defineUser = new DefineUser<>(getApplicationContext());
         if (defineUser.getTypeUser().second.equals(true)) {
             Getter getter = defineUser.defineGetter();
-            GetterRepository.changeToken(getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
+            GetterRepository.changeToken(getApplicationContext(), getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) defineUser.changeFCMtoken(token);
@@ -48,7 +48,7 @@ public class CustomMessagingService extends FirebaseMessagingService {
 
         } else {
             Setter setter = defineUser.defineSetter();
-            SetterRepository.changeToken(setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
+            SetterRepository.changeToken(getApplicationContext(), setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) defineUser.changeFCMtoken(token);

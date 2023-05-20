@@ -1,5 +1,7 @@
 package com.example.nofoodsharingproject.data.api.notifications;
 
+import android.content.Context;
+
 import com.example.nofoodsharingproject.data.api.notifications.dto.FMCMessage;
 import com.example.nofoodsharingproject.data.api.notifications.dto.FMCNotification;
 import com.example.nofoodsharingproject.data.api.notifications.dto.RequestSetRead;
@@ -14,19 +16,19 @@ public class NotificationRepository {
         return NotificationApiService.getInstance().notifyUserAboutDonate(new FMCMessage(fmcToken, new FMCNotification(title, body)));
     }
 
-    public static Call<ResponseNotificationsList> getNotifications(String userID, String typeOfUser) {
-        return InnerNotificationService.getInstance().getNotifications(userID, typeOfUser);
+    public static Call<ResponseNotificationsList> getNotifications(Context ctx, String userID, String typeOfUser) {
+        return InnerNotificationService.getInstance(ctx).getNotifications(userID, typeOfUser);
     }
 
-    public static Call<Notification> getNotificationOne(String notificationID) {
-        return InnerNotificationService.getInstance().getNotificationOne(notificationID);
+    public static Call<Notification> getNotificationOne(Context ctx, String notificationID) {
+        return InnerNotificationService.getInstance(ctx).getNotificationOne(notificationID);
     }
 
-    public static Call<Notification> createNotification(Notification notification) {
-        return InnerNotificationService.getInstance().createNotification(notification);
+    public static Call<Notification> createNotification(Context ctx, Notification notification) {
+        return InnerNotificationService.getInstance(ctx).createNotification(notification);
     }
 
-    public static Call<Notification> setRead(String notificationID) {
-        return InnerNotificationService.getInstance().setRead(new RequestSetRead(notificationID));
+    public static Call<Notification> setRead(Context ctx, String notificationID) {
+        return InnerNotificationService.getInstance(ctx).setRead(new RequestSetRead(notificationID));
     }
 }

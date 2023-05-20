@@ -118,7 +118,7 @@ public class LocationTrackingService extends Service implements LocationListener
 
     private void getMarket() {
         Pair<String, Boolean> userData = defineUser();
-        MapRepository.getPinMarket(userData.second ? "getter" : "setter", userData.first).enqueue(new Callback<MarketTitleResponse>() {
+        MapRepository.getPinMarket(getApplicationContext(), userData.second ? "getter" : "setter", userData.first).enqueue(new Callback<MarketTitleResponse>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                 if (response.code() == 200) {
@@ -178,7 +178,7 @@ public class LocationTrackingService extends Service implements LocationListener
     }
 
     private void getRandomGetterAdvert() {
-        AdvertsRepository.getRandomAdvertByMarket(titleMarket).enqueue(new Callback<Advertisement>() {
+        AdvertsRepository.getRandomAdvertByMarket(getApplicationContext(), titleMarket).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.code() == 404 || response.code() == 400 || response.body() == null) createNotification(new Advertisement());
@@ -212,7 +212,7 @@ public class LocationTrackingService extends Service implements LocationListener
         Notification notification = new Notification(title, body.toString(), defineUser().first);
         notification.setTypeOfUser("setter");
         showNotification(title, body.toString());
-        NotificationRepository.createNotification(notification).enqueue(new Callback<Notification>() {
+        NotificationRepository.createNotification(getApplicationContext(), notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
                 if (response.code() == 201) {

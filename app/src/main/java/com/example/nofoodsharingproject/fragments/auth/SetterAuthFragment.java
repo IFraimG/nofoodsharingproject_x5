@@ -52,7 +52,7 @@ public class SetterAuthFragment extends Fragment {
     private void signup(String tokenFCM) {
         if (validate()) {
             binding.setterAuthBtnLogin.setEnabled(false);
-            AuthRepository.setterRegistration(binding.setterAuthPhone.getText().toString(), binding.setterAuthLogin.getText().toString(), binding.setterAuthPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
+            AuthRepository.setterRegistration(requireContext(), binding.setterAuthPhone.getText().toString(), binding.setterAuthLogin.getText().toString(), binding.setterAuthPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
                     if (response.code() == 401) {

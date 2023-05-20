@@ -74,7 +74,7 @@ public class GetterAuthFragment extends Fragment {
     private void login() {
         if (validate()) {
             binding.authGetterBtnLogin.setEnabled(false);
-            AuthRepository.getterLogin(binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString()).enqueue(new Callback<SignUpResponseI<Getter>>() {
+            AuthRepository.getterLogin(requireContext(), binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString()).enqueue(new Callback<SignUpResponseI<Getter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                     if (response.code() == 400) {
@@ -103,7 +103,7 @@ public class GetterAuthFragment extends Fragment {
 
     private void signup(String tokenFCM) {
         binding.authGetterCreate.setEnabled(false);
-        AuthRepository.getterRegistration(binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
+        AuthRepository.getterRegistration(requireContext(), binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                 if (response.code() == 400) {

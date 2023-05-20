@@ -78,7 +78,7 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
             if (userProductItems.size() > 0) advertisement.setListProductsCustom(userProductItems);
 
             binding.readyToCreate.setEnabled(false);
-            AdvertsRepository.createAdvert(advertisement).enqueue(new Callback<Advertisement>() {
+            AdvertsRepository.createAdvert(getApplicationContext(), advertisement).enqueue(new Callback<Advertisement>() {
                 @Override
                 public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                     if (!response.isSuccessful()) {

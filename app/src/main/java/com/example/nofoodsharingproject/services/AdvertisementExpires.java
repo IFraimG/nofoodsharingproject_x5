@@ -49,7 +49,7 @@ public class AdvertisementExpires extends BroadcastReceiver {
     }
 
     private void getAdvert(Context ctx) {
-        AdvertsRepository.getOwnAdvert(getUserID(ctx)).enqueue(new Callback<Advertisement>() {
+        AdvertsRepository.getOwnAdvert(ctx, getUserID(ctx)).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.body() != null && response.code() == 200) {
@@ -65,7 +65,7 @@ public class AdvertisementExpires extends BroadcastReceiver {
     }
 
     private void deleteAdvert(Context context, Advertisement advert) {
-        if (advert != null) AdvertsRepository.deleteAdvert(advert.getAdvertsID()).enqueue(new Callback<ResponseDeleteAdvert>() {
+        if (advert != null) AdvertsRepository.deleteAdvert(context, advert.getAdvertsID()).enqueue(new Callback<ResponseDeleteAdvert>() {
             @Override
             public void onResponse(@NotNull Call<ResponseDeleteAdvert> call, @NotNull Response<ResponseDeleteAdvert> response) {
                 if (response.code() == 400) Log.e("err", context.getString(R.string.unvisinle_error));

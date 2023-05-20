@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void authSetter() {
-        AuthRepository.checkAuthSetter(defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
+        AuthRepository.checkAuthSetter(getApplicationContext(), defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() != null && !response.body().getIsAuth()) redirectToAuth();
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void authGetter() {
-        AuthRepository.checkAuthGetter(defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
+        AuthRepository.checkAuthGetter(getApplicationContext(), defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() == null) redirectToAuth();

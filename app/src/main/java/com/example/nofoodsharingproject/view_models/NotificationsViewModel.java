@@ -35,7 +35,7 @@ public class NotificationsViewModel extends AndroidViewModel {
 
     public LiveData<List<Notification>> getAllNotifications(String userID, String typeOfUser) {
         _status.setValue(LoaderStatus.LOADING);
-        NotificationRepository.getNotifications(userID, typeOfUser).enqueue(new Callback<ResponseNotificationsList>() {
+        NotificationRepository.getNotifications(getApplication().getApplicationContext(), userID, typeOfUser).enqueue(new Callback<ResponseNotificationsList>() {
             @Override
             public void onResponse(@NotNull Call<ResponseNotificationsList> call, @NotNull Response<ResponseNotificationsList> response) {
                 if (response.isSuccessful() && response.body() != null) {

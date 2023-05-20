@@ -67,7 +67,7 @@ public class GetterProfileFragment extends Fragment {
             Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
         } else {
             binding.getterProfileSave.setEnabled(false);
-            GetterRepository.editProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Getter>() {
+            GetterRepository.editProfile(requireContext(), user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Getter>() {
                 @Override
                 public void onResponse(@NotNull Call<Getter> call, @NotNull Response<Getter> response) {
                     if (response.code() == 400) Toast.makeText(getContext(), R.string.your_password_uncorrect, Toast.LENGTH_SHORT).show();

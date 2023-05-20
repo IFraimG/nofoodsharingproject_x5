@@ -1,17 +1,19 @@
 package com.example.nofoodsharingproject.data.api.map;
 
+import android.content.Context;
+
 import com.example.nofoodsharingproject.data.RetrofitService;
 import com.example.nofoodsharingproject.data.api.auth.AuthAPI;
 
 public class MapApiService {
     private static MapAPI mapAPI;
 
-    public static MapAPI create() {
-        return RetrofitService.getInstance().create(MapAPI.class);
+    public static MapAPI create(Context ctx) {
+        return RetrofitService.getInstance(ctx).create(MapAPI.class);
     }
 
-    public static MapAPI getInstance() {
-        if (mapAPI == null) mapAPI = create();
+    public static MapAPI getInstance(Context ctx) {
+        if (mapAPI == null) mapAPI = create(ctx);
         return mapAPI;
     }
 }

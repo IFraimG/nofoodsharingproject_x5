@@ -118,7 +118,7 @@ public class SetterProfileFragment extends Fragment {
     }
 
     private void getHistoryList() {
-        AdvertsRepository.findSetterAdvertisements(this.user.getX5_Id()).enqueue(new Callback<ResponseHistoryAdverts>() {
+        AdvertsRepository.findSetterAdvertisements(requireContext(), this.user.getX5_Id()).enqueue(new Callback<ResponseHistoryAdverts>() {
             @Override
             public void onResponse(@NotNull Call<ResponseHistoryAdverts> call, @NotNull Response<ResponseHistoryAdverts> response) {
                 if (response.code() == 400) Toast.makeText(requireContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
@@ -189,7 +189,7 @@ public class SetterProfileFragment extends Fragment {
         String newPhone = binding.setterProfileEditPhone.getText().toString();
         String newPassword = binding.setterProfileEditPassword.getText().toString();
         String oldPasswordText = binding.setterProfileEditOldPassword.getText().toString();
-        SetterRepository.editProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Setter>() {
+        SetterRepository.editProfile(requireContext(), user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Setter>() {
             @Override
             public void onResponse(@NotNull Call<Setter> call, @NotNull Response<Setter> response) {
                 if (response.code() == 400) Toast.makeText(getContext(), R.string.your_password_uncorrect, Toast.LENGTH_SHORT).show();

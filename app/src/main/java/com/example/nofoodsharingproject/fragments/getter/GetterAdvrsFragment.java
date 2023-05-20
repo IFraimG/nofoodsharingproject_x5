@@ -131,7 +131,7 @@ public class GetterAdvrsFragment extends Fragment {
 
     // _______________ РАБОТА С ОБЪЯВЛЕНИЯМИ ____________________
     private void getAdvertisement() {
-        AdvertsRepository.getOwnAdvert(userType.first).enqueue(new Callback<Advertisement>() {
+        AdvertsRepository.getOwnAdvert(requireContext(), userType.first).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.code() == 400) {
@@ -155,7 +155,7 @@ public class GetterAdvrsFragment extends Fragment {
     }
 
     private void removeAdvertisement() {
-        AdvertsRepository.deleteAdvert(advertisement.getAdvertsID()).enqueue(new Callback<ResponseDeleteAdvert>() {
+        AdvertsRepository.deleteAdvert(requireContext(), advertisement.getAdvertsID()).enqueue(new Callback<ResponseDeleteAdvert>() {
             @Override
             public void onResponse(@NotNull Call<ResponseDeleteAdvert> call, @NotNull Response<ResponseDeleteAdvert> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isDelete) {
@@ -174,7 +174,7 @@ public class GetterAdvrsFragment extends Fragment {
     // _______________ РАБОТА С УВЕДОМЛЕНИЯМИ И СОХРАНЕНИЕМ ПРОДУКТОВ ____________________
     // Шаг 1 - забираем продукты
     private void takeProducts() {
-        AdvertsRepository.takingProducts(userType.first).enqueue(new Callback<Advertisement>() {
+        AdvertsRepository.takingProducts(requireContext(), userType.first).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (!response.isSuccessful()) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
@@ -197,7 +197,7 @@ public class GetterAdvrsFragment extends Fragment {
         notification.setTypeOfUser("setter");
         notification.setFromUserID(advertisement.getAuthorID());
         notification.setUserID(advertisement.getUserDoneID());
-        NotificationRepository.createNotification(notification).enqueue(new Callback<Notification>() {
+        NotificationRepository.createNotification(requireContext(), notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
                 if (response.body() == null || !response.isSuccessful()) {
@@ -215,7 +215,7 @@ public class GetterAdvrsFragment extends Fragment {
 
     // Шаг 3 - Получаем fmc token
     private void getFMCToken(String body) {
-        SetterRepository.getFCMtoken(advertisement.getUserDoneID()).enqueue(new Callback<ResponseFCMToken>() {
+        SetterRepository.getFCMtoken(requireContext(), advertisement.getUserDoneID()).enqueue(new Callback<ResponseFCMToken>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
                 if (!response.isSuccessful() || response.body() == null) Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
@@ -252,7 +252,7 @@ public class GetterAdvrsFragment extends Fragment {
     private void getAddress() {
         String userData = userType.second ? "getter" : "setter";
 
-        MapRepository.getPinMarket(userData, userType.first).enqueue(new Callback<MarketTitleResponse>() {
+        MapRepository.getPinMarket(requireContext(), userData, userType.first).enqueue(new Callback<MarketTitleResponse>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {

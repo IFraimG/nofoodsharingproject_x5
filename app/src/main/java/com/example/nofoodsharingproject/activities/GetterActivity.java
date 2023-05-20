@@ -10,7 +10,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.databinding.ActivityGetterBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class GetterActivity extends AppCompatActivity {
     private NavController navController;
@@ -25,8 +24,7 @@ public class GetterActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_getter_fragment);
         navController = navHostFragment.getNavController();
 
-        BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.getter_navigation);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupWithNavController(binding.getterNavigation, navController);
     }
 
     @Override

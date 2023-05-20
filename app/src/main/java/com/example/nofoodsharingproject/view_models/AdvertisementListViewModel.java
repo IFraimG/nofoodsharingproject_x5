@@ -1,6 +1,7 @@
 package com.example.nofoodsharingproject.view_models;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -45,7 +46,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
         _status.setValue(LoaderStatus.LOADING);
 
         if (activeMarket.getValue() == null || activeMarket.getValue().length() == 0) {
-            MapRepository.getPinMarket("setter", userID).enqueue(new Callback<MarketTitleResponse>() {
+            MapRepository.getPinMarket(getApplication().getApplicationContext(),"setter", userID).enqueue(new Callback<MarketTitleResponse>() {
                 @Override
                 public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                     if (!response.isSuccessful()) loadAdverts("");
@@ -71,7 +72,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
 
     public void loadAdverts(String market) {
         if (LoaderStatus.Status.LOADED.equals(this.getLoaderStatus().getValue().getStatus())) _status.setValue(LoaderStatus.LOADING);
-        AdvertsRepository.getListAdverts(market).enqueue(new Callback<ResponseActiveAdverts>() {
+        AdvertsRepository.getListAdverts(getApplication().getApplicationContext(), market).enqueue(new Callback<ResponseActiveAdverts>() {
             @Override
             public void onResponse(@NotNull Call<ResponseActiveAdverts> call, @NotNull Response<ResponseActiveAdverts> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -89,7 +90,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
     }
 
     public LiveData<String> getMarket() {
-        MapRepository.getPinMarket("setter", userID).enqueue(new Callback<MarketTitleResponse>() {
+        MapRepository.getPinMarket(getApplication().getApplicationContext(), "setter", userID).enqueue(new Callback<MarketTitleResponse>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                 if (response.isSuccessful() && response.body() != null) activeMarket.setValue(response.body().getMarket());
