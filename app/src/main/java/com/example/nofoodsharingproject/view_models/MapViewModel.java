@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.nofoodsharingproject.data.api.map.MapRepository;
 import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
 import com.example.nofoodsharingproject.models.Getter;
-import com.example.nofoodsharingproject.models.LoaderStatus;
 import com.example.nofoodsharingproject.models.Market;
 import com.example.nofoodsharingproject.models.Setter;
 import com.yandex.mapkit.geometry.Point;
@@ -28,7 +27,6 @@ public class MapViewModel extends AndroidViewModel {
             new Market("Ковров пер., 8, стр. 1", 55.740582, 37.681854),
             new Market("Нижегородская улица, 34", 55.736351, 37.695708)
     };
-
 
     private final List<Point> marketPoints = Arrays.asList(
             fullListMarkets[1].getPoint(),
@@ -53,27 +51,22 @@ public class MapViewModel extends AndroidViewModel {
                 if (response.code() == 404) {
                     choosenMarket = "";
                     listMarkets = new String[fullListMarkets.length];
-                    for (int i = 0; i < fullListMarkets.length; i++)
+                    for (int i = 0; i < fullListMarkets.length; i++) {
                         listMarkets[i] = fullListMarkets[i].getTitle();
+                    }
                 } else {
                     if (response.isSuccessful() && response.body() != null) {
                         listMarkets = new String[fullListMarkets.length - 1];
-                        listMarkets[0] = response.body().market;
                         choosenMarket = response.body().market;
                         for (int i = 1; i < fullListMarkets.length; i++) {
                             if (fullListMarkets[i].getTitle().equals(choosenMarket)) {
                                 oldPosition = i;
-                                break;
                             }
-                            listMarkets[i] = fullListMarkets[i].getTitle();
+                            listMarkets[i - 1] = fullListMarkets[i].getTitle();
                         }
                     }
                 }
-                if (oldPosition != -1) {
-                    for (int i = oldPosition; i < fullListMarkets.length - 1; i++) {
-                        listMarkets[i] = fullListMarkets[i + 1].getTitle();
-                    }
-                }
+
                 _markets.setValue(Arrays.asList(listMarkets));
             }
 
@@ -87,11 +80,16 @@ public class MapViewModel extends AndroidViewModel {
     }
 
 
+    public int getOldPosition() {
+        return this.oldPosition;
+    }
+
     public void changePosition(int position) {
         if (_markets.getValue() != null) {
             choosenMarket = _markets.getValue().get(position);
             oldPosition = position;
-        }}
+        }
+    }
 
     public void updateMarket(boolean isGetter, String userID) {
         if (!choosenMarket.equals("Выберите магазин")) {

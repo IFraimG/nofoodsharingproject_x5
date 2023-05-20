@@ -26,6 +26,8 @@ public abstract class User {
     @Expose
     private String tokenFCM;
 
+    private String tokenJWT;
+
     public User() {}
 
     public User(String phone, String login, String password) {
@@ -77,5 +79,13 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getTokenJWT() {
+        return tokenJWT;
+    }
+
+    public void setTokenJWT(String tokenJWT) {
+        this.tokenJWT = tokenJWT;
     }
 }

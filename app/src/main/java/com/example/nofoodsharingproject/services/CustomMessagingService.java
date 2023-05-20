@@ -8,17 +8,31 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.models.Getter;
+import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.utils.DefineUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class CustomMessagingService extends FirebaseMessagingService {
     final String CHANNEL_ID = "HEADS_UP_NOTIFICATION";
+    private EncryptedSharedPreferences esp;
+    private DefineUser defineUser;
 
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
+
+        defineUser = new DefineUser<>(getApplicationContext());
+        if (defineUser.getTypeUser().second.equals(true)) {
+            Getter getter = defineUser.defineGetter();
+
+        } else {
+            Setter setter = defineUser.defineSetter();
+        }
     }
 
 

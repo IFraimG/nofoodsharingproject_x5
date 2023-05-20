@@ -12,6 +12,7 @@ import retrofit2.Call;
 public class AdvertsRepository {
 
     public static Call<ResponseActiveAdverts> getListAdverts(String market) {
+
         return AdvertsApiService.getInstance().getListAdvertisements(market);
     }
 

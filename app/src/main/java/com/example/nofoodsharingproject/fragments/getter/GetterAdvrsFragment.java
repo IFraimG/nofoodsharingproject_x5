@@ -25,6 +25,8 @@ import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Notification;
+import com.example.nofoodsharingproject.utils.DateNowChecker;
+import com.example.nofoodsharingproject.utils.DateNowCheckerOld;
 import com.example.nofoodsharingproject.utils.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
@@ -85,7 +87,7 @@ public class GetterAdvrsFragment extends Fragment {
     private void hideAdvertisementElements() {
         advertisement = null;
         binding.getterAdvertStatus.setVisibility(View.VISIBLE);
-        binding.createNewRequest.setVisibility(View.VISIBLE);
+        showCreateButton();
         binding.stopAdvert.setVisibility(View.GONE);
         arrayAdapter.notifyDataSetChanged();
         binding.pickUpOrder.setVisibility(View.GONE);
@@ -112,16 +114,31 @@ public class GetterAdvrsFragment extends Fragment {
         }
     }
 
+    private void showCreateButton() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            DateNowChecker dateNowChecker = new DateNowChecker();
+            if (dateNowChecker.getHour() >= 10 && dateNowChecker.getHour() < 23) {
+                binding.createNewRequest.setVisibility(View.VISIBLE);
+            }
+        } else {
+            DateNowCheckerOld dateNowCheckerOld = new DateNowCheckerOld();
+            if (dateNowCheckerOld.getHour() >= 10 && dateNowCheckerOld.getHour() < 23) {
+                binding.createNewRequest.setVisibility(View.VISIBLE);
+
+            }
+        }
+    }
+
     // _______________ РАБОТА С ОБЪЯВЛЕНИЯМИ ____________________
     private void getAdvertisement() {
         AdvertsRepository.getOwnAdvert(userType.first).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.code() == 400) {
-                    binding.createNewRequest.setVisibility(View.VISIBLE);
+                    showCreateButton();
                     Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 }
-                if (response.code() == 404) binding.createNewRequest.setVisibility(View.VISIBLE);
+                if (response.code() == 404) showCreateButton();
                 if (response.isSuccessful() && response.body() != null) {
                     showAdvertisementElements(response.body());
                 }

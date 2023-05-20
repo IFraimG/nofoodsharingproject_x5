@@ -190,7 +190,13 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
                 adapter = new ArrayAdapter<>(getContext(), R.layout.market_item, listMarkets);
                 adapter.setDropDownViewResource(R.layout.map_dropdown_text);
                 binding.mapListMarkets.setAdapter(adapter);
-            } else adapter.notifyDataSetChanged();
+
+                if (viewModel.getOldPosition() != -1) binding.mapListMarkets.setSelection(viewModel.getOldPosition() - 1);
+            } else {
+                if (viewModel.getOldPosition() != -1) binding.mapListMarkets.setSelection(viewModel.getOldPosition() - 1);
+                adapter.notifyDataSetChanged();
+            }
+
 
             initListMarkets();
         });

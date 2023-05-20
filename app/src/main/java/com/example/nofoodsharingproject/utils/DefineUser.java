@@ -25,6 +25,9 @@ public class DefineUser<T extends User> {
     public DefineUser(Activity activity) {
         initEsp(activity);
     }
+    public DefineUser(Context ctx) {
+        initEsp(ctx);
+    }
 
     public DefineUser(EncryptedSharedPreferences esp) {
         encryptedSharedPreferences = esp;
@@ -63,15 +66,31 @@ public class DefineUser<T extends User> {
         sharedPreferences = activity.getSharedPreferences("prms", Context.MODE_PRIVATE);
     }
 
+    public void initEsp(Context ctx) {
+        try {
+            MasterKey masterKey = new MasterKey.Builder(ctx, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build();
+            encryptedSharedPreferences = (EncryptedSharedPreferences) EncryptedSharedPreferences.create(ctx, "user", masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
+        } catch (IOException | GeneralSecurityException err) {
+            Log.e("auth error", err.toString());
+            err.printStackTrace();
+        }
+        sharedPreferences = ctx.getSharedPreferences("prms", Context.MODE_PRIVATE);
+    }
+
     public Setter defineSetter() {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
         String userID = encryptedSharedPreferences.getString("X5_id", "");
+        String token = encryptedSharedPreferences.getString("token", "");
 
         Setter user = new Setter();
         user.setLogin(login);
         user.setPhone(phone);
         user.setX5_Id(userID);
+        user.setTokenJWT(token);
 
         return user;
     }
@@ -80,11 +99,13 @@ public class DefineUser<T extends User> {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
         String userID = encryptedSharedPreferences.getString("X5_id", "");
+        String token = encryptedSharedPreferences.getString("token", "");
 
         Getter user = new Getter();
         user.setLogin(login);
         user.setPhone(phone);
         user.setX5_Id(userID);
+        user.setTokenJWT(token);
 
         return user;
     }
