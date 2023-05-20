@@ -18,8 +18,8 @@
         app:layout_constraintTop_toTopOf="parent">
         <ImageView
             android:id="@+id/chat_return"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/standard_size_very_medium"
             android:src="@drawable/ic_baseline_chevron_left_24"/>
@@ -38,7 +38,7 @@
         android:id="@+id/messages_top_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:background="@color/grey_100"
         app:layout_constraintStart_toStartOf="@+id/messages_title"
         app:layout_constraintTop_toTopOf="@+id/messages_title" />

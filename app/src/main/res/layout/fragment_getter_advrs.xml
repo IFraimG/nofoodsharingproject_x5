@@ -8,6 +8,10 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_getter_advrs">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/getter_advert_swiper">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -137,7 +141,6 @@
                 android:background="@color/grey_100"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
             <LinearLayout
                 android:layout_marginTop="30dp"
                 android:id="@+id/getter_advert_layout"
@@ -160,6 +163,8 @@
                     android:id="@+id/getter_advert_products"
                     android:layout_width="200dp"
                     android:layout_height="150dp"
+                    android:dividerHeight="5dp"
+                    android:divider="@color/white"
                     android:layout_marginTop="@dimen/standard_size_very_medium" />
             </LinearLayout>
 
@@ -200,5 +205,6 @@
             </FrameLayout>
         </LinearLayout>
     </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
 

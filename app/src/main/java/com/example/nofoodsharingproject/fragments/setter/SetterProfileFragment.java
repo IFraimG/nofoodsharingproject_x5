@@ -148,10 +148,11 @@ public class SetterProfileFragment extends Fragment {
     }
 
     private void editProfile() {
-        this.binding.setterProfileHistoryList.setVisibility(View.GONE);
-        this.binding.setterOpenVk.setVisibility(View.GONE);
-        this.binding.setterProfileHistoryTitle.setVisibility(View.GONE);
-        this.binding.setterProfileEdit.setVisibility(View.VISIBLE);
+        binding.setterProfileHistoryList.setVisibility(View.GONE);
+        binding.setterOpenVk.setVisibility(View.GONE);
+        binding.setterProfileHistoryTitle.setVisibility(View.GONE);
+        binding.setterProfileOpenChat.setVisibility(View.GONE);
+        binding.setterProfileEdit.setVisibility(View.VISIBLE);
     }
 
     private void closeEdit() {
@@ -228,6 +229,7 @@ public class SetterProfileFragment extends Fragment {
         this.binding.setterProfileHistoryList.setVisibility(View.VISIBLE);
         this.binding.setterOpenVk.setVisibility(View.VISIBLE);
         this.binding.setterProfileHistoryTitle.setVisibility(View.VISIBLE);
+        binding.setterProfileOpenChat.setVisibility(View.VISIBLE);
         this.binding.setterProfileEdit.setVisibility(View.GONE);
     }
 

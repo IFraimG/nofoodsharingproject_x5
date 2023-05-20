@@ -48,8 +48,10 @@ public class AdvertisementListViewModel extends AndroidViewModel {
             MapRepository.getPinMarket("setter", userID).enqueue(new Callback<MarketTitleResponse>() {
                 @Override
                 public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
-                    if (response.code() == 404 || response.code() == 400) loadAdverts("");
-                    else if (response.code() == 200 && response.body() != null) loadAdverts(response.body().getMarket());
+                    if (!response.isSuccessful()) loadAdverts("");
+                    else {
+                        if (response.body() != null) loadAdverts(response.body().getMarket());
+                    }
                 }
 
                 @Override
@@ -72,7 +74,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
         AdvertsRepository.getListAdverts(market).enqueue(new Callback<ResponseActiveAdverts>() {
             @Override
             public void onResponse(@NotNull Call<ResponseActiveAdverts> call, @NotNull Response<ResponseActiveAdverts> response) {
-                if (response.body() != null && response.code() != 400 && response.code() != 404) {
+                if (response.isSuccessful() && response.body() != null) {
                     _adverts.setValue(Arrays.asList(response.body().getAdvertisements()));
                     if (LoaderStatus.Status.LOADING.equals(getLoaderStatus().getValue().getStatus())) _status.setValue(LoaderStatus.LOADED);
                 }
@@ -90,7 +92,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
         MapRepository.getPinMarket("setter", userID).enqueue(new Callback<MarketTitleResponse>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
-                if (response.code() == 200 && response.body() != null) activeMarket.setValue(response.body().getMarket());
+                if (response.isSuccessful() && response.body() != null) activeMarket.setValue(response.body().getMarket());
             }
 
             @Override

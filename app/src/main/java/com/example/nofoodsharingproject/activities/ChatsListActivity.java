@@ -54,6 +54,7 @@ public class ChatsListActivity extends AppCompatActivity {
             intent.putExtra("chatID", chat.getChatID());
             startActivity(intent);
         });
+        binding.chatsReturn.setOnClickListener(View -> finish());
     }
 
     @Override

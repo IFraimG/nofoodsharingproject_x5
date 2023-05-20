@@ -34,7 +34,7 @@ public class SetterHelpFinishActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getterID = getIntent().getStringExtra("getterID");
-        defineUser = new DefineUser<Setter>(this);
+        defineUser = new DefineUser<>(this);
 
         binding.setterFinishGotovk.setOnClickListener(View -> vkLoad());
         binding.setterFinishReturn.setOnClickListener(View -> {
@@ -44,6 +44,15 @@ public class SetterHelpFinishActivity extends AppCompatActivity {
         });
 
         binding.setterFinishOpenChat.setOnClickListener(View -> createChat());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (socket != null) {
+            socket.disconnect();
+            socket.off("getCreatedChat");
+        }
     }
 
     private void vkLoad() {

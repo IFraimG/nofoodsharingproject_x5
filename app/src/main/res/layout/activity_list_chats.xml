@@ -6,14 +6,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.ChatsListActivity"
     android:orientation="vertical">
-    <TextView
-        style="@style/heading_getter_fragments"
-        android:text="@string/chats_title"/>
+    <LinearLayout
+        android:id="@+id/messages_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/chats_return"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/no_image_warnings"
+            android:layout_marginStart="@dimen/standard_size_very_medium"
+            android:src="@drawable/ic_baseline_chevron_left_24"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/standard_size_very_medium"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:text="@string/chats_title" />
+    </LinearLayout>
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/standard_size_very_medium"
         android:background="@color/grey_100" />
 
     <ListView
@@ -22,7 +45,7 @@
         android:layout_height="wrap_content"
         android:minHeight="48dp"
         android:layout_margin="@dimen/standard_size_very_medium"
-        android:divider="@color/custom_grey"
-        android:dividerHeight="1dp"
+        android:divider="@color/white"
+        android:dividerHeight="10dp"
         tools:listitem="@layout/item_chat"/>
 </LinearLayout>

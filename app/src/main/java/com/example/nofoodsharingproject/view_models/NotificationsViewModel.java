@@ -38,7 +38,7 @@ public class NotificationsViewModel extends AndroidViewModel {
         NotificationRepository.getNotifications(userID, typeOfUser).enqueue(new Callback<ResponseNotificationsList>() {
             @Override
             public void onResponse(@NotNull Call<ResponseNotificationsList> call, @NotNull Response<ResponseNotificationsList> response) {
-                if (response.code() != 404 && response.code() != 400 && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     List<Notification> notificationsRes = Arrays.asList(response.body().getResult());
                     _notifications.setValue(notificationsRes);
                     _status.setValue(LoaderStatus.LOADED);

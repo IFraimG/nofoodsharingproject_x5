@@ -3,6 +3,7 @@ package com.example.nofoodsharingproject.fragments.getter;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,11 +78,14 @@ public class GetterAdvrsFragment extends Fragment {
             Intent intent = new Intent(getContext(), FaqActivity.class);
             startActivity(intent);
         });
+
+        binding.getterAdvertSwiper.setOnRefreshListener(this::getAdvertisement);
     }
 
     private void hideAdvertisementElements() {
         advertisement = null;
         binding.getterAdvertStatus.setVisibility(View.VISIBLE);
+        binding.createNewRequest.setVisibility(View.VISIBLE);
         binding.stopAdvert.setVisibility(View.GONE);
         arrayAdapter.notifyDataSetChanged();
         binding.pickUpOrder.setVisibility(View.GONE);
@@ -93,6 +97,7 @@ public class GetterAdvrsFragment extends Fragment {
     private void showAdvertisementElements(Advertisement advert) {
         binding.getterAdvertTitleProducts.setText(advert.getTitle());
         binding.getterAdvertStatus.setVisibility(View.GONE);
+        binding.createNewRequest.setVisibility(View.GONE);
         binding.stopAdvert.setVisibility(View.VISIBLE);
         arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advert.getListTitleProducts());
         binding.getterAdvertProducts.setAdapter(arrayAdapter);
@@ -117,12 +122,16 @@ public class GetterAdvrsFragment extends Fragment {
                     Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 }
                 if (response.code() == 404) binding.createNewRequest.setVisibility(View.VISIBLE);
-                if (response.code() == 200 && response.body() != null) showAdvertisementElements(response.body());
+                if (response.isSuccessful() && response.body() != null) {
+                    showAdvertisementElements(response.body());
+                }
+                binding.getterAdvertSwiper.setRefreshing(false);
             }
 
             @Override
             public void onFailure(@NotNull Call<Advertisement> call, @NotNull Throwable t) {
                 t.printStackTrace();
+                binding.getterAdvertSwiper.setRefreshing(false);
                 Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
             }
         });
@@ -132,7 +141,7 @@ public class GetterAdvrsFragment extends Fragment {
         AdvertsRepository.deleteAdvert(advertisement.getAdvertsID()).enqueue(new Callback<ResponseDeleteAdvert>() {
             @Override
             public void onResponse(@NotNull Call<ResponseDeleteAdvert> call, @NotNull Response<ResponseDeleteAdvert> response) {
-                if (response.code() != 400 && response.body() != null && response.body().isDelete) {
+                if (response.isSuccessful() && response.body() != null && response.body().isDelete) {
                     Toast.makeText(getContext(), R.string.sucsesfully_deleted, Toast.LENGTH_SHORT).show();
                     hideAdvertisementElements();
                 } else Toast.makeText(getContext(), R.string.error_on_delated, Toast.LENGTH_SHORT).show();
@@ -151,10 +160,8 @@ public class GetterAdvrsFragment extends Fragment {
         AdvertsRepository.takingProducts(userType.first).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                if (response.code() == 404) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                else if (response.code() == 201) {
-                    sendNotification();
-                }
+                if (!response.isSuccessful()) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                else if (response.code() == 201) sendNotification();
             }
 
             @Override
@@ -176,7 +183,7 @@ public class GetterAdvrsFragment extends Fragment {
         NotificationRepository.createNotification(notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
-                if (response.body() == null || response.code() == 400 || response.code() == 404) {
+                if (response.body() == null || !response.isSuccessful()) {
                     Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
                 } else getFMCToken(body);
             }
@@ -194,10 +201,8 @@ public class GetterAdvrsFragment extends Fragment {
         SetterRepository.getFCMtoken(advertisement.getUserDoneID()).enqueue(new Callback<ResponseFCMToken>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
-                if (response.code() == 400 || response.code() == 404 || response.body() == null) Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-                else {
-                    sendFMCMessage(response.body(), body);
-                }
+                if (!response.isSuccessful() || response.body() == null) Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
+                else sendFMCMessage(response.body(), body);
             }
 
             @Override
@@ -233,7 +238,7 @@ public class GetterAdvrsFragment extends Fragment {
         MapRepository.getPinMarket(userData, userType.first).enqueue(new Callback<MarketTitleResponse>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
-                if (response.code() != 404 && response.code() != 400 && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     market = response.body().market;
                     binding.addressShop.setText(response.body().market);
                     binding.addressShop.setVisibility(View.VISIBLE);

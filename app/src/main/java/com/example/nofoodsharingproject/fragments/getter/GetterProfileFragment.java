@@ -4,28 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.nofoodsharingproject.ApplicationCore;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.ChatsListActivity;
 import com.example.nofoodsharingproject.activities.MainAuthActivity;
-import com.example.nofoodsharingproject.activities.SetterAdvertActivity;
 import com.example.nofoodsharingproject.data.api.getter.GetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterProfileBinding;
 import com.example.nofoodsharingproject.models.ShortDataUser;
 import com.example.nofoodsharingproject.utils.DefineUser;
 import com.example.nofoodsharingproject.utils.ValidateUser;
 import com.example.nofoodsharingproject.models.Getter;
-
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import retrofit2.Call;
 import retrofit2.Callback;

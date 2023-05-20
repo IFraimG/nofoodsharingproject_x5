@@ -1,40 +1,35 @@
 package com.example.nofoodsharingproject.fragments.setter;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
-
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.FaqActivity;
 import com.example.nofoodsharingproject.adapters.SetterAdvertListAdapter;
 import com.example.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
 import com.example.nofoodsharingproject.models.LoaderStatus;
+import com.example.nofoodsharingproject.models.Setter;
+import com.example.nofoodsharingproject.utils.DefineUser;
 import com.example.nofoodsharingproject.view_models.AdvertisementListViewModel;
 import org.jetbrains.annotations.NotNull;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 public class SetterAdvrsFragment extends Fragment {
     private AdvertisementListViewModel viewModel;
     private FragmentSetterAdvrsBinding binding;
+    private DefineUser<Setter> defineUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        defineUser = new DefineUser<>(requireActivity());
     }
 
     @Override
@@ -50,11 +45,11 @@ public class SetterAdvrsFragment extends Fragment {
                 (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
                 .get(AdvertisementListViewModel.class);
 
-        viewModel.getAllAdverts(getUserID()).observe(requireActivity(), setterAdvertListAdapter::updateAdverts);
+        viewModel.getAllAdverts(defineUser.getUser().getX5_Id()).observe(requireActivity(), setterAdvertListAdapter::updateAdverts);
         viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
 
         binding.setterAdvertSwiper.setOnRefreshListener(() -> {
-            viewModel.getAllAdverts(getUserID()).observe(requireActivity(), setterAdvertListAdapter::updateAdverts);
+            viewModel.getAllAdverts(defineUser.getUser().getX5_Id()).observe(requireActivity(), setterAdvertListAdapter::updateAdverts);
             binding.setterAdvertSwiper.setRefreshing(false);
         });
 
@@ -85,22 +80,6 @@ public class SetterAdvrsFragment extends Fragment {
                 binding.setterAdvertSwiper.setRefreshing(false);
                 break;
         }
-    }
-
-    private String getUserID() {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(requireActivity().getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(requireActivity().getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-
-            return sharedPreferences.getString("X5_id", "");
-        } catch (GeneralSecurityException | IOException err) {
-            Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-            Log.e("esp_error", err.toString());
-        }
-        return "";
     }
 
     private void initFilter() {

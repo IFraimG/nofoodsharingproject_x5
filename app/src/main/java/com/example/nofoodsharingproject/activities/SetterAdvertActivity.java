@@ -67,7 +67,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
         AdvertsRepository.getAdvertByID(advertID).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                if (response.code() == 404) finish();
+                if (!response.isSuccessful()) finish();
                 else {
                     advertisement = response.body();
                     productsAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.item_getter_product_name, advertisement.getListProducts());
@@ -155,7 +155,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
         NotificationRepository.createNotification(notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
-                if (response.code() != 201) Toast.makeText(SetterAdvertActivity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                if (!response.isSuccessful()) Toast.makeText(SetterAdvertActivity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();
                 else getFCMTokenByUserID();
             }
 

@@ -154,10 +154,15 @@
     <string name="chat_title">Чат</string>
     <string name="chats_title">Список чатов</string>
     <string name="send_message">Отправить</string>
+    <string name="go_to_chat">Перейти в чат</string>
     <string name="no_input_message">Вы не ввели сообщение!</string>
     <string name="success_advert">На ваше объявление откликнулись!</string>
     <string name="success_advert_body">Заберите продукты как можно скорее.</string>
     <string name="error_fmc">Fetching FCM registration token failed</string>
     <string name="time_default">00-00-0000 00:00:00</string>
     <string name="write_to_getter">Сообщите нуждающемуся о покупке сами!</string>
+    <string name="market1">Большая Андроньевская улица, 22</string>
+    <string name="market2">1, микрорайон Парковый, Котельники</string>
+    <string name="market3">Ковров пер., 8, стр. 1</string>
+    <string name="market4">Нижегородская улица, 34</string>
 </resources>

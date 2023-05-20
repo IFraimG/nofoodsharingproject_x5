@@ -4,27 +4,20 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
-
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.databinding.ActivityGetterCreateNewAdvertismentBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.services.AdvertisementExpires;
+import com.example.nofoodsharingproject.utils.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +34,7 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
     private ActivityGetterCreateNewAdvertismentBinding binding;
     private ArrayAdapter<String> arrayAdapterChoose;
     private ArrayAdapter<String> arrayAdapterChoosenItems;
+    private DefineUser<Getter> defineUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +43,10 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
         binding = ActivityGetterCreateNewAdvertismentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        arrayAdapterChoose = new ArrayAdapter<String>(this, R.layout.item_getter_product_name, this.productItems);
-        arrayAdapterChoosenItems = new ArrayAdapter<String>(this, R.layout.item_getter_product_done_name, this.userProductItems);
+        defineUser = new DefineUser<>(this);
+
+        arrayAdapterChoose = new ArrayAdapter<>(this, R.layout.item_getter_product_name, this.productItems);
+        arrayAdapterChoosenItems = new ArrayAdapter<>(this, R.layout.item_getter_product_done_name, this.userProductItems);
 
         binding.productChoice.setAdapter(arrayAdapterChoose);
         binding.productChoosenItems.setAdapter(arrayAdapterChoosenItems);
@@ -76,7 +72,7 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
         } else if (userProductItems.size() > 3) {
             Toast.makeText(GetterNewAdvertActivity.this, R.string.many_products, Toast.LENGTH_SHORT).show();
         } else {
-            Getter result = getUserInfo();
+            Getter result = defineUser.defineGetter();
             Advertisement advertisement = new Advertisement(binding.getterAdvertInputTitle.getText().toString(), result.getX5_Id(), result.getLogin());
             advertisement.setGettingProductID(Advertisement.generateID());
             if (userProductItems.size() > 0) advertisement.setListProductsCustom(userProductItems);
@@ -85,8 +81,7 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
             AdvertsRepository.createAdvert(advertisement).enqueue(new Callback<Advertisement>() {
                 @Override
                 public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                    Advertisement result = response.body();
-                    if (response.code() == 400) {
+                    if (!response.isSuccessful()) {
                         Toast.makeText(GetterNewAdvertActivity.this, R.string.problems, Toast.LENGTH_SHORT).show();
                         binding.readyToCreate.setEnabled(true);
                     } else {
@@ -119,29 +114,6 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
         } else {
             Toast.makeText(GetterNewAdvertActivity.this, R.string.this_product_added, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private Getter getUserInfo() {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            String login = sharedPreferences.getString("login", "");
-            String authorID = sharedPreferences.getString("X5_id", "");
-
-            Getter userRequestData = new Getter();
-            userRequestData.setLogin(login);
-            userRequestData.setX5_Id(authorID);
-
-            return userRequestData;
-        } catch (IOException | GeneralSecurityException err) {
-            Log.e("getting info error", err.toString());
-            err.printStackTrace();
-        }
-
-        return new Getter();
     }
 
     private void setAlarm() {
