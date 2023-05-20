@@ -1,9 +1,11 @@
 package com.example.nofoodsharingproject.data.api.setter;
 
+import com.example.nofoodsharingproject.data.api.getter.dto.RequestChangeToken;
 import com.example.nofoodsharingproject.data.api.getter.dto.RequestGetterEditProfile;
 import com.example.nofoodsharingproject.data.api.notifications.dto.ResponseFCMToken;
 import com.example.nofoodsharingproject.models.Setter;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -16,4 +18,7 @@ public interface SetterAPI {
 
     @GET("/setters/get_token/{authorID}")
     Call<ResponseFCMToken> getFCMtoken(@Path("authorID") String authorID);
+
+    @PUT("/setters/change_token")
+    Call<ResponseBody> changeToken(@Body RequestChangeToken requestChangeToken);
 }

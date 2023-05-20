@@ -42,10 +42,12 @@ public abstract class User {
     }
 
     public String getPhone() {
+        if (phone == null) return "";
         return phone;
     }
 
     public String getLogin() {
+        if (login == null) return "";
         return login;
     }
 
@@ -62,6 +64,7 @@ public abstract class User {
     }
 
     public String getTokenFCM() {
+        if (tokenFCM == null) return "";
         return tokenFCM;
     }
 

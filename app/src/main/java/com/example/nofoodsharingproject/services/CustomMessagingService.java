@@ -8,18 +8,23 @@ import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.security.crypto.EncryptedSharedPreferences;
 
 import com.example.nofoodsharingproject.R;
+import com.example.nofoodsharingproject.data.api.getter.GetterRepository;
+import com.example.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.models.Setter;
 import com.example.nofoodsharingproject.utils.DefineUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class CustomMessagingService extends FirebaseMessagingService {
     final String CHANNEL_ID = "HEADS_UP_NOTIFICATION";
-    private EncryptedSharedPreferences esp;
     private DefineUser defineUser;
 
     @Override
@@ -29,9 +34,31 @@ public class CustomMessagingService extends FirebaseMessagingService {
         defineUser = new DefineUser<>(getApplicationContext());
         if (defineUser.getTypeUser().second.equals(true)) {
             Getter getter = defineUser.defineGetter();
+            GetterRepository.changeToken(getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    if (response.isSuccessful()) defineUser.changeFCMtoken(token);
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                }
+            });
 
         } else {
             Setter setter = defineUser.defineSetter();
+            SetterRepository.changeToken(setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                    if (response.isSuccessful()) defineUser.changeFCMtoken(token);
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                }
+            });
         }
     }
 

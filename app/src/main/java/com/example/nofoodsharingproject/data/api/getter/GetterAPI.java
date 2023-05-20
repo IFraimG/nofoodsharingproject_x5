@@ -1,9 +1,11 @@
 package com.example.nofoodsharingproject.data.api.getter;
 
+import com.example.nofoodsharingproject.data.api.getter.dto.RequestChangeToken;
 import com.example.nofoodsharingproject.data.api.getter.dto.RequestGetterEditProfile;
 import com.example.nofoodsharingproject.data.api.notifications.dto.ResponseFCMToken;
 import com.example.nofoodsharingproject.models.Getter;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -16,4 +18,7 @@ public interface GetterAPI {
 
     @GET("/getters/get_token/{authorID}")
     Call<ResponseFCMToken> getFCMtoken(@Path("authorID") String authorID);
+
+    @PUT("/getters/change_token")
+    Call<ResponseBody> changeToken(@Body RequestChangeToken requestChangeToken);
 }

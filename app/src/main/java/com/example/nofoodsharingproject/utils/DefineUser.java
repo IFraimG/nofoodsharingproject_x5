@@ -130,7 +130,8 @@ public class DefineUser<T extends User> {
         editor.putBoolean("isGetter", isGetter);
         editor.putString("login", result.user.getLogin());
         editor.putString("phone", result.user.getPhone());
-        editor.putString("X5_id", X5_id);
+        if (X5_id != null) editor.putString("X5_id", X5_id);
+        else editor.putString("X5_id", "");
         editor.putString("token", result.getToken());
         editor.putString("FCMtoken", result.user.getTokenFCM());
         editor.apply();
@@ -180,5 +181,9 @@ public class DefineUser<T extends User> {
 
     public String getFCMToken() {
         return encryptedSharedPreferences.getString("FCMtoken", "");
+    }
+
+    public void changeFCMtoken(String fcmToken) {
+        encryptedSharedPreferences.edit().putString("FCMtoken", fcmToken).apply();
     }
 }
