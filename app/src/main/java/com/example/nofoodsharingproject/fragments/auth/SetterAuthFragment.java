@@ -54,7 +54,7 @@ public class SetterAuthFragment extends Fragment {
     private void signup(String tokenFCM) {
         if (validate()) {
             binding.setterAuthBtnLogin.setEnabled(false);
-            authRepository.setterRegistration(requireContext(), binding.setterAuthPhone.getText().toString(), binding.setterAuthLogin.getText().toString(), binding.setterAuthPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
+            authRepository.setterRegistration(requireContext(), binding.setterAuthPhone.getText().toString().replaceAll("\\s", ""), binding.setterAuthLogin.getText().toString().replaceAll("\\s", ""), binding.setterAuthPassword.getText().toString().replaceAll("\\s", ""), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
                     if (response.code() == 401) {
@@ -80,15 +80,15 @@ public class SetterAuthFragment extends Fragment {
     }
 
     private boolean validate() {
-        if (!ValidateUser.validatePhone(binding.setterAuthPhone.getText().toString())) {
+        if (!ValidateUser.validatePhone(binding.setterAuthPhone.getText().toString().replaceAll("\\s", ""))) {
             Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!ValidateUser.validateLogin(binding.setterAuthLogin.getText().toString())) {
+        if (!ValidateUser.validateLogin(binding.setterAuthLogin.getText().toString().replaceAll("\\s", ""))) {
             Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!ValidateUser.validatePassword(binding.setterAuthPassword.getText().toString())) {
+        if (!ValidateUser.validatePassword(binding.setterAuthPassword.getText().toString().replaceAll("\\s", ""))) {
             Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
             return false;
         }

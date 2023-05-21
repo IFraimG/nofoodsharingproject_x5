@@ -9,6 +9,7 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;
 import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.models.Advertisement;
+import com.example.nofoodsharingproject.models.Getter;
 import com.example.nofoodsharingproject.utils.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +27,7 @@ public class AdvertisementExpires extends BroadcastReceiver {
     }
 
     private String getUserID(Context ctx) {
-        DefineUser defineUser = new DefineUser(ctx);
+        DefineUser<Getter> defineUser = new DefineUser<>(ctx);
 
         return defineUser.getUser().getX5_Id();
     }

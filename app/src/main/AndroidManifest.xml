@@ -41,8 +41,8 @@
         </activity>
         <activity android:exported="true" android:name=".activities.MainAuthActivity" />
         <activity android:name=".activities.GetterNewAdvertActivity" android:exported="false" />
-        <activity android:configChanges="orientation|screenSize" android:name=".activities.SetterActivity" android:exported="false" />
-        <activity android:name=".activities.SetterAdvertActivity" android:exported="false" />
+        <activity android:configChanges="orientation|screenSize" android:name=".activities.SetterActivity" android:screenOrientation="portrait" android:exported="false" />
+        <activity android:name=".activities.SetterAdvertActivity" android:exported="false" android:screenOrientation="portrait" />
         <activity android:name=".activities.SetterHelpFinishActivity" android:exported="false" />
         <activity android:name=".activities.FaqActivity" android:exported="false" />
         <activity android:name=".activities.ChatActivity" android:exported="false" />

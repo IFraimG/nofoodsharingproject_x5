@@ -166,5 +166,6 @@
     <string name="market3">Ковров пер., 8, стр. 1</string>
     <string name="market4">Нижегородская улица, 34</string>
     <string name="see_more">Посмотреть подробнее</string>
+    <string name="mail_feedback">Не нашли нужного ответа на вопрос? Обращайтесь к нам на электронную почту pokupaypomogay@mail.ru</string>
     <string name="getters_auth_note">Если у вас нет аккаунта, вам предложат его создать, когда вы введете все данные</string>
 </resources>

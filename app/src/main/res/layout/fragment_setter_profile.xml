@@ -5,15 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_marginBottom="200dp"
     tools:context=".fragments.setter.SetterProfileFragment">
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/setter_profile_swiper">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp">
+<!--        <ScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="100dp">-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,23 +202,30 @@
                             android:layout_marginEnd="@dimen/standard_size_small" />
                     </LinearLayout>
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/setter_profile_history_title"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:gravity="center"
-                    android:layout_marginBottom="@dimen/standard_size_very_medium"
-                    android:textColor="@color/black"
-                    android:text="@string/history_transfer_text"/>
-                <ListView
-                    android:id="@+id/setter_profile_history_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/standard_size_very_medium"
-                    android:layout_marginEnd="@dimen/standard_size_very_medium"
-                    android:layout_marginBottom="100dp"/>
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/setter_profile_history_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="@dimen/standard_size_very_medium"
+                        android:textColor="@color/black"
+                        android:text="@string/history_transfer_text"/>
+
+                    <ListView
+                        android:id="@+id/setter_profile_history_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="150dp"
+                        android:layout_marginStart="@dimen/standard_size_very_medium"
+                        android:layout_marginEnd="@dimen/standard_size_very_medium"
+                        android:layout_marginBottom="100dp" />
+                </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+<!--        </ScrollView>-->
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

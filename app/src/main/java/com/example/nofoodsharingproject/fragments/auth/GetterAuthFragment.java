@@ -105,7 +105,12 @@ public class GetterAuthFragment extends Fragment {
 
     private void signup(String tokenFCM) {
         binding.authGetterCreate.setEnabled(false);
-        authRepository.getterRegistration(requireContext(), binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
+
+        authRepository.getterRegistration(requireContext(),
+                binding.authGetterSignupPhone.getText().toString().replaceAll("\\s", ""),
+                binding.authGetterSignupLogin.getText().toString().replaceAll("\\s", ""),
+                binding.authGetterSignupPassword.getText().toString().replaceAll("\\s", ""),
+                tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                 if (response.code() == 400) {
