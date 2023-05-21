@@ -43,12 +43,18 @@ public class GetterAdvrsFragment extends Fragment {
     private String market;
     private Pair<String, Boolean> userType;
     private DefineUser<Getter> defineUser;
+    private SetterRepository setterRepository;
+    private NotificationRepository notificationRepository;
+    private AdvertsRepository advertsRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         defineUser = new DefineUser<>(requireActivity());
+        notificationRepository = new NotificationRepository();
+        setterRepository = new SetterRepository();
+        advertsRepository = new AdvertsRepository();
         userType = defineUser.getTypeUser();
     }
 
@@ -131,7 +137,7 @@ public class GetterAdvrsFragment extends Fragment {
 
     // _______________ РАБОТА С ОБЪЯВЛЕНИЯМИ ____________________
     private void getAdvertisement() {
-        AdvertsRepository.getOwnAdvert(requireContext(), userType.first).enqueue(new Callback<Advertisement>() {
+        advertsRepository.getOwnAdvert(requireContext(), userType.first).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.code() == 400) {
@@ -155,7 +161,7 @@ public class GetterAdvrsFragment extends Fragment {
     }
 
     private void removeAdvertisement() {
-        AdvertsRepository.deleteAdvert(requireContext(), advertisement.getAdvertsID()).enqueue(new Callback<ResponseDeleteAdvert>() {
+        advertsRepository.deleteAdvert(requireContext(), advertisement.getAdvertsID()).enqueue(new Callback<ResponseDeleteAdvert>() {
             @Override
             public void onResponse(@NotNull Call<ResponseDeleteAdvert> call, @NotNull Response<ResponseDeleteAdvert> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isDelete) {
@@ -174,7 +180,7 @@ public class GetterAdvrsFragment extends Fragment {
     // _______________ РАБОТА С УВЕДОМЛЕНИЯМИ И СОХРАНЕНИЕМ ПРОДУКТОВ ____________________
     // Шаг 1 - забираем продукты
     private void takeProducts() {
-        AdvertsRepository.takingProducts(requireContext(), userType.first).enqueue(new Callback<Advertisement>() {
+        advertsRepository.takingProducts(requireContext(), userType.first).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (!response.isSuccessful()) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
@@ -197,7 +203,7 @@ public class GetterAdvrsFragment extends Fragment {
         notification.setTypeOfUser("setter");
         notification.setFromUserID(advertisement.getAuthorID());
         notification.setUserID(advertisement.getUserDoneID());
-        NotificationRepository.createNotification(requireContext(), notification).enqueue(new Callback<Notification>() {
+        notificationRepository.createNotification(requireContext(), notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
                 if (response.body() == null || !response.isSuccessful()) {
@@ -215,7 +221,7 @@ public class GetterAdvrsFragment extends Fragment {
 
     // Шаг 3 - Получаем fmc token
     private void getFMCToken(String body) {
-        SetterRepository.getFCMtoken(requireContext(), advertisement.getUserDoneID()).enqueue(new Callback<ResponseFCMToken>() {
+        setterRepository.getFCMtoken(requireContext(), advertisement.getUserDoneID()).enqueue(new Callback<ResponseFCMToken>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
                 if (!response.isSuccessful() || response.body() == null) Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
@@ -232,7 +238,7 @@ public class GetterAdvrsFragment extends Fragment {
 
     // Шаг 4 - Отправляем через firebase сообщение об успешно полученном токене
     private void sendFMCMessage(ResponseFCMToken response, String body) {
-        NotificationRepository.requestNotifyDonateCall(response.getFcmToken(), getString(R.string.success_deal), body).enqueue(new Callback<ResponseBody>() {
+        notificationRepository.requestNotifyDonateCall(response.getFcmToken(), getString(R.string.success_deal), body).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {

@@ -30,11 +30,13 @@ import retrofit2.Response;
 public class SetterAuthFragment extends Fragment {
     private FragmentSetterAuthBinding binding;
     private DefineUser<Setter> defineUser;
+    private AuthRepository authRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         defineUser = new DefineUser<>(requireActivity());
+        authRepository = new AuthRepository();
     }
 
     @Override
@@ -52,7 +54,7 @@ public class SetterAuthFragment extends Fragment {
     private void signup(String tokenFCM) {
         if (validate()) {
             binding.setterAuthBtnLogin.setEnabled(false);
-            AuthRepository.setterRegistration(requireContext(), binding.setterAuthPhone.getText().toString(), binding.setterAuthLogin.getText().toString(), binding.setterAuthPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
+            authRepository.setterRegistration(requireContext(), binding.setterAuthPhone.getText().toString(), binding.setterAuthLogin.getText().toString(), binding.setterAuthPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
                     if (response.code() == 401) {

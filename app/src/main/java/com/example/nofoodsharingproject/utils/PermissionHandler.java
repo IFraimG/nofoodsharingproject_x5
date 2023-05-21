@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -31,6 +30,16 @@ public class PermissionHandler {
                 != PackageManager.PERMISSION_GRANTED && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ActivityCompat.requestPermissions(activity,
                     new String[]{ android.Manifest.permission.ACCESS_BACKGROUND_LOCATION }, 201);
+        }
+    }
+
+    public static void requestCalendarPermissions(Activity activity) {
+        if (ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.READ_CALENDAR)
+                != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_CALENDAR)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{ android.Manifest.permission.READ_CALENDAR, android.Manifest.permission.WRITE_CALENDAR,  }, 202);
         }
     }
 

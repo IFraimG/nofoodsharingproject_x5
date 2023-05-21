@@ -39,6 +39,9 @@ public class SetterAdvertActivity extends AppCompatActivity {
     private Socket socket;
     private ArrayAdapter<String> productsAdapter;
     private DefineUser<Setter> defineUser;
+    private GetterRepository getterRepository;
+    private NotificationRepository notificationRepository;
+    private AdvertsRepository advertsRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +50,9 @@ public class SetterAdvertActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         this.defineUser = new DefineUser<>(this);
+        advertsRepository = new AdvertsRepository();
+        getterRepository = new GetterRepository();
+        notificationRepository = new NotificationRepository();
 
         binding.setterAdvertBack.setOnClickListener(View -> finish());
         binding.setterAdvertAccept.setOnClickListener(View -> makeHelp());
@@ -63,8 +69,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
     }
 
     private void getAdvertisement(String advertID) {
-
-        AdvertsRepository.getAdvertByID(getApplicationContext(), advertID).enqueue(new Callback<Advertisement>() {
+        advertsRepository.getAdvertByID(getApplicationContext(), advertID).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (!response.isSuccessful()) finish();
@@ -88,7 +93,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
 
     private void makeHelp() {
         binding.setterAdvertAccept.setEnabled(false);
-        AdvertsRepository.makeDoneAdvert(getApplicationContext(), new RequestDoneAdvert(advertisement.getAuthorID(), defineUser.getTypeUser().first, Advertisement.generateID())).enqueue(new Callback<RequestDoneAdvert>() {
+        advertsRepository.makeDoneAdvert(getApplicationContext(), new RequestDoneAdvert(advertisement.getAuthorID(), defineUser.getTypeUser().first, Advertisement.generateID())).enqueue(new Callback<RequestDoneAdvert>() {
             @Override
             public void onResponse(@NotNull Call<RequestDoneAdvert> call, @NotNull Response<RequestDoneAdvert> response) {
                 if (response.isSuccessful()) {
@@ -112,7 +117,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
     }
 
     private void getFCMTokenByUserID() {
-        GetterRepository.getFCMtoken(getApplicationContext(), advertisement.getAuthorID()).enqueue(new Callback<ResponseFCMToken>() {
+        getterRepository.getFCMtoken(getApplicationContext(), advertisement.getAuthorID()).enqueue(new Callback<ResponseFCMToken>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -130,7 +135,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
     }
 
     private void sendNotification() {
-            NotificationRepository.requestNotifyDonateCall(fcmToken, getString(R.string.success_advert), getString(R.string.success_advert_body)).enqueue(new Callback<ResponseBody>() {
+            notificationRepository.requestNotifyDonateCall(fcmToken, getString(R.string.success_advert), getString(R.string.success_advert_body)).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
@@ -152,7 +157,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
         notification.setFromUserID(defineUser.getTypeUser().first);
         notification.setListItems(advertisement.getListProducts());
         notification.setTypeOfUser("getter");
-        NotificationRepository.createNotification(getApplicationContext(), notification).enqueue(new Callback<Notification>() {
+        notificationRepository.createNotification(getApplicationContext(), notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
                 if (!response.isSuccessful()) Toast.makeText(SetterAdvertActivity.this, R.string.smth_wrong, Toast.LENGTH_SHORT).show();

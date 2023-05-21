@@ -186,4 +186,8 @@ public class DefineUser<T extends User> {
     public void changeFCMtoken(String fcmToken) {
         encryptedSharedPreferences.edit().putString("FCMtoken", fcmToken).apply();
     }
+
+    public boolean getIsLocation() {
+        return sharedPreferences.getBoolean("locaiton", true);
+    }
 }

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.databinding.ActivityGetterBinding;
+import com.example.nofoodsharingproject.utils.PermissionHandler;
 
 public class GetterActivity extends AppCompatActivity {
     private NavController navController;
@@ -20,6 +21,8 @@ public class GetterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityGetterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        PermissionHandler.requestCalendarPermissions(this);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_getter_fragment);
         navController = navHostFragment.getNavController();

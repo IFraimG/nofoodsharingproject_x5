@@ -3,7 +3,6 @@ package com.example.nofoodsharingproject.data.api.map;
 import android.content.Context;
 
 import com.example.nofoodsharingproject.data.RetrofitService;
-import com.example.nofoodsharingproject.data.api.auth.AuthAPI;
 
 public class MapApiService {
     private static MapAPI mapAPI;

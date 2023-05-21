@@ -13,21 +13,28 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.databinding.ActivitySetterBinding;
+import com.example.nofoodsharingproject.models.Setter;
 import com.example.nofoodsharingproject.services.LocationTrackingService;
 import com.example.nofoodsharingproject.utils.DateNowChecker;
 import com.example.nofoodsharingproject.utils.DateNowCheckerOld;
+import com.example.nofoodsharingproject.utils.DefineUser;
 import com.example.nofoodsharingproject.utils.PermissionHandler;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SetterActivity extends AppCompatActivity {
     private NavController navController;
     private ActivitySetterBinding binding;
+    private DefineUser<Setter> defineUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySetterBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
+        defineUser = new DefineUser<>(this);
+
+        PermissionHandler.requestCalendarPermissions(this);
+        if (defineUser.getIsLocation()) PermissionHandler.requestPermissions(this);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_setter_fragment);
         navController = navHostFragment.getNavController();
@@ -53,10 +60,12 @@ public class SetterActivity extends AppCompatActivity {
     private void initLocation() {
         if (!PermissionHandler.checkPermissions(getApplicationContext())) PermissionHandler.requestPermissions(this);
         else {
-            Intent serviceIntent = new Intent(this, LocationTrackingService.class);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForegroundService(serviceIntent);
-            } else startService(serviceIntent);
+            if (defineUser.getIsLocation()) {
+                Intent serviceIntent = new Intent(this, LocationTrackingService.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(serviceIntent);
+                } else startService(serviceIntent);
+            }
         }
     }
 }

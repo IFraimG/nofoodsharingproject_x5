@@ -35,6 +35,7 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapterChoose;
     private ArrayAdapter<String> arrayAdapterChoosenItems;
     private DefineUser<Getter> defineUser;
+    private AdvertsRepository advertsRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         defineUser = new DefineUser<>(this);
+        advertsRepository = new AdvertsRepository();
 
         arrayAdapterChoose = new ArrayAdapter<>(this, R.layout.item_getter_product_name, this.productItems);
         arrayAdapterChoosenItems = new ArrayAdapter<>(this, R.layout.item_getter_product_done_name, this.userProductItems);
@@ -78,7 +80,7 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
             if (userProductItems.size() > 0) advertisement.setListProductsCustom(userProductItems);
 
             binding.readyToCreate.setEnabled(false);
-            AdvertsRepository.createAdvert(getApplicationContext(), advertisement).enqueue(new Callback<Advertisement>() {
+            advertsRepository.createAdvert(getApplicationContext(), advertisement).enqueue(new Callback<Advertisement>() {
                 @Override
                 public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                     if (!response.isSuccessful()) {

@@ -16,14 +16,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.util.Pair;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.security.crypto.EncryptedSharedPreferences;
-import androidx.security.crypto.MasterKey;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
@@ -33,11 +30,10 @@ import com.example.nofoodsharingproject.data.api.notifications.NotificationRepos
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Market;
 import com.example.nofoodsharingproject.models.Notification;
+import com.example.nofoodsharingproject.utils.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,12 +59,16 @@ public class LocationTrackingService extends Service implements LocationListener
     };
 
     private Location compareCoords;
+    private NotificationRepository notificationRepository;
+    private DefineUser defineUser;
 
     @Override
     public void onCreate() {
         super.onCreate();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         sharedPreferences = getSharedPreferences("dateSettings", Context.MODE_PRIVATE);
+        notificationRepository = new NotificationRepository();
+        defineUser = new DefineUser(getApplicationContext());
 
         getMarket();
     }
@@ -79,8 +79,10 @@ public class LocationTrackingService extends Service implements LocationListener
             return START_NOT_STICKY;
         }
 
-        if (!defineUser().second) startForeground(1, notifySetter());
+        defineUser = new DefineUser(getApplicationContext());
+        if (defineUser.getTypeUser().second.equals(false)) startForeground(1, notifySetter());
 
+        notificationRepository = new NotificationRepository();
         getMarket();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -117,17 +119,16 @@ public class LocationTrackingService extends Service implements LocationListener
     }
 
     private void getMarket() {
-        Pair<String, Boolean> userData = defineUser();
-        MapRepository.getPinMarket(getApplicationContext(), userData.second ? "getter" : "setter", userData.first).enqueue(new Callback<MarketTitleResponse>() {
+        MapRepository.getPinMarket(getApplicationContext(), defineUser.getTypeUser().second.equals(true) ? "getter" : "setter", defineUser.getTypeUser().first.toString()).enqueue(new Callback<MarketTitleResponse>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful() && response.body() != null) {
                     titleMarket = response.body().getMarket();
-                    for (int i = 0; i < fullListMarkets.length; i++) {
-                        if (fullListMarkets[i].getTitle().equals(titleMarket)) {
+                    for (Market fullListMarket : fullListMarkets) {
+                        if (fullListMarket.getTitle().equals(titleMarket)) {
                             compareCoords = new Location("");
-                            compareCoords.setLatitude(fullListMarkets[i].getLatitude());
-                            compareCoords.setLongitude(fullListMarkets[i].getLongitude());
+                            compareCoords.setLatitude(fullListMarket.getLatitude());
+                            compareCoords.setLongitude(fullListMarket.getLongitude());
                             break;
                         }
                     }
@@ -141,24 +142,6 @@ public class LocationTrackingService extends Service implements LocationListener
             }
         });
     }
-    private Pair<String, Boolean> defineUser() {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-            boolean isGetter = sharedPreferences.getBoolean("isGetter", false);
-            String userID = sharedPreferences.getString("X5_id", "");
-
-            return new Pair<>(userID, isGetter);
-        } catch (IOException | GeneralSecurityException err) {
-            Log.e("auth error", err.toString());
-            err.printStackTrace();
-        }
-
-        return new Pair<>("", false);
-    }
 
     private boolean checkTimer() {
         String dateLocation = sharedPreferences.getString("locationDate", "");
@@ -169,6 +152,8 @@ public class LocationTrackingService extends Service implements LocationListener
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date1 = dateFormat.parse(dateLocation);
 
+            if (date1 == null) return false;
+
             long diffInMilliseconds = Math.abs(new Date().getTime() - date1.getTime());
 
             return diffInMilliseconds > 7200000;
@@ -178,10 +163,12 @@ public class LocationTrackingService extends Service implements LocationListener
     }
 
     private void getRandomGetterAdvert() {
-        AdvertsRepository.getRandomAdvertByMarket(getApplicationContext(), titleMarket).enqueue(new Callback<Advertisement>() {
+        AdvertsRepository advertsRepository = new AdvertsRepository();
+        advertsRepository.getRandomAdvertByMarket(getApplicationContext(), titleMarket).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                if (response.code() == 404 || response.code() == 400 || response.body() == null) createNotification(new Advertisement());
+                if (response.code() == 404 || response.code() == 400 || response.body() == null)
+                    createNotification(new Advertisement());
                 else createNotification(response.body());
             }
 
@@ -202,17 +189,18 @@ public class LocationTrackingService extends Service implements LocationListener
 
                 listProducts.append(": ");
                 String[] result = advert.getListProducts();
-                for (int i = 0; i < result.length - 1; i++) listProducts.append(result[i]).append(", ");
+                for (int i = 0; i < result.length - 1; i++)
+                    listProducts.append(result[i]).append(", ");
 
                 listProducts.append(result[result.length - 1]).append(".");
                 body.append(listProducts);
             }
         } else body.append(getString(R.string.help_getter));
 
-        Notification notification = new Notification(title, body.toString(), defineUser().first);
+        Notification notification = new Notification(title, body.toString(), defineUser.getTypeUser().first.toString());
         notification.setTypeOfUser("setter");
         showNotification(title, body.toString());
-        NotificationRepository.createNotification(getApplicationContext(), notification).enqueue(new Callback<Notification>() {
+        notificationRepository.createNotification(getApplicationContext(), notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
                 if (response.code() == 201) {
@@ -249,7 +237,10 @@ public class LocationTrackingService extends Service implements LocationListener
 
         notificationManagerCompat = NotificationManagerCompat.from(this);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {}
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
 
         notificationManagerCompat.notify(1, builder.build());
     }

@@ -26,15 +26,18 @@ import retrofit2.Response;
 public class CustomMessagingService extends FirebaseMessagingService {
     final String CHANNEL_ID = "HEADS_UP_NOTIFICATION";
     private DefineUser defineUser;
+    private SetterRepository setterRepository;
 
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
 
         defineUser = new DefineUser<>(getApplicationContext());
+        GetterRepository getterRepository = new GetterRepository();
+
         if (defineUser.getTypeUser().second.equals(true)) {
             Getter getter = defineUser.defineGetter();
-            GetterRepository.changeToken(getApplicationContext(), getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
+            getterRepository.changeToken(getApplicationContext(), getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) defineUser.changeFCMtoken(token);
@@ -48,7 +51,7 @@ public class CustomMessagingService extends FirebaseMessagingService {
 
         } else {
             Setter setter = defineUser.defineSetter();
-            SetterRepository.changeToken(getApplicationContext(), setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
+            setterRepository.changeToken(getApplicationContext(), setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) defineUser.changeFCMtoken(token);

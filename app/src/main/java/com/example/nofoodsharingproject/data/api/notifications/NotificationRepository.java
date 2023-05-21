@@ -12,7 +12,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class NotificationRepository {
-    public static Call<ResponseBody> requestNotifyDonateCall(String fmcToken, String title, String body) {
+    public Call<ResponseBody> requestNotifyDonateCall(String fmcToken, String title, String body) {
         return NotificationApiService.getInstance().notifyUserAboutDonate(new FMCMessage(fmcToken, new FMCNotification(title, body)));
     }
 
@@ -20,15 +20,15 @@ public class NotificationRepository {
         return InnerNotificationService.getInstance(ctx).getNotifications(userID, typeOfUser);
     }
 
-    public static Call<Notification> getNotificationOne(Context ctx, String notificationID) {
+    public Call<Notification> getNotificationOne(Context ctx, String notificationID) {
         return InnerNotificationService.getInstance(ctx).getNotificationOne(notificationID);
     }
 
-    public static Call<Notification> createNotification(Context ctx, Notification notification) {
+    public Call<Notification> createNotification(Context ctx, Notification notification) {
         return InnerNotificationService.getInstance(ctx).createNotification(notification);
     }
 
-    public static Call<Notification> setRead(Context ctx, String notificationID) {
+    public Call<Notification> setRead(Context ctx, String notificationID) {
         return InnerNotificationService.getInstance(ctx).setRead(new RequestSetRead(notificationID));
     }
 }

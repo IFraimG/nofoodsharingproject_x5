@@ -29,11 +29,13 @@ import retrofit2.Response;
 public class GetterAuthFragment extends Fragment {
     private FragmentGetterAuthBinding binding;
     private DefineUser<Getter> defineUser;
+    private AuthRepository authRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         defineUser = new DefineUser<>(requireActivity());
+        authRepository = new AuthRepository();
     }
 
     @Override
@@ -74,7 +76,7 @@ public class GetterAuthFragment extends Fragment {
     private void login() {
         if (validate()) {
             binding.authGetterBtnLogin.setEnabled(false);
-            AuthRepository.getterLogin(requireContext(), binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString()).enqueue(new Callback<SignUpResponseI<Getter>>() {
+            authRepository.getterLogin(requireContext(), binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString()).enqueue(new Callback<SignUpResponseI<Getter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                     if (response.code() == 400) {
@@ -103,7 +105,7 @@ public class GetterAuthFragment extends Fragment {
 
     private void signup(String tokenFCM) {
         binding.authGetterCreate.setEnabled(false);
-        AuthRepository.getterRegistration(requireContext(), binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
+        authRepository.getterRegistration(requireContext(), binding.authGetterSignupPhone.getText().toString(), binding.authGetterSignupLogin.getText().toString(), binding.authGetterSignupPassword.getText().toString(), tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                 if (response.code() == 400) {

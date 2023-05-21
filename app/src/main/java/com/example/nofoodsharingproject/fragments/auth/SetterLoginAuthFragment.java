@@ -26,18 +26,19 @@ import retrofit2.Response;
 public class SetterLoginAuthFragment extends Fragment {
     private FragmentSetterLoginAuthBinding binding;
     private DefineUser<Setter> defineUser;
+    private AuthRepository authRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         defineUser = new DefineUser<>(requireActivity());
+        authRepository = new AuthRepository();
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterLoginAuthBinding.inflate(inflater);
-
 
         binding.authSetterLoginBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterLoginAuthF_to_setterAuthF));
         binding.loginAuthBtn.setOnClickListener(View -> login());
@@ -50,7 +51,7 @@ public class SetterLoginAuthFragment extends Fragment {
             Toast.makeText(getContext(), R.string.not_full, Toast.LENGTH_LONG).show();
         } else {
             binding.loginAuthBtn.setEnabled(false);
-            AuthRepository.setterLogin(requireContext(), binding.authSetterLoginLogin.getText().toString(), binding.authSetterLoginPassword.getText().toString()).enqueue(new Callback<SignUpResponseI<Setter>>() {
+            authRepository.setterLogin(requireContext(), binding.authSetterLoginLogin.getText().toString(), binding.authSetterLoginPassword.getText().toString()).enqueue(new Callback<SignUpResponseI<Setter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
                     if (response.code() == 404 || response.code() == 400) {

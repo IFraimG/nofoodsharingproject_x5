@@ -18,6 +18,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private DefineUser defineUser;
+    private AuthRepository authRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         defineUser = new DefineUser(this);
+        authRepository = new AuthRepository();
+
         String res = null;
         try {
             res = defineUser.isGetter();
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void authSetter() {
-        AuthRepository.checkAuthSetter(getApplicationContext(), defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
+        authRepository.checkAuthSetter(getApplicationContext(), defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() != null && !response.body().getIsAuth()) redirectToAuth();
@@ -61,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void authGetter() {
-        AuthRepository.checkAuthGetter(getApplicationContext(), defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
+        authRepository.checkAuthGetter(getApplicationContext(), defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() == null) redirectToAuth();
