@@ -80,6 +80,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
                     binding.setterAdvertAuthor.setText(advertisement.getAuthorName());
                     binding.setterAdvertTitle.setText(advertisement.getTitle());
                     binding.setterAdvertDate.setText(advertisement.getDateOfCreated());
+                    if (advertisement.isDone()) binding.setterAdvertAccept.setEnabled(false);
                 }
             }
 

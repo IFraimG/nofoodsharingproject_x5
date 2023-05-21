@@ -22,7 +22,6 @@ import android.widget.Toast;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.ChatsListActivity;
 import com.example.nofoodsharingproject.activities.MainAuthActivity;
-import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
 import com.example.nofoodsharingproject.models.Setter;
@@ -49,7 +48,6 @@ public class SetterProfileFragment extends Fragment {
 
     private DefineUser<Setter> defineUser;
     private SetterRepository setterRepository;
-    private AdvertsRepository advertsRepository;
     private SetterProfileViewModel viewModel;
 
     @Override
@@ -62,7 +60,6 @@ public class SetterProfileFragment extends Fragment {
 
         this.user = defineUser.defineSetter();
         this.setterRepository = new SetterRepository();
-        this.advertsRepository = new AdvertsRepository();
 
         isCheckedLocation = defineUser.getPreferences("location");
         isCheckedNotification = defineUser.getPreferences("notificaiton");
@@ -129,15 +126,17 @@ public class SetterProfileFragment extends Fragment {
     }
 
     private void getHistoryList(List<String> result) {
-        binding.setterProfileCount.setText(Integer.toString(result.size()) + " успешных передач продуктов");
-        if (arrayAdapter == null) {
-            arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, result);
-            binding.setterProfileHistoryList.setAdapter(arrayAdapter);
-            arrayAdapter.notifyDataSetChanged();
-        } else {
-            arrayAdapter.clear();
-            arrayAdapter.addAll(result);
-            arrayAdapter.notifyDataSetChanged();
+        if (result != null) {
+            binding.setterProfileCount.setText("Успешных передач продуктов: " + Integer.toString(result.size()));
+            if (arrayAdapter == null) {
+                arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, result);
+                binding.setterProfileHistoryList.setAdapter(arrayAdapter);
+                arrayAdapter.notifyDataSetChanged();
+            } else {
+                arrayAdapter.clear();
+                arrayAdapter.addAll(result);
+                arrayAdapter.notifyDataSetChanged();
+            }
         }
         binding.setterProfileSwiper.setRefreshing(false);
     }

@@ -167,8 +167,7 @@ public class LocationTrackingService extends Service implements LocationListener
         advertsRepository.getRandomAdvertByMarket(getApplicationContext(), titleMarket).enqueue(new Callback<Advertisement>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                if (response.code() == 404 || response.code() == 400 || response.body() == null)
-                    createNotification(new Advertisement());
+                if (!response.isSuccessful() || response.body() == null) createNotification(new Advertisement());
                 else createNotification(response.body());
             }
 
@@ -199,6 +198,7 @@ public class LocationTrackingService extends Service implements LocationListener
 
         Notification notification = new Notification(title, body.toString(), defineUser.getTypeUser().first.toString());
         notification.setTypeOfUser("setter");
+        notification.setAdvertID(advert.getAdvertsID());
         showNotification(title, body.toString());
         notificationRepository.createNotification(getApplicationContext(), notification).enqueue(new Callback<Notification>() {
             @Override

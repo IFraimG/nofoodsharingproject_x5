@@ -41,7 +41,7 @@ public class SetterProfileViewModel extends AndroidViewModel {
 
                     advertisementsHistory = new ArrayList<>();
                     for (Advertisement advertisement : result) {
-                        advertisementsHistory.add(advertisement.getTitle() + " - " + advertisement.getListProducts().length + " продукта - " + advertisement.getDateOfCreated());
+                        advertisementsHistory.add(advertisement.getTitle() + " - продуктов: " + advertisement.getListProducts().length + " - " + advertisement.getDateOfCreated());
                     }
 
                     _adverts.setValue(advertisementsHistory);

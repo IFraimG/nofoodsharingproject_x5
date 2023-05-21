@@ -45,6 +45,10 @@ public class Notification {
     @SerializedName("buttonType")
     @Expose
     private String buttonType;
+
+    @SerializedName("advertID")
+    @Expose
+    private String advertID;
     public Notification() {}
 
     public Notification(String title, String description, String userID) {
@@ -148,5 +152,13 @@ public class Notification {
 
     public void setButtonType(String buttonType) {
         this.buttonType = buttonType;
+    }
+
+    public String getAdvertID() {
+        return advertID;
+    }
+
+    public void setAdvertID(String advertID) {
+        this.advertID = advertID;
     }
 }
