@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,15 +23,17 @@ import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.ChatsListActivity;
 import com.example.nofoodsharingproject.activities.MainAuthActivity;
 import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
-import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseHistoryAdverts;
 import com.example.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
-import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Setter;
 import com.example.nofoodsharingproject.utils.DefineUser;
 import com.example.nofoodsharingproject.utils.PermissionHandler;
 import com.example.nofoodsharingproject.utils.ValidateUser;
+import com.example.nofoodsharingproject.view_models.SetterProfileViewModel;
+
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +42,6 @@ import retrofit2.Response;
 
 public class SetterProfileFragment extends Fragment {
     private FragmentSetterProfileBinding binding;
-    private String[] advertisementsHistory;
     private ArrayAdapter<String> arrayAdapter;
     private Setter user;
     private boolean isCheckedLocation = false;
@@ -48,6 +50,7 @@ public class SetterProfileFragment extends Fragment {
     private DefineUser<Setter> defineUser;
     private SetterRepository setterRepository;
     private AdvertsRepository advertsRepository;
+    private SetterProfileViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,8 +80,13 @@ public class SetterProfileFragment extends Fragment {
         binding.setterProfileLocation.setChecked(isCheckedLocation);
         binding.setterProfileOpenChat.setOnClickListener(View -> openChats());
 
-        getHistoryList();
         handlers();
+
+        viewModel = new ViewModelProvider(requireActivity(),
+                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                .get(SetterProfileViewModel.class);
+
+        viewModel.getHistoryAdverts(user.getX5_Id()).observe(requireActivity(), this::getHistoryList);
 
         return binding.getRoot();
     }
@@ -108,8 +116,7 @@ public class SetterProfileFragment extends Fragment {
         binding.setterProfileSave.setOnClickListener(View -> closeEdit());
         binding.setterProfileCancel.setOnClickListener(View -> removeEdit());
 
-        binding.setterProfileSwiper.setOnRefreshListener(this::getHistoryList);
-
+        binding.setterProfileSwiper.setOnRefreshListener(() -> viewModel.getHistoryAdverts(user.getX5_Id()).observe(requireActivity(), this::getHistoryList));
         binding.setterOpenVk.setOnClickListener(View -> vkLoad());
 
         binding.setterProfileLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -121,34 +128,18 @@ public class SetterProfileFragment extends Fragment {
         binding.setterProfileNotifications.setOnCheckedChangeListener((buttonView, isChecked) -> isCheckedNotification = isChecked);
     }
 
-    private void getHistoryList() {
-        advertsRepository.findSetterAdvertisements(requireContext(), this.user.getX5_Id()).enqueue(new Callback<ResponseHistoryAdverts>() {
-            @Override
-            public void onResponse(@NotNull Call<ResponseHistoryAdverts> call, @NotNull Response<ResponseHistoryAdverts> response) {
-                if (response.code() == 400) Toast.makeText(requireContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                else if (response.code() != 404 && response.body() != null) {
-                    Advertisement[] result = response.body().getAdvertisements();
-                    binding.setterProfileCount.setText(Integer.toString(result.length) + getString(R.string.some_success_products));
-
-                    advertisementsHistory = new String[result.length];
-                    for (int i = 0; i < result.length; i++) {
-                        advertisementsHistory[i] = result[i].getTitle() + " - " + result[i].getListProducts().length + getString(R.string.product_text_success) + result[i].getDateOfCreated();
-                    }
-
-                    arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advertisementsHistory);
-                    binding.setterProfileHistoryList.setAdapter(arrayAdapter);
-
-                    binding.setterProfileSwiper.setRefreshing(false);
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<ResponseHistoryAdverts> call, @NotNull Throwable t) {
-                t.printStackTrace();
-                Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                binding.setterProfileSwiper.setRefreshing(false);
-            }
-        });
+    private void getHistoryList(List<String> result) {
+        binding.setterProfileCount.setText(Integer.toString(result.size()) + " успешных передач продуктов");
+        if (arrayAdapter == null) {
+            arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, result);
+            binding.setterProfileHistoryList.setAdapter(arrayAdapter);
+            arrayAdapter.notifyDataSetChanged();
+        } else {
+            arrayAdapter.clear();
+            arrayAdapter.addAll(result);
+            arrayAdapter.notifyDataSetChanged();
+        }
+        binding.setterProfileSwiper.setRefreshing(false);
     }
 
     private void editProfile() {
@@ -197,7 +188,7 @@ public class SetterProfileFragment extends Fragment {
             @Override
             public void onResponse(@NotNull Call<Setter> call, @NotNull Response<Setter> response) {
                 if (response.code() == 400) Toast.makeText(getContext(), R.string.your_password_uncorrect, Toast.LENGTH_SHORT).show();
-                if (response.code() == 201) {
+                if (response.isSuccessful() && response.body() != null) {
                     Toast.makeText(getContext(), R.string.sucses, Toast.LENGTH_SHORT).show();
                     binding.setterProfileName.setText(response.body().getLogin());
                     binding.setterProfilePhone.setText(response.body().getPhone());
