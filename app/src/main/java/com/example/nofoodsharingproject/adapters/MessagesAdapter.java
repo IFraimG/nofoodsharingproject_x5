@@ -3,6 +3,7 @@ package com.example.nofoodsharingproject.adapters;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         holder.body.setText(message.getBody());
         holder.dateCreated.setText(message.getDateCreated());
         if (message.getAuthorID().equals(userID)) holder.msgLayout.setBackground(AppCompatResources.getDrawable(ctx, R.drawable.custom_border_list));
+        else {
+//            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.msgLayout.getLayoutParams();
+//            layoutParams. = Gravity.END;
+//            holder.msgLayout.setLayoutParams(layoutParams);
+        }
+
     }
 
     @Override

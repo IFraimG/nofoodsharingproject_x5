@@ -29,13 +29,7 @@ public class MainActivity extends AppCompatActivity {
         defineUser = new DefineUser(this);
         authRepository = new AuthRepository();
 
-        String res = null;
-        try {
-            res = defineUser.isGetter();
-        }
-        catch(Exception e){
-                Log.i("ActivMain", e.getMessage());
-            }
+        String res = defineUser.isGetter();
         if (res != null) {
             if (res.equals("setter")) authSetter();
             else if (res.equals("getter")) authGetter();
