@@ -105,12 +105,15 @@ public class GetterAuthFragment extends Fragment {
 
     private void signup(String tokenFCM) {
         binding.authGetterCreate.setEnabled(false);
+        String dtoPhone = binding.authGetterSignupPhone.getText().toString().replaceAll("\\s", "");
+        String dtoLogin = binding.authGetterSignupLogin.getText().toString().replaceAll("\\s", "");
+        String dtoPassword = binding.authGetterSignupPassword.getText().toString().replaceAll("\\s", "");
+//        String dtoPhone = "3333";
+//        String dtoLogin = "mega_barsik";
+//        String dtoPassword = "1myrmyr1";
 
-        authRepository.getterRegistration(requireContext(),
-                binding.authGetterSignupPhone.getText().toString().replaceAll("\\s", ""),
-                binding.authGetterSignupLogin.getText().toString().replaceAll("\\s", ""),
-                binding.authGetterSignupPassword.getText().toString().replaceAll("\\s", ""),
-                tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
+
+        authRepository.getterRegistration(requireContext(), dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<SignUpResponseI<Getter>>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                 if (response.code() == 400) {

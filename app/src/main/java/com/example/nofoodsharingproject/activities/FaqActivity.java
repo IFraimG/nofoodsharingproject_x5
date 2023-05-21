@@ -1,8 +1,12 @@
 package com.example.nofoodsharingproject.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.nofoodsharingproject.R;
@@ -51,5 +55,15 @@ public class FaqActivity extends AppCompatActivity {
 
         binding.faqSetterList.setAdapter(faqAdapterSetter);
         binding.faqGetterList.setAdapter(faqAdapterGetter);
+
+        binding.getterPolicyOpen.setOnClickListener(View -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = getLayoutInflater();
+            android.view.View customView = inflater.inflate(R.layout.fragment_privacy_policy, null);
+            builder.setView(customView);
+
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        });
     }
 }

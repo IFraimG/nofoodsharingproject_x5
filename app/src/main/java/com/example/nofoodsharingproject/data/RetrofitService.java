@@ -1,6 +1,8 @@
 package com.example.nofoodsharingproject.data;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.example.nofoodsharingproject.utils.DefineUser;
 
 
@@ -51,6 +53,14 @@ public class RetrofitService {
 
     public static void changeBaseUrl(String newApiBaseUrl) {
         BASE_URL = newApiBaseUrl;
+        Log.d("msg", BASE_URL);
+        Log.d("msg", BASE_URL);
+        Log.d("msg", BASE_URL);
+        Log.d("msg", BASE_URL);
+        Log.d("msg", BASE_URL);
+        Log.d("msg", BASE_URL);
+        Log.d("msg", BASE_URL);
+        Log.d("msg", BASE_URL);
     }
 
     public static Retrofit getInstance(Context ctx) {

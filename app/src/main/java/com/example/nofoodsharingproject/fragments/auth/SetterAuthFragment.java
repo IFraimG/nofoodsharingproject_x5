@@ -53,8 +53,16 @@ public class SetterAuthFragment extends Fragment {
 
     private void signup(String tokenFCM) {
         if (validate()) {
+            String dtoPhone = binding.setterAuthPhone.getText().toString().replaceAll("\\s", "");
+            String dtoLogin = binding.setterAuthLogin.getText().toString().replaceAll("\\s", "");
+            String dtoPassword = binding.setterAuthPassword.getText().toString().replaceAll("\\s", "");
+
+//            String dtoPhone = "3333";
+//            String dtoLogin = "mega_barsik";
+//            String dtoPassword = "1myrmyr1";
+
             binding.setterAuthBtnLogin.setEnabled(false);
-            authRepository.setterRegistration(requireContext(), binding.setterAuthPhone.getText().toString().replaceAll("\\s", ""), binding.setterAuthLogin.getText().toString().replaceAll("\\s", ""), binding.setterAuthPassword.getText().toString().replaceAll("\\s", ""), tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
+            authRepository.setterRegistration(requireContext(), dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
                     if (response.code() == 401) {

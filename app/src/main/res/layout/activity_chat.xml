@@ -16,23 +16,24 @@
         android:paddingBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <ImageView
+
+        <ImageButton
             android:id="@+id/chat_return"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
+            android:contentDescription="@string/no_image_warnings"
             android:layout_marginStart="@dimen/standard_size_very_medium"
-            android:src="@drawable/ic_baseline_chevron_left_24"/>
+            android:src="@drawable/ic_baseline_chevron_left_24" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/standard_size_very_medium"
-            android:textColor="@color/black"
-            android:textSize="20sp"
             android:text="@string/chat_title"
-            />
+            android:textColor="@color/black"
+            android:textSize="20sp" />
     </LinearLayout>
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/messages_top_divider"
@@ -98,12 +99,13 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/messages_send"
                 android:layout_width="0dp"
                 android:layout_height="64dp"
                 android:layout_weight="0.2"
                 android:layout_gravity="center|end"
+                android:contentDescription="@string/no_image_warnings"
                 android:layout_marginStart="@dimen/standard_size_very_medium"
                 android:background="@drawable/custom_round_border"
                 android:src="@drawable/baseline_send_24" />

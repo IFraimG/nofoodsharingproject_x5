@@ -12,7 +12,8 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/faq_return"
-            android:layout_width="32dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
             android:layout_height="32dp"
             android:contentDescription="@string/no_image_warnings"
             android:layout_gravity="center"
@@ -22,10 +23,21 @@
         <TextView
             android:id="@+id/getter_notify_title"
             style="@style/heading_getter_fragments"
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
             android:layout_marginTop="@dimen/standard_size_small"
             android:layout_marginStart="@dimen/standard_size_small"
             android:layout_gravity="center"
             android:text="@string/faq_link" />
+        <TextView
+            android:id="@+id/getter_policy_open"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:gravity="center"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/standard_size_small"
+            android:text="@string/privacy_policy"/>
     </LinearLayout>
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"

@@ -26,6 +26,7 @@ import retrofit2.Response;
 public class CustomMessagingService extends FirebaseMessagingService {
     final String CHANNEL_ID = "HEADS_UP_NOTIFICATION";
     private DefineUser defineUser;
+    private GetterRepository getterRepository;
     private SetterRepository setterRepository;
 
     @Override
@@ -33,9 +34,12 @@ public class CustomMessagingService extends FirebaseMessagingService {
         super.onNewToken(token);
 
         defineUser = new DefineUser<>(getApplicationContext());
-        GetterRepository getterRepository = new GetterRepository();
 
-        if (defineUser.getTypeUser().second.equals(true)) {
+        getterRepository = new GetterRepository();
+        setterRepository = new SetterRepository();
+
+        // проверка на наличие jwt токена, чтобы было что изменять
+        if (defineUser.getToken() != null && defineUser.getToken().length() > 0 && defineUser.getTypeUser().second.equals(true)) {
             Getter getter = defineUser.defineGetter();
             getterRepository.changeToken(getApplicationContext(), getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -66,25 +70,28 @@ public class CustomMessagingService extends FirebaseMessagingService {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        String title = remoteMessage.getNotification().getTitle();
-        String text = remoteMessage.getNotification().getBody();
-
         if (remoteMessage.getNotification() != null) {
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            String title = remoteMessage.getNotification().getTitle();
+            String text = remoteMessage.getNotification().getBody();
 
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "test_channel", NotificationManager.IMPORTANCE_HIGH);
-            notificationManager.createNotificationChannel(notificationChannel);
+            if (remoteMessage.getNotification() != null) {
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-            Notification.Builder notification = new Notification.Builder(this, CHANNEL_ID)
-                    .setContentTitle(title)
-                    .setContentText(text)
-                    .setSmallIcon(R.drawable.ic_launcher_background)
-                    .setAutoCancel(true);
+                NotificationChannel notificationChannel = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    notificationChannel = new NotificationChannel(CHANNEL_ID, "test_channel", NotificationManager.IMPORTANCE_HIGH);
+                    notificationManager.createNotificationChannel(notificationChannel);
 
-            notificationManager.notify(0, notification.build());
+                    Notification.Builder notification = new Notification.Builder(this, CHANNEL_ID)
+                            .setContentTitle(title)
+                            .setContentText(text)
+                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setAutoCancel(true);
+                    notificationManager.notify(0, notification.build());
+                }
+            }
         }
     }
 }

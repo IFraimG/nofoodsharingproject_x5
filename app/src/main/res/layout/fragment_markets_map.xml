@@ -22,6 +22,7 @@
             android:id="@+id/map_list_markets"
             android:layout_width="match_parent"
             android:minHeight="@dimen/size_48"
+            android:padding="@dimen/standard_size_very_medium"
             android:popupBackground="@color/white"
             android:layout_height="wrap_content" />
         <androidx.appcompat.widget.AppCompatButton

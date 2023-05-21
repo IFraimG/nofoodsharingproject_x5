@@ -1,9 +1,7 @@
 package com.example.nofoodsharingproject.adapters;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,13 +43,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
         holder.body.setText(message.getBody());
         holder.dateCreated.setText(message.getDateCreated());
-        if (message.getAuthorID().equals(userID)) holder.msgLayout.setBackground(AppCompatResources.getDrawable(ctx, R.drawable.custom_border_list));
-        else {
-//            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) holder.msgLayout.getLayoutParams();
-//            layoutParams. = Gravity.END;
-//            holder.msgLayout.setLayoutParams(layoutParams);
+        if (message.getAuthorID().equals(userID)) {
+            holder.msgLayout.setBackground(AppCompatResources.getDrawable(ctx, R.drawable.custom_round_border_active));
+            holder.textYou.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
@@ -81,12 +76,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         public final TextView body;
         public final TextView dateCreated;
         public final LinearLayout msgLayout;
+        public final TextView textYou;
 
         public ViewHolder(View view) {
             super(view);
             this.body = (TextView) view.findViewById(R.id.message_body);
             this.dateCreated = (TextView) view.findViewById(R.id.message_date);
             this.msgLayout = (LinearLayout) view.findViewById(R.id.message_layout);
+            this.textYou = (TextView) view.findViewById(R.id.message_you);
         }
     }
 }

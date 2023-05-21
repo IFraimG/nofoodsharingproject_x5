@@ -63,6 +63,7 @@ public class DefineUser<T extends User> {
             Log.e("auth error", err.toString());
             err.printStackTrace();
         }
+
         sharedPreferences = activity.getSharedPreferences("prms", Context.MODE_PRIVATE);
     }
 
@@ -118,11 +119,13 @@ public class DefineUser<T extends User> {
     }
 
     public void clearData() {
-        SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
-        editor.clear();
-        editor.apply();
+        if (encryptedSharedPreferences != null) {
+            SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+        }
 
-        sharedPreferences.edit().clear().apply();
+        if (sharedPreferences != null) sharedPreferences.edit().clear().apply();
     }
 
     public void saveUserData(boolean isGetter, String X5_id, SignUpResponseI<T> result) {
