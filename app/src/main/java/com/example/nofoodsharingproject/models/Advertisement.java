@@ -3,6 +3,8 @@ package com.example.nofoodsharingproject.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -47,6 +49,8 @@ public class Advertisement {
     @SerializedName("userDoneID")
     @Expose
     private String userDoneID;
+
+    private List<String> listArrayProducts;
 
     public Advertisement() {}
 
@@ -97,8 +101,10 @@ public class Advertisement {
         return listProducts;
     }
 
-    public String[] getListTitleProducts() {
-        return getListProducts();
+    public List<String> getListTitleProducts() {
+        listArrayProducts = new ArrayList<>();
+        listArrayProducts.addAll(Arrays.asList(listProducts));
+        return listArrayProducts;
     }
 
     public void setAdvertsID(String advertsID) {

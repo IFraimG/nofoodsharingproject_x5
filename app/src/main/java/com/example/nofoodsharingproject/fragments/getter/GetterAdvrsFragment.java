@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
-import android.util.Pair;
+import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,48 +14,29 @@ import android.widget.Toast;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.activities.FaqActivity;
 import com.example.nofoodsharingproject.activities.GetterNewAdvertActivity;
-import com.example.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;
-import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
-import com.example.nofoodsharingproject.data.api.map.MapRepository;
-import com.example.nofoodsharingproject.data.api.notifications.NotificationRepository;
-import com.example.nofoodsharingproject.data.api.notifications.dto.ResponseFCMToken;
-import com.example.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.example.nofoodsharingproject.databinding.FragmentGetterAdvrsBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
-import com.example.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
+
 import com.example.nofoodsharingproject.models.Getter;
-import com.example.nofoodsharingproject.models.Notification;
+import com.example.nofoodsharingproject.models.LoaderStatus;
 import com.example.nofoodsharingproject.utils.DateNowChecker;
 import com.example.nofoodsharingproject.utils.DateNowCheckerOld;
 import com.example.nofoodsharingproject.utils.DefineUser;
+import com.example.nofoodsharingproject.view_models.AdvertisementOneViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class GetterAdvrsFragment extends Fragment {
     private FragmentGetterAdvrsBinding binding;
-    private Advertisement advertisement;
+    private AdvertisementOneViewModel viewModel;
     private ArrayAdapter<String> arrayAdapter;
-    private String market;
-    private Pair<String, Boolean> userType;
     private DefineUser<Getter> defineUser;
-    private SetterRepository setterRepository;
-    private NotificationRepository notificationRepository;
-    private AdvertsRepository advertsRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         defineUser = new DefineUser<>(requireActivity());
-        notificationRepository = new NotificationRepository();
-        setterRepository = new SetterRepository();
-        advertsRepository = new AdvertsRepository();
-        userType = defineUser.getTypeUser();
     }
 
     @Override
@@ -66,21 +47,64 @@ public class GetterAdvrsFragment extends Fragment {
         binding.stopAdvert.setVisibility(View.GONE);
         binding.getterAdvertLayout.setVisibility(View.GONE);
 
-        getAddress();
+        viewModel = new ViewModelProvider(requireActivity(),
+                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                .get(AdvertisementOneViewModel.class);
+
+        viewModel.getAddress(defineUser.getUser().getX5_Id(), defineUser.getTypeUser().second).observe(requireActivity(), market -> {
+            binding.addressShop.setText(market);
+            binding.addressShop.setVisibility(View.VISIBLE);
+        });
+
+        viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
+        viewModel.getLoaderRemoveStatus().observe(requireActivity(), this::renderStatusRemove);
+        viewModel.getLoaderNotificationStatus().observe(requireActivity(), this::renderStatusNotification);
+
         getAdvertisement();
         initHandlers();
 
         return binding.getRoot();
     }
 
+    private void renderStatus(LoaderStatus loaderStatus) {
+        switch (loaderStatus.getStatus()) {
+            case LOADING:
+                binding.getterAdvertSwiper.setRefreshing(true);
+                hideAdvertisementElements();
+                break;
+            case FAILURE:
+                hideAdvertisementElements();
+                break;
+        }
+    }
+
+    private void renderStatusRemove(LoaderStatus loaderStatus) {
+        switch (loaderStatus.getStatus()) {
+            case LOADING:
+                binding.getterAdvertSwiper.setRefreshing(true);
+                break;
+            case LOADED:
+                hideAdvertisementElements();
+                break;
+            case FAILURE:
+                binding.getterAdvertSwiper.setRefreshing(false);
+                break;
+        }
+    }
+
+    private void renderStatusNotification(LoaderStatus loaderStatus) {
+        if (loaderStatus.getStatus() == LoaderStatus.Status.LOADED) hideAdvertisementElements();
+    }
+
+
     private void initHandlers() {
         binding.createNewRequest.setOnClickListener(View -> {
-            if (market == null || market.length() == 0) Toast.makeText(getContext(), getString(R.string.pin_market), Toast.LENGTH_LONG).show();
+            if (viewModel.getMarket() == null || viewModel.getMarket().length() == 0) Toast.makeText(getContext(), getString(R.string.pin_market), Toast.LENGTH_LONG).show();
             else startActivity(new Intent(getActivity(), GetterNewAdvertActivity.class));
         });
 
-        binding.stopAdvert.setOnClickListener(View -> removeAdvertisement());
-        binding.pickUpOrder.setOnClickListener(View -> takeProducts());
+        binding.stopAdvert.setOnClickListener(View -> viewModel.removeAdvertisement());
+        binding.pickUpOrder.setOnClickListener(View -> viewModel.takeProducts(defineUser.getUser().getX5_Id()));
 
         binding.getterAdvertFaq.setOnClickListener(View -> {
             Intent intent = new Intent(getContext(), FaqActivity.class);
@@ -91,15 +115,18 @@ public class GetterAdvrsFragment extends Fragment {
     }
 
     private void hideAdvertisementElements() {
-        advertisement = null;
         binding.getterAdvertStatus.setVisibility(View.VISIBLE);
         showCreateButton();
         binding.stopAdvert.setVisibility(View.GONE);
-        arrayAdapter.notifyDataSetChanged();
+        if (arrayAdapter != null) {
+            arrayAdapter.clear();
+            arrayAdapter.notifyDataSetChanged();
+        }
         binding.pickUpOrder.setVisibility(View.GONE);
         binding.numberOfAdvertisement.setVisibility(View.GONE);
         binding.textNumberOfAdvert.setVisibility(View.GONE);
         binding.getterAdvertLayout.setVisibility(View.GONE);
+        binding.getterAdvertSwiper.setRefreshing(false);
     }
 
     private void showAdvertisementElements(Advertisement advert) {
@@ -107,10 +134,7 @@ public class GetterAdvrsFragment extends Fragment {
         binding.getterAdvertStatus.setVisibility(View.GONE);
         binding.createNewRequest.setVisibility(View.GONE);
         binding.stopAdvert.setVisibility(View.VISIBLE);
-        arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advert.getListTitleProducts());
-        binding.getterAdvertProducts.setAdapter(arrayAdapter);
         binding.getterAdvertLayout.setVisibility(View.VISIBLE);
-        advertisement = advert;
 
         if (advert.getGettingProductID() != null && advert.getGettingProductID().length() > 0) {
             binding.pickUpOrder.setVisibility(View.VISIBLE);
@@ -118,6 +142,7 @@ public class GetterAdvrsFragment extends Fragment {
             binding.textNumberOfAdvert.setVisibility(View.VISIBLE);
             binding.numberOfAdvertisement.setText(advert.getGettingProductID());
         }
+        binding.getterAdvertSwiper.setRefreshing(false);
     }
 
     private void showCreateButton() {
@@ -135,143 +160,13 @@ public class GetterAdvrsFragment extends Fragment {
         }
     }
 
-    // _______________ РАБОТА С ОБЪЯВЛЕНИЯМИ ____________________
     private void getAdvertisement() {
-        advertsRepository.getOwnAdvert(requireContext(), userType.first).enqueue(new Callback<Advertisement>() {
-            @Override
-            public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                if (response.code() == 400) {
-                    showCreateButton();
-                    Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                }
-                if (response.code() == 404) showCreateButton();
-                if (response.isSuccessful() && response.body() != null) {
-                    showAdvertisementElements(response.body());
-                }
-                binding.getterAdvertSwiper.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<Advertisement> call, @NotNull Throwable t) {
-                t.printStackTrace();
-                binding.getterAdvertSwiper.setRefreshing(false);
-                Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void removeAdvertisement() {
-        advertsRepository.deleteAdvert(requireContext(), advertisement.getAdvertsID()).enqueue(new Callback<ResponseDeleteAdvert>() {
-            @Override
-            public void onResponse(@NotNull Call<ResponseDeleteAdvert> call, @NotNull Response<ResponseDeleteAdvert> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isDelete) {
-                    Toast.makeText(getContext(), R.string.sucsesfully_deleted, Toast.LENGTH_SHORT).show();
-                    hideAdvertisementElements();
-                } else Toast.makeText(getContext(), R.string.error_on_delated, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<ResponseDeleteAdvert> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), R.string.error_on_delated, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    // _______________ РАБОТА С УВЕДОМЛЕНИЯМИ И СОХРАНЕНИЕМ ПРОДУКТОВ ____________________
-    // Шаг 1 - забираем продукты
-    private void takeProducts() {
-        advertsRepository.takingProducts(requireContext(), userType.first).enqueue(new Callback<Advertisement>() {
-            @Override
-            public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                if (!response.isSuccessful()) Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                else if (response.code() == 201) sendNotification();
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<Advertisement> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    // Шаг 2 - сохраняем сообщение об этом у отдающего
-    private void sendNotification() {
-        String body =  "Благодарим вас за помощь! Пользователь " + advertisement.getAuthorName() + " забрал продукты";
-        Notification notification = new Notification();
-        notification.setTitle(getString(R.string.success_deal));
-        notification.setDescription(body);
-        notification.setTypeOfUser("setter");
-        notification.setFromUserID(advertisement.getAuthorID());
-        notification.setUserID(advertisement.getUserDoneID());
-        notificationRepository.createNotification(requireContext(), notification).enqueue(new Callback<Notification>() {
-            @Override
-            public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
-                if (response.body() == null || !response.isSuccessful()) {
-                    Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-                } else getFMCToken(body);
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<Notification> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
-            }
-        });
-    }
-
-    // Шаг 3 - Получаем fmc token
-    private void getFMCToken(String body) {
-        setterRepository.getFCMtoken(requireContext(), advertisement.getUserDoneID()).enqueue(new Callback<ResponseFCMToken>() {
-            @Override
-            public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
-                if (!response.isSuccessful() || response.body() == null) Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-                else sendFMCMessage(response.body(), body);
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<ResponseFCMToken> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
-            }
-        });
-    }
-
-    // Шаг 4 - Отправляем через firebase сообщение об успешно полученном токене
-    private void sendFMCMessage(ResponseFCMToken response, String body) {
-        notificationRepository.requestNotifyDonateCall(response.getFcmToken(), getString(R.string.success_deal), body).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getContext(), R.string.deal_correct, Toast.LENGTH_LONG).show();
-                    hideAdvertisementElements();
-                }
-            }
-            @Override
-            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
-            }
-        });
-    }
-
-    // _______________ ИНФОРМАЦИЯ О МАГАЗИНЕ ____________________
-    private void getAddress() {
-        String userData = userType.second ? "getter" : "setter";
-
-        MapRepository.getPinMarket(requireContext(), userData, userType.first).enqueue(new Callback<MarketTitleResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    market = response.body().market;
-                    binding.addressShop.setText(response.body().market);
-                    binding.addressShop.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<MarketTitleResponse> call, @NotNull Throwable t) {
-                Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
+        viewModel.getAdvert(defineUser.getUser().getX5_Id()).observe(requireActivity(), advert -> {
+            if (advert != null) {
+                binding.getterAdvertTitleProducts.setText(advert.getTitle());
+                arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advert.getListTitleProducts());
+                binding.getterAdvertProducts.setAdapter(arrayAdapter);
+                showAdvertisementElements(advert);
             }
         });
     }
