@@ -54,9 +54,7 @@
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/fk_size"
             android:text="@string/i_setter_text"
-
             android:textSize="20sp"
             app:backgroundTint="@color/green_pastel" />
     </LinearLayout>

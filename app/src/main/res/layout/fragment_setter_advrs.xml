@@ -18,7 +18,8 @@
             android:orientation="horizontal">
         <TextView
             android:id="@+id/setter_advert_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.6"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/standard_size_very_medium"
             android:textColor="@color/black"
@@ -28,8 +29,10 @@
 
         <TextView
             android:id="@+id/setter_advert_faq"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="50dp"
+            android:gravity="center"
             android:layout_margin="@dimen/standard_size_very_medium"
             android:layout_gravity="center|end"
             android:textColor="@color/black"

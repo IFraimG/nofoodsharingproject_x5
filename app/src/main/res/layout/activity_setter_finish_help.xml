@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textSize="18sp"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
+        android:layout_marginBottom="@dimen/standard_size_very_medium"
         android:text="@string/celebrate_help" />
 
     <Button
@@ -47,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:backgroundTint="@color/grey_light"
+        android:backgroundTint="@color/grey"
         android:text="@string/return_to_main_page"
         android:layout_marginBottom="@dimen/standard_size_very_medium"/>
 </LinearLayout>

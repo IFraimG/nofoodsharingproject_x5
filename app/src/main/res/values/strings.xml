@@ -126,7 +126,7 @@
     <string name="your_password_uncorrect">Ваш старый пароль введен неверно</string>
     <string name="sucses">Успешно!</string>
     <string name="error_on_route">Произошла ошибка при построении маршрута</string>
-    <string name="celebrate_help">Если вы хотите получить дополнительные бонусы, отсканируйте штрих код вашего чека и загрузите в сервис SuperUp (Вконтакте)</string>
+    <string name="celebrate_help">Если вы хотите получить дополнительные бонусы и загрузите чек в сервис SuperUp VK</string>
     <string name="celebrate_help_title">Поздравляем с успешной передачей продуктов!</string>
     <string name="open_vk">Отсканировать чек в VK</string>
     <string name="no_image_warnings">...</string>

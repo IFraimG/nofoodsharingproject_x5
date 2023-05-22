@@ -2,6 +2,7 @@ package com.example.nofoodsharingproject.view_models;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -55,7 +56,10 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     _advert.setValue(response.body());
                     _status.setValue(LoaderStatus.LOADED);
-                } else _status.setValue(LoaderStatus.FAILURE);
+                } else {
+                    if (response.code() == 404) _advert.setValue(null);
+                    _status.setValue(LoaderStatus.FAILURE);
+                }
             }
 
             @Override
@@ -143,16 +147,13 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
                 Date firstDate = dateFormat.parse(timeStart);
                 Date secondDate = dateFormat.parse(timeEnd);
 
-                long diffInMillis = Math.abs(secondDate.getTime() - firstDate.getTime());
+                long diffInMillis = 2 * 60 * 60 * 1000 - (secondDate.getTime() - firstDate.getTime());
 
-                Calendar calendar1 = Calendar.getInstance();
-                calendar1.set(Calendar.HOUR, 2);
-                calendar1.set(Calendar.MINUTE, 0);
-                calendar1.set(Calendar.SECOND, 0);
+                long hours = TimeUnit.MILLISECONDS.toHours(diffInMillis);
+                long minutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillis) - TimeUnit.HOURS.toMinutes(hours);
+                long seconds = TimeUnit.MILLISECONDS.toSeconds(diffInMillis) - TimeUnit.MINUTES.toSeconds(minutes) - TimeUnit.HOURS.toSeconds(hours);
 
-                long diff = calendar1.getTimeInMillis() - diffInMillis;
-
-                return dateFormat2.format(new Date(diff));
+                return String.format("%02d:%02d:%02d", hours, minutes, seconds);
             } catch (ParseException err) {
                 err.printStackTrace();
             }

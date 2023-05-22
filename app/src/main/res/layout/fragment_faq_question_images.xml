@@ -25,11 +25,12 @@
                 android:layout_marginTop="@dimen/standard_size_very_medium"
                 android:text="@string/faq_2" />
             <ImageView
+                android:id="@+id/faq_image_load_1"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:contentDescription="@string/no_image_warnings"
                 android:layout_marginTop="@dimen/standard_size_very_medium"
-                android:src="@drawable/faq6" />
+               />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,23 +38,19 @@
                 android:layout_marginTop="@dimen/standard_size_very_medium"
                 android:text="@string/faq_3" />
             <ImageView
+                android:id="@+id/faq_image_load_2"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:contentDescription="@string/no_image_warnings"
                 android:layout_marginTop="@dimen/standard_size_very_medium"
-                android:src="@drawable/faq5" />
+                 />
             <ImageView
+                android:id="@+id/faq_image_load_3"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:contentDescription="@string/no_image_warnings"
                 android:layout_marginTop="@dimen/standard_size_very_medium"
-                android:src="@drawable/faq4" />
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:contentDescription="@string/no_image_warnings"
-                android:layout_marginTop="@dimen/standard_size_very_medium"
-                android:src="@drawable/faq5" />
+                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,19 +61,21 @@
                 android:layout_height="300dp"
                 android:orientation="horizontal">
                 <ImageView
+                    android:id="@+id/faq_image_load_4"
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/no_image_warnings"
                     android:layout_marginTop="@dimen/standard_size_very_medium"
-                    android:src="@drawable/faq3" />
+                     />
                 <ImageView
+                    android:id="@+id/faq_image_load_5"
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:contentDescription="@string/no_image_warnings"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/standard_size_very_medium"
-                    android:src="@drawable/faq2" />
+                     />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,17 +83,19 @@
                 android:layout_marginTop="@dimen/standard_size_very_medium"
                 android:orientation="horizontal">
                 <ImageView
+                    android:id="@+id/faq_image_load_6"
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:contentDescription="@string/no_image_warnings"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/faq1" />
+                     />
                 <ImageView
+                    android:id="@+id/faq_image_load_7"
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:contentDescription="@string/no_image_warnings"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/faq7" />
+                     />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

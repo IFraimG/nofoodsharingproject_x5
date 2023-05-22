@@ -22,6 +22,8 @@
                 android:minHeight="50dp"
                 android:inputType="text"
                 android:textSize="15sp"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium"
                 android:layout_gravity="center|top"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/style8"

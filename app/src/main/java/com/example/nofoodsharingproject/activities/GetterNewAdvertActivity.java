@@ -1,9 +1,5 @@
 package com.example.nofoodsharingproject.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -13,7 +9,6 @@ import com.example.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.example.nofoodsharingproject.databinding.ActivityGetterCreateNewAdvertismentBinding;
 import com.example.nofoodsharingproject.models.Advertisement;
 import com.example.nofoodsharingproject.models.Getter;
-import com.example.nofoodsharingproject.services.AdvertisementExpires;
 import com.example.nofoodsharingproject.utils.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
@@ -89,7 +84,6 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(getApplicationContext(),
                                 R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
-                        setAlarm();
                         finish();
                     }
                 }
@@ -116,15 +110,5 @@ public class GetterNewAdvertActivity extends AppCompatActivity {
         } else {
             Toast.makeText(GetterNewAdvertActivity.this, R.string.this_product_added, Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void setAlarm() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AdvertisementExpires.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        long triggerAtMillis = System.currentTimeMillis() + (2 * 60 * 60 * 1000);
-
-        if (alarmManager != null) alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
     }
 }

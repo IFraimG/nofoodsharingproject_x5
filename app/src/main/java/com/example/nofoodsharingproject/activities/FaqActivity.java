@@ -2,10 +2,13 @@ package com.example.nofoodsharingproject.activities;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.adapters.FaqAdapter;
 import com.example.nofoodsharingproject.databinding.ActivityFaqBinding;
@@ -64,6 +67,21 @@ public class FaqActivity extends AppCompatActivity {
         builder.setView(customView);
 
         alertDialog = builder.create();
+        ImageView img1 = customView.findViewById(R.id.faq_image_load_1);
+        ImageView img2 = customView.findViewById(R.id.faq_image_load_2);
+        ImageView img3 = customView.findViewById(R.id.faq_image_load_3);
+        ImageView img4 = customView.findViewById(R.id.faq_image_load_4);
+        ImageView img5 = customView.findViewById(R.id.faq_image_load_5);
+        ImageView img6 = customView.findViewById(R.id.faq_image_load_6);
+        ImageView img7 = customView.findViewById(R.id.faq_image_load_7);
+
+        Glide.with(alertDialog.getContext()).load(R.drawable.faq6).into(img1);
+        Glide.with(alertDialog.getContext()).load(R.drawable.faq5).into(img2);
+        Glide.with(alertDialog.getContext()).load(R.drawable.faq4).into(img3);
+        Glide.with(alertDialog.getContext()).load(R.drawable.faq3).into(img4);
+        Glide.with(alertDialog.getContext()).load(R.drawable.faq2).into(img5);
+        Glide.with(alertDialog.getContext()).load(R.drawable.faq1).into(img6);
+        Glide.with(alertDialog.getContext()).load(R.drawable.faq7).into(img7);
         alertDialog.show();
     }
 
