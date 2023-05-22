@@ -70,6 +70,17 @@
                 android:textSize="24sp"
                 android:layout_margin="@dimen/standard_size_very_medium"
                 android:text="@string/setter_account_text"/>
+            <TextView
+                android:id="@+id/faq_item_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/faq_question"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium"
+                android:layout_marginBottom="40dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18sp" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/faq_setter_list"
                 android:layout_width="match_parent"

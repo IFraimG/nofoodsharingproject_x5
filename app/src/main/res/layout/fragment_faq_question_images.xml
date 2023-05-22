@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/standard_size_very_medium">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:text="@string/faq_1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:text="@string/faq_2" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:contentDescription="@string/no_image_warnings"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:src="@drawable/faq6" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:text="@string/faq_3" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:contentDescription="@string/no_image_warnings"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:src="@drawable/faq5" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:contentDescription="@string/no_image_warnings"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:src="@drawable/faq4" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:contentDescription="@string/no_image_warnings"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:src="@drawable/faq5" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:text="@string/faq_4" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/no_image_warnings"
+                    android:layout_marginTop="@dimen/standard_size_very_medium"
+                    android:src="@drawable/faq3" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:contentDescription="@string/no_image_warnings"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/standard_size_very_medium"
+                    android:src="@drawable/faq2" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:contentDescription="@string/no_image_warnings"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/faq1" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:contentDescription="@string/no_image_warnings"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/faq7" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
