@@ -72,7 +72,6 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     private DrivingSession drivingSession;
     private boolean isAvailableLocation = false;
     private LocationManager locationManager;
-    private final Point moscowPoint = new Point(55.71989101308894, 37.5689757769603);
     private final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
     private Point myPoint;
     private DefineUser defineUser;
@@ -122,7 +121,10 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         initMap();
         getPinnedMarketInfo();
 
-        setMarketBtn.setOnClickListener(View -> updateMarket());
+        setMarketBtn.setOnClickListener(View -> {
+            Pair<String, Boolean> userData = defineUser.getTypeUser();
+            viewModel.updateMarket(userData.second, userData.first);
+        });
         makeRouteBtn.setOnClickListener(View -> createRoute());
 
         return binding.getRoot();
@@ -163,7 +165,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         userLocationLayer.setHeadingEnabled(true);
         userLocationLayer.setObjectListener(this);
 
-        mapView.getMap().move(new CameraPosition(moscowPoint, 14, 0, 0), pingAnimation, null);
+        mapView.getMap().move(new CameraPosition(new Point(55.71989101308894, 37.5689757769603), 14, 0, 0), pingAnimation, null);
 
         drivingRouter = DirectionsFactory.getInstance().createDrivingRouter();
         mapObjects = mapView.getMap().getMapObjects().addCollection();
@@ -173,11 +175,6 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
             PlacemarkMapObject placemark = mapObjects.addPlacemark(point, imageProvider);
             placemark.addTapListener(this);
         }
-    }
-
-    private void updateMarket() {
-        Pair<String, Boolean> userData = defineUser.getTypeUser();
-        viewModel.updateMarket(userData.second, userData.first);
     }
 
     private void getPinnedMarketInfo() {
@@ -196,20 +193,15 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
                 adapter.notifyDataSetChanged();
             }
 
+            binding.mapListMarkets.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    viewModel.changePosition(position);
+                }
 
-            initListMarkets();
-        });
-    }
-
-    private void initListMarkets() {
-        binding.mapListMarkets.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                viewModel.changePosition(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {}
+            });
         });
     }
 
@@ -250,14 +242,12 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
                 }
             }
 
-            DrivingOptions drivingOptions = new DrivingOptions();
-            VehicleOptions vehicleOptions = new VehicleOptions();
             ArrayList<RequestPoint> requestPoints = new ArrayList<>();
 
             requestPoints.add(new RequestPoint(myPoint, RequestPointType.WAYPOINT, null));
             requestPoints.add(new RequestPoint(resultPoint, RequestPointType.WAYPOINT, null));
 
-            this.drivingSession = drivingRouter.requestRoutes(requestPoints, drivingOptions, vehicleOptions, this);
+            this.drivingSession = drivingRouter.requestRoutes(requestPoints, new DrivingOptions(), new VehicleOptions(), this);
         } else Toast.makeText(requireContext(), getString(R.string.open_location), Toast.LENGTH_SHORT).show();
     }
 
