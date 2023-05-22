@@ -149,8 +149,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
             };
 
             locationManager = MapKitFactory.getInstance().createLocationManager();
-            if (locationListener != null)
-                locationManager.subscribeForLocationUpdates(0, 0, 0, false, FilteringMode.OFF, locationListener);
+            if (locationListener != null) locationManager.subscribeForLocationUpdates(0, 0, 0, false, FilteringMode.OFF, locationListener);
         }
     }
 
@@ -293,28 +292,16 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
                         (mapView.getHeight() * 0.83)));
 
         userLocationView.getArrow().setIcon(ImageProvider.fromResource(
-                requireContext(), R.drawable.person_outline));
+                requireContext(), R.drawable.accessibility));
 
         CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
 
-        pinIcon.setIcon(
-                "icon",
-                ImageProvider.fromResource(requireContext(), R.drawable.person_outline),
+        pinIcon.setIcon("icon", ImageProvider.fromResource(requireContext(), R.drawable.accessibility),
                 new IconStyle().setAnchor(new PointF(0f, 0f))
                         .setRotationType(RotationType.ROTATE)
                         .setZIndex(0f)
                         .setScale(1f)
         );
-
-        pinIcon.setIcon(
-                "pin",
-                ImageProvider.fromResource(requireContext(), R.drawable.person_outline),
-                new IconStyle().setAnchor(new PointF(0.5f, 0.5f))
-                        .setRotationType(RotationType.ROTATE)
-                        .setZIndex(1f)
-                        .setScale(0.5f)
-        );
-
     }
 
     @Override

@@ -116,6 +116,11 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
     }
 
 
+    public int getTimer() {
+
+        return 0;
+    }
+
     public void takeProducts(String userID) {
         AdvertsRepository advertsRepository = new AdvertsRepository();
         _statusNotifications.setValue(LoaderStatus.LOADING);

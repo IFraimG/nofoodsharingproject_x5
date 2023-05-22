@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/main_color"
@@ -100,9 +99,12 @@
                 android:background="@color/grey_light"/>
 
             <LinearLayout
+                android:id="@+id/getter_block_timer"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/standard_size_small"
                 android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginBottom="30dp"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
@@ -119,28 +121,28 @@
 
             <LinearLayout
                 android:id="@+id/getter_advert_status"
-                android:layout_marginTop="30dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="@dimen/standard_size_very_medium">
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/adv_text_hint"
+                    android:layout_marginStart="@dimen/standard_size_very_medium"
                     android:textColor="@color/grey_500"/>
-            </LinearLayout>
 
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/standard_size_small"
-                android:layout_marginBottom="@dimen/standard_size_small"
-                android:layout_marginStart="@dimen/standard_size_very_medium"
-                android:layout_marginEnd="@dimen/standard_size_very_medium"
-                android:background="@color/grey_100"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/standard_size_small"
+                    android:layout_marginBottom="@dimen/standard_size_small"
+                    android:layout_marginStart="@dimen/standard_size_very_medium"
+                    android:layout_marginEnd="@dimen/standard_size_very_medium"
+                    android:background="@color/grey_100"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="30dp"
                 android:id="@+id/getter_advert_layout"

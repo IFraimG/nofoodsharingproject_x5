@@ -126,6 +126,7 @@ public class GetterAdvrsFragment extends Fragment {
         binding.numberOfAdvertisement.setVisibility(View.GONE);
         binding.textNumberOfAdvert.setVisibility(View.GONE);
         binding.getterAdvertLayout.setVisibility(View.GONE);
+        binding.getterBlockTimer.setVisibility(View.GONE);
         binding.getterAdvertSwiper.setRefreshing(false);
     }
 
@@ -141,6 +142,7 @@ public class GetterAdvrsFragment extends Fragment {
             binding.numberOfAdvertisement.setVisibility(View.VISIBLE);
             binding.textNumberOfAdvert.setVisibility(View.VISIBLE);
             binding.numberOfAdvertisement.setText(advert.getGettingProductID());
+            binding.getterBlockTimer.setVisibility(View.VISIBLE);
         }
         binding.getterAdvertSwiper.setRefreshing(false);
     }
