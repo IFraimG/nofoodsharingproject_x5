@@ -98,14 +98,6 @@ public class Notification {
         this.description = description;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setNotificationID(String notificationID) {
-        this.notificationID = notificationID;
-    }
-
     public String getTypeOfUser() {
         return typeOfUser;
     }
@@ -144,14 +136,6 @@ public class Notification {
 
     public void setListItems(String[] listItems) {
         this.listItems = listItems;
-    }
-
-    public String getButtonType() {
-        return buttonType;
-    }
-
-    public void setButtonType(String buttonType) {
-        this.buttonType = buttonType;
     }
 
     public String getAdvertID() {

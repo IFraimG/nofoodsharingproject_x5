@@ -82,14 +82,6 @@ public class Advertisement {
         return isDone;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
-    }
-
-    public void setListProducts(String[] listProducts) {
-        this.listProducts = listProducts;
-    }
-
     public void setListProductsCustom(List<String> listProducts) {
         this.listProducts = new String[listProducts.size()];
         for (int i = 0; i < listProducts.size(); i++) {
@@ -111,10 +103,6 @@ public class Advertisement {
         return listArrayProducts;
     }
 
-    public void setAdvertsID(String advertsID) {
-        this.advertsID = advertsID;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -132,9 +120,6 @@ public class Advertisement {
         return authorName;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
-    }
 
     public String getGettingProductID() {
         return gettingProductID;
@@ -148,22 +133,6 @@ public class Advertisement {
         return authorID;
     }
 
-    public void setDateOfCreated(String dateOfCreated) {
-        this.dateOfCreated = dateOfCreated;
-    }
-
-    public String getDateOfExpires() {
-        return dateOfExpires;
-    }
-
-    public void setDateOfExpires(String dateOfExpires) {
-        this.dateOfExpires = dateOfExpires;
-    }
-
-    public void setUserDoneID(String userDoneID) {
-        this.userDoneID = userDoneID;
-    }
-
     public String getUserDoneID() {
         return userDoneID;
     }
@@ -171,9 +140,5 @@ public class Advertisement {
     public String getDateDone() {
         if (dateDone == null) return "";
         return dateDone;
-    }
-
-    public void setDateDone(String dateDone) {
-        this.dateDone = dateDone;
     }
 }
