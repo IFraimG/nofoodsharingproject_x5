@@ -3,8 +3,6 @@ package com.example.nofoodsharingproject.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
-
 public abstract class User {
     @SerializedName("phone")
     @Expose

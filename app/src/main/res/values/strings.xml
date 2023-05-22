@@ -34,7 +34,7 @@
     <string name="number_adv_text_hint6">0000</string>
     <string name="adress_shop_text">Адрeс вашего магазина:</string>
     <string name="adress_shop_text_hint">Адрес магазина</string>
-    <string name="time_text">Оставшееся время:</string>
+    <string name="time_text">Осталось времени:</string>
     <string name="time_text_hint">00:00:00</string>
     <string name="create_adv_text">Состояние объявления:</string>
     <string name="adv_text_hint">Нет активных объявлений</string>

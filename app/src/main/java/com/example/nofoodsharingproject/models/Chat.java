@@ -3,7 +3,6 @@ package com.example.nofoodsharingproject.models;
 import com.google.gson.annotations.SerializedName;
 
 public class Chat {
-    // имя пользователя, которому ты пишешь
     @SerializedName("title")
     private String title;
 

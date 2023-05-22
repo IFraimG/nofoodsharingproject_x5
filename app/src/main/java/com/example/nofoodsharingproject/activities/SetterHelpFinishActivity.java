@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,7 +71,7 @@ public class SetterHelpFinishActivity extends AppCompatActivity {
             JSONArray arr = new JSONArray(new String[]{defineUser.getTypeUser().first, getterID});
             socket.emit("create_chat", arr);
         } catch (JSONException err) {
-            Log.d("msg", err.getMessage());
+            err.printStackTrace();
         }
 
         socket.on("getCreatedChat", args -> {

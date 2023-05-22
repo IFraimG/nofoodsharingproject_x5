@@ -2,7 +2,6 @@ package com.example.nofoodsharingproject.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -181,7 +180,7 @@ public class SetterAdvertActivity extends AppCompatActivity {
             JSONArray arr = new JSONArray(new String[]{defineUser.getTypeUser().first, advertisement.getAuthorID()});
             socket.emit("create_chat", arr);
         } catch (JSONException err) {
-            Log.d("msg", err.getMessage());
+            err.printStackTrace();
         }
 
         socket.on("getCreatedChat", args -> {

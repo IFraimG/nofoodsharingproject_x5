@@ -2,7 +2,6 @@ package com.example.nofoodsharingproject.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.widget.ArrayAdapter;
 
@@ -72,7 +71,7 @@ public class ChatsListActivity extends AppCompatActivity {
             jsonObject.put("userID", userData.first);
             mSocket.emit("send_user_id_to_get_chat", jsonObject);
         } catch (JSONException err) {
-            Log.d("msg", err.getMessage());
+            err.printStackTrace();
         }
 
         mSocket.on("get_chats", args -> {

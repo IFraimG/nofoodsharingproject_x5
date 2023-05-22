@@ -3,7 +3,6 @@ package com.example.nofoodsharingproject.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
 import com.example.nofoodsharingproject.data.api.auth.AuthRepository;

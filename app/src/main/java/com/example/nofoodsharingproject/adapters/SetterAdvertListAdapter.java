@@ -2,7 +2,6 @@ package com.example.nofoodsharingproject.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +66,7 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
 
             notifyDataSetChanged();
         } catch (NullPointerException err) {
-            Log.e("msg", ctx.getString(R.string.no_adverts));
+            err.printStackTrace();
         }}
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,6 +1,7 @@
 package com.example.nofoodsharingproject.activities;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -52,8 +53,10 @@ public class ChatActivity extends AppCompatActivity {
         mSocket.connect();
 
         binding.messagesSend.setOnClickListener(View -> sendMessage());
-        binding.chatReturn.setOnClickListener(v -> {
+        binding.chatReturn.setOnClickListener(v -> finish());
+        binding.chatReturn.setOnLongClickListener(v -> {
             finish();
+            return false;
         });
 
         mSocket.emit("get_messages", chatID);

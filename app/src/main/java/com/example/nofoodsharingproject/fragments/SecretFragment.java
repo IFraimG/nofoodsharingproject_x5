@@ -3,7 +3,6 @@ package com.example.nofoodsharingproject.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -11,23 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.RetrofitService;
 import com.example.nofoodsharingproject.databinding.FragmentSecretBinding;
 import com.example.nofoodsharingproject.utils.DefineUser;
-
-import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 
 public class SecretFragment extends DialogFragment {
     private FragmentSecretBinding binding;
-    private final ArrayList<String> list = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
 
     @NonNull
     @Override
@@ -57,6 +46,9 @@ public class SecretFragment extends DialogFragment {
 
         return builder.create();
     }
+
+//    private final ArrayList<String> list = new ArrayList<>();
+//    private ArrayAdapter<String> adapter;
 
 //    private void getIpAddresses() {
 //        try {

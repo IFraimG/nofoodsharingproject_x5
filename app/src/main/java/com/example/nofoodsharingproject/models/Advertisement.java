@@ -50,6 +50,10 @@ public class Advertisement {
     @Expose
     private String userDoneID;
 
+    @SerializedName("dateDone")
+    @Expose
+    private String dateDone;
+
     private List<String> listArrayProducts;
 
     public Advertisement() {}
@@ -162,5 +166,14 @@ public class Advertisement {
 
     public String getUserDoneID() {
         return userDoneID;
+    }
+
+    public String getDateDone() {
+        if (dateDone == null) return "";
+        return dateDone;
+    }
+
+    public void setDateDone(String dateDone) {
+        this.dateDone = dateDone;
     }
 }

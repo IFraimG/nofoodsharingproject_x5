@@ -57,7 +57,7 @@
         <ListView
             android:id="@+id/faq_item_images"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:dividerHeight="1dp"
             android:divider="@color/grey_500"
             tools:listitem="@layout/item_faq_image" />

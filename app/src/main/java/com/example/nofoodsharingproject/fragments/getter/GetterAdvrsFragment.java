@@ -143,6 +143,7 @@ public class GetterAdvrsFragment extends Fragment {
             binding.textNumberOfAdvert.setVisibility(View.VISIBLE);
             binding.numberOfAdvertisement.setText(advert.getGettingProductID());
             binding.getterBlockTimer.setVisibility(View.VISIBLE);
+            binding.timerToAdvert.setText(viewModel.getTimer());
         }
         binding.getterAdvertSwiper.setRefreshing(false);
     }
@@ -169,6 +170,7 @@ public class GetterAdvrsFragment extends Fragment {
                 arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advert.getListTitleProducts());
                 binding.getterAdvertProducts.setAdapter(arrayAdapter);
                 showAdvertisementElements(advert);
+
             }
         });
     }

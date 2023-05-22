@@ -113,7 +113,7 @@
                     android:text="@string/time_text"/>
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/timer_to_advert"
                     android:layout_marginStart="@dimen/standard_size_small"
                     android:text="@string/time_text_hint"/>

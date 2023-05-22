@@ -1,5 +1,6 @@
 package com.example.nofoodsharingproject.view_models;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,14 @@ import com.example.nofoodsharingproject.models.LoaderStatus;
 import com.example.nofoodsharingproject.models.Notification;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -116,9 +125,39 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
     }
 
 
-    public int getTimer() {
+    public String getTimer() {
+        if (_advert.getValue() != null) {
 
-        return 0;
+            String timeStart = _advert.getValue().getDateDone();
+
+            @SuppressLint("SimpleDateFormat")
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            @SuppressLint("SimpleDateFormat")
+            SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm:ss");
+            dateFormat2.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
+            dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Moscow"));
+            Date currentDate = new Date();
+            String timeEnd = dateFormat.format(currentDate);
+
+            try {
+                Date firstDate = dateFormat.parse(timeStart);
+                Date secondDate = dateFormat.parse(timeEnd);
+
+                long diffInMillis = Math.abs(secondDate.getTime() - firstDate.getTime());
+
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.set(Calendar.HOUR, 2);
+                calendar1.set(Calendar.MINUTE, 0);
+                calendar1.set(Calendar.SECOND, 0);
+
+                long diff = calendar1.getTimeInMillis() - diffInMillis;
+
+                return dateFormat2.format(new Date(diff));
+            } catch (ParseException err) {
+                err.printStackTrace();
+            }
+        }
+        return "00:00:00";
     }
 
     public void takeProducts(String userID) {

@@ -1,7 +1,6 @@
 package com.example.nofoodsharingproject.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +73,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
             this.faq.addAll(faq);
             notifyDataSetChanged();
         } catch (NullPointerException err) {
-            Log.e("msg", ctx.getString(R.string.unvisinle_error));
+            err.printStackTrace();
         }
     }
 

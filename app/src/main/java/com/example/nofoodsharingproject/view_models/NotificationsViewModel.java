@@ -27,8 +27,6 @@ public class NotificationsViewModel extends AndroidViewModel {
     private final MutableLiveData<List<Notification>> _notifications = new MutableLiveData<>();
     private final MutableLiveData<LoaderStatus> _status = new MutableLiveData<>();
 
-//    public LiveData<LoaderStatus> status = _status;
-
     public NotificationsViewModel(@NonNull Application application) {
         super(application);
     }
