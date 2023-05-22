@@ -15,6 +15,7 @@ import java.util.Arrays;
 
 public class FaqActivity extends AppCompatActivity {
     private ActivityFaqBinding binding;
+    private AlertDialog alertDialog;
 
     private final Faq[] getterQuesitons = new Faq[]{
             new Faq("Как создать объявление?", "Для создания объявления необходимо перейти на вкладку \"Объяления\", и проверить, что пункт \"Адрес магазина\" не пустой. Если же адреса нет, то вам необходимо прикрепиться к магазину. Читайте об этом ниже. Затем, необходимо нажать на кнопку \"Создать новое объявление\". В случае отсутствия данной кнопки, проверьте, есть ли у вас созданное активное объявление, и удалите его, посредством нажатия на кнопку \"Удалить объявление\", а затем нажмите  \"Создать новое объявление\". Затем, нажатием на названия продуктов, выберите необходимые вам товары. Помните, что их должно быть не более двух. В нижней части экрана отобразиться список товаров, выбранных вами. Также, не забудте ввести название вашего объявления. Затем, остаётся только нажать кнопку \"Готово\", и ваше объявление создано. Также, оно отобразится на экране \"Объявления\"."),
@@ -26,8 +27,6 @@ public class FaqActivity extends AppCompatActivity {
             new Faq("Как я могу редактировать данные профиля?", "На вкладке \"Профиль\" вы можете редактировать свои данные. Для этого необходимо заполнить поля в соответствии с подсказками, а затем нажать на \"Редактировать профиль\". После этого, если все новые даннные введены корректно, профиль обновится."),
     };
     private final Faq[] setterQuesitons = new Faq[]{
-//            new Faq("Что делать, если я случайно запретил доступ к местоположению?", "Чтобы приложение работало корректно, необходимо, чтобы ему был дан доступ к местоположению. Если вы случайно запретили доступ при запуске приложения, то вам необходимо: свернуть всё на главный экран. Найти приложение \"Настройки\", зайти в него, и в строке поиска настроек наберите \"все приложения\" и перейдите в самый первый раздел - откроется список все приложений, установленных у вас на устройстве. Начните набирать \"Покупай\" в строке поиска, высветится искомое приложение. Нажмите на него и скрольте до раздела \"разрешения приложений\". Нажав на этот пункт меню, перед вами откроется станица, на которой вам необходимо нажать на пункт \"местоположение\" и нажать предпочитаемый для вас пункт.\n",
-//                    new int[]{R.drawable.faq6, R.drawable.faq5, R.drawable.faq4, R.drawable.faq3, R.drawable.faq2, R.drawable.faq1, R.drawable.faq7}),
             new Faq("Я живу рядом с магазином и мне постоянно приходят уведомления. Могу ли я их отключить?", "Для того, чтобы отключить уведомления, необходимо: на экране \"Профиль\" в левом верхнем углу найти три точки. Нажав на них, выберите пункт \"Редактировние профиля\""),
             new Faq("Как прикрепиться к магазину?", "Для прикрепления к магазину необходимо в нижней панели навигации выбрать фрагмент \"Карта\". В верхней части экрана отобразится окно, при нажатии на которое откроется список ближайших магазинов, участвующих в программе. Выбрав необходимый вам магазин, необходимо нажать кнопку \"Прикрепиться к этому магазину\"."),
             new Faq("Хочу изменить данные моего профиля. Что делать?", "Перейдите в раздел \"Профиль\" и нажмите на три точки в левом верхнем углу. Нажмите\"Редактировать профиль\" и редактируйте ваш профиль."),
@@ -53,24 +52,29 @@ public class FaqActivity extends AppCompatActivity {
         binding.faqSetterList.setAdapter(faqAdapterSetter);
         binding.faqGetterList.setAdapter(faqAdapterGetter);
 
-        binding.getterPolicyOpen.setOnClickListener(View -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            LayoutInflater inflater = getLayoutInflater();
-            android.view.View customView = inflater.inflate(R.layout.fragment_privacy_policy, null);
-            builder.setView(customView);
+        binding.getterPolicyOpen.setOnClickListener(View -> createPrivacyPolicyDialog());
+        binding.faqItemQuestion.setOnClickListener(View -> createFaqItemQuestionDialog());
+    }
 
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        });
+    private void createFaqItemQuestionDialog() {
+        if (alertDialog != null && alertDialog.isShowing()) alertDialog.cancel();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        android.view.View customView = inflater.inflate(R.layout.fragment_faq_question_images, null);
+        builder.setView(customView);
 
-        binding.faqItemQuestion.setOnClickListener(View -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            LayoutInflater inflater = getLayoutInflater();
-            android.view.View customView = inflater.inflate(R.layout.fragment_faq_question_images, null);
-            builder.setView(customView);
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
 
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        });
+    private void createPrivacyPolicyDialog() {
+        if (alertDialog != null && alertDialog.isShowing()) alertDialog.cancel();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        android.view.View customView = inflater.inflate(R.layout.fragment_privacy_policy, null);
+        builder.setView(customView);
+
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 }
