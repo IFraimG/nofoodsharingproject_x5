@@ -65,7 +65,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     public void updateMessage(Message message) {
         try {
             this.messages.add(message);
-            notifyDataSetChanged();
+            notifyItemChanged(this.messages.size() - 1);
         } catch (NullPointerException err) {
            err.printStackTrace();
         }

@@ -32,6 +32,7 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
         this.intent = new Intent(this.ctx, SetterAdvertActivity.class);
     }
 
+    @NonNull
     @Override
     public SetterAdvertListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.setter_advert_item, parent, false);

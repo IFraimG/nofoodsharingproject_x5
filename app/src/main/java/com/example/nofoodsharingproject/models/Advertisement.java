@@ -117,6 +117,7 @@ public class Advertisement {
     }
 
     public String getAuthorName() {
+        if (authorName == null) return "";
         return authorName;
     }
 

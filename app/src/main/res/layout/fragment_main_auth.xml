@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".fragments.auth.MainAuthFragment">
 
     <ImageView
@@ -18,44 +18,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/auth_main_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="100dp"
-            android:text="@string/Authorization_text"
-            android:textColor="@color/black"
-            android:textSize="32sp"
+            android:layout_marginTop="180dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/main_auth_btn_getter"
-            android:layout_width="300dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/fk_size"
-            android:text="@string/i_getter_text"
-            android:textSize="20sp"
-            app:backgroundTint="@color/light_orange" />
+            <TextView
+                android:id="@+id/auth_main_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="50dp"
+                android:text="@string/Authorization_text"
+                android:textColor="@color/black"
+                android:textSize="32sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/main_auth_btn_setter"
-            android:layout_width="300dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:text="@string/i_setter_text"
-            android:textSize="20sp"
-            app:backgroundTint="@color/green_pastel" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/main_auth_btn_getter"
+                android:layout_width="300dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/standard_size_very_medium"
+                android:text="@string/i_getter_text"
+                android:textSize="20sp"
+                app:backgroundTint="@color/light_orange" />
+
+            <Button
+                android:id="@+id/main_auth_btn_setter"
+                android:layout_width="300dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:text="@string/i_setter_text"
+                android:textSize="20sp"
+                app:backgroundTint="@color/green_pastel" />
+        </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

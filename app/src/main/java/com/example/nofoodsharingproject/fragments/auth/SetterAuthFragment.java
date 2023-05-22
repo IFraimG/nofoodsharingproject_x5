@@ -57,10 +57,6 @@ public class SetterAuthFragment extends Fragment {
             String dtoLogin = binding.setterAuthLogin.getText().toString().replaceAll("\\s", "");
             String dtoPassword = binding.setterAuthPassword.getText().toString().replaceAll("\\s", "");
 
-//            String dtoPhone = "3333";
-//            String dtoLogin = "mega_barsik";
-//            String dtoPassword = "1myrmyr1";
-
             binding.setterAuthBtnLogin.setEnabled(false);
             authRepository.setterRegistration(requireContext(), dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
                 @Override

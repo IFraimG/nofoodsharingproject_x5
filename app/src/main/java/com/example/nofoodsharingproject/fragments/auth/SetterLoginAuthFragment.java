@@ -54,8 +54,6 @@ public class SetterLoginAuthFragment extends Fragment {
             String dtoLogin = binding.authSetterLoginLogin.getText().toString().replaceAll("\\s", "");
             String dtoPassword = binding.authSetterLoginPassword.getText().toString().replaceAll("\\s", "");
 
-//            String dtoLogin = "mega_barsik";
-//            String dtoPassword = "1myrmyr1";
             authRepository.setterLogin(requireContext(), dtoLogin, dtoPassword).enqueue(new Callback<SignUpResponseI<Setter>>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {

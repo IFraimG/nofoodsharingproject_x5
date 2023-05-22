@@ -4,20 +4,12 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    tools:context=".activities.SetterAdvertActivity">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/standard_size_very_medium"
-        android:orientation="vertical">
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
         tools:context=".activities.SetterAdvertActivity">
         <ImageView
             android:id="@+id/setter_advert_back"
@@ -30,7 +22,6 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="@color/black"
-            android:layout_marginStart="@dimen/standard_size_very_medium"
             android:text="@string/button_navigation_first_first"
             />
     </LinearLayout>
@@ -46,12 +37,16 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="@color/black"
+        android:paddingStart="@dimen/standard_size_very_medium"
+        android:paddingEnd="@dimen/standard_size_very_medium"
         android:text="@string/named_advert_text"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingStart="@dimen/standard_size_very_medium"
+        android:paddingEnd="@dimen/standard_size_very_medium"
         android:layout_marginTop="@dimen/standard_size_very_medium">
         <TextView
             android:id="@+id/setter_advert_author"
@@ -86,21 +81,25 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/standard_size_very_medium"
         android:layout_marginBottom="@dimen/standard_size_very_medium"
+        android:paddingStart="@dimen/standard_size_very_medium"
+        android:paddingEnd="@dimen/standard_size_very_medium"
         android:text="@string/list_product_text"
         android:textSize="32sp" />
     <ListView
         android:id="@+id/setter_advert_product_item_list_products"
+        android:paddingStart="@dimen/standard_size_very_medium"
+        android:paddingEnd="@dimen/standard_size_very_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/setter_advert_accept"
         android:layout_marginTop="@dimen/standard_size_very_medium"
+        android:paddingStart="@dimen/standard_size_very_medium"
+        android:paddingEnd="@dimen/standard_size_very_medium"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:text="@string/message_adv_text"
         android:textSize="18sp"
         app:backgroundTint="@color/green_pastel" />
-    </LinearLayout>
-</ScrollView>
 </LinearLayout>
