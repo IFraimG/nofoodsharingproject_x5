@@ -86,9 +86,8 @@ public class GetterAuthFragment extends Fragment {
                         Toast.makeText(getContext(), R.string.account_not_exist, Toast.LENGTH_SHORT).show();
                         binding.authGetterBtnLogin.setEnabled(true);
                         binding.authGetterCreate.setVisibility(View.VISIBLE);
-                    } else if (response.isSuccessful()) {
-                        if (response.body() != null && response.body().token != null) pushData(response.body());
-                    } else {
+                    } else if (response.isSuccessful() && response.body() != null && response.body().token != null) pushData(response.body());
+                    else {
                         binding.authGetterBtnLogin.setEnabled(true);
                         Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
                     }

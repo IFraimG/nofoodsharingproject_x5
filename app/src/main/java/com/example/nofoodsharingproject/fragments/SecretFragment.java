@@ -58,50 +58,50 @@ public class SecretFragment extends DialogFragment {
         return builder.create();
     }
 
-    private void getIpAddresses() {
-        try {
-            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+//    private void getIpAddresses() {
+//        try {
+//            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+//
+//            while (networkInterfaces.hasMoreElements()) {
+//                NetworkInterface networkInterface = networkInterfaces.nextElement();
+//
+//                if (networkInterface.isUp() && !networkInterface.isLoopback()) {
+//                    Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
+//
+//                    while (inetAddresses.hasMoreElements()) {
+//                        InetAddress inetAddress = inetAddresses.nextElement();
+//
+//                        if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
+//                            String ipAddress = inetAddress.getHostAddress();
+//                            list.add(ipAddress);
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (SocketException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-            while (networkInterfaces.hasMoreElements()) {
-                NetworkInterface networkInterface = networkInterfaces.nextElement();
-
-                if (networkInterface.isUp() && !networkInterface.isLoopback()) {
-                    Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
-
-                    while (inetAddresses.hasMoreElements()) {
-                        InetAddress inetAddress = inetAddresses.nextElement();
-
-                        if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
-                            String ipAddress = inetAddress.getHostAddress();
-                            list.add(ipAddress);
-                        }
-                    }
-                }
-            }
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getFreeAddresses() {
-        adapter = new ArrayAdapter<>(requireContext(), R.layout.item_getter_product_name, list);
-        String subnet = "192.168.0.";
-        int timeout = 1000;
-
-        for (int i = 1; i < 255; i++) {
-            String host = subnet + i;
-            try {
-                if (InetAddress.getByName(host).isReachable(timeout)) {
-                } else {
-                    Log.d("msg", host);
-                    list.add(host);
-                    adapter.notifyDataSetChanged();
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
+//    private void getFreeAddresses() {
+//        adapter = new ArrayAdapter<>(requireContext(), R.layout.item_getter_product_name, list);
+//        String subnet = "192.168.0.";
+//        int timeout = 1000;
+//
+//        for (int i = 1; i < 255; i++) {
+//            String host = subnet + i;
+//            try {
+//                if (InetAddress.getByName(host).isReachable(timeout)) {
+//                } else {
+//                    Log.d("msg", host);
+//                    list.add(host);
+//                    adapter.notifyDataSetChanged();
+//
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//    }
 }

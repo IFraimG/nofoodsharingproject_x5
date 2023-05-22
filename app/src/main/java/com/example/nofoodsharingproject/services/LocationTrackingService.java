@@ -200,6 +200,11 @@ public class LocationTrackingService extends Service implements LocationListener
         notification.setTypeOfUser("setter");
         notification.setAdvertID(advert.getAdvertsID());
         showNotification(title, body.toString());
+
+        sendNotification(notification);
+    }
+
+    private void sendNotification(Notification notification) {
         notificationRepository.createNotification(getApplicationContext(), notification).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {

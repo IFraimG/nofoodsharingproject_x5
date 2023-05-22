@@ -4,10 +4,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.os.Build;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import com.example.nofoodsharingproject.R;
 import com.example.nofoodsharingproject.data.api.getter.GetterRepository;
@@ -40,33 +37,38 @@ public class CustomMessagingService extends FirebaseMessagingService {
 
         // проверка на наличие jwt токена, чтобы было что изменять
         if (defineUser.getToken() != null && defineUser.getToken().length() > 0 && defineUser.getTypeUser().second.equals(true)) {
-            Getter getter = defineUser.defineGetter();
-            getterRepository.changeToken(getApplicationContext(), getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                    if (response.isSuccessful()) defineUser.changeFCMtoken(token);
-                }
+            changeGetterToken(token);
+        } else changeSetterToken(token);
+    }
 
-                @Override
-                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                    t.printStackTrace();
-                }
-            });
+    private void changeSetterToken(String token) {
+        Setter setter = defineUser.defineSetter();
+        setterRepository.changeToken(getApplicationContext(), setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) defineUser.changeFCMtoken(token);
+            }
 
-        } else {
-            Setter setter = defineUser.defineSetter();
-            setterRepository.changeToken(getApplicationContext(), setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                    if (response.isSuccessful()) defineUser.changeFCMtoken(token);
-                }
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
 
-                @Override
-                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                    t.printStackTrace();
-                }
-            });
-        }
+    private void changeGetterToken(String token) {
+        Getter getter = defineUser.defineGetter();
+        getterRepository.changeToken(getApplicationContext(), getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) defineUser.changeFCMtoken(token);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
 

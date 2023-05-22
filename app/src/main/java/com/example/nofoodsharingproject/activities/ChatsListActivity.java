@@ -78,38 +78,41 @@ public class ChatsListActivity extends AppCompatActivity {
         mSocket.on("get_chats", args -> {
             runOnUiThread(() -> {
                 JSONObject data = (JSONObject) args[0];
-                try {
-                    // перенести десериализацию в класс
-                    JSONArray chatsJSON = data.getJSONArray("result");
-
-                    chats = new ArrayList<>(chatsJSON.length());
-                    shortChats = new ArrayList<>(chatsJSON.length());
-
-                    for (int i = 0; i < chatsJSON.length(); i++) {
-                        JSONObject chat = chatsJSON.getJSONObject(i);
-                        Chat normalChat = new Chat();
-
-                        normalChat.setChatID(chat.getString("_id"));
-                        normalChat.setDateCreated(chat.getString("dateCreated"));
-                        normalChat.setTitle(chat.getString("title"));
-
-                        shortChats.add(chat.getString("title"));
-
-                        JSONArray users = chat.getJSONArray("users");
-                        String[] normalUsers = new String[users.length()];
-                        for (int j = 0; j < users.length(); j++) normalUsers[j] = users.getString(j);
-                        normalChat.setUsers(normalUsers);
-
-                        chats.add(normalChat);
-                    }
-
-                    arrayAdapter.clear();
-                    arrayAdapter.addAll(shortChats);
-                    arrayAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                chatsUpdate(data);
             });
         });
+    }
+
+    private void chatsUpdate(JSONObject data) {
+        try {
+            JSONArray chatsJSON = data.getJSONArray("result");
+
+            chats = new ArrayList<>(chatsJSON.length());
+            shortChats = new ArrayList<>(chatsJSON.length());
+
+            for (int i = 0; i < chatsJSON.length(); i++) {
+                JSONObject chat = chatsJSON.getJSONObject(i);
+                Chat normalChat = new Chat();
+
+                normalChat.setChatID(chat.getString("_id"));
+                normalChat.setDateCreated(chat.getString("dateCreated"));
+                normalChat.setTitle(chat.getString("title"));
+
+                shortChats.add(chat.getString("title"));
+
+                JSONArray users = chat.getJSONArray("users");
+                String[] normalUsers = new String[users.length()];
+                for (int j = 0; j < users.length(); j++) normalUsers[j] = users.getString(j);
+                normalChat.setUsers(normalUsers);
+
+                chats.add(normalChat);
+            }
+
+            arrayAdapter.clear();
+            arrayAdapter.addAll(shortChats);
+            arrayAdapter.notifyDataSetChanged();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
