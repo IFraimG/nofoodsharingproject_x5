@@ -53,21 +53,27 @@
         android:layout_marginBottom="@dimen/standard_size_very_medium"
         android:textSize="14sp" />
 
-    <Button
+    <TextView
         android:id="@+id/setter_finish_gotovk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="32sp"
-        android:backgroundTint="@color/green_pastel"
+        android:textColor="@color/white"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:background="@drawable/custom_round_border_active"
         android:layout_marginBottom="@dimen/standard_size_very_medium"
         android:text="@string/go_over_text" />
 
-    <Button
+    <TextView
         android:id="@+id/setter_finish_return"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="60dp"
         android:textSize="18sp"
-        android:backgroundTint="@color/grey"
+        android:gravity="center"
+        android:background="@drawable/custom_round_border"
         android:text="@string/return_to_main_page"
         android:layout_marginBottom="@dimen/standard_size_very_medium"/>
 </LinearLayout>

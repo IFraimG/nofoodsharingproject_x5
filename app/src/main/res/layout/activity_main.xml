@@ -31,5 +31,6 @@
         android:layout_gravity="center"
         android:layout_width="86dp"
         android:layout_height="86dp"
+        android:indeterminateTint="@color/green_pastel"
         />
 </LinearLayout>
