@@ -135,6 +135,10 @@
                             android:minHeight="@dimen/size_64"
                             android:autofillHints=""
                             android:inputType="text"
+                            android:layout_marginTop="@dimen/standard_size_very_medium"
+                            android:paddingStart="@dimen/standard_size_very_medium"
+                            android:paddingEnd="@dimen/standard_size_very_medium"
+                            android:background="@drawable/custom_round_border"
                             android:textSize="15sp" />
                         <EditText
                             android:id="@+id/setter_profile_edit_phone"
@@ -144,12 +148,20 @@
                             android:minHeight="@dimen/size_64"
                             android:hint="@string/telephone_hint"
                             android:autofillHints=""
+                            android:layout_marginTop="@dimen/standard_size_very_medium"
+                            android:paddingStart="@dimen/standard_size_very_medium"
+                            android:paddingEnd="@dimen/standard_size_very_medium"
+                            android:background="@drawable/custom_round_border"
                             android:inputType="phone" />
                         <EditText
                             android:id="@+id/setter_profile_edit_old_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="15sp"
+                            android:layout_marginTop="@dimen/standard_size_very_medium"
+                            android:paddingStart="@dimen/standard_size_very_medium"
+                            android:paddingEnd="@dimen/standard_size_very_medium"
+                            android:background="@drawable/custom_round_border"
                             android:minHeight="@dimen/size_64"
                             android:autofillHints=""
                             android:inputType="textPassword"
@@ -160,7 +172,11 @@
                             android:layout_height="wrap_content"
                             android:textSize="15sp"
                             android:minHeight="@dimen/size_64"
+                            android:layout_marginTop="@dimen/standard_size_very_medium"
                             android:autofillHints=""
+                            android:paddingStart="@dimen/standard_size_very_medium"
+                            android:paddingEnd="@dimen/standard_size_very_medium"
+                            android:background="@drawable/custom_round_border"
                             android:inputType="textPassword"
                             android:hint="@string/new_password_hint"/>
                         <androidx.appcompat.widget.SwitchCompat
@@ -168,6 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/standard_size_very_medium"
                             android:text="@string/geolocation_text" />
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/setter_profile_notifications"
@@ -179,7 +196,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_marginTop="@dimen/standard_size_small"
+                            android:layout_marginTop="@dimen/standard_size_very_medium"
                             android:layout_marginBottom="60dp"
                             android:orientation="horizontal">
                             <androidx.appcompat.widget.AppCompatButton
@@ -189,6 +206,7 @@
                                 android:textSize="16sp"
                                 android:background="@drawable/style2"
                                 android:backgroundTint="@color/green_pastel"
+                                android:layout_marginTop="@dimen/standard_size_small"
                                 android:layout_marginBottom="@dimen/standard_size_small"
                                 android:text="@string/update"
                                 />
@@ -199,6 +217,7 @@
                                 android:text="@string/cancel"
                                 android:textSize="16sp"
                                 android:background="@drawable/style2"
+                                android:layout_marginTop="@dimen/standard_size_small"
                                 android:layout_marginStart="@dimen/standard_size_small"
                                 android:layout_marginBottom="@dimen/standard_size_small"
                                 android:layout_marginEnd="@dimen/standard_size_small" />
