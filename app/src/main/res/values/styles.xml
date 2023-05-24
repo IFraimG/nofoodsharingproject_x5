@@ -2,7 +2,7 @@
 <resources>
     <style name="grey_500_button" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/black</item>
-        <item name="android:background">@drawable/style1</item>
+        <item name="android:background">@drawable/custom_round_border</item>
         <item name="android:textSize">14sp</item>
         <item name="android:layout_marginStart">@dimen/standard_size_very_medium</item>
         <item name="android:layout_marginEnd">@dimen/standard_size_very_medium</item>

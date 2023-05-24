@@ -26,7 +26,9 @@
                 android:layout_marginEnd="@dimen/standard_size_very_medium"
                 android:layout_gravity="center|top"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/style8"
+                android:paddingStart="@dimen/standard_size_small"
+                android:paddingEnd="@dimen/standard_size_small"
+                android:background="@drawable/custom_round_border"
                 android:autofillHints=""
                 android:id="@+id/getter_advert_input_title"
                 android:hint="@string/getter_creating_title" />
@@ -36,6 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
                 android:textSize="15sp"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="@dimen/standard_size_very_medium"
                 android:textColor="@color/grey_500"
@@ -101,7 +105,8 @@
                     android:layout_marginTop="@dimen/standard_size_very_medium"
                     android:layout_marginBottom="@dimen/standard_size_very_medium"
                     android:id="@+id/ready_to_create"
-                    android:background="@drawable/style1" />
+                    android:textColor="@color/white"
+                    android:background="@drawable/style6" />
                 </LinearLayout>
         </LinearLayout>
     </ScrollView>

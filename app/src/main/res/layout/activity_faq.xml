@@ -16,8 +16,7 @@
             android:layout_weight="0.1"
             android:layout_height="32dp"
             android:contentDescription="@string/no_image_warnings"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/standard_size_small"
+            android:layout_marginTop="@dimen/standard_size_very_medium"
             android:layout_marginStart="@dimen/standard_size_very_medium"
             android:src="@drawable/ic_baseline_chevron_left_24" />
         <TextView
@@ -25,24 +24,26 @@
             style="@style/heading_getter_fragments"
             android:layout_width="0dp"
             android:layout_weight="0.2"
-            android:layout_marginTop="@dimen/standard_size_small"
+            android:layout_marginTop="@dimen/standard_size_very_medium"
             android:layout_marginStart="@dimen/standard_size_small"
-            android:layout_gravity="center"
             android:text="@string/faq_link" />
         <TextView
             android:id="@+id/getter_policy_open"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.7"
             android:gravity="center"
-            android:layout_height="40dp"
+            android:textSize="12sp"
+            android:minHeight="50dp"
+            android:background="@drawable/custom_round_border"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/standard_size_small"
+            android:layout_margin="@dimen/standard_size_small"
             android:text="@string/privacy_policy"/>
     </LinearLayout>
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/standard_size_very_medium"
+        android:layout_marginTop="@dimen/standard_size_small"
         android:background="@color/grey_100"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,9 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/standard_size_very_medium"
-        android:layout_marginBottom="@dimen/standard_size_very_medium"
+        android:layout_margin="@dimen/standard_size_very_medium"
         android:textColor="@color/black"
         android:text="@string/mail_feedback"/>
     <ScrollView

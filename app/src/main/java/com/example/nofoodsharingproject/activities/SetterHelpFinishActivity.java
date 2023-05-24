@@ -25,6 +25,7 @@ public class SetterHelpFinishActivity extends AppCompatActivity {
     private Socket socket;
     private DefineUser<Setter> defineUser;
     private String getterID;
+    private String generateID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,10 @@ public class SetterHelpFinishActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getterID = getIntent().getStringExtra("getterID");
+        generateID = getIntent().getStringExtra("gettingProductID");
+
+        if (generateID != null) binding.setterFinishCode.setText(generateID);
+
         defineUser = new DefineUser<>(this);
 
         binding.setterFinishGotovk.setOnClickListener(View -> vkLoad());

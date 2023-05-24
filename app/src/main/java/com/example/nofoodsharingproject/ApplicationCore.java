@@ -1,7 +1,6 @@
 package com.example.nofoodsharingproject;
 
 import android.app.Application;
-
 import com.example.nofoodsharingproject.data.RetrofitService;
 import com.example.nofoodsharingproject.utils.DefineUser;
 import com.instabug.library.Instabug;

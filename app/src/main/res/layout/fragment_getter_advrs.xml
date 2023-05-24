@@ -26,19 +26,24 @@
                 <TextView
                     android:id="@+id/textView"
                     style="@style/heading_getter_fragments"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
                     android:text="@string/button_navigation_first_first"
                  />
 
                 <TextView
                     android:id="@+id/getter_advert_faq"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
                     android:layout_height="wrap_content"
+                    android:minHeight="40dp"
                     android:layout_gravity="center|top"
-                    android:gravity="center|end"
+                    android:gravity="center"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:text="@string/faq_link"
                     android:textColor="@color/black"
+                    android:background="@drawable/custom_round_border"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -184,9 +189,10 @@
                     android:layout_gravity="center|top"
                     android:text="@string/stop_adv_text"
                     android:layout_marginTop="20dp"
+                    android:background="@drawable/style6"
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:visibility="invisible" />
-
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/pick_up_order"
@@ -195,6 +201,8 @@
                     android:layout_marginTop="80dp"
                     android:layout_marginBottom="20dp"
                     android:layout_width="match_parent"
+                    android:background="@drawable/style6"
+                    android:textColor="@color/white"
                     android:text="@string/adv_zabor_text"
                     android:visibility="invisible" />
 
@@ -202,7 +210,11 @@
                     android:id="@+id/create_new_request"
                     style="@style/grey_500_button"
                     android:layout_width="match_parent"
+                    android:background="@drawable/style6"
+                    android:textColor="@color/white"
                     android:text="@string/add_new_request_button"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
                     android:visibility="invisible" />
             </FrameLayout>
         </LinearLayout>

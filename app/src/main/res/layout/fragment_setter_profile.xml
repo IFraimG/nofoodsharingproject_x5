@@ -94,6 +94,7 @@
                         android:layout_marginStart="@dimen/standard_size_very_medium"
                         android:layout_marginEnd="@dimen/standard_size_very_medium"
                         android:src="@drawable/baseline_chat_24"
+                        android:background="@drawable/custom_round_border"
                         android:contentDescription="@string/no_image_warnings"
                         />
 

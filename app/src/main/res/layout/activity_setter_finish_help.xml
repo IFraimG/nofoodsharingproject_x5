@@ -16,6 +16,24 @@
         android:text="@string/celebrate_help_title" />
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
+        android:layout_marginBottom="@dimen/standard_size_very_medium"
+        android:text="@string/getting_product_description" />
+
+    <TextView
+        android:id="@+id/setter_finish_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="48sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
+        android:layout_marginBottom="@dimen/standard_size_very_medium" />
+
+    <TextView
         android:id="@+id/setter_finish_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

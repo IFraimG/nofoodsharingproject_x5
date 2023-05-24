@@ -39,7 +39,7 @@
             android:text="@string/faq_link"
             android:padding="@dimen/standard_size_small"
             android:textStyle="bold"
-            android:background="@color/grey_100"
+            android:background="@drawable/custom_round_border"
             android:textSize="20sp" />
         </LinearLayout>
         <com.google.android.material.divider.MaterialDivider

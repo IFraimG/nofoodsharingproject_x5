@@ -93,13 +93,15 @@ public class SetterAdvertActivity extends AppCompatActivity {
 
     private void makeHelp() {
         binding.setterAdvertAccept.setEnabled(false);
-        advertsRepository.makeDoneAdvert(getApplicationContext(), new RequestDoneAdvert(advertisement.getAuthorID(), defineUser.getTypeUser().first, Advertisement.generateID())).enqueue(new Callback<RequestDoneAdvert>() {
+        String generateID = Advertisement.generateID();
+        advertsRepository.makeDoneAdvert(getApplicationContext(), new RequestDoneAdvert(advertisement.getAuthorID(), defineUser.getTypeUser().first, generateID)).enqueue(new Callback<RequestDoneAdvert>() {
             @Override
             public void onResponse(@NotNull Call<RequestDoneAdvert> call, @NotNull Response<RequestDoneAdvert> response) {
                 if (response.isSuccessful()) {
                     saveMessageForUser();
                     Intent intent = new Intent(SetterAdvertActivity.this, SetterHelpFinishActivity.class);
                     intent.putExtra("getterID", advertisement.getAuthorID());
+                    intent.putExtra("gettingProductID", generateID);
                     startActivity(intent);
                     finish();
                 } else {
