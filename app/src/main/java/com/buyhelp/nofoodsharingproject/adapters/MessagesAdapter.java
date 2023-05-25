@@ -45,6 +45,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         if (message.getAuthorID().equals(userID)) {
             holder.msgLayout.setBackground(AppCompatResources.getDrawable(ctx, R.drawable.custom_round_border_active));
             holder.textYou.setVisibility(View.VISIBLE);
+        } else {
+            holder.msgLayout.setBackground(AppCompatResources.getDrawable(ctx, R.drawable.custom_round_border));
+            holder.textYou.setVisibility(View.GONE);
         }
     }
 
@@ -65,7 +68,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     public void updateMessage(Message message) {
         try {
             this.messages.add(message);
-            notifyItemChanged(this.messages.size() - 1);
+            notifyDataSetChanged();
         } catch (NullPointerException err) {
            err.printStackTrace();
         }
