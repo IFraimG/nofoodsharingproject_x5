@@ -3,8 +3,6 @@
 
 <a href="https://codeclimate.com/github/IFraimG/nofoodsharingproject_x5/maintainability"><img src="https://api.codeclimate.com/v1/badges/43002fad82fd9eabe136/maintainability" /></a>
 
-*В данный момент в проекте не реализованна часть функций из-за отсутствия необходимого доступа к данным X5 group.*
-
 ##### Основная идея проекта:
 Создание приложения для людей, которые располагают возможностью помочь малообеспеченным, удобно совершать пожертвоания.
 
