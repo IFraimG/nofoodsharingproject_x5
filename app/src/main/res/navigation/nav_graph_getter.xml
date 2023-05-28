@@ -11,14 +11,8 @@
         android:label="fragment_getter_profile"
         tools:layout="@layout/fragment_getter_profile" >
         <action
-            android:id="@+id/action_getterProfileF_to_getterAdvrsF"
-            app:destination="@id/getterAdvrsF" />
-        <action
-            android:id="@+id/action_getterProfileF_to_getterNotifyF"
-            app:destination="@id/getterNotifyF" />
-        <action
-            android:id="@+id/action_getterProfileF_to_marketsMapF"
-            app:destination="@id/marketsMapF" />
+            android:id="@+id/action_getterProfileF_to_chatsListFragment"
+            app:destination="@id/chatsListFragment" />
     </fragment>
 
     <fragment
@@ -27,44 +21,57 @@
         android:label="fragment_getter_advrs"
         tools:layout="@layout/fragment_getter_advrs" >
         <action
-            android:id="@+id/action_getterAdvrsF_to_getterNotifyF"
-            app:destination="@id/getterNotifyF" />
+            android:id="@+id/action_getterAdvrsF_to_faqFragment"
+            app:destination="@id/faqFragment" />
         <action
-            android:id="@+id/action_getterAdvrsF_to_getterProfileF"
-            app:destination="@id/getterProfileF" />
-        <action
-            android:id="@+id/action_getterAdvrsF_to_marketsMapF"
-            app:destination="@id/marketsMapF" />
+            android:id="@+id/action_getterAdvrsF_to_getterNewAdvertFragment"
+            app:destination="@id/getterNewAdvertFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/marketsMapF"
         android:name="com.buyhelp.nofoodsharingproject.fragments.MarketsMapFragment"
         android:label="fragment_markets_map"
-        tools:layout="@layout/fragment_markets_map" >
-        <action
-            android:id="@+id/action_marketsMapF_to_getterNotifyF"
-            app:destination="@id/getterNotifyF" />
-        <action
-            android:id="@+id/action_marketsMapF_to_getterAdvrsF"
-            app:destination="@id/getterAdvrsF" />
-        <action
-            android:id="@+id/action_marketsMapF_to_getterProfileF"
-            app:destination="@id/getterProfileF" />
-    </fragment>
+        tools:layout="@layout/fragment_markets_map" />
     <fragment
         android:id="@+id/getterNotifyF"
         android:name="com.buyhelp.nofoodsharingproject.fragments.NotifyFragment"
         android:label="fragment_getter_notify"
-        tools:layout="@layout/fragment_getter_notify" >
+        tools:layout="@layout/fragment_getter_notify" />
+    <fragment
+        android:id="@+id/faqFragment"
+        android:name="com.buyhelp.nofoodsharingproject.fragments.FaqFragment"
+        android:label="fragment_faq"
+        tools:layout="@layout/fragment_faq" >
         <action
-            android:id="@+id/action_getterNotifyF_to_getterAdvrsF"
+            android:id="@+id/action_faqFragment_to_getterAdvrsF"
             app:destination="@id/getterAdvrsF" />
+    </fragment>
+    <fragment
+        android:id="@+id/getterNewAdvertFragment"
+        android:name="com.buyhelp.nofoodsharingproject.fragments.getter.GetterNewAdvertFragment"
+        android:label="GetterNewAdvertFragment" >
         <action
-            android:id="@+id/action_getterNotifyF_to_getterProfileF"
+            android:id="@+id/action_getterNewAdvertFragment_to_getterAdvrsF"
+            app:destination="@id/getterAdvrsF" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatsListFragment"
+        android:name="com.buyhelp.nofoodsharingproject.fragments.ChatsListFragment"
+        android:label="ChatsListFragment" >
+        <action
+            android:id="@+id/action_chatsListFragment_to_getterProfileF"
             app:destination="@id/getterProfileF" />
         <action
-            android:id="@+id/action_getterNotifyF_to_marketsMapF"
-            app:destination="@id/marketsMapF" />
+            android:id="@+id/action_chatsListFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.buyhelp.nofoodsharingproject.fragments.ChatFragment"
+        android:label="ChatFragment" >
+        <action
+            android:id="@+id/action_chatFragment_to_chatsListFragment"
+            app:destination="@id/chatsListFragment" />
     </fragment>
 </navigation>

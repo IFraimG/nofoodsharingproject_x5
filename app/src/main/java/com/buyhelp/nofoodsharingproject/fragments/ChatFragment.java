@@ -1,19 +1,27 @@
-package com.buyhelp.nofoodsharingproject.activities;
+package com.buyhelp.nofoodsharingproject.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.buyhelp.nofoodsharingproject.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.R;
+import com.buyhelp.nofoodsharingproject.activities.GetterActivity;
+import com.buyhelp.nofoodsharingproject.activities.SetterActivity;
 import com.buyhelp.nofoodsharingproject.adapters.MessagesAdapter;
-import com.buyhelp.nofoodsharingproject.databinding.ActivityChatBinding;
+import com.buyhelp.nofoodsharingproject.databinding.FragmentChatBinding;
 import com.buyhelp.nofoodsharingproject.models.Message;
 import com.buyhelp.nofoodsharingproject.utils.DefineUser;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,8 +32,8 @@ import java.util.List;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
-public class ChatActivity extends AppCompatActivity {
-    private ActivityChatBinding binding;
+public class ChatFragment extends Fragment {
+    private FragmentChatBinding binding;
     private Socket mSocket;
     private String chatID;
     private DefineUser defineUser;
@@ -34,49 +42,70 @@ public class ChatActivity extends AppCompatActivity {
     private final List<Message> messages = new ArrayList<>();
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = ActivityChatBinding.inflate(getLayoutInflater());
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentChatBinding.inflate(getLayoutInflater());
 
-        chatID = getIntent().getStringExtra("chatID");
-        defineUser = new DefineUser<>(this);
+        chatID = getArguments().getString("chatID");
+        defineUser = new DefineUser<>(requireActivity());
 
-        messagesAdapter = new MessagesAdapter(getApplicationContext(), defineUser.getUser().getX5_Id());
+        messagesAdapter = new MessagesAdapter(requireContext(), defineUser.getUser().getX5_Id());
         messagesAdapter.updateMessages(messages);
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(requireContext());
         binding.messagesList.setLayoutManager(layoutManager);
         binding.messagesList.setAdapter(messagesAdapter);
 
-        ApplicationCore app = (ApplicationCore) getApplication();
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         mSocket = app.getSocket();
         mSocket.connect();
 
         binding.messagesSend.setOnClickListener(View -> sendMessage());
-        binding.chatReturn.setOnClickListener(v -> finish());
+        binding.chatReturn.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
         binding.chatReturn.setOnLongClickListener(v -> {
-            finish();
+            Navigation.findNavController(v).popBackStack();
             return false;
         });
 
         mSocket.emit("get_messages", chatID);
         mSocket.on("set_messages", setMessages);
 
-        setContentView(binding.getRoot());
+        return binding.getRoot();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof SetterActivity) {
+            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(false);
+        } else if (getActivity() instanceof GetterActivity) {
+            ((GetterActivity) requireActivity()).setBottomNavigationVisibility(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof SetterActivity) {
+            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(true);
+        } else if (getActivity() instanceof GetterActivity ) {
+            ((GetterActivity) requireActivity()).setBottomNavigationVisibility(true);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
         super.onDestroy();
         if (mSocket != null) {
             mSocket.disconnect();
             mSocket.off("set_messages");
             mSocket.off("get_messages");
         }
+
+        binding = null;
     }
     private final Emitter.Listener setMessages = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            runOnUiThread(() -> {
+            new Handler(Looper.getMainLooper()).post(() -> {
                 JSONObject data = (JSONObject) args[0];
                 List<Message> newMessages = new ArrayList<>();
                 try {
@@ -107,7 +136,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendMessage() {
         String body = binding.messagesInput.getText().toString();
-        if (body.length() == 0) Toast.makeText(this, getString(R.string.no_input_message), Toast.LENGTH_SHORT).show();
+        if (body.length() == 0) Toast.makeText(requireContext(), getString(R.string.no_input_message), Toast.LENGTH_SHORT).show();
         else {
             try {
                 JSONObject jsonObject = new JSONObject();

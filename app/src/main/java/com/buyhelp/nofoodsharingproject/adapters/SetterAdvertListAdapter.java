@@ -1,7 +1,7 @@
 package com.buyhelp.nofoodsharingproject.adapters;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +11,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.activities.SetterAdvertActivity;
 import com.buyhelp.nofoodsharingproject.models.Advertisement;
 
 import java.util.ArrayList;
@@ -24,12 +24,10 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
     private final Context ctx;
     private final List<Advertisement> advertisements = new ArrayList<>();
     private final LayoutInflater inflater;
-    private final Intent intent;
 
     public SetterAdvertListAdapter(Context context) {
         this.ctx = context;
         this.inflater = LayoutInflater.from(context);
-        this.intent = new Intent(this.ctx, SetterAdvertActivity.class);
     }
 
     @NonNull
@@ -49,9 +47,10 @@ public class SetterAdvertListAdapter extends RecyclerView.Adapter<SetterAdvertLi
         holder.productList.setAdapter(arrayAdapter);
 
 
-        holder.link.setOnClickListener(View -> {
-            intent.putExtra("advertID", advertisement.getAdvertsID());
-            ctx.startActivity(intent);
+        holder.link.setOnClickListener(v -> {
+            Bundle args = new Bundle();
+            args.putString("advertID", advertisement.getAdvertsID());
+            Navigation.findNavController(v).navigate(R.id.action_setterAdvrsF_to_setterAdvertFragment, args);
         });
     }
 

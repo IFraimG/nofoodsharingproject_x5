@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,8 +40,7 @@ public class SetterActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_setter_fragment);
         navController = navHostFragment.getNavController();
 
-        BottomNavigationView navigationView = binding.setterNavigation;
-        NavigationUI.setupWithNavController(navigationView, navController);
+        NavigationUI.setupWithNavController(binding.setterNavigation, navController);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DateNowChecker dateNowChecker = new DateNowChecker();
@@ -49,6 +49,18 @@ public class SetterActivity extends AppCompatActivity {
             DateNowCheckerOld dateNowCheckerOld = new DateNowCheckerOld();
             if (dateNowCheckerOld.getHour() >= 10 && dateNowCheckerOld.getHour() < 23) initLocation();
         }
+    }
+
+    public void setBottomNavigationVisibility(boolean isVisible) {
+        if (isVisible) binding.setterNavigation.setVisibility(View.VISIBLE);
+        else binding.setterNavigation.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        binding = null;
     }
 
     @Override

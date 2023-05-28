@@ -1,23 +1,29 @@
-package com.buyhelp.nofoodsharingproject.activities;
+package com.buyhelp.nofoodsharingproject.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
+import com.buyhelp.nofoodsharingproject.activities.GetterActivity;
+import com.buyhelp.nofoodsharingproject.activities.SetterActivity;
 import com.buyhelp.nofoodsharingproject.adapters.FaqAdapter;
+import com.buyhelp.nofoodsharingproject.databinding.FragmentFaqBinding;
 import com.buyhelp.nofoodsharingproject.models.Faq;
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.databinding.ActivityFaqBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-public class FaqActivity extends AppCompatActivity {
-    private ActivityFaqBinding binding;
+public class FaqFragment extends Fragment {
+    private FragmentFaqBinding binding;
     private AlertDialog alertDialog;
 
     private final Faq[] getterQuesitons = new Faq[]{
@@ -38,16 +44,13 @@ public class FaqActivity extends AppCompatActivity {
     };
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentFaqBinding.inflate(inflater);
 
-        binding = ActivityFaqBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        binding.faqReturn.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
-        binding.faqReturn.setOnClickListener(View -> finish());
-
-        FaqAdapter faqAdapterSetter = new FaqAdapter(getApplicationContext());
-        FaqAdapter faqAdapterGetter = new FaqAdapter(getApplicationContext());
+        FaqAdapter faqAdapterSetter = new FaqAdapter(requireContext());
+        FaqAdapter faqAdapterGetter = new FaqAdapter(requireContext());
 
         faqAdapterSetter.loadFaq(Arrays.asList(setterQuesitons));
         faqAdapterGetter.loadFaq(Arrays.asList(getterQuesitons));
@@ -57,11 +60,33 @@ public class FaqActivity extends AppCompatActivity {
 
         binding.getterPolicyOpen.setOnClickListener(View -> createPrivacyPolicyDialog());
         binding.faqItemQuestion.setOnClickListener(View -> createFaqItemQuestionDialog());
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof SetterActivity) {
+            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(false);
+        } else if (getActivity() instanceof GetterActivity) {
+            ((GetterActivity) requireActivity()).setBottomNavigationVisibility(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof SetterActivity) {
+            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(true);
+        } else if (getActivity() instanceof GetterActivity ) {
+            ((GetterActivity) requireActivity()).setBottomNavigationVisibility(true);
+        }
     }
 
     private void createFaqItemQuestionDialog() {
         if (alertDialog != null && alertDialog.isShowing()) alertDialog.cancel();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
         android.view.View customView = inflater.inflate(R.layout.fragment_faq_question_images, null);
         builder.setView(customView);
@@ -87,7 +112,7 @@ public class FaqActivity extends AppCompatActivity {
 
     private void createPrivacyPolicyDialog() {
         if (alertDialog != null && alertDialog.isShowing()) alertDialog.cancel();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();
         android.view.View customView = inflater.inflate(R.layout.fragment_privacy_policy, null);
         builder.setView(customView);

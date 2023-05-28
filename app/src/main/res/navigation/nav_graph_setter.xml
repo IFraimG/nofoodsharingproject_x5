@@ -8,20 +8,88 @@
         android:id="@+id/setterAdvrsF"
         android:name="com.buyhelp.nofoodsharingproject.fragments.setter.SetterAdvrsFragment"
         android:label="fragment_setter_advrs"
-        tools:layout="@layout/fragment_setter_advrs" />
+        tools:layout="@layout/fragment_setter_advrs" >
+        <action
+            android:id="@+id/action_setterAdvrsF_to_faqFragment"
+            app:destination="@id/faqFragment" />
+        <action
+            android:id="@+id/action_setterAdvrsF_to_setterAdvertFragment"
+            app:destination="@id/setterAdvertFragment" />
+    </fragment>
     <fragment
         android:id="@+id/getterNotifyF"
         android:name="com.buyhelp.nofoodsharingproject.fragments.NotifyFragment"
         android:label="fragment_getter_notify"
-        tools:layout="@layout/fragment_getter_notify" />
+        tools:layout="@layout/fragment_getter_notify" >
+        <action
+            android:id="@+id/action_getterNotifyF_to_setterAdvertFragment"
+            app:destination="@id/setterAdvertFragment" />
+    </fragment>
     <fragment
         android:id="@+id/setterProfileF"
         android:name="com.buyhelp.nofoodsharingproject.fragments.setter.SetterProfileFragment"
         android:label="fragment_setter_profile"
-        tools:layout="@layout/fragment_setter_profile" />
+        tools:layout="@layout/fragment_setter_profile" >
+        <action
+            android:id="@+id/action_setterProfileF_to_chatsListFragment"
+            app:destination="@id/chatsListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/marketsMapF"
         android:name="com.buyhelp.nofoodsharingproject.fragments.MarketsMapFragment"
         android:label="fragment_markets_map"
         tools:layout="@layout/fragment_markets_map" />
+    <fragment
+        android:id="@+id/faqFragment"
+        android:name="com.buyhelp.nofoodsharingproject.fragments.FaqFragment"
+        android:label="fragment_faq"
+        tools:layout="@layout/fragment_faq" >
+        <action
+            android:id="@+id/action_faqFragment_to_setterAdvrsF"
+            app:destination="@id/setterAdvrsF" />
+    </fragment>
+    <fragment
+        android:id="@+id/setterAdvertFragment"
+        android:name="com.buyhelp.nofoodsharingproject.fragments.setter.SetterAdvertFragment"
+        android:label="SetterAdvertFragment" >
+        <action
+            android:id="@+id/action_setterAdvertFragment_to_setterAdvrsF"
+            app:destination="@id/setterAdvrsF" />
+        <action
+            android:id="@+id/action_setterAdvertFragment_to_setterHelpFinishFragment"
+            app:destination="@id/setterHelpFinishFragment" />
+        <action
+            android:id="@+id/action_setterAdvertFragment_to_chatsListFragment"
+            app:destination="@id/chatsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setterHelpFinishFragment"
+        android:name="com.buyhelp.nofoodsharingproject.fragments.setter.SetterHelpFinishFragment"
+        android:label="SetterHelpFinishFragment">
+        <action
+            android:id="@+id/action_setterHelpFinishFragment_to_setterAdvrsF"
+            app:destination="@id/setterAdvrsF" />
+        <action
+            android:id="@+id/action_setterHelpFinishFragment_to_chatsListFragment"
+            app:destination="@id/chatsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatsListFragment"
+        android:name="com.buyhelp.nofoodsharingproject.fragments.ChatsListFragment"
+        android:label="ChatsListFragment" >
+        <action
+            android:id="@+id/action_chatsListFragment_to_setterProfileF"
+            app:destination="@id/setterProfileF" />
+        <action
+            android:id="@+id/action_chatsListFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.buyhelp.nofoodsharingproject.fragments.ChatFragment"
+        android:label="ChatFragment" >
+        <action
+            android:id="@+id/action_chatFragment_to_chatsListFragment"
+            app:destination="@id/chatsListFragment" />
+    </fragment>
 </navigation>

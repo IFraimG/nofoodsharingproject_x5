@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/standard_size_very_medium"
-        tools:context=".activities.SetterAdvertActivity">
+        tools:context=".fragments.setter.SetterAdvertFragment">
         <ImageView
             android:id="@+id/setter_advert_back"
             android:layout_width="@dimen/size_64"

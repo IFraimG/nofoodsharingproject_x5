@@ -93,4 +93,9 @@ dependencies {
     implementation ('io.socket:socket.io-client:2.1.0') {
         exclude group: 'org.json', module: 'json'
     }
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.11'
+
+    compileOnly "com.android.tools.lint:lint-api:31.0.2"
+    compileOnly "com.android.tools.lint:lint-checks:31.0.2"
 }

@@ -34,7 +34,13 @@ public class MainActivity extends AppCompatActivity {
             else if (res.equals("getter")) authGetter();
             else redirectToAuth();
         } else redirectToAuth();
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        binding = null;
     }
 
     public void authSetter() {

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.activities.ChatsListActivity;
 import com.buyhelp.nofoodsharingproject.activities.MainAuthActivity;
 import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
@@ -75,7 +75,7 @@ public class SetterProfileFragment extends Fragment {
         binding.setterProfileName.setText(user.getLogin());
         binding.setterProfilePhone.setText(user.getPhone());
         binding.setterProfileLocation.setChecked(isCheckedLocation);
-        binding.setterProfileOpenChat.setOnClickListener(View -> openChats());
+        binding.setterProfileOpenChat.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterProfileF_to_chatsListFragment));
 
         handlers();
 
@@ -242,10 +242,5 @@ public class SetterProfileFragment extends Fragment {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(getContext(), getString(R.string.smth_wrong), Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void openChats() {
-        Intent intent = new Intent(requireActivity(), ChatsListActivity.class);
-        startActivity(intent);
     }
 }

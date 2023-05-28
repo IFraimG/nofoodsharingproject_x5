@@ -1,10 +1,11 @@
 package com.buyhelp.nofoodsharingproject.fragments.getter;
 
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.activities.FaqActivity;
-import com.buyhelp.nofoodsharingproject.activities.GetterNewAdvertActivity;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterAdvrsBinding;
 import com.buyhelp.nofoodsharingproject.models.Advertisement;
 
@@ -66,6 +65,13 @@ public class GetterAdvrsFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        binding = null;
+    }
+
     private void renderStatus(LoaderStatus loaderStatus) {
         switch (loaderStatus.getStatus()) {
             case LOADING:
@@ -98,17 +104,18 @@ public class GetterAdvrsFragment extends Fragment {
 
 
     private void initHandlers() {
-        binding.createNewRequest.setOnClickListener(View -> {
+        binding.createNewRequest.setOnClickListener(v -> {
             if (viewModel.getMarket() == null || viewModel.getMarket().length() == 0) Toast.makeText(getContext(), getString(R.string.pin_market), Toast.LENGTH_LONG).show();
-            else startActivity(new Intent(getActivity(), GetterNewAdvertActivity.class));
+            else {
+                Navigation.findNavController(v).navigate(R.id.action_getterAdvrsF_to_getterNewAdvertFragment);
+            }
         });
 
         binding.stopAdvert.setOnClickListener(View -> viewModel.removeAdvertisement());
         binding.pickUpOrder.setOnClickListener(View -> viewModel.takeProducts(defineUser.getUser().getX5_Id()));
 
-        binding.getterAdvertFaq.setOnClickListener(View -> {
-            Intent intent = new Intent(getContext(), FaqActivity.class);
-            startActivity(intent);
+        binding.getterAdvertFaq.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_getterAdvrsF_to_faqFragment);
         });
 
         binding.getterAdvertSwiper.setOnRefreshListener(this::getAdvertisement);

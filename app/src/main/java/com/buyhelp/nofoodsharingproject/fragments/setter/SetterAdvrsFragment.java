@@ -1,10 +1,9 @@
 package com.buyhelp.nofoodsharingproject.fragments.setter;
 
-import android.content.Intent;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.activities.FaqActivity;
 import com.buyhelp.nofoodsharingproject.adapters.SetterAdvertListAdapter;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
 import com.buyhelp.nofoodsharingproject.models.LoaderStatus;
@@ -53,14 +51,20 @@ public class SetterAdvrsFragment extends Fragment {
             binding.setterAdvertSwiper.setRefreshing(false);
         });
 
-        binding.setterAdvertFaq.setOnClickListener(View -> {
-            Intent intent = new Intent(getContext(), FaqActivity.class);
-            startActivity(intent);
+        binding.setterAdvertFaq.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_setterAdvrsF_to_faqFragment);
         });
 
         initFilter();
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        binding = null;
     }
 
     private void renderStatus(LoaderStatus loaderStatus) {

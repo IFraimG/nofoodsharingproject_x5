@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activities.ChatActivity">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/messages_title"
@@ -88,14 +87,14 @@
                 android:layout_width="0dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center|start"
+                android:layout_weight="0.8"
                 android:background="@drawable/custom_round_border"
                 android:hint="@string/enter_message"
                 android:inputType="textMultiLine"
+                android:maxLength="1000"
+                android:maxLines="8"
                 android:minWidth="250dp"
                 android:padding="5dp"
-                android:maxLines="8"
-                android:layout_weight="0.8"
-                android:maxLength="1000"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp" />
 
@@ -103,11 +102,11 @@
                 android:id="@+id/messages_send"
                 android:layout_width="0dp"
                 android:layout_height="64dp"
-                android:layout_weight="0.2"
                 android:layout_gravity="center|end"
-                android:contentDescription="@string/no_image_warnings"
                 android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_weight="0.2"
                 android:background="@drawable/custom_round_border"
+                android:contentDescription="@string/no_image_warnings"
                 android:src="@drawable/baseline_send_24" />
         </LinearLayout>
     </LinearLayout>

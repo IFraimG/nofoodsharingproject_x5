@@ -2,6 +2,7 @@ package com.buyhelp.nofoodsharingproject.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.activities.SetterAdvertActivity;
 import com.buyhelp.nofoodsharingproject.models.Notification;
 
 import java.util.ArrayList;
@@ -43,10 +44,10 @@ public class GetterNotificationsAdapter extends RecyclerView.Adapter<GetterNotif
 
         if (notification.getAdvertID() != null && notification.getAdvertID().length() > 0) {
             holder.link.setVisibility(View.VISIBLE);
-            holder.link.setOnClickListener(View -> {
-                Intent intent = new Intent(ctx, SetterAdvertActivity.class);
-                intent.putExtra("advertID", notification.getAdvertID());
-                ctx.startActivity(intent);
+            holder.link.setOnClickListener(v -> {
+                Bundle args = new Bundle();
+                args.putString("advertID", notification.getAdvertID());
+                Navigation.findNavController(v).navigate(R.id.action_getterNotifyF_to_setterAdvertFragment, args);
             });
         }
     }

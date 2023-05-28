@@ -2,6 +2,7 @@ package com.buyhelp.nofoodsharingproject.activities;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,18 @@ public class GetterActivity extends AppCompatActivity {
         navController = navHostFragment.getNavController();
 
         NavigationUI.setupWithNavController(binding.getterNavigation, navController);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        binding = null;
+    }
+
+    public void setBottomNavigationVisibility(boolean isVisible) {
+        if (isVisible) binding.getterNavigation.setVisibility(View.VISIBLE);
+        else binding.getterNavigation.setVisibility(View.GONE);
     }
 
     @Override

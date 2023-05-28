@@ -1,7 +1,6 @@
 package com.buyhelp.nofoodsharingproject.data;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.buyhelp.nofoodsharingproject.utils.DefineUser;
 
@@ -16,7 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitService {
     private static Retrofit retrofit;
     public static String BASE_URL = "https://buy-help-server.onrender.com";
-//    public static final String BASE_URL = "http://192.168.0.100:8000";
     private static OkHttpClient.Builder client;
     private static Retrofit builder;
 
@@ -53,14 +51,6 @@ public class RetrofitService {
 
     public static void changeBaseUrl(String newApiBaseUrl) {
         BASE_URL = newApiBaseUrl;
-        Log.d("msg", BASE_URL);
-        Log.d("msg", BASE_URL);
-        Log.d("msg", BASE_URL);
-        Log.d("msg", BASE_URL);
-        Log.d("msg", BASE_URL);
-        Log.d("msg", BASE_URL);
-        Log.d("msg", BASE_URL);
-        Log.d("msg", BASE_URL);
     }
 
     public static Retrofit getInstance(Context ctx) {

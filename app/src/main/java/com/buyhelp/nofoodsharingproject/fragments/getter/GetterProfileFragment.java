@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.activities.ChatsListActivity;
 import com.buyhelp.nofoodsharingproject.activities.MainAuthActivity;
 import com.buyhelp.nofoodsharingproject.data.api.getter.GetterRepository;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterProfileBinding;
@@ -50,11 +51,16 @@ public class GetterProfileFragment extends Fragment {
         binding.getterProfileLogout.setOnClickListener(View -> logout());
         binding.getterProfileSave.setOnClickListener(View -> editProfile());
 
-        binding.getterProfileOpenChat.setOnClickListener(View -> openChat());
+        binding.getterProfileOpenChat.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_getterProfileF_to_chatsListFragment));
 
         return binding.getRoot();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
 
     private void editProfile() {
         String newLogin = binding.getterProfileEditLogin.getText().toString();
@@ -105,10 +111,5 @@ public class GetterProfileFragment extends Fragment {
         Intent intent = new Intent(requireActivity().getApplicationContext(), MainAuthActivity.class);
         startActivity(intent);
         requireActivity().finish();
-    }
-
-    private void openChat() {
-        Intent intent = new Intent(requireActivity(), ChatsListActivity.class);
-        startActivity(intent);
     }
 }
