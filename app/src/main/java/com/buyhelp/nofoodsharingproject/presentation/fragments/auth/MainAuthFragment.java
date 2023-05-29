@@ -48,30 +48,51 @@ public class MainAuthFragment extends Fragment {
         Button btnSetter = binding.mainAuthBtnSetter;
         ImageView imageSecret = binding.secretClickableImage;
 
-        imageSecret.setOnClickListener(View -> {
-            if (!isOpen) {
-                countClick += 1;
-                if (future != null && future.isDone() && executor != null) {
-                    future.cancel(true);
-                    executor.shutdown();
-                    if (toast != null) toast.cancel();
-                }
-
-                if (countClick > 3) {
-                    isOpen = true;
-                    openWindow();
-                } else {
-                    toast = Toast.makeText(getContext(), countClick + " нажатия", Toast.LENGTH_SHORT);
-                    toast.show();
-                    startTimer();
-                }
-            } else openWindow();
-        });
+        imageSecret.setOnClickListener(View -> secretClickerHandler());
 
         btnSetter.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_setterAuthF));
         btnGetter.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_getterAuthF));
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (future != null) {
+            future.cancel(true);
+            future = null;
+        }
+
+        if (executor != null) {
+            executor.shutdown();
+            executor = null;
+        }
+
+        if (toast != null) {
+            toast.cancel();
+            toast = null;
+        }
+    }
+
+    private void secretClickerHandler() {
+        if (!isOpen) {
+            countClick += 1;
+            if (future != null && future.isDone() && executor != null) {
+                future.cancel(true);
+                executor.shutdown();
+                if (toast != null) toast.cancel();
+            }
+
+            if (countClick > 3) {
+                isOpen = true;
+                openWindow();
+            } else {
+                toast = Toast.makeText(getContext(), countClick + " нажатия", Toast.LENGTH_SHORT);
+                toast.show();
+                startTimer();
+            }
+        } else openWindow();
     }
 
     private void startTimer() {

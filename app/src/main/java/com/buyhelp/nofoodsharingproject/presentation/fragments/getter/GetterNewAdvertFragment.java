@@ -7,60 +7,40 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.presentation.activities.GetterActivity;
-import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterCreateNewAdvertismentBinding;
-import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
-import com.buyhelp.nofoodsharingproject.data.models.Getter;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
-
+import com.buyhelp.nofoodsharingproject.presentation.view_models.GetterNewAdvertViewModel;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class GetterNewAdvertFragment extends Fragment {
-    private final String[] productItems = new String[]{"Хлеб", "Картофель", "Мороженая рыба", "Сливочное масло",
-            "Подсолнечное масло", "Яйца куриные", "Молоко", "Чай", "Кофе", "Соль", "Сахар",
-            "Мука", "Лук", "Макаронные изделия", "Пшено", "Шлифованный рис", "Гречневая крупа",
-            "Белокочанная капуста", "Морковь", "Яблоки", "Свинина", "Баранина", "Курица"};
-    private final List<String> userProductItems = new ArrayList<String>();
     private FragmentGetterCreateNewAdvertismentBinding binding;
-    private ArrayAdapter<String> arrayAdapterChoose;
     private ArrayAdapter<String> arrayAdapterChoosenItems;
-    private DefineUser<Getter> defineUser;
-    private AdvertsRepository advertsRepository;
+    private GetterNewAdvertViewModel viewModel;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         binding = FragmentGetterCreateNewAdvertismentBinding.inflate(getLayoutInflater());
-        defineUser = new DefineUser<>(requireActivity());
-        advertsRepository = new AdvertsRepository();
 
-        arrayAdapterChoose = new ArrayAdapter<>(requireContext(), R.layout.item_getter_product_name, this.productItems);
-        arrayAdapterChoosenItems = new ArrayAdapter<>(requireContext(), R.layout.item_getter_product_done_name, this.userProductItems);
+        viewModel = new ViewModelProvider(requireActivity(),
+                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                .get(GetterNewAdvertViewModel.class);
+
+        ArrayAdapter<String> arrayAdapterChoose = new ArrayAdapter<>(requireContext(), R.layout.item_getter_product_name, viewModel.getProductItems());
+        arrayAdapterChoosenItems = new ArrayAdapter<>(requireContext(), R.layout.item_getter_product_done_name, new ArrayList<>());
 
         binding.productChoice.setAdapter(arrayAdapterChoose);
         binding.productChoosenItems.setAdapter(arrayAdapterChoosenItems);
 
         binding.productChoice.setOnItemClickListener((parent, view, position, id) -> chooseItem(position));
-
-        binding.productChoosenItems.setOnItemClickListener((parent, view, position, id) -> {
-            userProductItems.remove(position);
-            arrayAdapterChoosenItems.notifyDataSetChanged();
-
-            Toast.makeText(requireContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
-        });
+        binding.productChoosenItems.setOnItemClickListener((parent, view, position, id) -> removeItem(position));
 
         binding.buttonBack.setOnClickListener(v ->  Navigation.findNavController(v).navigate(R.id.action_getterNewAdvertFragment_to_getterAdvrsF));
-        binding.readyToCreate.setOnClickListener(View -> pushData());
+        binding.readyToCreate.setOnClickListener(View -> createAdvert());
 
         return binding.getRoot();
     }
@@ -81,54 +61,47 @@ public class GetterNewAdvertFragment extends Fragment {
         }
     }
 
-    private void pushData() {
-        if (userProductItems.size() == 0)
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        binding = null;
+    }
+
+    private void createAdvert() {
+        if (viewModel.getUserItems().size() == 0)
             Toast.makeText(requireContext(), R.string.add_to_list_product, Toast.LENGTH_SHORT).show();
         else if (binding.getterAdvertInputTitle.getText().toString().length() == 0) {
             Toast.makeText(requireContext(), R.string.edit_name, Toast.LENGTH_SHORT).show();
-        } else if (userProductItems.size() > 3) {
+        } else if (viewModel.getUserItems().size() > 3) {
             Toast.makeText(requireContext(), R.string.many_products, Toast.LENGTH_SHORT).show();
         } else {
-            Getter result = defineUser.defineGetter();
-            Advertisement advertisement = new Advertisement(binding.getterAdvertInputTitle.getText().toString(), result.getX5_Id(), result.getLogin());
-            advertisement.setGettingProductID(Advertisement.generateID());
-            if (userProductItems.size() > 0) advertisement.setListProductsCustom(userProductItems);
-
             binding.readyToCreate.setEnabled(false);
-            advertsRepository.createAdvert(requireContext(), advertisement).enqueue(new Callback<Advertisement>() {
-                @Override
-                public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                    if (!response.isSuccessful()) {
-                        Toast.makeText(requireContext(), R.string.problems, Toast.LENGTH_SHORT).show();
-                        binding.readyToCreate.setEnabled(true);
-                    } else {
-                        Toast.makeText(requireContext(),
-                                R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
-                        Navigation.findNavController(requireView()).navigate(R.id.action_getterNewAdvertFragment_to_getterAdvrsF);
-                    }
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<Advertisement> call, @NotNull Throwable t) {
-                    binding.readyToCreate.setEnabled(true);
-                    Toast.makeText(requireContext(),
-                            R.string.smth_not_good, Toast.LENGTH_SHORT).show();
-                    t.printStackTrace();
-                }
+            viewModel.createAdvert(binding.getterAdvertInputTitle.getText().toString()).observe(requireActivity(), advertisement -> {
+                if (advertisement != null) {
+                    Navigation.findNavController(requireView()).navigate(R.id.action_getterNewAdvertFragment_to_getterAdvrsF);
+                } else binding.readyToCreate.setEnabled(true);
             });
         }
     }
 
-    private void chooseItem(int position) {
-        String result = productItems[position];
-        if (userProductItems.size() > 3) {
-            Toast.makeText(requireContext(), R.string.lot_of_product, Toast.LENGTH_SHORT).show();
-        } else if (!userProductItems.contains(result)) {
-            userProductItems.add(result);
+    private void removeItem(int position) {
+        viewModel.removeItem(position).observe(requireActivity(), strings -> {
+            arrayAdapterChoosenItems.clear();
+            arrayAdapterChoosenItems.addAll(strings);
             arrayAdapterChoosenItems.notifyDataSetChanged();
-            Toast.makeText(requireContext(), R.string.added, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(requireContext(), R.string.this_product_added, Toast.LENGTH_SHORT).show();
-        }
+
+            Toast.makeText(requireContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void chooseItem(int position) {
+        viewModel.updateItem(position).observe(requireActivity(), userItems -> {
+            if (userItems.size() != arrayAdapterChoosenItems.getCount()) {
+                arrayAdapterChoosenItems.clear();
+                arrayAdapterChoosenItems.addAll(userItems);
+                arrayAdapterChoosenItems.notifyDataSetChanged();
+            }
+        });
     }
 }

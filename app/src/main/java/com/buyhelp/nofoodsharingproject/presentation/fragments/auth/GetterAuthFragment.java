@@ -49,6 +49,7 @@ public class GetterAuthFragment extends Fragment {
                     if (getterSignUpResponseI != null) {
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         startActivity(intent);
+                        requireActivity().finish();
                     }
                 });
             });

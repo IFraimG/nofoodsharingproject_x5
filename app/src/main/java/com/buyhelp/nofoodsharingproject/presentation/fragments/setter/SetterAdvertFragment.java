@@ -101,7 +101,7 @@ public class SetterAdvertFragment extends Fragment {
     private void getAdvertisement(String advertID) {
         binding.setterAdvertCreateChat.setEnabled(false);
         binding.setterAdvertAccept.setEnabled(false);
-        advertsRepository.getAdvertByID(requireContext(), advertID).enqueue(new Callback<Advertisement>() {
+        advertsRepository.getAdvertByID(requireContext(), advertID).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (!response.isSuccessful()) Navigation.findNavController(requireView()).navigate(R.id.action_setterAdvertFragment_to_setterAdvrsF);
@@ -129,7 +129,7 @@ public class SetterAdvertFragment extends Fragment {
     private void makeHelp() {
         binding.setterAdvertAccept.setEnabled(false);
         String generateID = Advertisement.generateID();
-        advertsRepository.makeDoneAdvert(requireContext(), new RequestDoneAdvert(advertisement.getAuthorID(), defineUser.getTypeUser().first, generateID)).enqueue(new Callback<RequestDoneAdvert>() {
+        advertsRepository.makeDoneAdvert(requireContext(), new RequestDoneAdvert(advertisement.getAuthorID(), defineUser.getTypeUser().first, generateID)).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<RequestDoneAdvert> call, @NotNull Response<RequestDoneAdvert> response) {
                 if (response.isSuccessful()) {
@@ -153,7 +153,7 @@ public class SetterAdvertFragment extends Fragment {
     }
 
     private void getFCMTokenByUserID() {
-        getterRepository.getFCMtoken(requireContext(), advertisement.getAuthorID()).enqueue(new Callback<ResponseFCMToken>() {
+        getterRepository.getFCMtoken(requireContext(), advertisement.getAuthorID()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -193,7 +193,7 @@ public class SetterAdvertFragment extends Fragment {
         notification.setFromUserID(defineUser.getTypeUser().first);
         notification.setListItems(advertisement.getListProducts());
         notification.setTypeOfUser("getter");
-        notificationRepository.createNotification(requireContext(), notification).enqueue(new Callback<Notification>() {
+        notificationRepository.createNotification(requireContext(), notification).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
                 if (!response.isSuccessful()) Toast.makeText(requireContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();

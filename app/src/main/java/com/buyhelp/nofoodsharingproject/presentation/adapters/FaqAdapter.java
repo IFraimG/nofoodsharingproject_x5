@@ -18,15 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
-    private final Context ctx;
     private final List<Faq> faq = new ArrayList<>();
     private final LayoutInflater inflater;
 
     public FaqAdapter(Context context) {
-        this.ctx = context;
         this.inflater = LayoutInflater.from(context);
     }
 
+    @NonNull
     @Override
     public FaqAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_faq, parent, false);

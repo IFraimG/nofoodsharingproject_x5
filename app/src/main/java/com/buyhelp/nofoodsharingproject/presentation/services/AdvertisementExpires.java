@@ -19,6 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Не используется !
 public class AdvertisementExpires extends BroadcastReceiver {
 
     @Override

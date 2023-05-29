@@ -89,7 +89,7 @@ public class CustomMessagingService extends FirebaseMessagingService {
                     Notification.Builder notification = new Notification.Builder(this, CHANNEL_ID)
                             .setContentTitle(title)
                             .setContentText(text)
-                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setSmallIcon(R.drawable.notifications_active)
                             .setAutoCancel(true);
                     notificationManager.notify(0, notification.build());
                 }

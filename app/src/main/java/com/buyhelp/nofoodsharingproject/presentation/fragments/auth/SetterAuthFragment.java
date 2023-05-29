@@ -3,119 +3,56 @@ package com.buyhelp.nofoodsharingproject.presentation.fragments.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
-import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAuthBinding;
-import com.buyhelp.nofoodsharingproject.data.models.Setter;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
-import com.buyhelp.nofoodsharingproject.domain.utils.ValidateUser;
-import com.google.firebase.messaging.FirebaseMessaging;
-
+import com.buyhelp.nofoodsharingproject.presentation.view_models.SetterAuthViewModel;
 import org.jetbrains.annotations.NotNull;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SetterAuthFragment extends Fragment {
     private FragmentSetterAuthBinding binding;
-    private DefineUser<Setter> defineUser;
-    private AuthRepository authRepository;
+    private SetterAuthViewModel viewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        defineUser = new DefineUser<>(requireActivity());
-        authRepository = new AuthRepository();
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterAuthBinding.inflate(inflater);
 
+        viewModel = new ViewModelProvider(requireActivity(),
+                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                .get(SetterAuthViewModel.class);
+
         binding.setterAuthBtnReg.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterAuthF_to_setterLoginAuthF));
         binding.authSetterSignupBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterAuthF_to_mainAuthF));
 
-        binding.setterAuthBtnLogin.setOnClickListener(View -> sendToNotifyAccount());
+        binding.setterAuthBtnLogin.setOnClickListener(View -> {
+            viewModel.sendToNotifyAccount().observe(requireActivity(), tokenFCM -> {
+                String dtoPhone = binding.setterAuthPhone.getText().toString().replaceAll("\\s", "");
+                String dtoLogin = binding.setterAuthLogin.getText().toString().replaceAll("\\s", "");
+                String dtoPassword = binding.setterAuthPassword.getText().toString().replaceAll("\\s", "");
 
-        return binding.getRoot();
-    }
+                if (viewModel.validate(dtoPhone, dtoLogin, dtoPassword)) {
+                    binding.setterAuthBtnLogin.setEnabled(false);
+                    viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), setterSignUpResponseI -> {
+                        binding.setterAuthBtnLogin.setEnabled(true);
 
-    private void signup(String tokenFCM) {
-        if (validate()) {
-            String dtoPhone = binding.setterAuthPhone.getText().toString().replaceAll("\\s", "");
-            String dtoLogin = binding.setterAuthLogin.getText().toString().replaceAll("\\s", "");
-            String dtoPassword = binding.setterAuthPassword.getText().toString().replaceAll("\\s", "");
-
-            binding.setterAuthBtnLogin.setEnabled(false);
-            authRepository.setterRegistration(requireContext(), dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<SignUpResponseI<Setter>>() {
-                @Override
-                public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
-                    if (response.code() == 401) {
-                        Toast.makeText(getContext(), R.string.prodlem_on_autorization, Toast.LENGTH_LONG).show();
-                        binding.setterAuthBtnLogin.setEnabled(true);
-                    } else if (response.code() == 400) {
-                        Toast.makeText(getContext(), R.string.account_created, Toast.LENGTH_LONG).show();
-                        binding.setterAuthBtnLogin.setEnabled(true);
-                    } else if (response.isSuccessful()) {
-                        if (response.body() != null && response.body().getToken() != null) pushData(response.body());
-                    } else {
-                        Toast.makeText(getContext(), R.string.unvisinle_error, Toast.LENGTH_LONG).show();
-                        binding.setterAuthBtnLogin.setEnabled(true);
-                    }
-                }
-                @Override
-                public void onFailure(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Throwable t) {
-                    binding.setterAuthBtnLogin.setEnabled(true);
-                    t.printStackTrace();
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                        requireActivity().finish();
+                    });
                 }
             });
-        }
-    }
-
-    private boolean validate() {
-        if (!ValidateUser.validatePhone(binding.setterAuthPhone.getText().toString().replaceAll("\\s", ""))) {
-            Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if (!ValidateUser.validateLogin(binding.setterAuthLogin.getText().toString().replaceAll("\\s", ""))) {
-            Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if (!ValidateUser.validatePassword(binding.setterAuthPassword.getText().toString().replaceAll("\\s", ""))) {
-            Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
-
-    private void pushData(SignUpResponseI<Setter> result) {
-        defineUser.saveUserData(false, result.user.getX5_Id(), result);
-
-        Intent intent = new Intent(getContext(), MainActivity.class);
-
-        startActivity(intent);
-        requireActivity().finish();
-    }
-
-    private void sendToNotifyAccount() {
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                Log.w("err", getString(R.string.error_fmc), task.getException());
-                signup("");
-                return;
-            }
-            signup(task.getResult());
         });
+
+        return binding.getRoot();
     }
 }

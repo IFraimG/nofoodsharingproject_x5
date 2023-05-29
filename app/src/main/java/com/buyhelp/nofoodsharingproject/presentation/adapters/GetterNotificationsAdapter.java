@@ -19,15 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetterNotificationsAdapter extends RecyclerView.Adapter<GetterNotificationsAdapter.ViewHolder> {
-    private final Context ctx;
     private final List<Notification> notifications = new ArrayList<>();
     private final LayoutInflater inflater;
 
     public GetterNotificationsAdapter(Context context) {
-        this.ctx = context;
         this.inflater = LayoutInflater.from(context);
     }
 
+    @NonNull
     @Override
     public GetterNotificationsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_getter_notifications, parent, false);
