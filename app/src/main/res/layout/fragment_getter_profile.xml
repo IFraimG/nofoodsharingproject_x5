@@ -147,7 +147,7 @@
                     android:layout_marginBottom="100dp"
                     android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                         android:id="@+id/getter_profile_save"
                         android:layout_width="0dp"
                         android:layout_weight="0.8"

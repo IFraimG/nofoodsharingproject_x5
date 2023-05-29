@@ -42,7 +42,7 @@
         android:layout_marginBottom="@dimen/standard_size_very_medium"
         android:text="@string/celebrate_help" />
 
-    <Button
+    <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
         android:id="@+id/setter_finish_open_chat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

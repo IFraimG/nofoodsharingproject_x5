@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="@dimen/standard_size_very_medium">
-                <androidx.appcompat.widget.AppCompatButton
+                <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                     android:text="@string/back_text"
                     style="@style/grey_500_button"
                     android:layout_gravity="center"
@@ -93,7 +93,7 @@
                     android:layout_marginBottom="@dimen/standard_size_very_medium"
                     android:id="@+id/button_back"/>
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

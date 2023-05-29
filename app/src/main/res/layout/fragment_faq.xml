@@ -27,7 +27,7 @@
             android:layout_marginTop="@dimen/standard_size_very_medium"
             android:layout_marginStart="@dimen/standard_size_small"
             android:text="@string/faq_link" />
-        <TextView
+        <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
             android:id="@+id/getter_policy_open"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -35,6 +35,8 @@
             android:gravity="center"
             android:textSize="12sp"
             android:minHeight="50dp"
+            android:paddingStart="@dimen/standard_size_small"
+            android:paddingEnd="@dimen/standard_size_small"
             android:background="@drawable/custom_round_border"
             android:layout_gravity="center"
             android:layout_margin="@dimen/standard_size_small"

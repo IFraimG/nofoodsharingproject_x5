@@ -63,7 +63,7 @@
                 android:inputType="textPassword"
                 />
 
-            <Button
+            <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                 android:id="@+id/auth_getter_create"
                 android:layout_width="300dp"
                 android:layout_height="80dp"
@@ -74,7 +74,7 @@
                 android:visibility="gone"
                 app:backgroundTint="@color/light_orange" />
 
-            <Button
+            <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                 android:id="@+id/auth_getter_btn_login"
                 android:layout_marginTop="@dimen/fk_size"
                 android:layout_marginBottom="@dimen/fk_size"

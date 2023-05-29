@@ -25,7 +25,7 @@
             android:padding="@dimen/standard_size_very_medium"
             android:popupBackground="@color/white"
             android:layout_height="wrap_content" />
-        <androidx.appcompat.widget.AppCompatButton
+        <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
             android:layout_marginTop="@dimen/standard_size_very_medium"
             android:layout_margin="20dp"
             android:id="@+id/map_set_market_btn"
@@ -36,7 +36,7 @@
             android:layout_gravity="center"
             android:textSize="12sp"
             android:text="@string/connect_to_this_shop_market_map_text"/>
-        <androidx.appcompat.widget.AppCompatButton
+        <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
             android:id="@+id/map_make_route"
             style="@style/grey_500_button"
             android:textSize="12sp"

@@ -46,7 +46,7 @@
         android:inputType="textPassword"
         />
 
-    <Button
+    <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
         android:layout_marginTop="@dimen/fk_size"
         android:id="@+id/login_auth_btn"
         android:layout_width="300dp"

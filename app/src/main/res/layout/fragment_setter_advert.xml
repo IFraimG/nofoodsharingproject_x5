@@ -13,22 +13,35 @@
         tools:context=".presentation.fragments.setter.SetterAdvertFragment">
         <ImageView
             android:id="@+id/setter_advert_back"
-            android:layout_width="@dimen/size_64"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/standard_size_small"
+            android:layout_marginEnd="@dimen/standard_size_small"
             android:layout_height="wrap_content"
             android:contentDescription="@string/no_image_warnings"
             app:srcCompat="@drawable/ic_baseline_chevron_left_24" />
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0.4"
             android:textSize="20sp"
+            android:layout_gravity="center"
             android:textColor="@color/black"
             android:text="@string/button_navigation_first_first"
             />
+        <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:text="@string/report"
+            android:background="@drawable/custom_round_border"
+            android:layout_marginEnd="@dimen/standard_size_very_medium"
+            android:layout_height="wrap_content" />
     </LinearLayout>
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/standard_size_small"
+        android:layout_marginTop="@dimen/standard_size_very_medium"
         android:layout_marginBottom="@dimen/standard_size_very_medium"
         android:backgroundTint="@color/grey_light"/>
     <TextView
@@ -65,7 +78,7 @@
             android:layout_weight="1"
             android:text="@string/date_text"
             android:textSize="18sp" />
-        <Button
+        <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
             android:id="@+id/setter_advert_create_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,7 +104,7 @@
         android:paddingEnd="@dimen/standard_size_very_medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <Button
+    <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
         android:id="@+id/setter_advert_accept"
         android:layout_marginTop="@dimen/standard_size_very_medium"
         android:paddingStart="@dimen/standard_size_very_medium"

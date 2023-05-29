@@ -30,7 +30,7 @@
         android:text="@string/notyfy_description"
         android:textSize="16sp"/>
 
-    <Button
+    <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
         android:id="@+id/notify_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
