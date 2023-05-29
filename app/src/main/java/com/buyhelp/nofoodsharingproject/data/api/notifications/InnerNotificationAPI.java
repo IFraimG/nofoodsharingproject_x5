@@ -2,7 +2,7 @@ package com.buyhelp.nofoodsharingproject.data.api.notifications;
 
 import com.buyhelp.nofoodsharingproject.data.api.notifications.dto.RequestSetRead;
 import com.buyhelp.nofoodsharingproject.data.api.notifications.dto.ResponseNotificationsList;
-import com.buyhelp.nofoodsharingproject.models.Notification;
+import com.buyhelp.nofoodsharingproject.data.models.Notification;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/getterAuthF"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.auth.GetterAuthFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.auth.GetterAuthFragment"
         android:label="fragment_getter_auth"
         tools:layout="@layout/fragment_getter_auth" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/setterAuthF"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.auth.SetterAuthFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.auth.SetterAuthFragment"
         android:label="fragment_setter_auth"
         tools:layout="@layout/fragment_setter_auth" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainAuthF"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.auth.MainAuthFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.auth.MainAuthFragment"
         android:label="fragment_main_auth"
         tools:layout="@layout/fragment_main_auth" >
         <action
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/setterLoginAuthF"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.auth.SetterLoginAuthFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.auth.SetterLoginAuthFragment"
         android:label="fragment_setter_login_auth"
         tools:layout="@layout/fragment_setter_login_auth" >
         <action

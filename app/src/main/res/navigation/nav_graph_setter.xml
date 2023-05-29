@@ -6,7 +6,7 @@
     app:startDestination="@id/setterAdvrsF">
     <fragment
         android:id="@+id/setterAdvrsF"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.setter.SetterAdvrsFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.setter.SetterAdvrsFragment"
         android:label="fragment_setter_advrs"
         tools:layout="@layout/fragment_setter_advrs" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/getterNotifyF"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.NotifyFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.NotifyFragment"
         android:label="fragment_getter_notify"
         tools:layout="@layout/fragment_getter_notify" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/setterProfileF"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.setter.SetterProfileFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.setter.SetterProfileFragment"
         android:label="fragment_setter_profile"
         tools:layout="@layout/fragment_setter_profile" >
         <action
@@ -36,12 +36,12 @@
     </fragment>
     <fragment
         android:id="@+id/marketsMapF"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.MarketsMapFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.MarketsMapFragment"
         android:label="fragment_markets_map"
         tools:layout="@layout/fragment_markets_map" />
     <fragment
         android:id="@+id/faqFragment"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.FaqFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.FaqFragment"
         android:label="fragment_faq"
         tools:layout="@layout/fragment_faq" >
         <action
@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/setterAdvertFragment"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.setter.SetterAdvertFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.setter.SetterAdvertFragment"
         android:label="SetterAdvertFragment" >
         <action
             android:id="@+id/action_setterAdvertFragment_to_setterAdvrsF"
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/setterHelpFinishFragment"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.setter.SetterHelpFinishFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.setter.SetterHelpFinishFragment"
         android:label="SetterHelpFinishFragment">
         <action
             android:id="@+id/action_setterHelpFinishFragment_to_setterAdvrsF"
@@ -75,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatsListFragment"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.ChatsListFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.ChatsListFragment"
         android:label="ChatsListFragment" >
         <action
             android:id="@+id/action_chatsListFragment_to_setterProfileF"
@@ -86,7 +86,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.buyhelp.nofoodsharingproject.fragments.ChatFragment"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.ChatFragment"
         android:label="ChatFragment" >
         <action
             android:id="@+id/action_chatFragment_to_chatsListFragment"

@@ -1,6 +1,6 @@
 package com.buyhelp.nofoodsharingproject.data.api.notifications;
 
-import com.buyhelp.nofoodsharingproject.data.RetrofitNotificationService;
+import com.buyhelp.nofoodsharingproject.data.api.RetrofitNotificationService;
 
 public class NotificationApiService {
     private static NotificationAPI notificationAPI;

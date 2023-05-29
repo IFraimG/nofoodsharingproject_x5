@@ -2,7 +2,7 @@ package com.buyhelp.nofoodsharingproject.data.api.adverts;
 
 import android.content.Context;
 
-import com.buyhelp.nofoodsharingproject.data.RetrofitService;
+import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 
 public class AdvertsApiService {
     private static AdvertsAPI advertsAPI;

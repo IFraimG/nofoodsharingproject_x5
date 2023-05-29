@@ -2,8 +2,8 @@ package com.buyhelp.nofoodsharingproject.data.api.map;
 
 import com.buyhelp.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
 import com.buyhelp.nofoodsharingproject.data.api.map.dto.RequestMarketInfo;
-import com.buyhelp.nofoodsharingproject.models.Getter;
-import com.buyhelp.nofoodsharingproject.models.Setter;
+import com.buyhelp.nofoodsharingproject.data.models.Getter;
+import com.buyhelp.nofoodsharingproject.data.models.Setter;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

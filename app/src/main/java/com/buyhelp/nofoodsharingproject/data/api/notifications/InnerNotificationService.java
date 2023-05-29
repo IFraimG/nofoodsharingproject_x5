@@ -2,7 +2,7 @@ package com.buyhelp.nofoodsharingproject.data.api.notifications;
 
 import android.content.Context;
 
-import com.buyhelp.nofoodsharingproject.data.RetrofitService;
+import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 
 public class InnerNotificationService {
     private static InnerNotificationAPI innerNotificationAPI;

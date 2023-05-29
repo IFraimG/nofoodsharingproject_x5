@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".fragments.auth.MainAuthFragment">
+    tools:context=".presentation.fragments.auth.MainAuthFragment">
 
     <ImageView
         android:id="@+id/secret_clickable_image"

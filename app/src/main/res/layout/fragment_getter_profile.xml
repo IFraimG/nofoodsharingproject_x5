@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:foregroundTint="@color/custom_grey"
     android:orientation="vertical"
-    tools:context=".fragments.getter.GetterProfileFragment">
+    tools:context=".presentation.fragments.getter.GetterProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

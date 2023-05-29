@@ -5,7 +5,7 @@ import com.buyhelp.nofoodsharingproject.data.api.adverts.dto.RequestTakingProduc
 import com.buyhelp.nofoodsharingproject.data.api.adverts.dto.ResponseActiveAdverts;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.dto.ResponseHistoryAdverts;
-import com.buyhelp.nofoodsharingproject.models.Advertisement;
+import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

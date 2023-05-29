@@ -6,7 +6,7 @@ import com.buyhelp.nofoodsharingproject.data.api.notifications.dto.FMCMessage;
 import com.buyhelp.nofoodsharingproject.data.api.notifications.dto.FMCNotification;
 import com.buyhelp.nofoodsharingproject.data.api.notifications.dto.RequestSetRead;
 import com.buyhelp.nofoodsharingproject.data.api.notifications.dto.ResponseNotificationsList;
-import com.buyhelp.nofoodsharingproject.models.Notification;
+import com.buyhelp.nofoodsharingproject.data.models.Notification;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

@@ -1,6 +1,6 @@
 package com.buyhelp.nofoodsharingproject.data.api.adverts.dto;
 
-import com.buyhelp.nofoodsharingproject.models.Advertisement;
+import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.google.gson.annotations.SerializedName;
 
 public class ResponseHistoryAdverts {

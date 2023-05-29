@@ -2,10 +2,9 @@ package com.buyhelp.nofoodsharingproject.data.api.map;
 
 import android.content.Context;
 
-import com.buyhelp.nofoodsharingproject.data.api.map.MapApiService;
 import com.buyhelp.nofoodsharingproject.data.api.map.dto.RequestMarketInfo;
-import com.buyhelp.nofoodsharingproject.models.Getter;
-import com.buyhelp.nofoodsharingproject.models.Setter;
+import com.buyhelp.nofoodsharingproject.data.models.Getter;
+import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
 
 import retrofit2.Call;

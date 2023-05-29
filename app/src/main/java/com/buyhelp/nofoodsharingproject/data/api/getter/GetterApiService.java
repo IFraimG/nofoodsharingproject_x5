@@ -2,7 +2,7 @@ package com.buyhelp.nofoodsharingproject.data.api.getter;
 
 import android.content.Context;
 
-import com.buyhelp.nofoodsharingproject.data.RetrofitService;
+import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 
 public class GetterApiService {
     private static GetterAPI getterAPI;

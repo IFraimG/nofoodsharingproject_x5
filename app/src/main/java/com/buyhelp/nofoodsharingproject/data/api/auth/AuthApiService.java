@@ -2,8 +2,7 @@ package com.buyhelp.nofoodsharingproject.data.api.auth;
 
 import android.content.Context;
 
-import com.buyhelp.nofoodsharingproject.data.RetrofitService;
-import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsAPI;
+import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 
 public class AuthApiService {
     private static AuthAPI authAPI;

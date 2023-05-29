@@ -3,8 +3,8 @@ package com.buyhelp.nofoodsharingproject.data.api.auth;
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpInformation;
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
-import com.buyhelp.nofoodsharingproject.models.Getter;
-import com.buyhelp.nofoodsharingproject.models.Setter;
+import com.buyhelp.nofoodsharingproject.data.models.Getter;
+import com.buyhelp.nofoodsharingproject.data.models.Setter;
 
 
 import retrofit2.Call;

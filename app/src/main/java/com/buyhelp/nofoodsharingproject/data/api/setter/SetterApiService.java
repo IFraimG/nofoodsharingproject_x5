@@ -2,7 +2,7 @@ package com.buyhelp.nofoodsharingproject.data.api.setter;
 
 import android.content.Context;
 
-import com.buyhelp.nofoodsharingproject.data.RetrofitService;
+import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 
 public class SetterApiService {
     private static SetterAPI setterAPI;

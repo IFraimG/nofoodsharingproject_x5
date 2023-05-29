@@ -1,6 +1,6 @@
 package com.buyhelp.nofoodsharingproject.data.api.notifications.dto;
 
-import com.buyhelp.nofoodsharingproject.models.Notification;
+import com.buyhelp.nofoodsharingproject.data.models.Notification;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

@@ -1,10 +1,7 @@
 package com.buyhelp.nofoodsharingproject.data.api.adverts.dto;
 
-import com.buyhelp.nofoodsharingproject.models.Advertisement;
-import com.google.gson.annotations.Expose;
+import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class ResponseActiveAdverts {
     @SerializedName("result")
