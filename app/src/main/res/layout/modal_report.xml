@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/standard_size_very_medium">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/report"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        />
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/standard_size_small"
+        android:layout_marginBottom="@dimen/standard_size_very_medium"
+        android:background="@color/grey_light"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/report_text"
+        android:layout_marginBottom="@dimen/standard_size_very_medium"
+        android:textSize="16sp"/>
+
+    <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
+        android:id="@+id/report_advert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mail"
+        android:textColor="@color/black"
+        android:layout_marginBottom="@dimen/standard_size_very_medium"
+        android:gravity="center"
+        android:textFontWeight="700"
+        android:background="@drawable/style6"
+        android:textSize="18sp"/>
+</LinearLayout>

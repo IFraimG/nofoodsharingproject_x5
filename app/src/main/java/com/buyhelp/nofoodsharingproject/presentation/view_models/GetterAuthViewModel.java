@@ -14,7 +14,6 @@ import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
-import com.buyhelp.nofoodsharingproject.domain.utils.ValidateUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,22 +27,6 @@ public class GetterAuthViewModel extends AndroidViewModel {
 
     public GetterAuthViewModel(@NonNull Application application) {
         super(application);
-    }
-
-    public boolean validate(String phone, String login, String password) {
-        if (!ValidateUser.validatePhone(phone)) {
-            Toast.makeText(getApplication(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if (!ValidateUser.validateLogin(login)) {
-            Toast.makeText(getApplication(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if (!ValidateUser.validatePassword(password)) {
-            Toast.makeText(getApplication(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
     }
 
     private void pushData(SignUpResponseI<Getter> result) {
@@ -111,6 +94,7 @@ public class GetterAuthViewModel extends AndroidViewModel {
     }
 
 
+    // переделать на OneSignal node.js
     public LiveData<String> sendToNotifyAccount() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {

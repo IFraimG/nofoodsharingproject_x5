@@ -17,7 +17,7 @@ import com.buyhelp.nofoodsharingproject.data.api.getter.GetterRepository;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterProfileBinding;
 import com.buyhelp.nofoodsharingproject.data.models.ShortDataUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
-import com.buyhelp.nofoodsharingproject.domain.utils.ValidateUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import org.jetbrains.annotations.NotNull;
 

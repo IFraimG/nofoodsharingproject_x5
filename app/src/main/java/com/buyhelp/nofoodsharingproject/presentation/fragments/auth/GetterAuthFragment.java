@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterAuthBinding;
@@ -62,7 +63,7 @@ public class GetterAuthFragment extends Fragment {
 
             binding.authGetterBtnLogin.setEnabled(false);
             binding.authGetterCreate.setEnabled(false);
-            if (viewModel.validate(dtoPhone, dtoLogin, dtoPassword)) {
+            if (ValidateUser.isValidate(requireContext(), dtoPhone, dtoLogin, dtoPassword)) {
                 viewModel.login(dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), getterSignUpResponseI -> {
                     binding.authGetterBtnLogin.setEnabled(true);
                     binding.authGetterCreate.setEnabled(true);

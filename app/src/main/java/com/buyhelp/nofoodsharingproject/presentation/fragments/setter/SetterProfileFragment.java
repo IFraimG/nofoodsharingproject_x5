@@ -27,7 +27,7 @@ import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterProfileBinding
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
-import com.buyhelp.nofoodsharingproject.domain.utils.ValidateUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
 import com.buyhelp.nofoodsharingproject.presentation.view_models.SetterProfileViewModel;
 

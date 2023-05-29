@@ -186,4 +186,6 @@
     <string name="faq_question">Что делать, если я случайно запретил доступ к местоположению?</string>
     <string name="getting_product_description">Продиктуйте этот код кассиру:</string>
     <string name="report">Пожаловаться</string>
+    <string name="mail">pokupaypomogay@mail.ru</string>
+    <string name="report_text">Если у вас возникли жалобы, пишите нам на электронный адрес. Мы ответим вам в течении дня.</string>
 </resources>

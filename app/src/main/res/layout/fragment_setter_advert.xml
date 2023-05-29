@@ -31,6 +31,7 @@
             android:text="@string/button_navigation_first_first"
             />
         <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
+            android:id="@+id/setter_advert_report"
             android:layout_width="0dp"
             android:layout_weight="0.4"
             android:text="@string/report"

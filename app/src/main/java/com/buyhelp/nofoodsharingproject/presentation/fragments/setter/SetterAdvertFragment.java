@@ -1,5 +1,7 @@
 package com.buyhelp.nofoodsharingproject.presentation.fragments.setter;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -23,6 +26,7 @@ import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.buyhelp.nofoodsharingproject.data.models.Notification;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -61,6 +65,7 @@ public class SetterAdvertFragment extends Fragment {
         binding.setterAdvertBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterAdvertFragment_to_setterAdvrsF));
         binding.setterAdvertAccept.setOnClickListener(View -> makeHelp());
         binding.setterAdvertCreateChat.setOnClickListener(this::createChat);
+        binding.setterAdvertReport.setOnClickListener(View -> openReportModal());
 
         getAdvertisement(getArguments().getString("advertID", ""));
 
@@ -214,5 +219,23 @@ public class SetterAdvertFragment extends Fragment {
         } catch (JSONException err) {
             err.printStackTrace();
         }
+    }
+
+    private void openReportModal() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        LayoutInflater inflater = getLayoutInflater();
+        android.view.View customView = inflater.inflate(R.layout.modal_report, null);
+        builder.setView(customView);
+
+        CustomAppCompatButton reportUser = customView.findViewById(R.id.report_advert);
+
+        reportUser.setOnClickListener(View -> {
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:" + R.string.mail));
+            startActivity(intent);
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

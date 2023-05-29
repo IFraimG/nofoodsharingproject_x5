@@ -1,7 +1,6 @@
 package com.buyhelp.nofoodsharingproject.presentation.view_models;
 
 import android.app.Application;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,8 +13,6 @@ import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
-import com.buyhelp.nofoodsharingproject.domain.utils.ValidateUser;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -93,32 +90,5 @@ public class SetterAuthViewModel extends AndroidViewModel {
         });
 
         return createdUser;
-    }
-
-    public boolean validate(String phone, String login, String password) {
-        if (!ValidateUser.validatePhone(phone)) {
-            Toast.makeText(getApplication(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if (!ValidateUser.validateLogin(login)) {
-            Toast.makeText(getApplication(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if (!ValidateUser.validatePassword(password)) {
-            Toast.makeText(getApplication(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
-            return false;
-        }
-        return true;
-    }
-
-    public LiveData<String> sendToNotifyAccount() {
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                Log.w("err", getApplication().getString(R.string.error_fmc), task.getException());
-                tokenFCM.setValue("");
-            } else tokenFCM.setValue(task.getResult());
-        });
-
-        return tokenFCM;
     }
 }
