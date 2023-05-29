@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_getter_profile" >
         <action
             android:id="@+id/action_getterProfileF_to_chatsListFragment"
-            app:destination="@id/chatsListFragment" />
+            app:destination="@id/chatsListFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
     </fragment>
 
     <fragment
@@ -22,10 +26,18 @@
         tools:layout="@layout/fragment_getter_advrs" >
         <action
             android:id="@+id/action_getterAdvrsF_to_faqFragment"
-            app:destination="@id/faqFragment" />
+            app:destination="@id/faqFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
         <action
             android:id="@+id/action_getterAdvrsF_to_getterNewAdvertFragment"
-            app:destination="@id/getterNewAdvertFragment" />
+            app:destination="@id/getterNewAdvertFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
     </fragment>
 
     <fragment
@@ -45,7 +57,11 @@
         tools:layout="@layout/fragment_faq" >
         <action
             android:id="@+id/action_faqFragment_to_getterAdvrsF"
-            app:destination="@id/getterAdvrsF" />
+            app:destination="@id/getterAdvrsF"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
     </fragment>
     <fragment
         android:id="@+id/getterNewAdvertFragment"
@@ -53,7 +69,11 @@
         android:label="GetterNewAdvertFragment" >
         <action
             android:id="@+id/action_getterNewAdvertFragment_to_getterAdvrsF"
-            app:destination="@id/getterAdvrsF" />
+            app:destination="@id/getterAdvrsF"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
     </fragment>
     <fragment
         android:id="@+id/chatsListFragment"
@@ -61,10 +81,18 @@
         android:label="ChatsListFragment" >
         <action
             android:id="@+id/action_chatsListFragment_to_getterProfileF"
-            app:destination="@id/getterProfileF" />
+            app:destination="@id/getterProfileF"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
         <action
             android:id="@+id/action_chatsListFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -72,6 +100,10 @@
         android:label="ChatFragment" >
         <action
             android:id="@+id/action_chatFragment_to_chatsListFragment"
-            app:destination="@id/chatsListFragment" />
+            app:destination="@id/chatsListFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
     </fragment>
 </navigation>

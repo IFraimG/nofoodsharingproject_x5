@@ -81,8 +81,6 @@ public class SetterHelpFinishFragment extends Fragment {
             socket.disconnect();
             socket.off("getCreatedChat");
         }
-
-        binding = null;
     }
 
     private void vkLoad() {

@@ -28,6 +28,7 @@ import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.domain.utils.ValidateUser;
+import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
 import com.buyhelp.nofoodsharingproject.presentation.view_models.SetterProfileViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -89,6 +90,15 @@ public class SetterProfileFragment extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (getActivity() instanceof SetterActivity) {
+            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(true);
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         requireActivity().getMenuInflater().inflate(R.menu.profile_left_panel_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
@@ -147,6 +157,11 @@ public class SetterProfileFragment extends Fragment {
         binding.setterProfileHistoryTitle.setVisibility(View.GONE);
         binding.setterProfileOpenChat.setVisibility(View.GONE);
         binding.setterProfileEdit.setVisibility(View.VISIBLE);
+        binding.setterProfileSwiper.setEnabled(false);
+
+        if (getActivity() instanceof SetterActivity) {
+            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(false);
+        }
     }
 
     private void closeEdit() {
@@ -220,11 +235,16 @@ public class SetterProfileFragment extends Fragment {
         binding.setterProfileEditPhone.setText("");
         binding.setterProfileEditOldPassword.setText("");
 
-        this.binding.setterProfileHistoryList.setVisibility(View.VISIBLE);
-        this.binding.setterOpenVk.setVisibility(View.VISIBLE);
-        this.binding.setterProfileHistoryTitle.setVisibility(View.VISIBLE);
+        binding.setterProfileHistoryList.setVisibility(View.VISIBLE);
+        binding.setterOpenVk.setVisibility(View.VISIBLE);
+        binding.setterProfileHistoryTitle.setVisibility(View.VISIBLE);
         binding.setterProfileOpenChat.setVisibility(View.VISIBLE);
-        this.binding.setterProfileEdit.setVisibility(View.GONE);
+        binding.setterProfileEdit.setVisibility(View.GONE);
+        binding.setterProfileSwiper.setEnabled(true);
+
+        if (getActivity() instanceof SetterActivity) {
+            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(true);
+        }
     }
 
     private void logout() {

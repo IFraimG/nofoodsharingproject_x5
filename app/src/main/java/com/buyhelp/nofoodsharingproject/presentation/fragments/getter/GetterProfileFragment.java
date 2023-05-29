@@ -56,12 +56,6 @@ public class GetterProfileFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        binding = null;
-    }
-
     private void editProfile() {
         String newLogin = binding.getterProfileEditLogin.getText().toString();
         String newPhone = binding.getterProfileEditPhone.getText().toString();

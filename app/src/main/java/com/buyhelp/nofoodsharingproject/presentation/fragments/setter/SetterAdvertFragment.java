@@ -87,8 +87,6 @@ public class SetterAdvertFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         disconnect();
-
-        binding = null;
     }
 
     private void disconnect() {

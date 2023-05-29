@@ -99,8 +99,6 @@ public class ChatsListFragment extends Fragment {
             mSocket.off("get_chats");
             mSocket.off("send_user_id_to_get_chat");
         }
-
-        binding = null;
     }
 
     private void getChatsList() {

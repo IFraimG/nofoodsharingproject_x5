@@ -99,8 +99,6 @@ public class ChatFragment extends Fragment {
             mSocket.off("set_messages");
             mSocket.off("get_messages");
         }
-
-        binding = null;
     }
     private final Emitter.Listener setMessages = new Emitter.Listener() {
         @Override

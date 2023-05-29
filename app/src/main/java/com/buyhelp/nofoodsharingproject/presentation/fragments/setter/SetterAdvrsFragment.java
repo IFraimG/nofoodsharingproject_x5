@@ -60,13 +60,6 @@ public class SetterAdvrsFragment extends Fragment {
         return binding.getRoot();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        binding = null;
-    }
-
     private void renderStatus(LoaderStatus loaderStatus) {
         switch (loaderStatus.getStatus()) {
             case LOADING:

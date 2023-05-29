@@ -46,6 +46,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/standard_size_very_medium"
                 android:text="@string/i_getter_text"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:backgroundTint="@color/light_orange" />
 
@@ -55,6 +56,7 @@
                 android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:text="@string/i_setter_text"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:backgroundTint="@color/green_pastel" />
         </LinearLayout>

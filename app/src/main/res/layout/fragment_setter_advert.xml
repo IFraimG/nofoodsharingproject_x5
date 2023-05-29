@@ -85,6 +85,7 @@
             android:layout_marginTop="@dimen/standard_size_very_medium"
             android:layout_marginBottom="@dimen/standard_size_very_medium"
             android:textSize="16sp"
+            android:textColor="@color/white"
             android:backgroundTint="@color/green_pastel"
             android:text="@string/write_to_getter" />
     </LinearLayout>
@@ -111,7 +112,10 @@
         android:paddingEnd="@dimen/standard_size_very_medium"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/standard_size_very_medium"
+        android:layout_marginEnd="@dimen/standard_size_very_medium"
         android:text="@string/message_adv_text"
         android:textSize="18sp"
         app:backgroundTint="@color/green_pastel" />

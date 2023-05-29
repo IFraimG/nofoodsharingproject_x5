@@ -61,13 +61,6 @@ public class GetterNewAdvertFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        binding = null;
-    }
-
     private void createAdvert() {
         if (viewModel.getUserItems().size() == 0)
             Toast.makeText(requireContext(), R.string.add_to_list_product, Toast.LENGTH_SHORT).show();

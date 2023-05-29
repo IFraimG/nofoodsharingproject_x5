@@ -8,31 +8,51 @@
         android:id="@+id/setterAdvrsF"
         android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.setter.SetterAdvrsFragment"
         android:label="fragment_setter_advrs"
-        tools:layout="@layout/fragment_setter_advrs" >
+        tools:layout="@layout/fragment_setter_advrs">
         <action
             android:id="@+id/action_setterAdvrsF_to_faqFragment"
-            app:destination="@id/faqFragment" />
+            app:destination="@id/faqFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
         <action
             android:id="@+id/action_setterAdvrsF_to_setterAdvertFragment"
-            app:destination="@id/setterAdvertFragment" />
+            app:destination="@id/setterAdvertFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
     <fragment
         android:id="@+id/getterNotifyF"
         android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.NotifyFragment"
         android:label="fragment_getter_notify"
-        tools:layout="@layout/fragment_getter_notify" >
+        tools:layout="@layout/fragment_getter_notify">
         <action
             android:id="@+id/action_getterNotifyF_to_setterAdvertFragment"
-            app:destination="@id/setterAdvertFragment" />
+            app:destination="@id/setterAdvertFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
     <fragment
         android:id="@+id/setterProfileF"
         android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.setter.SetterProfileFragment"
         android:label="fragment_setter_profile"
-        tools:layout="@layout/fragment_setter_profile" >
+        tools:layout="@layout/fragment_setter_profile">
         <action
             android:id="@+id/action_setterProfileF_to_chatsListFragment"
-            app:destination="@id/chatsListFragment" />
+            app:destination="@id/chatsListFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
     <fragment
         android:id="@+id/marketsMapF"
@@ -43,24 +63,44 @@
         android:id="@+id/faqFragment"
         android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.FaqFragment"
         android:label="fragment_faq"
-        tools:layout="@layout/fragment_faq" >
+        tools:layout="@layout/fragment_faq">
         <action
             android:id="@+id/action_faqFragment_to_setterAdvrsF"
-            app:destination="@id/setterAdvrsF" />
+            app:destination="@id/setterAdvrsF"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
     <fragment
         android:id="@+id/setterAdvertFragment"
         android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.setter.SetterAdvertFragment"
-        android:label="SetterAdvertFragment" >
+        android:label="SetterAdvertFragment">
         <action
             android:id="@+id/action_setterAdvertFragment_to_setterAdvrsF"
-            app:destination="@id/setterAdvrsF" />
+            app:destination="@id/setterAdvrsF"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
         <action
             android:id="@+id/action_setterAdvertFragment_to_setterHelpFinishFragment"
-            app:destination="@id/setterHelpFinishFragment" />
+            app:destination="@id/setterHelpFinishFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
         <action
             android:id="@+id/action_setterAdvertFragment_to_chatsListFragment"
-            app:destination="@id/chatsListFragment" />
+            app:destination="@id/chatsListFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
     <fragment
         android:id="@+id/setterHelpFinishFragment"
@@ -68,28 +108,53 @@
         android:label="SetterHelpFinishFragment">
         <action
             android:id="@+id/action_setterHelpFinishFragment_to_setterAdvrsF"
-            app:destination="@id/setterAdvrsF" />
+            app:destination="@id/setterAdvrsF"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
         <action
             android:id="@+id/action_setterHelpFinishFragment_to_chatsListFragment"
-            app:destination="@id/chatsListFragment" />
+            app:destination="@id/chatsListFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
     <fragment
         android:id="@+id/chatsListFragment"
         android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.ChatsListFragment"
-        android:label="ChatsListFragment" >
+        android:label="ChatsListFragment">
         <action
             android:id="@+id/action_chatsListFragment_to_setterProfileF"
-            app:destination="@id/setterProfileF" />
+            app:destination="@id/setterProfileF"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
         <action
             android:id="@+id/action_chatsListFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.ChatFragment"
-        android:label="ChatFragment" >
+        android:label="ChatFragment">
         <action
             android:id="@+id/action_chatFragment_to_chatsListFragment"
-            app:destination="@id/chatsListFragment" />
+            app:destination="@id/chatsListFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
 </navigation>
