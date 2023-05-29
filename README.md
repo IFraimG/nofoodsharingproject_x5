@@ -6,6 +6,9 @@
 
 Пожалуйста, проверьте страницу [CONTRIBUTING](CONTRIBUTING.md), если вы хотите помочь.
 
+
+![logotype](https://github.com/IFraimG/nofoodsharingproject_x5/blob/master/app/src/main/res/drawable-v24/logo2.png)
+
 ## Основная идея проекта:
 Создание приложения для людей, которые располагают возможностью помочь малообеспеченным, удобно совершать пожертвоания.
 
