@@ -11,7 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.domain.utils.PermissionHandler;
+import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.databinding.ActivityGetterBinding;
 
 

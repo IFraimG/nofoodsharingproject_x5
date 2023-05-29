@@ -11,7 +11,7 @@ import com.buyhelp.nofoodsharingproject.data.api.getter.GetterRepository;
 import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

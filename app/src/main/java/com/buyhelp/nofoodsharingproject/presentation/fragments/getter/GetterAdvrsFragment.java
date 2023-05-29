@@ -20,7 +20,7 @@ import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowChecker;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowCheckerOld;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.view_models.AdvertisementOneViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +45,6 @@ public class GetterAdvrsFragment extends Fragment {
         binding.textNumberOfAdvert.setVisibility(View.GONE);
         binding.stopAdvert.setVisibility(View.GONE);
         binding.getterAdvertLayout.setVisibility(View.GONE);
-
         viewModel = new ViewModelProvider(requireActivity(),
                 (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
                 .get(AdvertisementOneViewModel.class);
@@ -177,7 +176,6 @@ public class GetterAdvrsFragment extends Fragment {
                 arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, advert.getListTitleProducts());
                 binding.getterAdvertProducts.setAdapter(arrayAdapter);
                 showAdvertisementElements(advert);
-
             }
         });
     }

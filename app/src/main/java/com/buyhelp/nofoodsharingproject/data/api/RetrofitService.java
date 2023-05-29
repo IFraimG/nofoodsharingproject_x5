@@ -2,7 +2,7 @@ package com.buyhelp.nofoodsharingproject.data.api;
 
 import android.content.Context;
 
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 
 
 import okhttp3.Interceptor;

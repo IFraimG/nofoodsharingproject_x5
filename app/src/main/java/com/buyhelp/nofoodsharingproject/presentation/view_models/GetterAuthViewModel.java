@@ -13,7 +13,7 @@ import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.utils.ValidateUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 import org.jetbrains.annotations.NotNull;

@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
 import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.buyhelp.nofoodsharingproject.databinding.ActivityMainBinding;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;

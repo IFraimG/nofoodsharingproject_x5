@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.buyhelp.nofoodsharingproject.BuildConfig;
 import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.jakewharton.threetenabp.AndroidThreeTen;

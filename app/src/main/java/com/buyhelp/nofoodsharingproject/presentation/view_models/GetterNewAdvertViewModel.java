@@ -12,7 +12,7 @@ import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

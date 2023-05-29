@@ -183,7 +183,7 @@
                 android:layout_marginBottom="80dp"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                     android:id="@+id/stop_advert"
                     style="@style/grey_500_button"
                     android:layout_gravity="center|top"
@@ -196,7 +196,7 @@
                     android:layout_width="match_parent"
                     android:visibility="invisible" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                     android:id="@+id/pick_up_order"
                     style="@style/grey_500_button"
                     android:layout_gravity="center|top"
@@ -208,7 +208,7 @@
                     android:text="@string/adv_zabor_text"
                     android:visibility="invisible" />
 
-                <androidx.appcompat.widget.AppCompatButton
+                <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                     android:id="@+id/create_new_request"
                     style="@style/grey_500_button"
                     android:layout_width="match_parent"

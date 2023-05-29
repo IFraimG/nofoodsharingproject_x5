@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.buyhelp.nofoodsharingproject.presentation.adapters.GetterNotificationsAdapter;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterNotifyBinding;
 import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.view_models.NotificationsViewModel;
 import org.jetbrains.annotations.NotNull;
 

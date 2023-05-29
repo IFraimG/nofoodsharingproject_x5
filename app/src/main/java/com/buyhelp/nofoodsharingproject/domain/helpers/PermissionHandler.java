@@ -1,4 +1,4 @@
-package com.buyhelp.nofoodsharingproject.domain.utils;
+package com.buyhelp.nofoodsharingproject.domain.helpers;
 
 import android.Manifest;
 import android.app.Activity;

@@ -15,7 +15,7 @@ import com.buyhelp.nofoodsharingproject.presentation.adapters.SetterAdvertListAd
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
 import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.view_models.AdvertisementListViewModel;
 import org.jetbrains.annotations.NotNull;
 

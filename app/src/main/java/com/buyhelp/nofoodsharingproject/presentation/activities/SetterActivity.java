@@ -18,8 +18,8 @@ import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.presentation.services.LocationTrackingService;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowChecker;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowCheckerOld;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
-import com.buyhelp.nofoodsharingproject.domain.utils.PermissionHandler;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 
 public class SetterActivity extends AppCompatActivity {
     private NavController navController;

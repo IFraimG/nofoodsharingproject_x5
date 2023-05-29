@@ -19,7 +19,7 @@ import com.buyhelp.nofoodsharingproject.presentation.activities.GetterActivity;
 import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentListChatsBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Chat;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;

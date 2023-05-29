@@ -30,7 +30,7 @@ import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepos
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.buyhelp.nofoodsharingproject.data.models.Market;
 import com.buyhelp.nofoodsharingproject.data.models.Notification;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
 

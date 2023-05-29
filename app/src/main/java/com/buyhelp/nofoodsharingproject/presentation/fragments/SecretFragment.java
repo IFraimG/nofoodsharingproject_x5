@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSecretBinding;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 
 public class SecretFragment extends DialogFragment {
     private FragmentSecretBinding binding;

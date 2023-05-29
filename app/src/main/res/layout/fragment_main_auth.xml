@@ -39,7 +39,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                 android:id="@+id/main_auth_btn_getter"
                 android:layout_width="300dp"
                 android:layout_height="70dp"
@@ -49,7 +49,7 @@
                 android:textSize="20sp"
                 app:backgroundTint="@color/light_orange" />
 
-            <Button
+            <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                 android:id="@+id/main_auth_btn_setter"
                 android:layout_width="300dp"
                 android:layout_height="70dp"

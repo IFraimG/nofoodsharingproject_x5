@@ -22,7 +22,7 @@ import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAdvertBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.buyhelp.nofoodsharingproject.data.models.Notification;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;

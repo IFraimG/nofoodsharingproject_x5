@@ -17,7 +17,7 @@ import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterFinishHelpBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
-import com.buyhelp.nofoodsharingproject.domain.utils.DefineUser;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
