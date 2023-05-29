@@ -2,6 +2,9 @@
 Благотворительный проект Александра Кулагина и Омельчук Григория, разработанный в рамках сотрудничества IT школы Samsung и X5 Group.
 
 <a href="https://codeclimate.com/github/IFraimG/nofoodsharingproject_x5/maintainability"><img src="https://api.codeclimate.com/v1/badges/43002fad82fd9eabe136/maintainability" /></a>
+[![Android CI](https://github.com/IFraimG/nofoodsharingproject_x5/actions/workflows/android.yml/badge.svg)](https://github.com/IFraimG/nofoodsharingproject_x5/actions/workflows/android.yml)
+
+Пожалуйста, проверьте страницу [CONTRIBUTING](CONTRIBUTING.md), если вы хотите помочь.
 
 ##### Основная идея проекта:
 Создание приложения для людей, которые располагают возможностью помочь малообеспеченным, удобно совершать пожертвоания.
@@ -66,7 +69,7 @@ javaScript
 Для хранения данных о аккаунте пользователя непосредственно на устройстве используются SharedPreferences.
 Данные о объявлениях "Принимающих" пользователей, их статусах, аккаунтах, чатах и тд хрянятся на сервере и испозуются в приложении с помощью фреймворка Retrofit. С помощью MongoDB реализованно использование баз данных, а через Socket.io реализована работа чата в приложении. Шифрование данных - Bcrypt.js.
 
-#### Реализация
+#### Реализация (Регулярно обновляется)
 ###### Java
 | Android class| Функция |
 | ------ | ------ |
