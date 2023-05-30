@@ -21,7 +21,7 @@ import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowChecker;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowCheckerOld;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.AdvertisementOneViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.view_models.advertisements.AdvertisementOneViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

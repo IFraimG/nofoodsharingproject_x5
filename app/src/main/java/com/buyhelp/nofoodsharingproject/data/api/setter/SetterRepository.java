@@ -11,8 +11,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class SetterRepository {
-    public Call<Setter> editProfile(Context ctx, String userID, String login, String phone, String password, String oldPassword) {
-        return SetterApiService.getInstance(ctx).editProfile(new RequestGetterEditProfile(userID, login, phone, password, oldPassword));
+    public Call<Setter> editProfile(Context ctx, RequestGetterEditProfile requestGetterEditProfile) {
+        return SetterApiService.getInstance(ctx).editProfile(requestGetterEditProfile);
     }
     public Call<ResponseFCMToken> getFCMtoken(Context ctx, String authorID) {
         return SetterApiService.getInstance(ctx).getFCMtoken(authorID);

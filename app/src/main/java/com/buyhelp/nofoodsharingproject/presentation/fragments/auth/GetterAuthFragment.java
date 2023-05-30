@@ -13,7 +13,7 @@ import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterAuthBinding;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.GetterAuthViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.view_models.getter.GetterAuthViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

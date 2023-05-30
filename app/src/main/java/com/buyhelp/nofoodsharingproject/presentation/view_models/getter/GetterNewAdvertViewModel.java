@@ -1,4 +1,4 @@
-package com.buyhelp.nofoodsharingproject.presentation.view_models;
+package com.buyhelp.nofoodsharingproject.presentation.view_models.getter;
 
 import android.app.Application;
 import android.widget.Toast;

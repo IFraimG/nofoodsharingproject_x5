@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterLoginAuthBinding;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.SetterAuthViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.view_models.setter.SetterAuthViewModel;
 import org.jetbrains.annotations.NotNull;
 
 public class SetterLoginAuthFragment extends Fragment {

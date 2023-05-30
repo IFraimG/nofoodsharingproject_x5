@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -21,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.buyhelp.nofoodsharingproject.R;
+import com.buyhelp.nofoodsharingproject.data.api.getter.dto.RequestGetterEditProfile;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainAuthActivity;
 import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
@@ -29,15 +31,10 @@ import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.SetterProfileViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.view_models.setter.SetterProfileViewModel;
 
 import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class SetterProfileFragment extends Fragment {
@@ -48,7 +45,6 @@ public class SetterProfileFragment extends Fragment {
     private boolean isCheckedNotification = false;
 
     private DefineUser<Setter> defineUser;
-    private SetterRepository setterRepository;
     private SetterProfileViewModel viewModel;
 
     @Override
@@ -60,7 +56,6 @@ public class SetterProfileFragment extends Fragment {
         setHasOptionsMenu(true);
 
         this.user = defineUser.defineSetter();
-        this.setterRepository = new SetterRepository();
 
         isCheckedLocation = defineUser.getPreferences("location");
         isCheckedNotification = defineUser.getPreferences("notificaiton");
@@ -198,27 +193,19 @@ public class SetterProfileFragment extends Fragment {
         String newPhone = binding.setterProfileEditPhone.getText().toString();
         String newPassword = binding.setterProfileEditPassword.getText().toString();
         String oldPasswordText = binding.setterProfileEditOldPassword.getText().toString();
-        setterRepository.editProfile(requireContext(), user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText).enqueue(new Callback<Setter>() {
+
+        viewModel.editProfile(new RequestGetterEditProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText)).observe(requireActivity(), new Observer<Setter>() {
             @Override
-            public void onResponse(@NotNull Call<Setter> call, @NotNull Response<Setter> response) {
-                if (response.code() == 400) Toast.makeText(getContext(), R.string.your_password_uncorrect, Toast.LENGTH_SHORT).show();
-                if (response.isSuccessful() && response.body() != null) {
+            public void onChanged(Setter setter) {
+                if (setter != null) {
                     Toast.makeText(getContext(), R.string.sucses, Toast.LENGTH_SHORT).show();
-                    binding.setterProfileName.setText(response.body().getLogin());
-                    binding.setterProfilePhone.setText(response.body().getPhone());
+                    binding.setterProfileName.setText(setter.getLogin());
+                    binding.setterProfilePhone.setText(setter.getPhone());
 
-                    defineUser.editProfileInfo(response.body().getLogin(), response.body().getPhone());
+                    defineUser.editProfileInfo(setter.getLogin(), setter.getPhone());
                 }
-
                 enabledButton(true);
                 removeEdit();
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<Setter> call, @NotNull Throwable t) {
-                t.printStackTrace();
-                enabledButton(true);
-                Toast.makeText(getContext(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
             }
         });
     }

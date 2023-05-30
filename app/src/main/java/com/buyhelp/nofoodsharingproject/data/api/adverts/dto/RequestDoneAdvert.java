@@ -3,7 +3,6 @@ package com.buyhelp.nofoodsharingproject.data.api.adverts.dto;
 import com.google.gson.annotations.SerializedName;
 
 public class RequestDoneAdvert {
-//    String advertID;
     @SerializedName("userDoneID")
     String userDoneID;
 
@@ -20,15 +19,6 @@ public class RequestDoneAdvert {
         this.userDoneID = userDoneID;
         this.gettingProductID = gettingProductID;
     }
-
-//    public String getAdvertID() {
-//        return advertID;
-//    }
-//
-//    public void setAdvertID(String advertID) {
-//        this.advertID = advertID;
-//    }
-
 
     public String getAuthorID() {
         return authorID;

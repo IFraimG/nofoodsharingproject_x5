@@ -13,7 +13,7 @@ import androidx.navigation.Navigation;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.presentation.activities.GetterActivity;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterCreateNewAdvertismentBinding;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.GetterNewAdvertViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.view_models.getter.GetterNewAdvertViewModel;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
