@@ -11,10 +11,10 @@
                 <corners
                     android:radius="@dimen/standard_size_small">
                 </corners>
-                <solid android:color="@color/extra_green"/>
+                <solid android:color="@color/new_custom_green_active"/>
                 <stroke
                     android:width="2dp"
-                    android:color="@color/extra_green" >
+                    android:color="@color/new_custom_green_active" >
                 </stroke>
             </shape>
         </item>
@@ -24,10 +24,10 @@
                 <corners
                     android:radius="@dimen/standard_size_small">
                 </corners>
-                <solid android:color="@color/green_pastel"/>
+                <solid android:color="@color/new_custom_green_dark"/>
                 <stroke
                     android:width="2dp"
-                    android:color="@color/extra_green" >
+                    android:color="@color/new_custom_green_dark" >
                 </stroke>
             </shape>
         </item>

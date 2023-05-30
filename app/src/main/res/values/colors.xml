@@ -21,4 +21,6 @@
     <color name="extra_green">#A4BC92</color>
     <color name="mini_green">#C7E9B0</color>
     <color name="new_grey">#DDE6ED</color>
+    <color name="new_custom_green_dark">#0D4D10</color>
+    <color name="new_custom_green_active">#FF0F9C16</color>
 </resources>
