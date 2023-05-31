@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -19,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.getter.dto.RequestGetterEditProfile;
@@ -31,6 +29,7 @@ import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterProfileViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
@@ -172,11 +171,11 @@ public class SetterProfileFragment extends Fragment {
         }
 
         if (!ValidateUser.validatePhone(editPhoneString)) {
-            Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
+            Snackbar.make(requireContext(), requireView(), getString(R.string.uncorrect_number_phone), Snackbar.LENGTH_LONG).show();
         } else if (!ValidateUser.validateLogin(editLoginString)) {
-            Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
+            Snackbar.make(requireContext(), requireView(), getString(R.string.uncorrect_name), Snackbar.LENGTH_LONG).show();
         } else if (!ValidateUser.validatePassword(editPasswordString)) {
-            Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
+            Snackbar.make(requireContext(), requireView(), getString(R.string.uncorrect_password), Snackbar.LENGTH_LONG).show();
         } else {
             enabledButton(false);
 
@@ -193,19 +192,21 @@ public class SetterProfileFragment extends Fragment {
         String newPassword = binding.setterProfileEditPassword.getText().toString();
         String oldPasswordText = binding.setterProfileEditOldPassword.getText().toString();
 
-        viewModel.editProfile(new RequestGetterEditProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText)).observe(requireActivity(), new Observer<Setter>() {
-            @Override
-            public void onChanged(Setter setter) {
-                if (setter != null) {
-                    Toast.makeText(getContext(), R.string.sucses, Toast.LENGTH_SHORT).show();
-                    binding.setterProfileName.setText(setter.getLogin());
-                    binding.setterProfilePhone.setText(setter.getPhone());
+        viewModel.editProfile(new RequestGetterEditProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText)).observe(requireActivity(), setter -> {
+            int code = viewModel.getStatusCode();
+            if (code == 403) Snackbar.make(requireContext(), requireView(), getString(R.string.used_data), Snackbar.LENGTH_SHORT).show();
+            else if (code > 299) Snackbar.make(requireContext(), requireView(), getString(R.string.uncorrect_password), Snackbar.LENGTH_SHORT).show();
 
-                    defineUser.editProfileInfo(setter.getLogin(), setter.getPhone());
-                }
-                enabledButton(true);
-                removeEdit();
+            if (setter != null) {
+                Snackbar.make(requireContext(), requireView(), getString(R.string.sucses), Snackbar.LENGTH_SHORT).show();
+                binding.setterProfileName.setText(setter.getLogin());
+                binding.setterProfilePhone.setText(setter.getPhone());
+
+                defineUser.editProfileInfo(setter.getLogin(), setter.getPhone());
+                Snackbar.make(requireContext(), requireView(), getString(R.string.sucses), Snackbar.LENGTH_SHORT).show();
             }
+            enabledButton(true);
+            removeEdit();
         });
     }
 
@@ -246,7 +247,7 @@ public class SetterProfileFragment extends Fragment {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.vk_link)));
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(getContext(), getString(R.string.smth_wrong), Toast.LENGTH_SHORT).show();
+            Snackbar.make(requireContext(), requireView(), getString(R.string.smth_wrong), Snackbar.LENGTH_SHORT).show();
         }
     }
 }

@@ -8,12 +8,13 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterLoginAuthBinding;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterAuthViewModel;
+import com.google.android.material.snackbar.Snackbar;
+
 import org.jetbrains.annotations.NotNull;
 
 public class SetterLoginAuthFragment extends Fragment {
@@ -35,7 +36,7 @@ public class SetterLoginAuthFragment extends Fragment {
             String dtoLogin = binding.authSetterLoginLogin.getText().toString().replaceAll("\\s", "");
             String dtoPassword = binding.authSetterLoginPassword.getText().toString().replaceAll("\\s", "");
 
-            if (dtoLogin.length() == 0 || dtoPassword.length() == 0) Toast.makeText(getContext(), R.string.not_full, Toast.LENGTH_LONG).show();
+            if (dtoLogin.length() == 0 || dtoPassword.length() == 0) Snackbar.make(requireContext(), requireView(), getString(R.string.not_full), Snackbar.LENGTH_LONG).show();
             else {
                 viewModel.login(dtoLogin, dtoPassword).observe(requireActivity(), setterSignUpResponseI -> {
                     if (setterSignUpResponseI == null) binding.loginAuthBtn.setEnabled(true);

@@ -124,6 +124,7 @@
     <string name="sucsesfully_deleted">Успешно удалено!</string>
     <string name="time_is_up">Время вышло! Объявление отменится само</string>
     <string name="your_password_uncorrect">Ваш старый пароль введен неверно</string>
+    <string name="used_data">Логин или номер телефона уже используются другим пользователем</string>
     <string name="sucses">Успешно!</string>
     <string name="error_on_route">Произошла ошибка при построении маршрута</string>
     <string name="celebrate_help">Если вы хотите получить дополнительные бонусы и загрузите чек в сервис SuperUp VK</string>

@@ -11,7 +11,6 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.getter.dto.RequestGetterEditProfile;
@@ -22,6 +21,7 @@ import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.getter.GetterProfileViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -65,16 +65,20 @@ public class GetterProfileFragment extends Fragment {
         String oldPasswordText = binding.getterProfileEditOldPassword.getText().toString();
 
         if (!ValidateUser.validatePhone(newPhone)) {
-            Toast.makeText(getContext(), R.string.uncorrect_number_phone, Toast.LENGTH_LONG).show();
+            Snackbar.make(requireContext(), requireView(), getString(R.string.uncorrect_number_phone), Snackbar.LENGTH_LONG).show();
         } else if (!ValidateUser.validateLogin(newLogin)) {
-            Toast.makeText(getContext(), R.string.uncorrect_name, Toast.LENGTH_LONG).show();
+            Snackbar.make(requireContext(), requireView(), getString(R.string.uncorrect_name), Snackbar.LENGTH_LONG).show();
         } else if (!ValidateUser.validatePassword(newPassword)) {
-            Toast.makeText(getContext(), R.string.uncorrect_password, Toast.LENGTH_LONG).show();
+            Snackbar.make(requireContext(), requireView(), getString(R.string.uncorrect_password), Snackbar.LENGTH_LONG).show();
         } else {
             binding.getterProfileSave.setEnabled(false);
             viewModel.editProfile(defineUser, new RequestGetterEditProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText)).observe(requireActivity(), new Observer<Getter>() {
                 @Override
                 public void onChanged(Getter getter) {
+                    int code = viewModel.getStatusCode();
+                    if (code == 403) Snackbar.make(requireContext(), requireView(), getString(R.string.used_data), Snackbar.LENGTH_SHORT).show();
+                    else if (code > 299) Snackbar.make(requireContext(), requireView(), getString(R.string.your_password_uncorrect), Snackbar.LENGTH_SHORT).show();
+
                     if (getter != null) {
                         binding.getterProfileLogin.setText(getter.getLogin());
                         binding.getterProfilePhone.setText(getter.getPhone());
@@ -85,6 +89,8 @@ public class GetterProfileFragment extends Fragment {
                         binding.getterProfileEditPassword.setText("");
                         binding.getterProfileEditPhone.setText("");
                         binding.getterProfileEditOldPassword.setText("");
+
+                        Snackbar.make(requireContext(), requireView(), getString(R.string.sucses), Snackbar.LENGTH_SHORT).show();
                     }
 
                     binding.getterProfileSave.setEnabled(true);

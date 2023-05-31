@@ -6,7 +6,6 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -20,6 +19,7 @@ import com.buyhelp.nofoodsharingproject.presentation.adapters.MessagesAdapter;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentChatBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Message;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -134,7 +134,7 @@ public class ChatFragment extends Fragment {
 
     private void sendMessage() {
         String body = binding.messagesInput.getText().toString();
-        if (body.length() == 0) Toast.makeText(requireContext(), getString(R.string.no_input_message), Toast.LENGTH_SHORT).show();
+        if (body.length() == 0) Snackbar.make(requireContext(), requireView(), getString(R.string.no_input_message), Snackbar.LENGTH_SHORT).show();
         else {
             try {
                 JSONObject jsonObject = new JSONObject();

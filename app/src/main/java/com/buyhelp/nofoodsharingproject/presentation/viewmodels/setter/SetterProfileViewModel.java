@@ -29,7 +29,7 @@ public class SetterProfileViewModel extends AndroidViewModel {
     private final MutableLiveData<List<String>> _adverts = new MutableLiveData<>();
     private final MutableLiveData<Setter> _profile = new MutableLiveData<>();
     private List<String> advertisementsHistory;
-
+    private int statusCode = 0;
 
     public SetterProfileViewModel(@NonNull Application application) {
         super(application);
@@ -65,27 +65,27 @@ public class SetterProfileViewModel extends AndroidViewModel {
 
     public LiveData<Setter> editProfile(RequestGetterEditProfile requestGetterEditProfile) {
         SetterRepository setterRepository = new SetterRepository();
+        statusCode = 0;
         setterRepository.editProfile(getApplication(), requestGetterEditProfile).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Setter> call, @NotNull Response<Setter> response) {
-                if (response.code() == 400) {
-                    _profile.setValue(null);
-                    Toast.makeText(getApplication(), R.string.your_password_uncorrect, Toast.LENGTH_SHORT).show();
-                }
-                if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(getApplication(), R.string.sucses, Toast.LENGTH_SHORT).show();
-                    _profile.setValue(response.body());
-                }
+                statusCode = response.code();
+                if (response.isSuccessful() && response.body() != null) _profile.setValue(response.body());
+                else _profile.setValue(null);
             }
 
             @Override
             public void onFailure(@NotNull Call<Setter> call, @NotNull Throwable t) {
                 t.printStackTrace();
                 _profile.setValue(null);
-                Toast.makeText(getApplication(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                statusCode = 400;
             }
         });
 
         return _profile;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
     }
 }

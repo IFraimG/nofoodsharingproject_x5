@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentMarketsMapBinding;
@@ -23,6 +22,7 @@ import com.buyhelp.nofoodsharingproject.data.models.Market;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.MapViewModel;
+import com.google.android.material.snackbar.Snackbar;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.RequestPoint;
@@ -210,7 +210,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
             Point pointMarket = fullListMarket.getPoint();
             if (Math.abs(pointMarket.getLatitude() - point.getLatitude()) < 0.001 &&
                     Math.abs(pointMarket.getLongitude() - point.getLongitude()) < 0.001) {
-                Toast.makeText(getContext(), getString(R.string.magazine_toast) + fullListMarket.getTitle(), Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireContext(), requireView(), getString(R.string.magazine_toast) + fullListMarket.getTitle(), Snackbar.LENGTH_SHORT).show();
             }
         }
     }
@@ -248,7 +248,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
             requestPoints.add(new RequestPoint(resultPoint, RequestPointType.WAYPOINT, null));
 
             this.drivingSession = drivingRouter.requestRoutes(requestPoints, new DrivingOptions(), new VehicleOptions(), this);
-        } else Toast.makeText(requireContext(), getString(R.string.open_location), Toast.LENGTH_SHORT).show();
+        } else Snackbar.make(requireContext(), requireView(), getString(R.string.open_location), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -260,7 +260,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
 
     @Override
     public void onDrivingRoutesError(@NonNull Error error) {
-        Toast.makeText(getContext(), R.string.error_on_route, Toast.LENGTH_SHORT).show();
+        Snackbar.make(requireContext(), requireView(), getString(R.string.error_on_route), Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
