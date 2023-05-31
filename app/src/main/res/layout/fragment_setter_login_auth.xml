@@ -49,10 +49,14 @@
     <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
         android:layout_marginTop="@dimen/fk_size"
         android:id="@+id/login_auth_btn"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        app:backgroundTint="@color/green_pastel"
+        android:layout_width="match_parent"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:minHeight="64dp"
+        android:background="@drawable/custom_round_border_active"
         android:layout_gravity="center"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:text="@string/enter_text" />
 </LinearLayout>

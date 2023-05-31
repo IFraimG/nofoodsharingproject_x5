@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:insetBottom="0dp"
-    android:insetLeft="0dp"
-    android:insetRight="0dp"
-    android:insetTop="0dp">
-    <selector>
-        <item android:state_pressed="true">
+    <selector xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:state_pressed="true" android:color="@color/new_custom_green_active">
             <shape
                 android:shape="rectangle">
                 <corners
@@ -18,7 +13,7 @@
                 </stroke>
             </shape>
         </item>
-        <item>
+        <item android:color="@color/new_custom_green_dark">
             <shape
                 android:shape="rectangle">
                 <corners
@@ -32,4 +27,3 @@
             </shape>
         </item>
     </selector>
-</inset>

@@ -13,7 +13,8 @@ import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterAuthBinding;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.getter.GetterAuthViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.viewmodels.getter.GetterAuthViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +35,7 @@ public class GetterAuthFragment extends Fragment {
                 (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
                 .get(GetterAuthViewModel.class);
 
-        binding.authGetterCreate.setOnClickListener(View -> {
+        binding.authGetterCreate.setOnClickListener(v -> {
             viewModel.sendToNotifyAccount().observe(requireActivity(), tokenFCM -> {
                 String dtoPhone = binding.authGetterSignupPhone.getText().toString().replaceAll("\\s", "");
                 String dtoLogin = binding.authGetterSignupLogin.getText().toString().replaceAll("\\s", "");
@@ -47,16 +48,20 @@ public class GetterAuthFragment extends Fragment {
                     binding.authGetterCreate.setEnabled(true);
                     binding.authGetterCreate.setEnabled(true);
 
-                    if (getterSignUpResponseI != null) {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        startActivity(intent);
-                        requireActivity().finish();
+                    int code = viewModel.getStatusCode();
+                    if (code == 400) Snackbar.make(requireContext(), v, getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
+                    else {
+                        if (getterSignUpResponseI != null) {
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            startActivity(intent);
+                            requireActivity().finish();
+                        }
                     }
                 });
             });
         });
 
-        binding.authGetterBtnLogin.setOnClickListener(View -> {
+        binding.authGetterBtnLogin.setOnClickListener(v -> {
             String dtoPhone = binding.authGetterSignupPhone.getText().toString().replaceAll("\\s", "");
             String dtoLogin = binding.authGetterSignupLogin.getText().toString().replaceAll("\\s", "");
             String dtoPassword = binding.authGetterSignupPassword.getText().toString().replaceAll("\\s", "");
@@ -67,12 +72,18 @@ public class GetterAuthFragment extends Fragment {
                 viewModel.login(dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), getterSignUpResponseI -> {
                     binding.authGetterBtnLogin.setEnabled(true);
                     binding.authGetterCreate.setEnabled(true);
+
+                    int code = viewModel.getStatusCode();
+                    if (code == 400) Snackbar.make(requireContext(), v, getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
+                    else if (code == 404) Snackbar.make(requireContext(), v, getText(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
+
                     if (getterSignUpResponseI == null) {
                         binding.authGetterCreate.setVisibility(android.view.View.VISIBLE);
                     } else {
                         Intent intent = new Intent(getContext(), MainActivity.class);
                         startActivity(intent);
                     }
+
                 });
             } else {
                 binding.authGetterBtnLogin.setEnabled(true);

@@ -35,7 +35,6 @@ public class CustomMessagingService extends FirebaseMessagingService {
         getterRepository = new GetterRepository();
         setterRepository = new SetterRepository();
 
-        // проверка на наличие jwt токена, чтобы было что изменять
         if (defineUser.getToken() != null && defineUser.getToken().length() > 0 && defineUser.getTypeUser().second.equals(true)) {
             changeGetterToken(token);
         } else changeSetterToken(token);
@@ -43,7 +42,7 @@ public class CustomMessagingService extends FirebaseMessagingService {
 
     private void changeSetterToken(String token) {
         Setter setter = defineUser.defineSetter();
-        setterRepository.changeToken(getApplicationContext(), setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
+        setterRepository.changeToken(getApplicationContext(), setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) defineUser.changeFCMtoken(token);
@@ -58,7 +57,7 @@ public class CustomMessagingService extends FirebaseMessagingService {
 
     private void changeGetterToken(String token) {
         Getter getter = defineUser.defineGetter();
-        getterRepository.changeToken(getApplicationContext(), getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<ResponseBody>() {
+        getterRepository.changeToken(getApplicationContext(), getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) defineUser.changeFCMtoken(token);

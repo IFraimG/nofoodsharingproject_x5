@@ -105,8 +105,9 @@
                         android:layout_height="@dimen/very_big"
                         android:layout_marginEnd="@dimen/standard_size_very_medium"
                         android:text="@string/open_vk"
+                        android:textColor="@color/white"
                         android:textSize="14sp"
-                        app:backgroundTint="@color/green_pastel" />
+                        android:background="@drawable/style6" />
                 </LinearLayout>
                 <ScrollView
                     android:id="@+id/setter_profile_edit"
@@ -203,10 +204,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="16sp"
-                                android:background="@drawable/style2"
-                                android:backgroundTint="@color/green_pastel"
+                                android:textColor="@color/white"
+                                android:background="@drawable/style6"
                                 android:layout_marginTop="@dimen/standard_size_small"
                                 android:layout_marginBottom="@dimen/standard_size_small"
+                                android:padding="@dimen/standard_size_small"
                                 android:text="@string/update"
                                 />
                             <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton

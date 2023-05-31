@@ -1,14 +1,11 @@
-package com.buyhelp.nofoodsharingproject.presentation.view_models.getter;
+package com.buyhelp.nofoodsharingproject.presentation.viewmodels.getter;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
@@ -26,6 +23,7 @@ public class GetterNewAdvertViewModel extends AndroidViewModel {
     private final MutableLiveData<List<String>> userProductItems = new MutableLiveData<>();
     private final List<String> userItems = new ArrayList<>();
     private final MutableLiveData<Advertisement> advert = new MutableLiveData<>();
+    private int statusCode = 0;
 
     private final String[] productItems = new String[]{"Хлеб", "Картофель", "Мороженая рыба", "Сливочное масло",
             "Подсолнечное масло", "Яйца куриные", "Молоко", "Чай", "Кофе", "Соль", "Сахар",
@@ -46,21 +44,17 @@ public class GetterNewAdvertViewModel extends AndroidViewModel {
         if (userProductItems != null && userProductItems.getValue().size() > 0) advertisement.setListProductsCustom(userProductItems.getValue());
 
         AdvertsRepository advertsRepository = new AdvertsRepository();
+        statusCode = 0;
         advertsRepository.createAdvert(getApplication(), advertisement).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(getApplication(), R.string.problems, Toast.LENGTH_SHORT).show();
-
-                } else {
-                    advert.setValue(response.body());
-                    Toast.makeText(getApplication(), R.string.advert_sucesfully_create, Toast.LENGTH_SHORT).show();
-                }
+                statusCode = response.code();
+                if (response.isSuccessful()) advert.setValue(response.body());
             }
 
             @Override
             public void onFailure(@NotNull Call<Advertisement> call, @NotNull Throwable t) {
-                Toast.makeText(getApplication(), R.string.smth_not_good, Toast.LENGTH_SHORT).show();
+                statusCode = 400;
                 t.printStackTrace();
             }
         });
@@ -76,16 +70,13 @@ public class GetterNewAdvertViewModel extends AndroidViewModel {
         return this.userItems;
     }
 
+    public boolean isContainsItem(int pos) {
+        return userItems.contains(productItems[pos]);
+    }
+
     public LiveData<List<String>> updateItem(int pos) {
-        if (userItems.size() > 3) {
-            Toast.makeText(getApplication(), R.string.lot_of_product, Toast.LENGTH_SHORT).show();
-        } else if (!userItems.contains(productItems[pos])) {
-            userItems.add(productItems[pos]);
-            userProductItems.setValue(userItems);
-            Toast.makeText(getApplication(), R.string.added, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplication(), R.string.this_product_added, Toast.LENGTH_SHORT).show();
-        }
+        userItems.add(productItems[pos]);
+        userProductItems.setValue(userItems);
 
         return userProductItems;
     }
@@ -95,5 +86,9 @@ public class GetterNewAdvertViewModel extends AndroidViewModel {
         userProductItems.setValue(userItems);
 
         return userProductItems;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
     }
 }

@@ -20,7 +20,7 @@ import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAdvertBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.setter.SetterAdvertViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterAdvertViewModel;
 import com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton;
 
 import org.jetbrains.annotations.NotNull;

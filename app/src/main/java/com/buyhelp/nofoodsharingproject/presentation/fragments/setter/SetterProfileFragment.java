@@ -24,14 +24,13 @@ import android.widget.Toast;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.getter.dto.RequestGetterEditProfile;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainAuthActivity;
-import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.setter.SetterProfileViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterProfileViewModel;
 
 import org.jetbrains.annotations.NotNull;
 import java.util.List;

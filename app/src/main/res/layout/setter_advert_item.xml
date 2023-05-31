@@ -40,7 +40,8 @@
         android:text="@string/detailed_text"
         android:layout_marginTop="@dimen/standard_size_small"
         android:textSize="16sp"
-        app:backgroundTint="@color/green_pastel" />
+        android:textColor="@color/white"
+        android:background="@drawable/style6" />
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"

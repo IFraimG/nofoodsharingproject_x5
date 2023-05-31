@@ -13,8 +13,8 @@ import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAuthBinding;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.getter.GetterAuthViewModel;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.setter.SetterAuthViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.viewmodels.getter.GetterAuthViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterAuthViewModel;
 import org.jetbrains.annotations.NotNull;
 
 public class SetterAuthFragment extends Fragment {

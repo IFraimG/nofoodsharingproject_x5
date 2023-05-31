@@ -11,7 +11,7 @@ import com.buyhelp.nofoodsharingproject.presentation.adapters.GetterNotification
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterNotifyBinding;
 import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.NotificationsViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.viewmodels.NotificationsViewModel;
 import org.jetbrains.annotations.NotNull;
 
 public class NotifyFragment extends Fragment {

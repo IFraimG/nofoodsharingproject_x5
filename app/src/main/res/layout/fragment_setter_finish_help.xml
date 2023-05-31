@@ -46,7 +46,7 @@
         android:id="@+id/setter_finish_open_chat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/green_pastel"
+        android:background="@drawable/style6"
         android:text="@string/write_to_getter"
         android:layout_marginTop="@dimen/standard_size_very_medium"
         android:layout_marginBottom="@dimen/standard_size_very_medium"

@@ -21,7 +21,7 @@ import com.buyhelp.nofoodsharingproject.data.models.ShortDataUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.getter.GetterProfileViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.viewmodels.getter.GetterProfileViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

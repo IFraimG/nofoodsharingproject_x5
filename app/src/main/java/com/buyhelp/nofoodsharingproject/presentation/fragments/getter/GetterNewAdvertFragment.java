@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -13,7 +13,9 @@ import androidx.navigation.Navigation;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.presentation.activities.GetterActivity;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterCreateNewAdvertismentBinding;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.getter.GetterNewAdvertViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.viewmodels.getter.GetterNewAdvertViewModel;
+import com.google.android.material.snackbar.Snackbar;
+
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
@@ -63,15 +65,19 @@ public class GetterNewAdvertFragment extends Fragment {
 
     private void createAdvert() {
         if (viewModel.getUserItems().size() == 0)
-            Toast.makeText(requireContext(), R.string.add_to_list_product, Toast.LENGTH_SHORT).show();
+            Snackbar.make(requireContext(), requireView(), getString(R.string.add_to_list_product), Snackbar.LENGTH_SHORT).show();
         else if (binding.getterAdvertInputTitle.getText().toString().length() == 0) {
-            Toast.makeText(requireContext(), R.string.edit_name, Toast.LENGTH_SHORT).show();
+            Snackbar.make(requireContext(),requireView(), getString(R.string.edit_name), Snackbar.LENGTH_SHORT).show();
         } else if (viewModel.getUserItems().size() > 3) {
-            Toast.makeText(requireContext(), R.string.many_products, Toast.LENGTH_SHORT).show();
+            Snackbar.make(requireContext(), requireView(), getString(R.string.many_products), Snackbar.LENGTH_SHORT).show();
         } else {
             binding.readyToCreate.setEnabled(false);
             viewModel.createAdvert(binding.getterAdvertInputTitle.getText().toString()).observe(requireActivity(), advertisement -> {
+                int code = viewModel.getStatusCode();
+                if (code > 299) Snackbar.make(requireContext(), requireView(), getString(R.string.problems), Snackbar.LENGTH_SHORT).show();
+
                 if (advertisement != null) {
+                    Snackbar.make(requireContext(), requireView(), getString(R.string.advert_sucesfully_create), Snackbar.LENGTH_SHORT).show();
                     Navigation.findNavController(requireView()).navigate(R.id.action_getterNewAdvertFragment_to_getterAdvrsF);
                 } else binding.readyToCreate.setEnabled(true);
             });
@@ -84,17 +90,25 @@ public class GetterNewAdvertFragment extends Fragment {
             arrayAdapterChoosenItems.addAll(strings);
             arrayAdapterChoosenItems.notifyDataSetChanged();
 
-            Toast.makeText(requireContext(), R.string.deleted, Toast.LENGTH_SHORT).show();
+            Snackbar.make(requireContext(), requireView(), getString(R.string.deleted), Snackbar.LENGTH_SHORT).show();
         });
     }
 
     private void chooseItem(int position) {
-        viewModel.updateItem(position).observe(requireActivity(), userItems -> {
-            if (userItems.size() != arrayAdapterChoosenItems.getCount()) {
-                arrayAdapterChoosenItems.clear();
-                arrayAdapterChoosenItems.addAll(userItems);
-                arrayAdapterChoosenItems.notifyDataSetChanged();
-            }
-        });
+        if (viewModel.getUserItems().size() > 3) {
+            Snackbar.make(requireContext(), requireView(), getString(R.string.lot_of_product), Snackbar.LENGTH_SHORT).show();
+        } else if (!viewModel.isContainsItem(position)) {
+            viewModel.updateItem(position).observe(requireActivity(), userItems -> {
+                if (userItems.size() != arrayAdapterChoosenItems.getCount()) {
+                    arrayAdapterChoosenItems.clear();
+                    arrayAdapterChoosenItems.addAll(userItems);
+                    arrayAdapterChoosenItems.notifyDataSetChanged();
+
+                    Snackbar.make(requireContext(), requireView(), getString(R.string.added), Snackbar.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            Snackbar.make(requireContext(), requireView(), getString(R.string.this_product_added), Snackbar.LENGTH_SHORT).show();
+        }
     }
 }

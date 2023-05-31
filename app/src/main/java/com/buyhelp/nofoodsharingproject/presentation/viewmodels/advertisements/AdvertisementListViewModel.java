@@ -1,4 +1,4 @@
-package com.buyhelp.nofoodsharingproject.presentation.view_models.advertisements;
+package com.buyhelp.nofoodsharingproject.presentation.viewmodels.advertisements;
 
 import android.app.Application;
 import androidx.annotation.NonNull;

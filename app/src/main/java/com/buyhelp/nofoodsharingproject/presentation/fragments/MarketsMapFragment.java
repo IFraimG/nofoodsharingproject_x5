@@ -22,7 +22,7 @@ import com.buyhelp.nofoodsharingproject.databinding.FragmentMarketsMapBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Market;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
-import com.buyhelp.nofoodsharingproject.presentation.view_models.MapViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.viewmodels.MapViewModel;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.RequestPoint;

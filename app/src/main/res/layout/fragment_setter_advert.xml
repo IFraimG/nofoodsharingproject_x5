@@ -86,8 +86,9 @@
             android:layout_marginTop="@dimen/standard_size_very_medium"
             android:layout_marginBottom="@dimen/standard_size_very_medium"
             android:textSize="16sp"
+            android:padding="@dimen/standard_size_small"
             android:textColor="@color/white"
-            android:backgroundTint="@color/green_pastel"
+            android:background="@drawable/style6"
             android:text="@string/write_to_getter" />
     </LinearLayout>
     <TextView
@@ -118,6 +119,7 @@
         android:layout_marginStart="@dimen/standard_size_very_medium"
         android:layout_marginEnd="@dimen/standard_size_very_medium"
         android:text="@string/message_adv_text"
-        android:textSize="18sp"
-        app:backgroundTint="@color/green_pastel" />
+        android:textSize="16sp"
+        android:padding="@dimen/standard_size_small"
+        android:background="@drawable/style6" />
 </LinearLayout>

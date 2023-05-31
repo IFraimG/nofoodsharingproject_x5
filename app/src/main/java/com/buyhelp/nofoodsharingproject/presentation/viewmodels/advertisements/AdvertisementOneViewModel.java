@@ -1,4 +1,4 @@
-package com.buyhelp.nofoodsharingproject.presentation.view_models.advertisements;
+package com.buyhelp.nofoodsharingproject.presentation.viewmodels.advertisements;
 
 import android.annotation.SuppressLint;
 import android.app.Application;

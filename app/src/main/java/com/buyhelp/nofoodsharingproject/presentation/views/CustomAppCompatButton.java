@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 
 import com.buyhelp.nofoodsharingproject.R;
@@ -35,6 +37,12 @@ public class CustomAppCompatButton extends AppCompatButton {
             performClick();
         }
         return true;
+    }
+
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        super.setOnClickListener(l);
+
     }
 
     @Override

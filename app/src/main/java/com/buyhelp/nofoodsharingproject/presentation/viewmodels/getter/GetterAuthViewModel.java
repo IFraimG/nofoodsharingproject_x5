@@ -1,8 +1,7 @@
-package com.buyhelp.nofoodsharingproject.presentation.view_models.getter;
+package com.buyhelp.nofoodsharingproject.presentation.viewmodels.getter;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -24,6 +23,7 @@ import retrofit2.Response;
 public class GetterAuthViewModel extends AndroidViewModel {
     private final MutableLiveData<String> tokenFCM = new MutableLiveData<>();
     private final MutableLiveData<SignUpResponseI<Getter>> createdUser = new MutableLiveData<>();
+    private int statusCode = 0;
 
     public GetterAuthViewModel(@NonNull Application application) {
         super(application);
@@ -36,27 +36,21 @@ public class GetterAuthViewModel extends AndroidViewModel {
 
     public LiveData<SignUpResponseI<Getter>> login(String phone, String login, String password) {
         AuthRepository authRepository = new AuthRepository();
+        statusCode = 0;
         authRepository.getterLogin(getApplication(), phone, login, password).enqueue(new Callback<>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
-                    if (response.code() == 400) {
-                        Toast.makeText(getApplication(), R.string.not_right_password, Toast.LENGTH_SHORT).show();
-                        createdUser.setValue(null);
-                    } else if (response.code() == 404) {
-                        Toast.makeText(getApplication(), R.string.account_not_exist, Toast.LENGTH_SHORT).show();
-                        createdUser.setValue(null);
-                    } else if (response.isSuccessful() && response.body() != null && response.body().token != null) {
+                    statusCode = response.code();
+                    if (response.isSuccessful() && response.body() != null && response.body().token != null) {
                         createdUser.setValue(response.body());
                         pushData(response.body());
-                    } else {
-                        Toast.makeText(getApplication(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-                        createdUser.setValue(null);
-                    }
+                    } else createdUser.setValue(null);
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Throwable t) {
                     t.printStackTrace();
+                    statusCode = 400;
                     createdUser.setValue(null);
                 }
             });
@@ -66,26 +60,21 @@ public class GetterAuthViewModel extends AndroidViewModel {
 
     public LiveData<SignUpResponseI<Getter>> signup(String tokenFCM, String dtoPhone, String dtoLogin, String dtoPassword) {
         AuthRepository authRepository = new AuthRepository();
+        statusCode = 0;
         authRepository.getterRegistration(getApplication(), dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
-                if (response.code() == 400) {
-                    Toast.makeText(getApplication(), R.string.account_created, Toast.LENGTH_SHORT).show();
-                    createdUser.setValue(null);
-                } else if (response.isSuccessful()) {
-                    if (response.body() != null && response.body().token != null) {
-                        createdUser.setValue(response.body());
-                        pushData(response.body());
-                    }
-                } else {
-                    Toast.makeText(getApplication(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-                    createdUser.setValue(null);
-                }
+                statusCode = response.code();
+                if (response.isSuccessful() && response.body() != null && response.body().token != null) {
+                    createdUser.setValue(response.body());
+                    pushData(response.body());
+                } else createdUser.setValue(null);
             }
 
             @Override
             public void onFailure(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Throwable t) {
                 t.printStackTrace();
+                statusCode = 400;
                 createdUser.setValue(null);
             }
         });
@@ -93,8 +82,6 @@ public class GetterAuthViewModel extends AndroidViewModel {
         return createdUser;
     }
 
-
-    // переделать на OneSignal node.js
     public LiveData<String> sendToNotifyAccount() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
@@ -104,5 +91,9 @@ public class GetterAuthViewModel extends AndroidViewModel {
         });
 
         return tokenFCM;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
     }
 }

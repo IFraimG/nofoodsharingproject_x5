@@ -26,6 +26,7 @@ android {
         buildConfigField "String", "instabugKey", "\"${properties.getProperty('instabugKey')}\""
         buildConfigField "String", "apiKey", "\"${properties.getProperty('apiKey')}\""
         buildConfigField "String", "fmcKey", "\"${properties.getProperty('fmcKey')}\""
+        buildConfigField "String", "onesignalKey", "\"${properties.getProperty('onesignalKey')}\""
     }
 
     dataBinding {

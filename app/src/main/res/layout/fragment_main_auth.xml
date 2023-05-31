@@ -58,6 +58,6 @@
                 android:text="@string/i_setter_text"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:backgroundTint="@color/green_pastel" />
+                android:background="@drawable/custom_round_border_active" />
         </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

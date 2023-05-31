@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/mail"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_marginBottom="@dimen/standard_size_very_medium"
         android:gravity="center"
         android:textFontWeight="700"
