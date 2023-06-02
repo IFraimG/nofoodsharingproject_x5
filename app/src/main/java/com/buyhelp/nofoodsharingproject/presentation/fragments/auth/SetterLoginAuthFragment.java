@@ -2,6 +2,8 @@ package com.buyhelp.nofoodsharingproject.presentation.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -9,10 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterLoginAuthBinding;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterAuthViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.factories.setters.SetterAuthFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -20,13 +25,22 @@ import org.jetbrains.annotations.NotNull;
 public class SetterLoginAuthFragment extends Fragment {
     private FragmentSetterLoginAuthBinding binding;
     private SetterAuthViewModel viewModel;
+    private AuthRepository authRepository;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        authRepository = app.getAppComponent().getAuthRepository();
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterLoginAuthBinding.inflate(inflater);
 
         viewModel = new ViewModelProvider(requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new SetterAuthFactory(requireActivity().getApplication(), authRepository))
                 .get(SetterAuthViewModel.class);
 
         binding.authSetterLoginBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_setterLoginAuthF_to_setterAuthF));
@@ -39,6 +53,10 @@ public class SetterLoginAuthFragment extends Fragment {
             if (dtoLogin.length() == 0 || dtoPassword.length() == 0) Snackbar.make(requireContext(), requireView(), getString(R.string.not_full), Snackbar.LENGTH_LONG).show();
             else {
                 viewModel.login(dtoLogin, dtoPassword).observe(requireActivity(), setterSignUpResponseI -> {
+                    int code = viewModel.getStatusCode();
+                    if (code == 400) Snackbar.make(requireContext(), requireView(), getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
+                    else if (code == 404) Snackbar.make(requireActivity(), requireView(), getString(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
+
                     if (setterSignUpResponseI == null) binding.loginAuthBtn.setEnabled(true);
                     else {
                         Intent intent = new Intent(getContext(), MainActivity.class);

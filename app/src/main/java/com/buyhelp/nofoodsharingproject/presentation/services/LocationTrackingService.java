@@ -31,6 +31,7 @@ import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.buyhelp.nofoodsharingproject.data.models.Market;
 import com.buyhelp.nofoodsharingproject.data.models.Notification;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -43,10 +44,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LocationTrackingService extends Service implements LocationListener {
-
     private LocationManager locationManager;
     private SharedPreferences sharedPreferences;
-
     private NotificationManager notificationManager;
     private NotificationManagerCompat notificationManagerCompat;
     private NotificationChannel channel;
@@ -60,14 +59,20 @@ public class LocationTrackingService extends Service implements LocationListener
 
     private Location compareCoords;
     private NotificationRepository notificationRepository;
+    private MapRepository mapRepository;
+    private AdvertsRepository advertsRepository;
     private DefineUser defineUser;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        ApplicationCore app = (ApplicationCore) getApplication();
+        notificationRepository = app.getAppComponent().getNotificationRepository();
+        mapRepository = app.getAppComponent().getMapRepository();
+        advertsRepository = app.getAppComponent().getAdvertsRepository();
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         sharedPreferences = getSharedPreferences("dateSettings", Context.MODE_PRIVATE);
-        notificationRepository = new NotificationRepository();
         defineUser = new DefineUser(getApplicationContext());
 
         getMarket();
@@ -79,10 +84,14 @@ public class LocationTrackingService extends Service implements LocationListener
             return START_NOT_STICKY;
         }
 
+        ApplicationCore app = (ApplicationCore) getApplication();
+        notificationRepository = app.getAppComponent().getNotificationRepository();
+        mapRepository = app.getAppComponent().getMapRepository();
+        advertsRepository = app.getAppComponent().getAdvertsRepository();
+
         defineUser = new DefineUser(getApplicationContext());
         if (defineUser.getTypeUser().second.equals(false)) startForeground(1, notifySetter());
 
-        notificationRepository = new NotificationRepository();
         getMarket();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -119,7 +128,7 @@ public class LocationTrackingService extends Service implements LocationListener
     }
 
     private void getMarket() {
-        MapRepository.getPinMarket(getApplicationContext(), defineUser.getTypeUser().second.equals(true) ? "getter" : "setter", defineUser.getTypeUser().first.toString()).enqueue(new Callback<MarketTitleResponse>() {
+        mapRepository.getPinMarket(defineUser.getTypeUser().second.equals(true) ? "getter" : "setter", defineUser.getTypeUser().first.toString()).enqueue(new Callback<MarketTitleResponse>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -163,8 +172,7 @@ public class LocationTrackingService extends Service implements LocationListener
     }
 
     private void getRandomGetterAdvert() {
-        AdvertsRepository advertsRepository = new AdvertsRepository();
-        advertsRepository.getRandomAdvertByMarket(getApplicationContext(), titleMarket).enqueue(new Callback<Advertisement>() {
+        advertsRepository.getRandomAdvertByMarket(titleMarket).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (!response.isSuccessful() || response.body() == null) createNotification(new Advertisement());
@@ -205,7 +213,7 @@ public class LocationTrackingService extends Service implements LocationListener
     }
 
     private void sendNotification(Notification notification) {
-        notificationRepository.createNotification(getApplicationContext(), notification).enqueue(new Callback<Notification>() {
+        notificationRepository.createNotification(notification).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
                 if (response.code() == 201) {

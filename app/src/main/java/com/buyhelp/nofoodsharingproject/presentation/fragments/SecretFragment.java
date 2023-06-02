@@ -8,8 +8,6 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
-import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSecretBinding;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 
@@ -27,12 +25,10 @@ public class SecretFragment extends DialogFragment {
                 .setPositiveButton("Подключить", (dialog, id) -> {
                     DefineUser defineUser = new DefineUser(requireActivity());
                     defineUser.initBaseRetrofitPath(input.getText().toString());
-                    RetrofitService.changeBaseUrl(defineUser.getBaseForRetrofit());
                 })
                 .setNegativeButton("Отмена", (dialog, id) -> {
                     DefineUser defineUser = new DefineUser(requireActivity());
                     defineUser.setDefaultBasePathForRetrofit();
-                    RetrofitService.changeBaseUrl(defineUser.getBaseForRetrofit());
                 });
 
 

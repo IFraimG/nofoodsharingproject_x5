@@ -17,10 +17,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.buyhelp.nofoodsharingproject.R;
+import com.buyhelp.nofoodsharingproject.data.api.map.MapRepository;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentMarketsMapBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Market;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
+import com.buyhelp.nofoodsharingproject.presentation.factories.MapFactory;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.MapViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.yandex.mapkit.Animation;
@@ -77,6 +80,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     private DefineUser defineUser;
     private MapViewModel viewModel;
     private ArrayAdapter<String> adapter = null;
+    private MapRepository mapRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +88,9 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
 
         SearchFactory.initialize(requireContext());
         DirectionsFactory.initialize(requireContext());
+
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        mapRepository = app.getAppComponent().getMapRepository();
 
         defineUser = new DefineUser(requireActivity());
         super.onCreate(savedInstanceState);
@@ -114,7 +121,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         Button makeRouteBtn = binding.mapMakeRoute;
 
         viewModel = new ViewModelProvider(requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new MapFactory(requireActivity().getApplication(), mapRepository))
                 .get(MapViewModel.class);
 
         initLocation();
@@ -164,6 +171,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         userLocationLayer.setVisible(true);
         userLocationLayer.setHeadingEnabled(true);
         userLocationLayer.setObjectListener(this);
+        mapView.getMap().setRotateGesturesEnabled(false);
 
         mapView.getMap().move(new CameraPosition(new Point(55.71989101308894, 37.5689757769603), 14, 0, 0), pingAnimation, null);
 

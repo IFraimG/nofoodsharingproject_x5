@@ -8,11 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
+import com.buyhelp.nofoodsharingproject.data.api.getter.GetterRepository;
+import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepository;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
@@ -20,6 +24,7 @@ import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAdvertBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.factories.setters.SetterAdvertFactory;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterAdvertViewModel;
 import com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton;
 
@@ -35,6 +40,17 @@ public class SetterAdvertFragment extends Fragment {
     private ArrayAdapter<String> productsAdapter;
     private DefineUser<Setter> defineUser;
     private SetterAdvertViewModel viewModel;
+    private AdvertsRepository advertsRepository;
+    private NotificationRepository notificationRepository;
+    private GetterRepository getterRepository;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        advertsRepository = app.getAppComponent().getAdvertsRepository();
+        notificationRepository = app.getAppComponent().getNotificationRepository();
+        getterRepository = app.getAppComponent().getGetterRepository();
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,7 +59,7 @@ public class SetterAdvertFragment extends Fragment {
         this.defineUser = new DefineUser<>(requireActivity());
 
         viewModel = new ViewModelProvider(requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new SetterAdvertFactory(requireActivity().getApplication(), advertsRepository, notificationRepository, getterRepository))
                 .get(SetterAdvertViewModel.class);
 
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();

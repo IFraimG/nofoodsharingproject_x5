@@ -13,6 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.buyhelp.nofoodsharingproject.R;
+import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
+import com.buyhelp.nofoodsharingproject.data.api.map.MapRepository;
+import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepository;
+import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterAdvrsBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 
@@ -21,7 +25,9 @@ import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowChecker;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowCheckerOld;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.advertisements.AdvertisementOneViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.factories.getters.GetterAdvrsFactory;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,10 +36,20 @@ public class GetterAdvrsFragment extends Fragment {
     private AdvertisementOneViewModel viewModel;
     private ArrayAdapter<String> arrayAdapter;
     private DefineUser<Getter> defineUser;
+    private NotificationRepository notificationRepository;
+    private SetterRepository setterRepository;
+    private AdvertsRepository advertsRepository;
+    private MapRepository mapRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        notificationRepository = app.getAppComponent().getNotificationRepository();
+        setterRepository = app.getAppComponent().getSetterRepository();
+        advertsRepository = app.getAppComponent().getAdvertsRepository();
+        mapRepository = app.getAppComponent().getMapRepository();
 
         defineUser = new DefineUser<>(requireActivity());
     }
@@ -46,7 +62,7 @@ public class GetterAdvrsFragment extends Fragment {
         binding.stopAdvert.setVisibility(View.GONE);
         binding.getterAdvertLayout.setVisibility(View.GONE);
         viewModel = new ViewModelProvider(requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new GetterAdvrsFactory(requireActivity().getApplication(), notificationRepository, setterRepository, advertsRepository, mapRepository))
                 .get(AdvertisementOneViewModel.class);
 
         viewModel.getAddress(defineUser.getUser().getX5_Id(), defineUser.getTypeUser().second).observe(requireActivity(), market -> {
@@ -157,7 +173,6 @@ public class GetterAdvrsFragment extends Fragment {
             DateNowCheckerOld dateNowCheckerOld = new DateNowCheckerOld();
             if (dateNowCheckerOld.getHour() >= 10 && dateNowCheckerOld.getHour() < 23) {
                 binding.createNewRequest.setVisibility(View.VISIBLE);
-
             }
         }
     }

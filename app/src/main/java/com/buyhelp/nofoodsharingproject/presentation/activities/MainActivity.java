@@ -3,13 +3,16 @@ package com.buyhelp.nofoodsharingproject.presentation.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
 import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.buyhelp.nofoodsharingproject.databinding.ActivityMainBinding;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,7 +20,8 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private DefineUser defineUser;
-    private AuthRepository authRepository;
+    @Inject
+    public AuthRepository authRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +29,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        ApplicationCore app = (ApplicationCore) getApplication();
+        app.getAppComponent().inject(this);
+
         defineUser = new DefineUser(this);
-        authRepository = new AuthRepository();
 
         String res = defineUser.isGetter();
         if (res != null) {
@@ -44,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void authSetter() {
-        authRepository.checkAuthSetter(getApplicationContext(), defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
+        authRepository.checkAuthSetter(defineUser.getToken()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() != null && !response.body().getIsAuth()) redirectToAuth();
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void authGetter() {
-        authRepository.checkAuthGetter(getApplicationContext(), defineUser.getToken()).enqueue(new Callback<CheckAuthI>() {
+        authRepository.checkAuthGetter(defineUser.getToken()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() == null) redirectToAuth();

@@ -20,7 +20,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.buyhelp.nofoodsharingproject.R;
+import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.buyhelp.nofoodsharingproject.data.api.getter.dto.RequestGetterEditProfile;
+import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainAuthActivity;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterProfileBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
@@ -28,6 +31,7 @@ import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
+import com.buyhelp.nofoodsharingproject.presentation.factories.setters.SetterProfileFactory;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterProfileViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -44,10 +48,16 @@ public class SetterProfileFragment extends Fragment {
 
     private DefineUser<Setter> defineUser;
     private SetterProfileViewModel viewModel;
+    private SetterRepository setterRepository;
+    private AdvertsRepository advertsRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        setterRepository = app.getAppComponent().getSetterRepository();
+        advertsRepository = app.getAppComponent().getAdvertsRepository();
 
         defineUser = new DefineUser<>(requireActivity());
 
@@ -74,7 +84,7 @@ public class SetterProfileFragment extends Fragment {
         handlers();
 
         viewModel = new ViewModelProvider(requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new SetterProfileFactory(requireActivity().getApplication(), setterRepository, advertsRepository))
                 .get(SetterProfileViewModel.class);
 
         viewModel.getHistoryAdverts(user.getX5_Id()).observe(requireActivity(), this::getHistoryList);
@@ -132,7 +142,7 @@ public class SetterProfileFragment extends Fragment {
         if (result != null) {
             binding.setterProfileCount.setText("Успешных передач продуктов: " + Integer.toString(result.size()));
             if (arrayAdapter == null) {
-                arrayAdapter = new ArrayAdapter<>(getContext(), R.layout.item_getter_product_name, result);
+                arrayAdapter = new ArrayAdapter<>(requireContext(), R.layout.item_getter_product_name, result);
                 binding.setterProfileHistoryList.setAdapter(arrayAdapter);
                 arrayAdapter.notifyDataSetChanged();
             } else {

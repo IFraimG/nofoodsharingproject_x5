@@ -5,6 +5,9 @@ import android.app.Application;
 import com.buyhelp.nofoodsharingproject.BuildConfig;
 import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.AppComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerAppComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.jakewharton.threetenabp.AndroidThreeTen;
@@ -18,6 +21,7 @@ import io.socket.client.IO;
 public class ApplicationCore extends Application {
     private boolean isInitMap = false;
     private Socket mSocket;
+    private AppComponent appComponent;
 
     @Override
     public void onCreate() {
@@ -34,7 +38,8 @@ public class ApplicationCore extends Application {
         }
 
         DefineUser defineUser = new DefineUser(getSharedPreferences("prms", MODE_PRIVATE));
-        RetrofitService.changeBaseUrl(defineUser.getBaseForRetrofit());
+
+        appComponent = DaggerAppComponent.builder().application(this).appModule(new AppModule(getApplicationContext())).retrofitModule(new RetrofitService(getApplicationContext())).create();
 
         AndroidThreeTen.init(getApplicationContext());
 
@@ -44,4 +49,9 @@ public class ApplicationCore extends Application {
     public Socket getSocket() {
         return mSocket;
     }
+
+    public AppComponent getAppComponent() {
+        return appComponent;
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.buyhelp.nofoodsharingproject.presentation.viewmodels.advertisements;
 
 import android.app.Application;
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -23,7 +22,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 public class AdvertisementListViewModel extends AndroidViewModel {
     public List<Advertisement> adverts = new ArrayList<>();
     private final MutableLiveData<List<Advertisement>> _adverts = new MutableLiveData<>();
@@ -34,9 +32,14 @@ public class AdvertisementListViewModel extends AndroidViewModel {
             "Большая Андроньевская улица, 22", "1, микрорайон Парковый, Котельники",
             "Ковров пер., 8, стр. 1", "Нижегородская улица, 34"
     };
+    private final AdvertsRepository advertsRepository;
+    private final MapRepository mapRepository;
 
-    public AdvertisementListViewModel(@NonNull Application application) {
+
+    public AdvertisementListViewModel(Application application, AdvertsRepository advertsRepository, MapRepository mapRepository) {
         super(application);
+        this.advertsRepository = advertsRepository;
+        this.mapRepository = mapRepository;
     }
 
     public LiveData<List<Advertisement>> getAllAdverts(String userID) {
@@ -44,7 +47,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
         _status.setValue(LoaderStatus.LOADING);
 
         if (activeMarket.getValue() == null || activeMarket.getValue().length() == 0) {
-            MapRepository.getPinMarket(getApplication().getApplicationContext(),"setter", userID).enqueue(new Callback<MarketTitleResponse>() {
+            mapRepository.getPinMarket("setter", userID).enqueue(new Callback<>() {
                 @Override
                 public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                     if (!response.isSuccessful()) loadAdverts("");
@@ -70,7 +73,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
 
     public void loadAdverts(String market) {
         if (LoaderStatus.Status.LOADED.equals(this.getLoaderStatus().getValue().getStatus())) _status.setValue(LoaderStatus.LOADING);
-        AdvertsRepository.getListAdverts(getApplication().getApplicationContext(), market).enqueue(new Callback<ResponseActiveAdverts>() {
+        advertsRepository.getListAdverts(market).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<ResponseActiveAdverts> call, @NotNull Response<ResponseActiveAdverts> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -88,7 +91,7 @@ public class AdvertisementListViewModel extends AndroidViewModel {
     }
 
     public LiveData<String> getMarket() {
-        MapRepository.getPinMarket(getApplication().getApplicationContext(), "setter", userID).enqueue(new Callback<MarketTitleResponse>() {
+        mapRepository.getPinMarket("setter", userID).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                 if (response.isSuccessful() && response.body() != null) activeMarket.setValue(response.body().getMarket());

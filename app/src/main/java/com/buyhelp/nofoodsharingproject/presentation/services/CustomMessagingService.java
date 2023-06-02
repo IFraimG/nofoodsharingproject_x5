@@ -12,6 +12,7 @@ import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -32,8 +33,9 @@ public class CustomMessagingService extends FirebaseMessagingService {
 
         defineUser = new DefineUser<>(getApplicationContext());
 
-        getterRepository = new GetterRepository();
-        setterRepository = new SetterRepository();
+        ApplicationCore app = (ApplicationCore) getApplication();
+        getterRepository = app.getAppComponent().getGetterRepository();
+        setterRepository = app.getAppComponent().getSetterRepository();
 
         if (defineUser.getToken() != null && defineUser.getToken().length() > 0 && defineUser.getTypeUser().second.equals(true)) {
             changeGetterToken(token);
@@ -42,7 +44,7 @@ public class CustomMessagingService extends FirebaseMessagingService {
 
     private void changeSetterToken(String token) {
         Setter setter = defineUser.defineSetter();
-        setterRepository.changeToken(getApplicationContext(), setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<>() {
+        setterRepository.changeToken(setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) defineUser.changeFCMtoken(token);
@@ -57,7 +59,7 @@ public class CustomMessagingService extends FirebaseMessagingService {
 
     private void changeGetterToken(String token) {
         Getter getter = defineUser.defineGetter();
-        getterRepository.changeToken(getApplicationContext(), getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<>() {
+        getterRepository.changeToken(getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) defineUser.changeFCMtoken(token);

@@ -9,22 +9,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAuthBinding;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.getter.GetterAuthViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.factories.getters.GetterAuthFactory;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterAuthViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.factories.setters.SetterAuthFactory;
+import com.google.android.material.snackbar.Snackbar;
+
 import org.jetbrains.annotations.NotNull;
 
 public class SetterAuthFragment extends Fragment {
     private FragmentSetterAuthBinding binding;
     private SetterAuthViewModel viewModel;
     private GetterAuthViewModel viewModelGetter;
+    private AuthRepository authRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        authRepository = app.getAppComponent().getAuthRepository();
     }
 
     @Override
@@ -32,10 +42,10 @@ public class SetterAuthFragment extends Fragment {
         binding = FragmentSetterAuthBinding.inflate(inflater);
 
         viewModel = new ViewModelProvider(requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new SetterAuthFactory(requireActivity().getApplication(), authRepository))
                 .get(SetterAuthViewModel.class);
         viewModelGetter = new ViewModelProvider(requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new GetterAuthFactory(requireActivity().getApplication(), authRepository))
                 .get(GetterAuthViewModel.class);
 
 
@@ -53,9 +63,14 @@ public class SetterAuthFragment extends Fragment {
                     viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), setterSignUpResponseI -> {
                         binding.setterAuthBtnLogin.setEnabled(true);
 
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        startActivity(intent);
-                        requireActivity().finish();
+                        int code = viewModel.getStatusCode();
+                        if (code == 400) Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
+                        else if (code == 403) Snackbar.make(requireContext(), requireView(), getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
+                        else if (code <= 299) {
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            startActivity(intent);
+                            requireActivity().finish();
+                        }
                     });
                 }
             });

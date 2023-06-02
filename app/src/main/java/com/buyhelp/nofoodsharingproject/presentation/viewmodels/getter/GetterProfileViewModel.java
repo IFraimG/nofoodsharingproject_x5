@@ -19,22 +19,23 @@ import retrofit2.Response;
 public class GetterProfileViewModel extends AndroidViewModel {
     private final MutableLiveData<Getter> _profile = new MutableLiveData<>();
     private int statusCode = 0;
+    private final GetterRepository getterRepository;
 
-    public GetterProfileViewModel(Application application) {
+    public GetterProfileViewModel(Application application, GetterRepository getterRepository) {
         super(application);
+        this.getterRepository = getterRepository;
     }
 
     public LiveData<Getter> editProfile(DefineUser<Getter> defineUser, RequestGetterEditProfile requestGetterEditProfile) {
-        GetterRepository getterRepository = new GetterRepository();
         statusCode = 0;
-        getterRepository.editProfile(getApplication(), requestGetterEditProfile).enqueue(new Callback<>() {
+        getterRepository.editProfile(requestGetterEditProfile).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Getter> call, @NotNull Response<Getter> response) {
                 statusCode = response.code();
                 if (response.isSuccessful() && response.body() != null) {
                     _profile.setValue(response.body());
                     defineUser.editProfileInfo(response.body().getLogin(), response.body().getPhone());
-                } else  _profile.setValue(null);
+                } else _profile.setValue(null);
             }
 
             @Override

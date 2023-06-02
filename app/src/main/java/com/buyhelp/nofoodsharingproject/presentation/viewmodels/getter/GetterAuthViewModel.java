@@ -14,6 +14,7 @@ import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.google.firebase.messaging.FirebaseMessaging;
+
 import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
@@ -24,9 +25,11 @@ public class GetterAuthViewModel extends AndroidViewModel {
     private final MutableLiveData<String> tokenFCM = new MutableLiveData<>();
     private final MutableLiveData<SignUpResponseI<Getter>> createdUser = new MutableLiveData<>();
     private int statusCode = 0;
+    private final AuthRepository authRepository;
 
-    public GetterAuthViewModel(@NonNull Application application) {
+    public GetterAuthViewModel(@NonNull Application application, AuthRepository authRepository) {
         super(application);
+        this.authRepository = authRepository;
     }
 
     private void pushData(SignUpResponseI<Getter> result) {
@@ -35,9 +38,8 @@ public class GetterAuthViewModel extends AndroidViewModel {
     }
 
     public LiveData<SignUpResponseI<Getter>> login(String phone, String login, String password) {
-        AuthRepository authRepository = new AuthRepository();
         statusCode = 0;
-        authRepository.getterLogin(getApplication(), phone, login, password).enqueue(new Callback<>() {
+        authRepository.getterLogin(phone, login, password).enqueue(new Callback<>() {
                 @Override
                 public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                     statusCode = response.code();
@@ -59,9 +61,8 @@ public class GetterAuthViewModel extends AndroidViewModel {
     }
 
     public LiveData<SignUpResponseI<Getter>> signup(String tokenFCM, String dtoPhone, String dtoLogin, String dtoPassword) {
-        AuthRepository authRepository = new AuthRepository();
         statusCode = 0;
-        authRepository.getterRegistration(getApplication(), dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<>() {
+        authRepository.getterRegistration(dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Getter>> call, @NotNull Response<SignUpResponseI<Getter>> response) {
                 statusCode = response.code();

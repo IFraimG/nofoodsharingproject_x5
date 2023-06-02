@@ -6,14 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.buyhelp.nofoodsharingproject.R;
+import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.activities.GetterActivity;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterCreateNewAdvertismentBinding;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.getter.GetterNewAdvertViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.factories.getters.GetterNewAdvertFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,13 +27,21 @@ public class GetterNewAdvertFragment extends Fragment {
     private FragmentGetterCreateNewAdvertismentBinding binding;
     private ArrayAdapter<String> arrayAdapterChoosenItems;
     private GetterNewAdvertViewModel viewModel;
+    private AdvertsRepository advertsRepository;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        advertsRepository = app.getAppComponent().getAdvertsRepository();
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         binding = FragmentGetterCreateNewAdvertismentBinding.inflate(getLayoutInflater());
 
         viewModel = new ViewModelProvider(requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new GetterNewAdvertFactory(requireActivity().getApplication(), advertsRepository))
                 .get(GetterNewAdvertViewModel.class);
 
         ArrayAdapter<String> arrayAdapterChoose = new ArrayAdapter<>(requireContext(), R.layout.item_getter_product_name, viewModel.getProductItems());

@@ -1,18 +1,18 @@
 package com.buyhelp.nofoodsharingproject.data.api.adverts;
 
-import android.content.Context;
-
 import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 
-public class AdvertsApiService {
-    private static AdvertsAPI advertsAPI;
+import javax.inject.Inject;
 
-    public static AdvertsAPI create(Context ctx) {
-        return RetrofitService.getInstance(ctx).create(AdvertsAPI.class);
+public class AdvertsApiService {
+    private final AdvertsAPI advertsAPI;
+
+    @Inject
+    public AdvertsApiService(RetrofitService retrofitService) {
+        advertsAPI = retrofitService.getInstance().create(AdvertsAPI.class);
     }
 
-    public static AdvertsAPI getInstance(Context ctx) {
-        if (advertsAPI == null) advertsAPI = create(ctx);
+    public AdvertsAPI getAdvertsAPI() {
         return advertsAPI;
     }
 

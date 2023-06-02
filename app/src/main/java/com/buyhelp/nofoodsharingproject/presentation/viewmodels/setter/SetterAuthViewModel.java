@@ -1,14 +1,12 @@
 package com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
@@ -22,10 +20,13 @@ import retrofit2.Response;
 
 public class SetterAuthViewModel extends AndroidViewModel {
     private final MutableLiveData<String> tokenFCM = new MutableLiveData<>();
+    private int code = 0;
+    private AuthRepository authRepository;
     private final MutableLiveData<SignUpResponseI<Setter>> createdUser = new MutableLiveData<>();
 
-    public SetterAuthViewModel(@NonNull Application application) {
+    public SetterAuthViewModel(@NonNull Application application, AuthRepository authRepository) {
         super(application);
+        this.authRepository = authRepository;
     }
 
     private void pushData(SignUpResponseI<Setter> result) {
@@ -34,28 +35,21 @@ public class SetterAuthViewModel extends AndroidViewModel {
     }
 
     public LiveData<SignUpResponseI<Setter>> login(String login, String password) {
-        AuthRepository authRepository = new AuthRepository();
-        authRepository.setterLogin(getApplication(), login, password).enqueue(new Callback<>() {
+        code = 0;
+        authRepository.setterLogin(login, password).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
-                if (response.code() == 400) {
-                    Toast.makeText(getApplication(), R.string.not_right_password, Toast.LENGTH_SHORT).show();
-                    createdUser.setValue(null);
-                } else if (response.code() == 404) {
-                    Toast.makeText(getApplication(), R.string.account_not_exist, Toast.LENGTH_SHORT).show();
-                    createdUser.setValue(null);
-                } else if (response.isSuccessful() && response.body() != null && response.body().token != null) {
+                code = response.code();
+                if (response.isSuccessful() && response.body() != null && response.body().token != null) {
                     createdUser.setValue(response.body());
                     pushData(response.body());
-                } else {
-                    Toast.makeText(getApplication(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-                    createdUser.setValue(null);
-                }
+                } else createdUser.setValue(null);
             }
 
             @Override
             public void onFailure(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Throwable t) {
                 t.printStackTrace();
+                code = 400;
                 createdUser.setValue(null);
             }
         });
@@ -64,31 +58,31 @@ public class SetterAuthViewModel extends AndroidViewModel {
     }
 
     public LiveData<SignUpResponseI<Setter>> signup(String tokenFCM, String dtoPhone, String dtoLogin, String dtoPassword) {
-        AuthRepository authRepository = new AuthRepository();
-        authRepository.setterRegistration(getApplication(), dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<>() {
+        code = 0;
+        authRepository.setterRegistration(dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Response<SignUpResponseI<Setter>> response) {
-                if (response.code() == 400) {
-                    Toast.makeText(getApplication(), R.string.account_created, Toast.LENGTH_SHORT).show();
-                    createdUser.setValue(null);
-                } else if (response.isSuccessful()) {
+                code = response.code();
+                if (response.isSuccessful()) {
                     if (response.body() != null && response.body().token != null) {
                         createdUser.setValue(response.body());
                         pushData(response.body());
                     }
-                } else {
-                    Toast.makeText(getApplication(), R.string.unvisinle_error, Toast.LENGTH_SHORT).show();
-                    createdUser.setValue(null);
-                }
+                } else createdUser.setValue(null);
             }
 
             @Override
             public void onFailure(@NotNull Call<SignUpResponseI<Setter>> call, @NotNull Throwable t) {
                 t.printStackTrace();
+                code = 400;
                 createdUser.setValue(null);
             }
         });
 
         return createdUser;
+    }
+
+    public int getStatusCode() {
+        return code;
     }
 }

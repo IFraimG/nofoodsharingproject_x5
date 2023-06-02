@@ -1,18 +1,18 @@
 package com.buyhelp.nofoodsharingproject.data.api.notifications;
 
-import android.content.Context;
-
 import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 
-public class InnerNotificationService {
-    private static InnerNotificationAPI innerNotificationAPI;
+import javax.inject.Inject;
 
-    public static InnerNotificationAPI create(Context ctx) {
-        return RetrofitService.getInstance(ctx).create(InnerNotificationAPI.class);
+public class InnerNotificationService {
+    private final InnerNotificationAPI innerNotificationAPI;
+
+    @Inject
+    public InnerNotificationService(RetrofitService retrofitService) {
+        innerNotificationAPI = retrofitService.getInstance().create(InnerNotificationAPI.class);
     }
 
-    public static InnerNotificationAPI getInstance(Context ctx) {
-        if (innerNotificationAPI == null) innerNotificationAPI = create(ctx);
+    public InnerNotificationAPI getInnerNotificationAPI() {
         return innerNotificationAPI;
     }
 }

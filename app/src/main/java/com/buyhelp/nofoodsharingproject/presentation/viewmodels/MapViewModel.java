@@ -1,6 +1,7 @@
 package com.buyhelp.nofoodsharingproject.presentation.viewmodels;
 
 import android.app.Application;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -12,6 +13,7 @@ import com.buyhelp.nofoodsharingproject.data.models.Market;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.yandex.mapkit.geometry.Point;
 
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -19,6 +21,8 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MapViewModel extends AndroidViewModel {
     private final Market[] fullListMarkets = new Market[]{
             new Market("Выберите магазин", 0, 0, false),
@@ -39,15 +43,18 @@ public class MapViewModel extends AndroidViewModel {
     private int oldPosition = -1;
     private String[] listMarkets;
     private final MutableLiveData<List<String>> _markets = new MutableLiveData<>();
+    private final MapRepository mapRepository;
 
-    public MapViewModel(@NonNull Application application) {
+    public MapViewModel(@NonNull Application application, MapRepository mapRepository) {
         super(application);
+
+        this.mapRepository = mapRepository;
     }
 
     public LiveData<List<String>> getPinnedMarketInfo(String userType, String userID) {
-        MapRepository.getPinMarket(getApplication().getApplicationContext(), userType, userID).enqueue(new Callback<MarketTitleResponse>() {
+        mapRepository.getPinMarket(userType, userID).enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull retrofit2.Response<MarketTitleResponse> response) {
+            public void onResponse(@NonNull Call<MarketTitleResponse> call, @NonNull Response<MarketTitleResponse> response) {
                 if (response.code() == 404) {
                     choosenMarket = "";
                     listMarkets = new String[fullListMarkets.length];
@@ -71,8 +78,8 @@ public class MapViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(@NotNull Call<MarketTitleResponse> call, @NotNull Throwable t) {
-                t.printStackTrace();
+            public void onFailure(@NonNull Call<MarketTitleResponse> call, @NonNull Throwable t) {
+
             }
         });
 
@@ -94,7 +101,7 @@ public class MapViewModel extends AndroidViewModel {
     public void updateMarket(boolean isGetter, String userID) {
         if (!choosenMarket.equals("Выберите магазин")) {
             if (isGetter) {
-                MapRepository.setGetterMarket(getApplication().getApplicationContext(), userID, choosenMarket).enqueue(new Callback<Getter>() {
+                mapRepository.setGetterMarket(userID, choosenMarket).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NotNull Call<Getter> call, @NotNull retrofit2.Response<Getter> response) {}
 
@@ -104,7 +111,7 @@ public class MapViewModel extends AndroidViewModel {
                     }
                 });
             } else {
-                MapRepository.setSetterMarket(getApplication().getApplicationContext(), userID, choosenMarket).enqueue(new Callback<Setter>() {
+                mapRepository.setSetterMarket(userID, choosenMarket).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NotNull Call<Setter> call, @NotNull retrofit2.Response<Setter> response) {}
 

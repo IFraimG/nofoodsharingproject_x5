@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.buyhelp.nofoodsharingproject.R;
+import com.buyhelp.nofoodsharingproject.data.api.getter.GetterRepository;
 import com.buyhelp.nofoodsharingproject.data.api.getter.dto.RequestGetterEditProfile;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainAuthActivity;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterProfileBinding;
 import com.buyhelp.nofoodsharingproject.data.models.ShortDataUser;
@@ -21,6 +23,7 @@ import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.getter.GetterProfileViewModel;
+import com.buyhelp.nofoodsharingproject.presentation.factories.getters.GetterProfileFactory;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,10 +33,15 @@ public class GetterProfileFragment extends Fragment {
     private ShortDataUser user;
     private DefineUser<Getter> defineUser;
     private GetterProfileViewModel viewModel;
+    private GetterRepository getterRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        getterRepository = app.getAppComponent().getGetterRepository();
+
         defineUser = new DefineUser<>(requireActivity());
     }
 
@@ -44,7 +52,7 @@ public class GetterProfileFragment extends Fragment {
         user = defineUser.getUser();
 
         viewModel = new ViewModelProvider(requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new GetterProfileFactory(requireActivity().getApplication(), getterRepository))
                 .get(GetterProfileViewModel.class);
 
         binding.getterProfileLogin.setText(user.getLogin());

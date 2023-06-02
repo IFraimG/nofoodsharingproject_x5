@@ -39,15 +39,22 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
     private final MutableLiveData<LoaderStatus> _statusNotifications = new MutableLiveData<>();
     private final MutableLiveData<LoaderStatus> _status = new MutableLiveData<>();
     private final MutableLiveData<LoaderStatus> _statusRemove = new MutableLiveData<>();
+    private final NotificationRepository notificationRepository;
+    private final SetterRepository setterRepository;
+    private final AdvertsRepository advertsRepository;
+    private final MapRepository mapRepository;
 
-    public AdvertisementOneViewModel(@NonNull Application application) {
+    public AdvertisementOneViewModel(@NonNull Application application, NotificationRepository notificationRepository, SetterRepository setterRepository, AdvertsRepository advertsRepository, MapRepository mapRepository) {
         super(application);
+        this.notificationRepository = notificationRepository;
+        this.setterRepository = setterRepository;
+        this.advertsRepository = advertsRepository;
+        this.mapRepository = mapRepository;
     }
 
     public LiveData<Advertisement> getAdvert(String userID) {
-        AdvertsRepository advertsRepository = new AdvertsRepository();
         _status.setValue(LoaderStatus.LOADING);
-        advertsRepository.getOwnAdvert(getApplication().getApplicationContext(), userID).enqueue(new Callback<Advertisement>() {
+        advertsRepository.getOwnAdvert(userID).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -83,9 +90,8 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
 
 
     public void removeAdvertisement() {
-        AdvertsRepository advertsRepository = new AdvertsRepository();
         _statusRemove.setValue(LoaderStatus.LOADING);
-        advertsRepository.deleteAdvert(getApplication().getApplicationContext(), _advert.getValue().getAdvertsID()).enqueue(new Callback<ResponseDeleteAdvert>() {
+        advertsRepository.deleteAdvert(_advert.getValue().getAdvertsID()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<ResponseDeleteAdvert> call, @NotNull Response<ResponseDeleteAdvert> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isDelete) {
@@ -104,7 +110,7 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
     public LiveData<String> getAddress(String userID, boolean isGetter) {
         String userData = isGetter ? "getter" : "setter";
 
-        MapRepository.getPinMarket(getApplication().getApplicationContext(), userData, userID).enqueue(new Callback<MarketTitleResponse>() {
+        mapRepository.getPinMarket(userData, userID).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -159,9 +165,8 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
     }
 
     public void takeProducts(String userID) {
-        AdvertsRepository advertsRepository = new AdvertsRepository();
         _statusNotifications.setValue(LoaderStatus.LOADING);
-        advertsRepository.takingProducts(getApplication().getApplicationContext(), userID).enqueue(new Callback<Advertisement>() {
+        advertsRepository.takingProducts(userID).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 if (response.isSuccessful()) sendNotification();
@@ -185,8 +190,7 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
         notification.setFromUserID(_advert.getValue().getAuthorID());
         notification.setUserID(_advert.getValue().getUserDoneID());
 
-        NotificationRepository notificationRepository = new NotificationRepository();
-        notificationRepository.createNotification(getApplication().getApplicationContext(), notification).enqueue(new Callback<Notification>() {
+        notificationRepository.createNotification(notification).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
                 if (response.body() != null && response.isSuccessful()) getFMCToken(body);
@@ -202,8 +206,7 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
 
     // Шаг 3 - Получаем fmc token
     private void getFMCToken(String body) {
-        SetterRepository setterRepository = new SetterRepository();
-        setterRepository.getFCMtoken(getApplication().getApplicationContext(), _advert.getValue().getUserDoneID()).enqueue(new Callback<ResponseFCMToken>() {
+        setterRepository.getFCMtoken(_advert.getValue().getUserDoneID()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
                 if (response.isSuccessful() && response.body() != null) sendFMCMessage(response.body(), body);
@@ -219,9 +222,7 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
 
     // Шаг 4 - Отправляем через firebase сообщение об успешно полученном токене
     private void sendFMCMessage(ResponseFCMToken response, String body) {
-        NotificationRepository notificationRepository = new NotificationRepository();
-
-        notificationRepository.requestNotifyDonateCall(response.getFcmToken(), getApplication().getApplicationContext().getString(R.string.success_deal), body).enqueue(new Callback<ResponseBody>() {
+        notificationRepository.requestNotifyDonateCall(response.getFcmToken(), getApplication().getApplicationContext().getString(R.string.success_deal), body).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {

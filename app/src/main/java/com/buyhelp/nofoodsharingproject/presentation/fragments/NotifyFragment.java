@@ -7,10 +7,14 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepository;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.adapters.GetterNotificationsAdapter;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterNotifyBinding;
 import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.factories.NotificationFactory;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.NotificationsViewModel;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,22 +22,26 @@ public class NotifyFragment extends Fragment {
     private NotificationsViewModel viewModel;
     private FragmentGetterNotifyBinding binding;
     private DefineUser defineUser;
+    private NotificationRepository notificationRepository;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        notificationRepository = app.getAppComponent().getNotificationRepository();
+
         defineUser = new DefineUser<>(requireActivity());
     }
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGetterNotifyBinding.inflate(inflater);
 
-
         GetterNotificationsAdapter getterNotificationsAdapter = new GetterNotificationsAdapter(getContext());
         binding.notifyRecycler.setAdapter(getterNotificationsAdapter);
 
         viewModel = new ViewModelProvider(
                 requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new NotificationFactory(requireActivity().getApplication(), notificationRepository))
                 .get(NotificationsViewModel.class);
 
         Pair<String, Boolean> userType = defineUser.getTypeUser();

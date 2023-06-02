@@ -1,7 +1,5 @@
 package com.buyhelp.nofoodsharingproject.data.api.adverts;
 
-import android.content.Context;
-
 import com.buyhelp.nofoodsharingproject.data.api.adverts.dto.RequestDoneAdvert;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.dto.ResponseActiveAdverts;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;
@@ -9,43 +7,51 @@ import com.buyhelp.nofoodsharingproject.data.api.adverts.dto.RequestTakingProduc
 import com.buyhelp.nofoodsharingproject.data.api.adverts.dto.ResponseHistoryAdverts;
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 
 public class AdvertsRepository {
+    private final AdvertsAPI advertsAPI;
 
-    public static Call<ResponseActiveAdverts> getListAdverts(Context ctx, String market) {
-        return AdvertsApiService.getInstance(ctx).getListAdvertisements(market);
+    @Inject
+    public AdvertsRepository(AdvertsApiService apiService) {
+        advertsAPI = apiService.getAdvertsAPI();
     }
 
-    public Call<Advertisement> createAdvert(Context ctx, Advertisement advert) {
-        return AdvertsApiService.getInstance(ctx).createAdvert(advert);
+    public Call<ResponseActiveAdverts> getListAdverts(String market) {
+        return advertsAPI.getListAdvertisements(market);
     }
 
-    public Call<RequestDoneAdvert> makeDoneAdvert(Context ctx, RequestDoneAdvert req) {
-        return AdvertsApiService.getInstance(ctx).makeDoneAdvert(req);
+    public Call<Advertisement> createAdvert(Advertisement advert) {
+        return advertsAPI.createAdvert(advert);
     }
 
-    public Call<Advertisement> getOwnAdvert(Context ctx, String authorID) {
-        return AdvertsApiService.create(ctx).getOwnAdvert(authorID);
+    public Call<RequestDoneAdvert> makeDoneAdvert(RequestDoneAdvert req) {
+        return advertsAPI.makeDoneAdvert(req);
     }
 
-    public Call<ResponseDeleteAdvert> deleteAdvert(Context ctx, String advertID) {
-        return AdvertsApiService.getInstance(ctx).deleteAdvert(advertID);
+    public Call<Advertisement> getOwnAdvert(String authorID) {
+        return advertsAPI.getOwnAdvert(authorID);
     }
 
-    public Call<Advertisement> getAdvertByID(Context ctx, String advertID) {
-        return AdvertsApiService.getInstance(ctx).getAdvertByID(advertID);
+    public Call<ResponseDeleteAdvert> deleteAdvert(String advertID) {
+        return advertsAPI.deleteAdvert(advertID);
     }
 
-    public Call<Advertisement> takingProducts(Context ctx, String authorID) {
-        return AdvertsApiService.getInstance(ctx).takingProducts(new RequestTakingProduct(authorID));
+    public Call<Advertisement> getAdvertByID(String advertID) {
+        return advertsAPI.getAdvertByID(advertID);
     }
 
-    public Call<ResponseHistoryAdverts> findSetterAdvertisements(Context ctx, String userID) {
-        return AdvertsApiService.getInstance(ctx).findSetterAdvertisements(userID);
+    public Call<Advertisement> takingProducts(String authorID) {
+        return advertsAPI.takingProducts(new RequestTakingProduct(authorID));
     }
 
-    public Call<Advertisement> getRandomAdvertByMarket(Context ctx, String market) {
-        return AdvertsApiService.getInstance(ctx).getRandomAdvertByMarket(market);
+    public Call<ResponseHistoryAdverts> findSetterAdvertisements(String userID) {
+        return advertsAPI.findSetterAdvertisements(userID);
+    }
+
+    public Call<Advertisement> getRandomAdvertByMarket(String market) {
+        return advertsAPI.getRandomAdvertByMarket(market);
     }
 }

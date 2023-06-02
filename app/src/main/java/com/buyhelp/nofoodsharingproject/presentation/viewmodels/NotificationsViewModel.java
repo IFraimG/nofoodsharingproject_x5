@@ -7,12 +7,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.buyhelp.nofoodsharingproject.data.api.notifications.dto.ResponseNotificationsList;
 import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepository;
+import com.buyhelp.nofoodsharingproject.data.api.notifications.dto.ResponseNotificationsList;
 import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
 import com.buyhelp.nofoodsharingproject.data.models.Notification;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,16 +24,19 @@ public class NotificationsViewModel extends AndroidViewModel {
     public List<Notification> notifications = new ArrayList<>();
     private final MutableLiveData<List<Notification>> _notifications = new MutableLiveData<>();
     private final MutableLiveData<LoaderStatus> _status = new MutableLiveData<>();
+    private final NotificationRepository notificationRepository;
 
-    public NotificationsViewModel(@NonNull Application application) {
+
+    public NotificationsViewModel(@NonNull Application application, NotificationRepository notificationRepository) {
         super(application);
+        this.notificationRepository = notificationRepository;
     }
 
     public LiveData<List<Notification>> getAllNotifications(String userID, String typeOfUser) {
         _status.setValue(LoaderStatus.LOADING);
-        NotificationRepository.getNotifications(getApplication().getApplicationContext(), userID, typeOfUser).enqueue(new Callback<ResponseNotificationsList>() {
+        notificationRepository.getNotifications(userID, typeOfUser).enqueue(new Callback<>() {
             @Override
-            public void onResponse(@NotNull Call<ResponseNotificationsList> call, @NotNull Response<ResponseNotificationsList> response) {
+            public void onResponse(@NonNull Call<ResponseNotificationsList> call, @NonNull Response<ResponseNotificationsList> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Notification> notificationsRes = Arrays.asList(response.body().getResult());
                     _notifications.setValue(notificationsRes);
@@ -44,7 +45,7 @@ public class NotificationsViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(@NotNull Call<ResponseNotificationsList> call, @NotNull Throwable t) {
+            public void onFailure(@NonNull Call<ResponseNotificationsList> call, @NonNull Throwable t) {
                 _status.setValue(LoaderStatus.FAILURE);
                 t.printStackTrace();
             }

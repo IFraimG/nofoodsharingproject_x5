@@ -149,8 +149,8 @@
     <string name="many_products">Вы можете выбирать не более трех продуктов</string>
     <string name="success_deal">Сделка прошла успешно!</string>
     <string name="near_market">Вы находитесь рядом с магазином</string>
-    <string name="location_on_title">Спасибо, что используете наше приложение с умом!</string>
-    <string name="location_on_body">Когда вы будете рядом с вашим магазином, мы сообщим вам о нуждающемся</string>
+    <string name="location_on_title">Информация о работе сервиса</string>
+    <string name="location_on_body">Это приложение собирает данные о вашем местоположении, чтобы понимать, находитесь ли вы рядом с магазином, даже когда приложение закрыто или не используется</string>
     <string name="help_getter">Помогите нуждающемуся.</string>
     <string name="chat_title">Чат</string>
     <string name="chats_title">Список чатов</string>
@@ -189,4 +189,5 @@
     <string name="report">Пожаловаться</string>
     <string name="mail">pokupaypomogay@mail.ru</string>
     <string name="report_text">Если у вас возникли жалобы, пишите нам на электронный адрес. Мы ответим вам в течении дня.</string>
+    <string name="data_repeat">Данный номер телефона или логин уже используются</string>
 </resources>

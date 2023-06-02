@@ -1,18 +1,18 @@
 package com.buyhelp.nofoodsharingproject.data.api.map;
 
-import android.content.Context;
-
 import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 
-public class MapApiService {
-    private static MapAPI mapAPI;
+import javax.inject.Inject;
 
-    public static MapAPI create(Context ctx) {
-        return RetrofitService.getInstance(ctx).create(MapAPI.class);
+public class MapApiService {
+    private final MapAPI mapAPI;
+
+    @Inject
+    public MapApiService(RetrofitService retrofitService) {
+        mapAPI = retrofitService.getInstance().create(MapAPI.class);
     }
 
-    public static MapAPI getInstance(Context ctx) {
-        if (mapAPI == null) mapAPI = create(ctx);
+    public MapAPI getMapAPI() {
         return mapAPI;
     }
 }

@@ -7,17 +7,24 @@ import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 
 public class MapRepository {
-    public static Call<Setter> setSetterMarket(Context ctx, String userID, String marketName) {
-        return MapApiService.getInstance(ctx).setSetterMarket(new RequestMarketInfo(userID, marketName));
+    private final MapAPI mapAPI;
+    @Inject
+    public MapRepository(MapApiService mapApiService) {
+        mapAPI = mapApiService.getMapAPI();
     }
-    public static Call<Getter> setGetterMarket(Context ctx, String userID, String marketName) {
-        return MapApiService.getInstance(ctx).setGetterMarket(new RequestMarketInfo(userID, marketName));
+    public Call<Setter> setSetterMarket(String userID, String marketName) {
+        return mapAPI.setSetterMarket(new RequestMarketInfo(userID, marketName));
+    }
+    public Call<Getter> setGetterMarket(String userID, String marketName) {
+        return mapAPI.setGetterMarket(new RequestMarketInfo(userID, marketName));
     }
 
-    public static Call<MarketTitleResponse> getPinMarket(Context ctx, String typeUser, String userID) {
-        return MapApiService.getInstance(ctx).getPinMarket(typeUser, userID);
+    public Call<MarketTitleResponse> getPinMarket(String typeUser, String userID) {
+        return mapAPI.getPinMarket(typeUser, userID);
     }
 }

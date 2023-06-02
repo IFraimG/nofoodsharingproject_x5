@@ -10,6 +10,7 @@ import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -24,14 +25,16 @@ public class GetterNewAdvertViewModel extends AndroidViewModel {
     private final List<String> userItems = new ArrayList<>();
     private final MutableLiveData<Advertisement> advert = new MutableLiveData<>();
     private int statusCode = 0;
+    private AdvertsRepository advertsRepository;
 
     private final String[] productItems = new String[]{"Хлеб", "Картофель", "Мороженая рыба", "Сливочное масло",
             "Подсолнечное масло", "Яйца куриные", "Молоко", "Чай", "Кофе", "Соль", "Сахар",
             "Мука", "Лук", "Макаронные изделия", "Пшено", "Шлифованный рис", "Гречневая крупа",
             "Белокочанная капуста", "Морковь", "Яблоки", "Свинина", "Баранина", "Курица"};
 
-    public GetterNewAdvertViewModel(@NonNull Application application) {
+    public GetterNewAdvertViewModel(@NonNull Application application, AdvertsRepository advertsRepository) {
         super(application);
+        this.advertsRepository = advertsRepository;
     }
 
     public LiveData<Advertisement> createAdvert(String getterAdvertInputTitle) {
@@ -43,9 +46,8 @@ public class GetterNewAdvertViewModel extends AndroidViewModel {
 
         if (userProductItems != null && userProductItems.getValue().size() > 0) advertisement.setListProductsCustom(userProductItems.getValue());
 
-        AdvertsRepository advertsRepository = new AdvertsRepository();
         statusCode = 0;
-        advertsRepository.createAdvert(getApplication(), advertisement).enqueue(new Callback<>() {
+        advertsRepository.createAdvert(advertisement).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 statusCode = response.code();

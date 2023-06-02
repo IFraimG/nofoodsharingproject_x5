@@ -1,18 +1,18 @@
 package com.buyhelp.nofoodsharingproject.data.api.setter;
 
-import android.content.Context;
-
 import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 
-public class SetterApiService {
-    private static SetterAPI setterAPI;
+import javax.inject.Inject;
 
-    public static SetterAPI create(Context ctx) {
-        return RetrofitService.getInstance(ctx).create(SetterAPI.class);
+public class SetterApiService {
+    private final SetterAPI setterAPI;
+
+    @Inject
+    public SetterApiService(RetrofitService retrofitService) {
+        setterAPI = retrofitService.getInstance().create(SetterAPI.class);
     }
 
-    public static SetterAPI getInstance(Context ctx) {
-        if (setterAPI == null) setterAPI = create(ctx);
+    public SetterAPI getSetterAPI() {
         return setterAPI;
     }
 }

@@ -11,11 +11,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import com.buyhelp.nofoodsharingproject.R;
+import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
+import com.buyhelp.nofoodsharingproject.data.api.map.MapRepository;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.adapters.SetterAdvertListAdapter;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
 import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.factories.setters.SetterAdvrsFactory;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.advertisements.AdvertisementListViewModel;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,10 +27,17 @@ public class SetterAdvrsFragment extends Fragment {
     private AdvertisementListViewModel viewModel;
     private FragmentSetterAdvrsBinding binding;
     private DefineUser<Setter> defineUser;
+    private AdvertsRepository advertsRepository;
+    private MapRepository mapRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        advertsRepository = app.getAppComponent().getAdvertsRepository();
+        mapRepository = app.getAppComponent().getMapRepository();
+
         defineUser = new DefineUser<>(requireActivity());
     }
 
@@ -40,7 +51,7 @@ public class SetterAdvrsFragment extends Fragment {
         recyclerView.setVerticalScrollBarEnabled(true);
 
         viewModel = new ViewModelProvider(requireActivity(),
-                (ViewModelProvider.Factory) ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                new SetterAdvrsFactory(requireActivity().getApplication(), advertsRepository, mapRepository))
                 .get(AdvertisementListViewModel.class);
 
         viewModel.getAllAdverts(defineUser.getUser().getX5_Id()).observe(requireActivity(), setterAdvertListAdapter::updateAdverts);
