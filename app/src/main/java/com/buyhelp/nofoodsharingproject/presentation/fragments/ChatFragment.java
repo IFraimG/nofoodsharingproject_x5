@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,7 @@ import io.socket.emitter.Emitter;
 
 public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
+    private WeakReference<FragmentChatBinding> mBinding;
     private Socket mSocket;
     private String chatID;
     private DefineUser defineUser;
@@ -42,21 +45,29 @@ public class ChatFragment extends Fragment {
     private final List<Message> messages = new ArrayList<>();
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        mSocket = app.getSocket();
+        mSocket.connect();
+
+        defineUser = app.getAppComponent().getDefineUser();
+
+    }
+
+    @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentChatBinding.inflate(getLayoutInflater());
+        mBinding = new WeakReference<>(binding);
 
         chatID = getArguments().getString("chatID");
-        defineUser = new DefineUser<>(requireActivity());
 
         messagesAdapter = new MessagesAdapter(requireContext(), defineUser.getUser().getX5_Id());
         messagesAdapter.updateMessages(messages);
         layoutManager = new LinearLayoutManager(requireContext());
         binding.messagesList.setLayoutManager(layoutManager);
         binding.messagesList.setAdapter(messagesAdapter);
-
-        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
-        mSocket = app.getSocket();
-        mSocket.connect();
 
         binding.messagesSend.setOnClickListener(View -> sendMessage());
         binding.chatReturn.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
@@ -89,6 +100,12 @@ public class ChatFragment extends Fragment {
         } else if (getActivity() instanceof GetterActivity ) {
             ((GetterActivity) requireActivity()).setBottomNavigationVisibility(true);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
     }
 
     @Override

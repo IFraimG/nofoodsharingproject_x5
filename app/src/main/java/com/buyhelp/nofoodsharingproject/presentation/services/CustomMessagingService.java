@@ -31,7 +31,7 @@ public class CustomMessagingService extends FirebaseMessagingService {
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
 
-        defineUser = new DefineUser<>(getApplicationContext());
+        defineUser = new DefineUser(getApplicationContext());
 
         ApplicationCore app = (ApplicationCore) getApplication();
         getterRepository = app.getAppComponent().getGetterRepository();

@@ -33,8 +33,8 @@ public class GetterAuthViewModel extends AndroidViewModel {
     }
 
     private void pushData(SignUpResponseI<Getter> result) {
-        DefineUser<Getter> defineUser = new DefineUser<>(getApplication().getApplicationContext());
-        defineUser.saveUserData(true, result.user.getX5_Id(), result);
+        DefineUser defineUser = new DefineUser(getApplication().getApplicationContext());
+        defineUser.saveUserDataGetter(true, result.user.getX5_Id(), result);
     }
 
     public LiveData<SignUpResponseI<Getter>> login(String phone, String login, String password) {

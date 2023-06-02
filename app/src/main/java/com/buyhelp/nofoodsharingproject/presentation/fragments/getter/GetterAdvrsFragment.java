@@ -31,11 +31,14 @@ import com.buyhelp.nofoodsharingproject.presentation.factories.getters.GetterAdv
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
+
 public class GetterAdvrsFragment extends Fragment {
     private FragmentGetterAdvrsBinding binding;
+    private WeakReference<FragmentGetterAdvrsBinding> mBinding;
     private AdvertisementOneViewModel viewModel;
     private ArrayAdapter<String> arrayAdapter;
-    private DefineUser<Getter> defineUser;
+    private DefineUser defineUser;
     private NotificationRepository notificationRepository;
     private SetterRepository setterRepository;
     private AdvertsRepository advertsRepository;
@@ -50,13 +53,13 @@ public class GetterAdvrsFragment extends Fragment {
         setterRepository = app.getAppComponent().getSetterRepository();
         advertsRepository = app.getAppComponent().getAdvertsRepository();
         mapRepository = app.getAppComponent().getMapRepository();
-
-        defineUser = new DefineUser<>(requireActivity());
+        defineUser = app.getAppComponent().getDefineUser();
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         binding = FragmentGetterAdvrsBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
 
         binding.textNumberOfAdvert.setVisibility(View.GONE);
         binding.stopAdvert.setVisibility(View.GONE);
@@ -78,6 +81,12 @@ public class GetterAdvrsFragment extends Fragment {
         initHandlers();
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
     }
 
     private void renderStatus(LoaderStatus loaderStatus) {

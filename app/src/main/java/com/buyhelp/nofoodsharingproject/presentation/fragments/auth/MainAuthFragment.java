@@ -20,6 +20,7 @@ import com.buyhelp.nofoodsharingproject.presentation.fragments.SecretFragment;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -29,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainAuthFragment extends Fragment {
     private FragmentMainAuthBinding binding;
+    private WeakReference<FragmentMainAuthBinding> mBinding;
     private int countClick = 0;
     private ScheduledFuture<String> future;
     private ScheduledExecutorService executor;
@@ -43,6 +45,7 @@ public class MainAuthFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMainAuthBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
 
         Button btnGetter = binding.mainAuthBtnGetter;
         Button btnSetter = binding.mainAuthBtnSetter;
@@ -54,6 +57,13 @@ public class MainAuthFragment extends Fragment {
         btnGetter.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_getterAuthF));
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        mBinding.clear();
     }
 
     @Override

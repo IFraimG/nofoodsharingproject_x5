@@ -14,24 +14,31 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.ActivitySetterBinding;
-import com.buyhelp.nofoodsharingproject.data.models.Setter;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.services.LocationTrackingService;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowChecker;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowCheckerOld;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 
+import javax.inject.Inject;
+
 public class SetterActivity extends AppCompatActivity {
     private NavController navController;
     private ActivitySetterBinding binding;
-    private DefineUser<Setter> defineUser;
+
+    @Inject
+    public DefineUser defineUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySetterBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
-        defineUser = new DefineUser<>(this);
+
+        ApplicationCore app = (ApplicationCore) getApplication();
+        app.getAppComponent().inject(this);
 
         PermissionHandler.requestCalendarPermissions(this);
         if (defineUser.getIsLocation()) PermissionHandler.requestPermissions(this);

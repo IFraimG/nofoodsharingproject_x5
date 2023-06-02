@@ -38,7 +38,7 @@ public class GetterNewAdvertViewModel extends AndroidViewModel {
     }
 
     public LiveData<Advertisement> createAdvert(String getterAdvertInputTitle) {
-        DefineUser<Getter> defineUser = new DefineUser<>(getApplication().getApplicationContext());
+        DefineUser defineUser = new DefineUser(getApplication().getApplicationContext());
         Getter result = defineUser.defineGetter();
 
         Advertisement advertisement = new Advertisement(getterAdvertInputTitle, result.getX5_Id(), result.getLogin());

@@ -39,7 +39,7 @@ public class ApplicationCore extends Application {
 
         DefineUser defineUser = new DefineUser(getSharedPreferences("prms", MODE_PRIVATE));
 
-        appComponent = DaggerAppComponent.builder().application(this).appModule(new AppModule(getApplicationContext())).retrofitModule(new RetrofitService(getApplicationContext())).create();
+        appComponent = DaggerAppComponent.builder().application(this).appModule(new AppModule(getApplicationContext())).defineUser(new DefineUser()).retrofitModule(new RetrofitService()).create();
 
         AndroidThreeTen.init(getApplicationContext());
 

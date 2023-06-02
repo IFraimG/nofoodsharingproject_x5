@@ -17,16 +17,19 @@ import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.adapters.SetterAdvertListAdapter;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
 import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
-import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.factories.setters.SetterAdvrsFactory;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.advertisements.AdvertisementListViewModel;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
+
+
 public class SetterAdvrsFragment extends Fragment {
     private AdvertisementListViewModel viewModel;
     private FragmentSetterAdvrsBinding binding;
-    private DefineUser<Setter> defineUser;
+    private WeakReference<FragmentSetterAdvrsBinding> mBinding;
+    private DefineUser defineUser;
     private AdvertsRepository advertsRepository;
     private MapRepository mapRepository;
 
@@ -37,13 +40,14 @@ public class SetterAdvrsFragment extends Fragment {
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         advertsRepository = app.getAppComponent().getAdvertsRepository();
         mapRepository = app.getAppComponent().getMapRepository();
-
-        defineUser = new DefineUser<>(requireActivity());
+        defineUser = app.getAppComponent().getDefineUser();
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterAdvrsBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
+
         RecyclerView recyclerView = binding.setterListAdvert;
 
         SetterAdvertListAdapter setterAdvertListAdapter = new SetterAdvertListAdapter(getContext());
@@ -69,6 +73,12 @@ public class SetterAdvrsFragment extends Fragment {
         initFilter();
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
     }
 
     private void renderStatus(LoaderStatus loaderStatus) {

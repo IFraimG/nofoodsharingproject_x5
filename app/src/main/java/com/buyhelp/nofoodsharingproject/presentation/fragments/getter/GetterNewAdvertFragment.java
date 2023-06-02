@@ -21,10 +21,13 @@ import com.buyhelp.nofoodsharingproject.presentation.factories.getters.GetterNew
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class GetterNewAdvertFragment extends Fragment {
     private FragmentGetterCreateNewAdvertismentBinding binding;
+    private WeakReference<FragmentGetterCreateNewAdvertismentBinding> mBinding;
     private ArrayAdapter<String> arrayAdapterChoosenItems;
     private GetterNewAdvertViewModel viewModel;
     private AdvertsRepository advertsRepository;
@@ -39,6 +42,7 @@ public class GetterNewAdvertFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         binding = FragmentGetterCreateNewAdvertismentBinding.inflate(getLayoutInflater());
+        mBinding = new WeakReference<>(binding);
 
         viewModel = new ViewModelProvider(requireActivity(),
                 new GetterNewAdvertFactory(requireActivity().getApplication(), advertsRepository))
@@ -74,6 +78,13 @@ public class GetterNewAdvertFragment extends Fragment {
             ((GetterActivity) requireActivity()).setBottomNavigationVisibility(true);
         }
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
+    }
+
 
     private void createAdvert() {
         if (viewModel.getUserItems().size() == 0)

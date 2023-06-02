@@ -22,8 +22,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
+
 public class SetterLoginAuthFragment extends Fragment {
     private FragmentSetterLoginAuthBinding binding;
+    private WeakReference<FragmentSetterLoginAuthBinding> mBinding;
     private SetterAuthViewModel viewModel;
     private AuthRepository authRepository;
 
@@ -38,6 +41,7 @@ public class SetterLoginAuthFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterLoginAuthBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
 
         viewModel = new ViewModelProvider(requireActivity(),
                 new SetterAuthFactory(requireActivity().getApplication(), authRepository))
@@ -68,5 +72,12 @@ public class SetterLoginAuthFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        mBinding.clear();
     }
 }

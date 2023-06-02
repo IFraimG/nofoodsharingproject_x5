@@ -19,9 +19,11 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    private DefineUser defineUser;
     @Inject
     public AuthRepository authRepository;
+
+    @Inject
+    public DefineUser defineUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         ApplicationCore app = (ApplicationCore) getApplication();
         app.getAppComponent().inject(this);
-
-        defineUser = new DefineUser(this);
 
         String res = defineUser.isGetter();
         if (res != null) {

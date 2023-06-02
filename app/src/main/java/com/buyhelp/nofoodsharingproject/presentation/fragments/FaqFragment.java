@@ -20,10 +20,12 @@ import com.buyhelp.nofoodsharingproject.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
 import java.util.Arrays;
 
 public class FaqFragment extends Fragment {
     private FragmentFaqBinding binding;
+    private WeakReference<FragmentFaqBinding> mBinding;
     private AlertDialog alertDialog;
 
     private final Faq[] getterQuesitons = new Faq[]{
@@ -46,6 +48,7 @@ public class FaqFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFaqBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
 
         binding.faqReturn.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
@@ -82,6 +85,12 @@ public class FaqFragment extends Fragment {
         } else if (getActivity() instanceof GetterActivity ) {
             ((GetterActivity) requireActivity()).setBottomNavigationVisibility(true);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
     }
 
     private void createFaqItemQuestionDialog() {

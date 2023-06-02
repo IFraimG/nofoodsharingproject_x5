@@ -8,28 +8,25 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import com.buyhelp.nofoodsharingproject.databinding.FragmentSecretBinding;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 
 public class SecretFragment extends DialogFragment {
-    private FragmentSecretBinding binding;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         final EditText input = new EditText(requireContext());
 
+        ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
+        DefineUser defineUser = app.getAppComponent().getDefineUser();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder
-                .setPositiveButton("Подключить", (dialog, id) -> {
-                    DefineUser defineUser = new DefineUser(requireActivity());
-                    defineUser.initBaseRetrofitPath(input.getText().toString());
-                })
-                .setNegativeButton("Отмена", (dialog, id) -> {
-                    DefineUser defineUser = new DefineUser(requireActivity());
-                    defineUser.setDefaultBasePathForRetrofit();
-                });
+        builder.setPositiveButton("Подключить", (dialog, id) -> {
+            defineUser.initBaseRetrofitPath(input.getText().toString());
+        }).setNegativeButton("Отмена", (dialog, id) -> {
+            defineUser.setDefaultBasePathForRetrofit();
+        });
 
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(

@@ -26,12 +26,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.socket.client.Socket;
 public class ChatsListFragment extends Fragment {
     private FragmentListChatsBinding binding;
+    private WeakReference<FragmentListChatsBinding> mBinding;
     private DefineUser defineUser;
     private ArrayAdapter<String> arrayAdapter;
     private List<Chat> chats;
@@ -45,13 +47,14 @@ public class ChatsListFragment extends Fragment {
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         mSocket = app.getSocket();
         mSocket.connect();
+
+        defineUser = app.getAppComponent().getDefineUser();
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentListChatsBinding.inflate(inflater);
-
-        defineUser = new DefineUser<>(requireActivity());
+        mBinding = new WeakReference<>(binding);
 
         getChatsList();
 
@@ -88,6 +91,12 @@ public class ChatsListFragment extends Fragment {
         } else if (getActivity() instanceof GetterActivity) {
             ((GetterActivity) requireActivity()).setBottomNavigationVisibility(true);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
     }
 
     @Override

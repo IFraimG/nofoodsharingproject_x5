@@ -22,11 +22,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
+
 public class GetterAuthFragment extends Fragment {
     private FragmentGetterAuthBinding binding;
+    private WeakReference<FragmentGetterAuthBinding> mBinding;
     private GetterAuthViewModel viewModel;
     private int code;
-
     public AuthRepository authRepository;
 
     @Override
@@ -40,6 +42,7 @@ public class GetterAuthFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGetterAuthBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
 
         viewModel = new ViewModelProvider(requireActivity(), new GetterAuthFactory(requireActivity().getApplication(), authRepository)).get(GetterAuthViewModel.class);
 
@@ -85,7 +88,10 @@ public class GetterAuthFragment extends Fragment {
 
                     code = viewModel.getStatusCode();
                     if (code == 400) Snackbar.make(requireContext(), v, getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
-                    else if (code == 403) Snackbar.make(requireContext(), v, getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
+                    else if (code == 403) {
+                        Snackbar.make(requireContext(), v, getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
+                        binding.authGetterCreate.setVisibility(android.view.View.GONE);
+                    }
                     else if (code == 404) Snackbar.make(requireContext(), v, getText(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
 
                     if (code != 403) {
@@ -106,5 +112,12 @@ public class GetterAuthFragment extends Fragment {
         binding.authGetterSignupBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_getterAuthF_to_mainAuthF));
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        mBinding.clear();
     }
 }

@@ -26,7 +26,7 @@ public class GetterProfileViewModel extends AndroidViewModel {
         this.getterRepository = getterRepository;
     }
 
-    public LiveData<Getter> editProfile(DefineUser<Getter> defineUser, RequestGetterEditProfile requestGetterEditProfile) {
+    public LiveData<Getter> editProfile(DefineUser defineUser, RequestGetterEditProfile requestGetterEditProfile) {
         statusCode = 0;
         getterRepository.editProfile(requestGetterEditProfile).enqueue(new Callback<>() {
             @Override

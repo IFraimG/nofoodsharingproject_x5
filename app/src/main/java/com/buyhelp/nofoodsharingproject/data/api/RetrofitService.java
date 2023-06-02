@@ -15,10 +15,12 @@ import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepos
 import com.buyhelp.nofoodsharingproject.data.api.setter.SetterApiService;
 import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Interceptor;
@@ -28,13 +30,14 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Module
+@Module(includes = { AppModule.class })
 public class RetrofitService {
     private Retrofit retrofit;
-    private final Context ctx;
+    private Context ctx;
 //    public String BASE_URL = "https://buy-help-server.onrender.com";
     public String BASE_URL = "http://192.168.0.100:8080";
 
+    public RetrofitService() {}
 
     @Inject
     public RetrofitService(Context ctx) {
@@ -118,6 +121,7 @@ public class RetrofitService {
     public AdvertsApiService provideAdvertsRetrofitService(RetrofitService retrofitService) {
         return new AdvertsApiService(retrofitService);
     }
+
     @Provides
     public AdvertsRepository provideAdvertsRepository(AdvertsApiService advertsApiService) {
         return new AdvertsRepository(advertsApiService);

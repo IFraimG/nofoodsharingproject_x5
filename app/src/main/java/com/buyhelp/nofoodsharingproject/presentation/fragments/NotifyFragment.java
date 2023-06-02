@@ -18,9 +18,12 @@ import com.buyhelp.nofoodsharingproject.presentation.factories.NotificationFacto
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.NotificationsViewModel;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
+
 public class NotifyFragment extends Fragment {
     private NotificationsViewModel viewModel;
     private FragmentGetterNotifyBinding binding;
+    private WeakReference<FragmentGetterNotifyBinding> mBinding;
     private DefineUser defineUser;
     private NotificationRepository notificationRepository;
     @Override
@@ -29,12 +32,12 @@ public class NotifyFragment extends Fragment {
 
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         notificationRepository = app.getAppComponent().getNotificationRepository();
-
-        defineUser = new DefineUser<>(requireActivity());
+        defineUser = app.getAppComponent().getDefineUser();
     }
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGetterNotifyBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
 
         GetterNotificationsAdapter getterNotificationsAdapter = new GetterNotificationsAdapter(getContext());
         binding.notifyRecycler.setAdapter(getterNotificationsAdapter);
@@ -55,6 +58,12 @@ public class NotifyFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
     }
 
     private void renderStatus(LoaderStatus loaderStatus) {

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -23,30 +24,39 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.lang.ref.WeakReference;
+
 import io.socket.client.Socket;
 
 
 public class SetterHelpFinishFragment extends Fragment {
     private FragmentSetterFinishHelpBinding binding;
+    private WeakReference<FragmentSetterFinishHelpBinding> mBinding;
     private Socket socket;
-    private DefineUser<Setter> defineUser;
+    private DefineUser defineUser;
     private String getterID;
     private String generateID;
 
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentSetterFinishHelpBinding.inflate(inflater);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         socket = app.getSocket();
         socket.connect();
 
+        defineUser = app.getAppComponent().getDefineUser();
+    }
+
+    @Override
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentSetterFinishHelpBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
+
         getterID = getArguments().getString("getterID");
         generateID = getArguments().getString("gettingProductID");
 
         if (generateID != null) binding.setterFinishCode.setText(generateID);
-
-        defineUser = new DefineUser<>(requireActivity());
 
         binding.setterFinishGotovk.setOnClickListener(View -> vkLoad());
         binding.setterFinishReturn.setOnClickListener(v -> {
@@ -72,6 +82,12 @@ public class SetterHelpFinishFragment extends Fragment {
         if (getActivity() instanceof SetterActivity) {
             ((SetterActivity) requireActivity()).setBottomNavigationVisibility(true);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
     }
 
     @Override

@@ -22,7 +22,6 @@ import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAdvertBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
-import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.factories.setters.SetterAdvertFactory;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterAdvertViewModel;
@@ -32,13 +31,16 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.lang.ref.WeakReference;
+
 import io.socket.client.Socket;
 
 public class SetterAdvertFragment extends Fragment {
     private FragmentSetterAdvertBinding binding;
+    private WeakReference<FragmentSetterAdvertBinding> mBinding;
     private Socket socket;
     private ArrayAdapter<String> productsAdapter;
-    private DefineUser<Setter> defineUser;
+    private DefineUser defineUser;
     private SetterAdvertViewModel viewModel;
     private AdvertsRepository advertsRepository;
     private NotificationRepository notificationRepository;
@@ -50,13 +52,13 @@ public class SetterAdvertFragment extends Fragment {
         advertsRepository = app.getAppComponent().getAdvertsRepository();
         notificationRepository = app.getAppComponent().getNotificationRepository();
         getterRepository = app.getAppComponent().getGetterRepository();
+        this.defineUser = app.getAppComponent().getDefineUser();
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterAdvertBinding.inflate(inflater);
-
-        this.defineUser = new DefineUser<>(requireActivity());
+        mBinding = new WeakReference<>(binding);
 
         viewModel = new ViewModelProvider(requireActivity(),
                 new SetterAdvertFactory(requireActivity().getApplication(), advertsRepository, notificationRepository, getterRepository))
@@ -90,6 +92,12 @@ public class SetterAdvertFragment extends Fragment {
         if (getActivity() instanceof SetterActivity) {
             ((SetterActivity) requireActivity()).setBottomNavigationVisibility(true);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
     }
 
     @Override

@@ -36,17 +36,20 @@ import com.buyhelp.nofoodsharingproject.presentation.viewmodels.setter.SetterPro
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 
 public class SetterProfileFragment extends Fragment {
     private FragmentSetterProfileBinding binding;
+    private WeakReference<FragmentSetterProfileBinding> mBinding;
     private ArrayAdapter<String> arrayAdapter;
     private Setter user;
     private boolean isCheckedLocation = false;
     private boolean isCheckedNotification = false;
 
-    private DefineUser<Setter> defineUser;
+    private DefineUser defineUser;
     private SetterProfileViewModel viewModel;
     private SetterRepository setterRepository;
     private AdvertsRepository advertsRepository;
@@ -58,8 +61,7 @@ public class SetterProfileFragment extends Fragment {
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         setterRepository = app.getAppComponent().getSetterRepository();
         advertsRepository = app.getAppComponent().getAdvertsRepository();
-
-        defineUser = new DefineUser<>(requireActivity());
+        defineUser = app.getAppComponent().getDefineUser();
 
         setHasOptionsMenu(true);
 
@@ -72,6 +74,7 @@ public class SetterProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSetterProfileBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
 
         AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
         appCompatActivity.setSupportActionBar(binding.setterProfileToolbar);
@@ -90,6 +93,12 @@ public class SetterProfileFragment extends Fragment {
         viewModel.getHistoryAdverts(user.getX5_Id()).observe(requireActivity(), this::getHistoryList);
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
     }
 
     @Override

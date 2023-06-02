@@ -37,6 +37,7 @@ import com.yandex.mapkit.directions.driving.DrivingRouter;
 import com.yandex.mapkit.directions.driving.DrivingSession;
 import com.yandex.mapkit.directions.driving.VehicleOptions;
 import com.yandex.mapkit.geometry.Point;
+import com.yandex.mapkit.layers.GeoObjectTapListener;
 import com.yandex.mapkit.layers.ObjectEvent;
 import com.yandex.mapkit.location.FilteringMode;
 import com.yandex.mapkit.location.LocationListener;
@@ -60,6 +61,7 @@ import com.yandex.runtime.image.ImageProvider;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +69,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         MapObjectTapListener, DrivingSession.DrivingRouteListener {
 
     private FragmentMarketsMapBinding binding;
+    private WeakReference<FragmentMarketsMapBinding> mBinding;
     private MapView mapView;
     private LocationListener locationListener;
     private UserLocationLayer userLocationLayer;
@@ -91,8 +94,8 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
 
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         mapRepository = app.getAppComponent().getMapRepository();
+        defineUser = app.getAppComponent().getDefineUser();
 
-        defineUser = new DefineUser(requireActivity());
         super.onCreate(savedInstanceState);
     }
 
@@ -115,6 +118,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMarketsMapBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
 
         this.mapView = binding.mapview;
         Button setMarketBtn = binding.mapSetMarketBtn;
@@ -141,6 +145,14 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     public void onResume() {
         super.onResume();
         getPinnedMarketInfo();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
+
+        if (mapView != null) mapView.getMap().getMapObjects().clear();
     }
 
     private void initLocation() {

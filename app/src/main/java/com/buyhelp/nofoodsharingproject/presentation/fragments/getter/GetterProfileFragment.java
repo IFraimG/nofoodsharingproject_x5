@@ -28,10 +28,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.ref.WeakReference;
+
 public class GetterProfileFragment extends Fragment {
     private FragmentGetterProfileBinding binding;
+    private WeakReference<FragmentGetterProfileBinding> mBinding;
     private ShortDataUser user;
-    private DefineUser<Getter> defineUser;
+    private DefineUser defineUser;
     private GetterProfileViewModel viewModel;
     private GetterRepository getterRepository;
 
@@ -41,13 +44,13 @@ public class GetterProfileFragment extends Fragment {
 
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         getterRepository = app.getAppComponent().getGetterRepository();
-
-        defineUser = new DefineUser<>(requireActivity());
+        defineUser = app.getAppComponent().getDefineUser();
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentGetterProfileBinding.inflate(inflater);
+        mBinding = new WeakReference<>(binding);
 
         user = defineUser.getUser();
 
@@ -64,6 +67,12 @@ public class GetterProfileFragment extends Fragment {
         binding.getterProfileOpenChat.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_getterProfileF_to_chatsListFragment));
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBinding.clear();
     }
 
     private void editProfile() {

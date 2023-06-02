@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
+import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 
@@ -30,8 +31,8 @@ public class SetterAuthViewModel extends AndroidViewModel {
     }
 
     private void pushData(SignUpResponseI<Setter> result) {
-        DefineUser<Setter> defineUser = new DefineUser<>(getApplication().getApplicationContext());
-        defineUser.saveUserData(false, result.user.getX5_Id(), result);
+        DefineUser defineUser = new DefineUser(getApplication().getApplicationContext());
+        defineUser.saveUserDataSetter(false, result.user.getX5_Id(), result);
     }
 
     public LiveData<SignUpResponseI<Setter>> login(String login, String password) {

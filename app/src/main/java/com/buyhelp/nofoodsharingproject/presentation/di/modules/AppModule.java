@@ -2,8 +2,6 @@ package com.buyhelp.nofoodsharingproject.presentation.di.modules;
 
 import android.content.Context;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -14,6 +12,7 @@ public class AppModule {
     public AppModule(Context context) {
         this.ctx = context;
     }
+
     @Provides
     public Context provideContext() {
         return ctx;

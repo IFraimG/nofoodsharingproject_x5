@@ -13,18 +13,28 @@ import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.data.models.ShortDataUser;
-import com.buyhelp.nofoodsharingproject.data.models.User;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-public class DefineUser<T extends User> {
+import javax.inject.Inject;
+
+import dagger.Module;
+import dagger.Provides;
+
+@Module(includes = { AppModule.class })
+public class DefineUser {
     private EncryptedSharedPreferences encryptedSharedPreferences;
     private SharedPreferences sharedPreferences;
 
     public DefineUser(Activity activity) {
         initEsp(activity);
     }
+
+    public DefineUser() {}
+
+    @Inject
     public DefineUser(Context ctx) {
         initEsp(ctx);
     }
@@ -32,6 +42,7 @@ public class DefineUser<T extends User> {
     public DefineUser(EncryptedSharedPreferences esp) {
         encryptedSharedPreferences = esp;
     }
+
     public DefineUser(SharedPreferences sp) {
         sharedPreferences = sp;
     }
@@ -43,6 +54,7 @@ public class DefineUser<T extends User> {
         else editor.putString("server_url", "https://buy-help-server.onrender.com").apply();
     }
 
+    @Provides
     public String getBaseForRetrofit() {
         return sharedPreferences.getString("server_url", "https://buy-help-server.onrender.com");
     }
@@ -81,6 +93,7 @@ public class DefineUser<T extends User> {
         sharedPreferences = ctx.getSharedPreferences("prms", Context.MODE_PRIVATE);
     }
 
+    @Provides
     public Setter defineSetter() {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
@@ -96,6 +109,7 @@ public class DefineUser<T extends User> {
         return user;
     }
 
+    @Provides
     public Getter defineGetter() {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
@@ -111,6 +125,7 @@ public class DefineUser<T extends User> {
         return user;
     }
 
+    @Provides
     public Pair<String, Boolean> getTypeUser() {
         String userID = encryptedSharedPreferences.getString("X5_id", "");
         boolean isUser = encryptedSharedPreferences.getBoolean("isGetter", false);
@@ -128,18 +143,27 @@ public class DefineUser<T extends User> {
         if (sharedPreferences != null) sharedPreferences.edit().clear().apply();
     }
 
-    public void saveUserData(boolean isGetter, String X5_id, SignUpResponseI<T> result) {
+    public void saveUserDataGetter(boolean isGetter, String X5_id, SignUpResponseI<Getter> result) {
+        saveData(isGetter, X5_id, result.getUser().getLogin(), result.getUser().getPhone(), result.getToken(), result.user.getTokenFCM());
+    }
+
+    public void saveUserDataSetter(boolean isGetter, String X5_id, SignUpResponseI<Setter> result) {
+        saveData(isGetter, X5_id, result.getUser().getLogin(), result.getUser().getPhone(), result.getToken(), result.user.getTokenFCM());
+    }
+
+    private void saveData(boolean isGetter, String X5_id, String login, String phone, String token, String FCMtoken) {
         SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
         editor.putBoolean("isGetter", isGetter);
-        editor.putString("login", result.user.getLogin());
-        editor.putString("phone", result.user.getPhone());
+        editor.putString("login", login);
+        editor.putString("phone", phone);
         if (X5_id != null) editor.putString("X5_id", X5_id);
         else editor.putString("X5_id", "");
-        editor.putString("token", result.getToken());
-        editor.putString("FCMtoken", result.user.getTokenFCM());
+        editor.putString("token", token);
+        editor.putString("FCMtoken", FCMtoken);
         editor.apply();
     }
 
+    @Provides
     public ShortDataUser getUser() {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
@@ -168,20 +192,24 @@ public class DefineUser<T extends User> {
         editor.apply();
     }
 
+    @Provides
     public boolean getPreferences(String key) {
         return sharedPreferences.getBoolean(key, false);
     }
 
+    @Provides
     public String isGetter() {
         if (!encryptedSharedPreferences.contains("isGetter")) return null;
 
         return encryptedSharedPreferences.getBoolean("isGetter", false) ? "getter" : "setter";
     }
 
+    @Provides
     public String getToken() {
         return encryptedSharedPreferences.getString("token", "");
     }
 
+    @Provides
     public String getFCMToken() {
         return encryptedSharedPreferences.getString("FCMtoken", "");
     }
@@ -190,6 +218,7 @@ public class DefineUser<T extends User> {
         encryptedSharedPreferences.edit().putString("FCMtoken", fcmToken).apply();
     }
 
+    @Provides
     public boolean getIsLocation() {
         return sharedPreferences.getBoolean("locaiton", true);
     }
