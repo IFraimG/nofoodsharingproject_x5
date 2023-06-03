@@ -20,31 +20,13 @@ import java.security.GeneralSecurityException;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-import dagger.Provides;
-
-@Module(includes = { AppModule.class })
 public class DefineUser {
     private EncryptedSharedPreferences encryptedSharedPreferences;
     private SharedPreferences sharedPreferences;
 
-    public DefineUser(Activity activity) {
-        initEsp(activity);
-    }
-
-    public DefineUser() {}
-
     @Inject
     public DefineUser(Context ctx) {
         initEsp(ctx);
-    }
-
-    public DefineUser(EncryptedSharedPreferences esp) {
-        encryptedSharedPreferences = esp;
-    }
-
-    public DefineUser(SharedPreferences sp) {
-        sharedPreferences = sp;
     }
 
     public void initBaseRetrofitPath(String path) {
@@ -54,7 +36,6 @@ public class DefineUser {
         else editor.putString("server_url", "https://buy-help-server.onrender.com").apply();
     }
 
-    @Provides
     public String getBaseForRetrofit() {
         return sharedPreferences.getString("server_url", "https://buy-help-server.onrender.com");
     }
@@ -62,21 +43,6 @@ public class DefineUser {
     public void setDefaultBasePathForRetrofit() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("server_url", "https://buy-help-server.onrender.com").apply();
-    }
-
-    public void initEsp(Activity activity) {
-        try {
-            MasterKey masterKey = new MasterKey.Builder(activity.getApplicationContext(), MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .build();
-            encryptedSharedPreferences = (EncryptedSharedPreferences) EncryptedSharedPreferences.create(activity.getApplicationContext(), "user", masterKey,
-                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM);
-        } catch (IOException | GeneralSecurityException err) {
-            Log.e("auth error", err.toString());
-            err.printStackTrace();
-        }
-
-        sharedPreferences = activity.getSharedPreferences("prms", Context.MODE_PRIVATE);
     }
 
     public void initEsp(Context ctx) {
@@ -93,7 +59,6 @@ public class DefineUser {
         sharedPreferences = ctx.getSharedPreferences("prms", Context.MODE_PRIVATE);
     }
 
-    @Provides
     public Setter defineSetter() {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
@@ -109,7 +74,6 @@ public class DefineUser {
         return user;
     }
 
-    @Provides
     public Getter defineGetter() {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
@@ -125,7 +89,6 @@ public class DefineUser {
         return user;
     }
 
-    @Provides
     public Pair<String, Boolean> getTypeUser() {
         String userID = encryptedSharedPreferences.getString("X5_id", "");
         boolean isUser = encryptedSharedPreferences.getBoolean("isGetter", false);
@@ -163,7 +126,6 @@ public class DefineUser {
         editor.apply();
     }
 
-    @Provides
     public ShortDataUser getUser() {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
@@ -192,24 +154,20 @@ public class DefineUser {
         editor.apply();
     }
 
-    @Provides
     public boolean getPreferences(String key) {
         return sharedPreferences.getBoolean(key, false);
     }
 
-    @Provides
     public String isGetter() {
         if (!encryptedSharedPreferences.contains("isGetter")) return null;
 
         return encryptedSharedPreferences.getBoolean("isGetter", false) ? "getter" : "setter";
     }
 
-    @Provides
     public String getToken() {
         return encryptedSharedPreferences.getString("token", "");
     }
 
-    @Provides
     public String getFCMToken() {
         return encryptedSharedPreferences.getString("FCMtoken", "");
     }
@@ -218,7 +176,6 @@ public class DefineUser {
         encryptedSharedPreferences.edit().putString("FCMtoken", fcmToken).apply();
     }
 
-    @Provides
     public boolean getIsLocation() {
         return sharedPreferences.getBoolean("locaiton", true);
     }

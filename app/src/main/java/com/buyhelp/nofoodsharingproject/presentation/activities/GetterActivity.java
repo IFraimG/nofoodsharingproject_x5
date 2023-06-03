@@ -1,11 +1,14 @@
 package com.buyhelp.nofoodsharingproject.presentation.activities;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -26,6 +29,10 @@ public class GetterActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         PermissionHandler.requestCalendarPermissions(this);
+
+        Menu menu = binding.getterNavigation.getMenu();
+        MenuItem specialItem = menu.findItem(R.id.getterAdvrsF);
+        DrawableCompat.setTintList(specialItem.getIcon(), ContextCompat.getColorStateList(this, R.color.new_custom_green_dark));
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_getter_fragment);
         navController = navHostFragment.getNavController();

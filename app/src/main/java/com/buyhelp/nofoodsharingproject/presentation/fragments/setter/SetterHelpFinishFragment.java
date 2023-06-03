@@ -45,7 +45,7 @@ public class SetterHelpFinishFragment extends Fragment {
         socket = app.getSocket();
         socket.connect();
 
-        defineUser = app.getAppComponent().getDefineUser();
+        defineUser = app.getHelpersComponent().getDefineUser();
     }
 
     @Override

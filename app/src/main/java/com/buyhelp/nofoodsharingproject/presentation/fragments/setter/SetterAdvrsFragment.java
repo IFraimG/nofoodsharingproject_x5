@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.buyhelp.nofoodsharingproject.data.api.map.MapRepository;
+import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.adapters.SetterAdvertListAdapter;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentSetterAdvrsBinding;
@@ -40,7 +41,7 @@ public class SetterAdvrsFragment extends Fragment {
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         advertsRepository = app.getAppComponent().getAdvertsRepository();
         mapRepository = app.getAppComponent().getMapRepository();
-        defineUser = app.getAppComponent().getDefineUser();
+        defineUser = app.getHelpersComponent().getDefineUser();
     }
 
     @Override

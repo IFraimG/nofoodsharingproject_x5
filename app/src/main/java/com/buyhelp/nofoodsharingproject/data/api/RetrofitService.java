@@ -16,6 +16,7 @@ import com.buyhelp.nofoodsharingproject.data.api.setter.SetterApiService;
 import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
+import com.buyhelp.nofoodsharingproject.presentation.di.scopes.AppScope;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -72,7 +73,6 @@ public class RetrofitService {
     }
 
     @Provides
-    @Singleton
     public Retrofit create() {
         OkHttpClient.Builder client = new OkHttpClient.Builder().addInterceptor(getHttpLoggingInterceptor()).addInterceptor(getAuthInterceptor());
 

@@ -32,7 +32,7 @@ public class NotifyFragment extends Fragment {
 
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         notificationRepository = app.getAppComponent().getNotificationRepository();
-        defineUser = app.getAppComponent().getDefineUser();
+        defineUser = app.getHelpersComponent().getDefineUser();
     }
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

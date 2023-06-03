@@ -53,7 +53,7 @@ public class GetterAdvrsFragment extends Fragment {
         setterRepository = app.getAppComponent().getSetterRepository();
         advertsRepository = app.getAppComponent().getAdvertsRepository();
         mapRepository = app.getAppComponent().getMapRepository();
-        defineUser = app.getAppComponent().getDefineUser();
+        defineUser = app.getHelpersComponent().getDefineUser();
     }
 
     @Override

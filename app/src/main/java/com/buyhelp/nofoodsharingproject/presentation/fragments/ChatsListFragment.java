@@ -48,7 +48,7 @@ public class ChatsListFragment extends Fragment {
         mSocket = app.getSocket();
         mSocket.connect();
 
-        defineUser = app.getAppComponent().getDefineUser();
+        defineUser = app.getHelpersComponent().getDefineUser();
     }
 
     @Override

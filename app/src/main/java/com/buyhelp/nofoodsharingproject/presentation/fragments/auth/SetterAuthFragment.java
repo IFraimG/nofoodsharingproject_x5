@@ -71,9 +71,8 @@ public class SetterAuthFragment extends Fragment {
                         if (code == 400) Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
                         else if (code == 403) Snackbar.make(requireContext(), requireView(), getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
                         else if (code <= 299) {
-                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            Intent intent = new Intent(requireContext(), MainActivity.class);
                             startActivity(intent);
-                            requireActivity().finish();
                         }
                     });
                 }

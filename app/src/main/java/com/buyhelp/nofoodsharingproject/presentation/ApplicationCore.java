@@ -7,11 +7,15 @@ import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.di.components.AppComponent;
 import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerAppComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.HelpersComponent;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.DefineUserModule;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.yandex.mapkit.MapKitFactory;
+
+import org.checkerframework.checker.units.qual.A;
 
 import io.socket.client.Socket;
 import java.net.URI;
@@ -22,6 +26,7 @@ public class ApplicationCore extends Application {
     private boolean isInitMap = false;
     private Socket mSocket;
     private AppComponent appComponent;
+    private HelpersComponent helpersComponent;
 
     @Override
     public void onCreate() {
@@ -37,13 +42,12 @@ public class ApplicationCore extends Application {
             isInitMap = true;
         }
 
-        DefineUser defineUser = new DefineUser(getSharedPreferences("prms", MODE_PRIVATE));
-
-        appComponent = DaggerAppComponent.builder().application(this).appModule(new AppModule(getApplicationContext())).defineUser(new DefineUser()).retrofitModule(new RetrofitService()).create();
+        appComponent = DaggerAppComponent.builder().appModule(new AppModule(getApplicationContext())).retrofitModule(new RetrofitService()).create();
+        helpersComponent = appComponent.helpersComponentBuilder().defineUserModule(new DefineUserModule(getApplicationContext())).create();
 
         AndroidThreeTen.init(getApplicationContext());
 
-        mSocket = IO.socket(URI.create(defineUser.getBaseForRetrofit()));
+        mSocket = IO.socket(URI.create(helpersComponent.getDefineUser().getBaseForRetrofit()));
     }
 
     public Socket getSocket() {
@@ -52,6 +56,10 @@ public class ApplicationCore extends Application {
 
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    public HelpersComponent getHelpersComponent() {
+        return helpersComponent;
     }
 
 }

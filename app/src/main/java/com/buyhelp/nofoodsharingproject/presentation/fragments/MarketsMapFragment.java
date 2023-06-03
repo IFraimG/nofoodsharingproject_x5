@@ -37,7 +37,6 @@ import com.yandex.mapkit.directions.driving.DrivingRouter;
 import com.yandex.mapkit.directions.driving.DrivingSession;
 import com.yandex.mapkit.directions.driving.VehicleOptions;
 import com.yandex.mapkit.geometry.Point;
-import com.yandex.mapkit.layers.GeoObjectTapListener;
 import com.yandex.mapkit.layers.ObjectEvent;
 import com.yandex.mapkit.location.FilteringMode;
 import com.yandex.mapkit.location.LocationListener;
@@ -87,6 +86,8 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         PermissionHandler.requestMapPermissions(requireActivity(), requireContext());
 
         SearchFactory.initialize(requireContext());
@@ -94,9 +95,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
 
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         mapRepository = app.getAppComponent().getMapRepository();
-        defineUser = app.getAppComponent().getDefineUser();
-
-        super.onCreate(savedInstanceState);
+        defineUser = app.getHelpersComponent().getDefineUser();
     }
 
 
@@ -121,8 +120,6 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         mBinding = new WeakReference<>(binding);
 
         this.mapView = binding.mapview;
-        Button setMarketBtn = binding.mapSetMarketBtn;
-        Button makeRouteBtn = binding.mapMakeRoute;
 
         viewModel = new ViewModelProvider(requireActivity(),
                 new MapFactory(requireActivity().getApplication(), mapRepository))
@@ -132,11 +129,12 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         initMap();
         getPinnedMarketInfo();
 
-        setMarketBtn.setOnClickListener(View -> {
+        binding.mapSetMarketBtn.setOnClickListener(View -> {
             Pair<String, Boolean> userData = defineUser.getTypeUser();
             viewModel.updateMarket(userData.second, userData.first);
         });
-        makeRouteBtn.setOnClickListener(View -> createRoute());
+
+        binding.mapMakeRoute.setOnClickListener(View -> createRoute());
 
         return binding.getRoot();
     }
@@ -207,9 +205,9 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
                 adapter.setDropDownViewResource(R.layout.map_dropdown_text);
                 binding.mapListMarkets.setAdapter(adapter);
 
-                if (viewModel.getOldPosition() != -1) binding.mapListMarkets.setSelection(viewModel.getOldPosition() - 1);
+                if (viewModel.getOldPosition() != -1) binding.mapListMarkets.setSelection(viewModel.getOldPosition());
             } else {
-                if (viewModel.getOldPosition() != -1) binding.mapListMarkets.setSelection(viewModel.getOldPosition() - 1);
+                if (viewModel.getOldPosition() != -1) binding.mapListMarkets.setSelection(viewModel.getOldPosition());
                 adapter.notifyDataSetChanged();
             }
 

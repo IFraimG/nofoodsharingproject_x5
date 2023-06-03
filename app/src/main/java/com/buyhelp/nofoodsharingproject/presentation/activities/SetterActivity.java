@@ -3,11 +3,14 @@ package com.buyhelp.nofoodsharingproject.presentation.activities;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -47,6 +50,11 @@ public class SetterActivity extends AppCompatActivity {
         navController = navHostFragment.getNavController();
 
         NavigationUI.setupWithNavController(binding.setterNavigation, navController);
+
+        Menu menu = binding.setterNavigation.getMenu();
+        MenuItem specialItem = menu.findItem(R.id.setterAdvrsF);
+        DrawableCompat.setTintList(specialItem.getIcon(), ContextCompat.getColorStateList(this, R.color.new_custom_green_dark));
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DateNowChecker dateNowChecker = new DateNowChecker();

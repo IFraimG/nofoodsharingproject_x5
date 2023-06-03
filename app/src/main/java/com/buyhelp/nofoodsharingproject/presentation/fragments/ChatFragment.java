@@ -52,7 +52,7 @@ public class ChatFragment extends Fragment {
         mSocket = app.getSocket();
         mSocket.connect();
 
-        defineUser = app.getAppComponent().getDefineUser();
+        defineUser = app.getHelpersComponent().getDefineUser();
 
     }
 

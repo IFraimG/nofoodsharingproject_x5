@@ -52,7 +52,7 @@ public class SetterAdvertFragment extends Fragment {
         advertsRepository = app.getAppComponent().getAdvertsRepository();
         notificationRepository = app.getAppComponent().getNotificationRepository();
         getterRepository = app.getAppComponent().getGetterRepository();
-        this.defineUser = app.getAppComponent().getDefineUser();
+        this.defineUser = app.getHelpersComponent().getDefineUser();
     }
 
     @Override

@@ -44,7 +44,7 @@ public class GetterProfileFragment extends Fragment {
 
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         getterRepository = app.getAppComponent().getGetterRepository();
-        defineUser = app.getAppComponent().getDefineUser();
+        defineUser = app.getHelpersComponent().getDefineUser();
     }
 
     @Override

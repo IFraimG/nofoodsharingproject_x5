@@ -55,6 +55,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
                             android:layout_marginBottom="@dimen/standard_size_small"
                             android:text="@string/name_text_hint" />
                         <TextView
@@ -245,7 +247,7 @@
                         android:minHeight="150dp"
                         android:layout_marginStart="@dimen/standard_size_very_medium"
                         android:layout_marginEnd="@dimen/standard_size_very_medium"
-                        android:layout_marginBottom="100dp" />
+                        android:layout_marginBottom="80dp" />
                 </LinearLayout>
             </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

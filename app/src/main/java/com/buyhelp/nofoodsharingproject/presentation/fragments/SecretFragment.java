@@ -19,7 +19,7 @@ public class SecretFragment extends DialogFragment {
         final EditText input = new EditText(requireContext());
 
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
-        DefineUser defineUser = app.getAppComponent().getDefineUser();
+        DefineUser defineUser = app.getHelpersComponent().getDefineUser();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setPositiveButton("Подключить", (dialog, id) -> {

@@ -61,7 +61,7 @@ public class SetterProfileFragment extends Fragment {
         ApplicationCore app = (ApplicationCore) requireActivity().getApplication();
         setterRepository = app.getAppComponent().getSetterRepository();
         advertsRepository = app.getAppComponent().getAdvertsRepository();
-        defineUser = app.getAppComponent().getDefineUser();
+        defineUser = app.getHelpersComponent().getDefineUser();
 
         setHasOptionsMenu(true);
 

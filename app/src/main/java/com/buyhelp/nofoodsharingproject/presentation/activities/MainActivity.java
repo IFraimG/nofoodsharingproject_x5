@@ -53,16 +53,16 @@ public class MainActivity extends AppCompatActivity {
         authRepository.checkAuthSetter(defineUser.getToken()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
-                if (response.body() != null && !response.body().getIsAuth()) redirectToAuth();
-                else {
+                if (response.isSuccessful() && response.body() != null && response.body().getIsAuth()) {
                     Intent intentSetter = new Intent(getApplicationContext(), SetterActivity.class);
                     startActivity(intentSetter);
                     finish();
-                }
+                } else redirectToAuth();
             }
 
             @Override
             public void onFailure(@NotNull Call<CheckAuthI> call, @NotNull Throwable t) {
+                t.printStackTrace();
                 redirectToAuth();
             }
         });
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NotNull Call<CheckAuthI> call, @NotNull Throwable t) {
+                t.printStackTrace();
                 redirectToAuth();
             }
         });
