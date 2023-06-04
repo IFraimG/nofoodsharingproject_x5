@@ -96,6 +96,7 @@
                 android:minWidth="250dp"
                 android:padding="5dp"
                 android:paddingStart="10dp"
+                android:autofillHints=""
                 android:paddingEnd="10dp" />
 
             <ImageButton

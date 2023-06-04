@@ -45,7 +45,7 @@ public class GiverActivity extends AppCompatActivity {
         ApplicationCore app = (ApplicationCore) getApplication();
         app.getAppComponent().inject(this);
 
-        PermissionComponent permissionComponent = (PermissionComponent) DaggerPermissionComponent.builder().defineActivity(new ActivityModule(this)).definePermissions(new PermissionHandlerModule());
+        PermissionComponent permissionComponent = DaggerPermissionComponent.builder().defineActivity(new ActivityModule(this)).definePermissions(new PermissionHandlerModule()).build();
         permissionHandler = permissionComponent.getPermissionHandler();
 
         permissionHandler.requestCalendarPermissions(this);
@@ -53,7 +53,7 @@ public class GiverActivity extends AppCompatActivity {
         if (defineUser.getIsLocation()) permissionHandler.requestPermissions(this);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_giver_fragment);
-        navController = navHostFragment.getNavController();
+        if (navHostFragment != null) navController = navHostFragment.getNavController();
 
         NavigationUI.setupWithNavController(binding.giverNavigation, navController);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

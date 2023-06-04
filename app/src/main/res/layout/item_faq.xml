@@ -27,6 +27,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.1"
             android:layout_height="32dp"
+            android:contentDescription="@string/no_image_warnings"
             android:src="@drawable/baseline_add_circle_outline_24" />
 
         <ImageView
@@ -35,6 +36,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:visibility="gone"
+            android:contentDescription="@string/no_image_warnings"
             android:src="@drawable/baseline_remove_24" />
     </LinearLayout>
     <LinearLayout

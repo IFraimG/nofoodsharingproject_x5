@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.map.MapRepository;
@@ -24,8 +23,6 @@ import com.buyhelp.nofoodsharingproject.data.models.Market;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
-import com.buyhelp.nofoodsharingproject.presentation.activities.GiverActivity;
-import com.buyhelp.nofoodsharingproject.presentation.activities.NeedyActivity;
 import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerPermissionComponent;
 import com.buyhelp.nofoodsharingproject.presentation.di.components.PermissionComponent;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.ActivityModule;
@@ -96,7 +93,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PermissionComponent permissionComponent = DaggerPermissionComponent.builder().defineActivity(new ActivityModule((AppCompatActivity) requireActivity())).definePermissions(new PermissionHandlerModule()).build();
+        PermissionComponent permissionComponent = DaggerPermissionComponent.builder().defineActivity(new ActivityModule(requireActivity())).definePermissions(new PermissionHandlerModule()).build();
         permissionHandler = permissionComponent.getPermissionHandler();
 
         if (permissionHandler != null) permissionHandler.requestMapPermissions((AppCompatActivity) requireActivity());
@@ -136,7 +133,23 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
                 new MapFactory(requireActivity().getApplication(), mapRepository))
                 .get(MapViewModel.class);
 
-        initLocation();
+        if (permissionHandler != null && permissionHandler.checkPermissions((AppCompatActivity) requireActivity())) {
+            locationListener = new LocationListener() {
+                @Override
+                public void onLocationStatusUpdated(@NonNull LocationStatus locationStatus) {
+                    if (locationStatus == LocationStatus.AVAILABLE) isAvailableLocation = true;
+                }
+
+                @Override
+                public void onLocationUpdated(@NonNull com.yandex.mapkit.location.Location location) {
+                    myPoint = location.getPosition();
+                }
+            };
+
+            locationManager = MapKitFactory.getInstance().createLocationManager();
+            if (locationListener != null) locationManager.subscribeForLocationUpdates(0, 0, 0, false, FilteringMode.OFF, locationListener);
+        }
+
         initMap();
         getPinnedMarketInfo();
 
@@ -162,25 +175,6 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         mBinding.clear();
 
         if (mapView != null) mapView.getMap().getMapObjects().clear();
-    }
-
-    private void initLocation() {
-        if (permissionHandler != null && permissionHandler.checkPermissions((AppCompatActivity) requireActivity())) {
-            locationListener = new LocationListener() {
-                @Override
-                public void onLocationStatusUpdated(@NonNull LocationStatus locationStatus) {
-                    if (locationStatus == LocationStatus.AVAILABLE) isAvailableLocation = true;
-                }
-
-                @Override
-                public void onLocationUpdated(@NonNull com.yandex.mapkit.location.Location location) {
-                    myPoint = location.getPosition();
-                }
-            };
-
-            locationManager = MapKitFactory.getInstance().createLocationManager();
-            if (locationListener != null) locationManager.subscribeForLocationUpdates(0, 0, 0, false, FilteringMode.OFF, locationListener);
-        }
     }
 
     private void initMap() {

@@ -1,5 +1,6 @@
 package com.buyhelp.nofoodsharingproject.presentation.fragments.giver;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -58,6 +59,7 @@ public class GiverProfileFragment extends Fragment {
     private GiverRepository giverRepository;
     private AdvertsRepository advertsRepository;
     private PermissionHandler permissionHandler;
+    private String productSuccess;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,16 +70,15 @@ public class GiverProfileFragment extends Fragment {
         advertsRepository = app.getAppComponent().getAdvertsRepository();
         defineUser = app.getHelpersComponent().getDefineUser();
 
-        PermissionComponent permissionComponent = DaggerPermissionComponent.builder().defineActivity(new ActivityModule((AppCompatActivity) requireActivity())).definePermissions(new PermissionHandlerModule()).build();
+        PermissionComponent permissionComponent = DaggerPermissionComponent.builder().defineActivity(new ActivityModule(requireActivity())).definePermissions(new PermissionHandlerModule()).build();
         permissionHandler = permissionComponent.getPermissionHandler();
 
         setHasOptionsMenu(true);
 
-
         this.user = defineUser.defineGiver();
 
         isCheckedLocation = defineUser.getPreferences("location");
-        isCheckedNotification = defineUser.getPreferences("notificaiton");
+        isCheckedNotification = defineUser.getPreferences("notification");
     }
 
     @Override
@@ -92,6 +93,8 @@ public class GiverProfileFragment extends Fragment {
         binding.giverProfilePhone.setText(user.getPhone());
         binding.giverProfileLocation.setChecked(isCheckedLocation);
         binding.giverProfileOpenChat.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_giverProfileF_to_chatsListFragment));
+
+        productSuccess = requireContext().getString(R.string.products_success);
 
         handlers();
 
@@ -125,16 +128,13 @@ public class GiverProfileFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @SuppressLint("NonConstantResourceId")
     private boolean toolbarHandle(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.profile_leave:
-                logout();
-                break;
-            case R.id.edit_settings:
-                editProfile();
-                break;
-            default:
-                break;
+            case R.id.profile_leave -> logout();
+            case R.id.edit_settings -> editProfile();
+            default -> {
+            }
         }
         return false;
     }
@@ -158,7 +158,8 @@ public class GiverProfileFragment extends Fragment {
 
     private void getHistoryList(List<String> result) {
         if (result != null) {
-            binding.giverProfileCount.setText("Успешных передач продуктов: " + Integer.toString(result.size()));
+            String giverProfileCountString = productSuccess + result.size();
+            binding.giverProfileCount.setText(giverProfileCountString);
             if (arrayAdapter == null) {
                 arrayAdapter = new ArrayAdapter<>(requireContext(), R.layout.item_needy_product_name, result);
                 binding.giverProfileHistoryList.setAdapter(arrayAdapter);

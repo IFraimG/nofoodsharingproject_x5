@@ -69,6 +69,7 @@
     <string name="name_text_needy">Имя нуждающегося</string>
     <string name="broadcast_text_hint">N успешных передач продуктов</string>
     <string name="some_success_products"> успешных передач продуктов</string>
+    <string name="products_success">Успешных передач продуктов: </string>
     <string name="product_text_success"> продукта - </string>
     <string name="geolocation_text">Включить геолокацию</string>
     <string name="on_notifications_text">Включить уведомления</string>
