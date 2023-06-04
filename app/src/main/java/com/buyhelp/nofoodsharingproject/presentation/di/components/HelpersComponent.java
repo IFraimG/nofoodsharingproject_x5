@@ -1,3 +1,9 @@
+/**
+ * Класс {@code HelpersComponent} позволяет передавать класс DefineUser, пробрасывая в него контекст через AppModule
+ * Субкомпонент у AppComponent
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.di.components;
 
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;

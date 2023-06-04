@@ -1,3 +1,8 @@
+/**
+ * Класс {@code NeedyAuthFragment} - фрагмент страницы авторизации нуждающегося пользователя
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments.auth;
 
 import android.content.Intent;

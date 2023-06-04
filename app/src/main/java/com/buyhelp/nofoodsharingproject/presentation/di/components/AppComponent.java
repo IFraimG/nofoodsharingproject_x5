@@ -1,3 +1,8 @@
+/**
+ * Класс {@code AppComponent} позволяет передавать класс Retrofit, пробрасывая в него контекст через AppModule
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.di.components;
 
 import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;

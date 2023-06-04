@@ -1,3 +1,9 @@
+/**
+ * Класс {@code PermissionComponent} позволяет передавать класс PermissionHandler
+ * В планах улучшить переброс активности в модуль PermissionHandlerModule
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.di.components;
 
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;

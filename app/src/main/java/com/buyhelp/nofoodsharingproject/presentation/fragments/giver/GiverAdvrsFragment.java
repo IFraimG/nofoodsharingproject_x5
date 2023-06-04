@@ -1,3 +1,8 @@
+/**
+ * Класс {@code GiverAdvrsFragment} - фрагмент главной страницы отдающего со списком объявлений
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments.giver;
 
 import android.os.Bundle;
@@ -66,9 +71,7 @@ public class GiverAdvrsFragment extends Fragment {
             binding.giverAdvertSwiper.setRefreshing(false);
         });
 
-        binding.giverAdvertFaq.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_giverAdvrsF_to_faqFragment);
-        });
+        binding.giverAdvertFaq.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_giverAdvrsF_to_faqFragment));
 
         initFilter();
 
@@ -83,20 +86,20 @@ public class GiverAdvrsFragment extends Fragment {
 
     private void renderStatus(LoaderStatus loaderStatus) {
         switch (loaderStatus.getStatus()) {
-            case LOADING:
+            case LOADING -> {
                 binding.giverListAdvert.setVisibility(View.INVISIBLE);
                 binding.giverLoader.setVisibility(View.VISIBLE);
-                break;
-            case LOADED:
+            }
+            case LOADED -> {
                 binding.giverListAdvert.setVisibility(View.VISIBLE);
                 binding.giverLoader.setVisibility(View.INVISIBLE);
                 binding.giverAdvertSwiper.setRefreshing(false);
-                break;
-            case FAILURE:
+            }
+            case FAILURE -> {
                 binding.giverListAdvert.setVisibility(View.INVISIBLE);
                 binding.giverLoader.setVisibility(View.INVISIBLE);
                 binding.giverAdvertSwiper.setRefreshing(false);
-                break;
+            }
         }
     }
 

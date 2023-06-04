@@ -1,3 +1,8 @@
+/**
+ * Класс {@code MainAuthFragment} - фрагмент общей страницы авторизации пользователя
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments.auth;
 
 import android.os.Bundle;
@@ -10,8 +15,6 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.buyhelp.nofoodsharingproject.R;

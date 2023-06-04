@@ -1,3 +1,9 @@
+/**
+ * Класс {@code GiverAdvertFragment} - фрагмент страницы объявления у отдающего пользователя
+ * Отдающий зайдет на эту страницу, когда будет стоять на кассе
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments.giver;
 
 import android.content.Intent;
@@ -69,11 +75,11 @@ public class GiverAdvertFragment extends Fragment {
         socket.connect();
 
         binding.giverAdvertBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_giverAdvertFragment_to_giverAdvrsF));
-        binding.giverAdvertAccept.setOnClickListener(View -> makeHelp());
+        binding.giverAdvertAccept.setOnClickListener(this::makeHelp);
         binding.giverAdvertCreateChat.setOnClickListener(this::createChat);
         binding.giverAdvertReport.setOnClickListener(View -> openReportModal());
 
-        getAdvertisement(getArguments().getString("advertID", ""));
+        if (getArguments() != null) getAdvertisement(getArguments().getString("advertID", ""));
 
         return binding.getRoot();
     }
@@ -113,6 +119,10 @@ public class GiverAdvertFragment extends Fragment {
         }
     }
 
+    /**
+     * Метод для получения объявления
+     * @param advertID необходим для поиска объявления
+     */
     private void getAdvertisement(String advertID) {
         binding.giverAdvertCreateChat.setEnabled(false);
         binding.giverAdvertAccept.setEnabled(false);
@@ -133,16 +143,20 @@ public class GiverAdvertFragment extends Fragment {
         });
     }
 
-    private void makeHelp() {
+    /**
+     * Метод, который отмечает, что пользователь совершил покупку
+     */
+    private void makeHelp(View v) {
         binding.giverAdvertAccept.setEnabled(false);
         String generateID = Advertisement.generateID();
         viewModel.makeHelp(defineUser).observe(requireActivity(), advertisement -> {
             Bundle args = new Bundle();
             args.putString("needyID", advertisement.getAuthorID());
             args.putString("gettingProductID", generateID);
-            Navigation.findNavController(requireView()).navigate(R.id.action_giverAdvertFragment_to_giverHelpFinishFragment, args);
+            Navigation.findNavController(v).navigate(R.id.action_giverAdvertFragment_to_giverHelpFinishFragment, args);
         });
     }
+
 
     private void createChat(View v) {
         try {
@@ -154,6 +168,9 @@ public class GiverAdvertFragment extends Fragment {
         }
     }
 
+    /**
+     * Метод необходим на случай, если пользователь захочет пожаловаться на объявление
+     */
     private void openReportModal() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = getLayoutInflater();

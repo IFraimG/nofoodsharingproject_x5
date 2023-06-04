@@ -1,3 +1,8 @@
+/**
+ * Класс {@code GiverAuthFragment} - фрагмент страницы регистрации отдаюзего пользователя
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments.auth;
 
 import android.content.Intent;
