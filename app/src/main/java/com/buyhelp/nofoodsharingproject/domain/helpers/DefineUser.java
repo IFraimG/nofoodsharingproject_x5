@@ -1,3 +1,8 @@
+/**
+ * Класс {@code DefineUser} необходим для работы с SharedPreferences и EncryptedSharedPreferences
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.domain.helpers;
 
 import android.content.Context;
@@ -28,6 +33,10 @@ public class DefineUser {
         initEsp(ctx);
     }
 
+    /**
+     * Метод для подключения к серверу
+     * @param path принимает на вход строку для подключения к серверу (доменная ссылка или localhost)
+     */
     public void initBaseRetrofitPath(String path) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String result = "http://" + path + ":8080";
@@ -39,11 +48,17 @@ public class DefineUser {
         return sharedPreferences.getString("server_url", "https://buy-help-server.onrender.com");
     }
 
+    /**
+     * Метод для подключения к серверу по умолчанию
+     */
     public void setDefaultBasePathForRetrofit() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("server_url", "https://buy-help-server.onrender.com").apply();
     }
 
+    /**
+     * Метод для инициализации ESP, SP
+     */
     public void initEsp(Context ctx) {
         try {
             MasterKey masterKey = new MasterKey.Builder(ctx, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
@@ -105,10 +120,22 @@ public class DefineUser {
         if (sharedPreferences != null) sharedPreferences.edit().clear().apply();
     }
 
+    /**
+     * Метод для сохранения данных нуждающегося после успешной авторизации
+     * @param isNeedy показывает, является ли пользователь нуждающимся или нет
+     * @param X5_id предоставляет основной ID пользователя
+     * @param result подает на вход остальные данные пользователя (логин, телефон, токен, фмс_токен, jwt_токен)
+     */
     public void saveUserDataNeedy(boolean isNeedy, String X5_id, SignUpResponseI<Needy> result) {
         saveData(isNeedy, X5_id, result.getUser().getLogin(), result.getUser().getPhone(), result.getToken(), result.user.getTokenFCM());
     }
 
+    /**
+     * Метод для сохранения данных отдающего после успешной авторизации
+     * @param isNeedy показывает, является ли пользователь нуждающимся или нет
+     * @param X5_id предоставляет основной ID пользователя
+     * @param result подает на вход остальные данные пользователя (логин, телефон, токен, фмс_токен, jwt_токен)
+     */
     public void saveUserDataGiver(boolean isNeedy, String X5_id, SignUpResponseI<Giver> result) {
         saveData(isNeedy, X5_id, result.getUser().getLogin(), result.getUser().getPhone(), result.getToken(), result.user.getTokenFCM());
     }
@@ -125,6 +152,10 @@ public class DefineUser {
         editor.apply();
     }
 
+    /**
+     * Метод для получения данных пользователя
+     * @return Возвращает упрощенную версию файла Needy/Giver
+     */
     public ShortDataUser getUser() {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
@@ -138,6 +169,9 @@ public class DefineUser {
         return user;
     }
 
+    /**
+     * Метод для сохранения изменений профиля (логин, телефон)
+     */
     public void editProfileInfo(String login, String phone) {
         SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
         editor.putString("login", login);
@@ -146,6 +180,10 @@ public class DefineUser {
         editor.apply();
     }
 
+    /**
+     * Метод обращения к SP в формате boolean значений
+     * @param key - "location", "notification"
+     */
     public void setToPreferences(String key, boolean value) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -157,24 +195,35 @@ public class DefineUser {
         return sharedPreferences.getBoolean(key, false);
     }
 
+    /**
+     * Метод для получения типа пользователя
+     * @return Возвращает информацию о том, является ли пользователь нуждающимся или нет
+     */
     public String isNeedy() {
         if (!encryptedSharedPreferences.contains("isNeedy")) return null;
 
         return encryptedSharedPreferences.getBoolean("isNeedy", false) ? "needy" : "giver";
     }
 
+    /**
+     * Метод для получения jwt токена
+     * @return Возвращает jwt токен пользователя
+     */
     public String getToken() {
         return encryptedSharedPreferences.getString("token", "");
     }
 
-    public String getFCMToken() {
-        return encryptedSharedPreferences.getString("FCMtoken", "");
-    }
-
+    /**
+     * Метод для изменения FCM токена
+     * @param fcmToken Принимает на вход токен пользователя, необходимый для удаленной отправки уведомлений
+     */
     public void changeFCMtoken(String fcmToken) {
         encryptedSharedPreferences.edit().putString("FCMtoken", fcmToken).apply();
     }
 
+    /**
+     * Метод для проверки, включена ли геолокация у пользователя
+     */
     public boolean getIsLocation() {
         return sharedPreferences.getBoolean("locaiton", true);
     }
