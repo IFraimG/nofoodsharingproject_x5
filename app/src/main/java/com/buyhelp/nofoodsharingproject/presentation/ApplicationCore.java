@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.buyhelp.nofoodsharingproject.BuildConfig;
 import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
-import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.di.components.AppComponent;
 import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerAppComponent;
 import com.buyhelp.nofoodsharingproject.presentation.di.components.HelpersComponent;
@@ -14,8 +13,6 @@ import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.yandex.mapkit.MapKitFactory;
-
-import org.checkerframework.checker.units.qual.A;
 
 import io.socket.client.Socket;
 import java.net.URI;

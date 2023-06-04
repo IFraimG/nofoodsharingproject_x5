@@ -29,12 +29,14 @@
     </style>
 
     <style name="style_auth_edittext" parent="TextAppearance.AppCompat">
-        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">80dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:background">@drawable/custom_round_border</item>
         <item name="android:paddingLeft">@dimen/standard_size_very_medium</item>
         <item name="android:layout_marginTop">@dimen/very_big</item>
+        <item name="android:layout_marginStart">@dimen/fk_size</item>
+        <item name="android:layout_marginEnd">@dimen/fk_size</item>
         <item name="android:textSize">18sp</item>
     </style>
 

@@ -21,7 +21,6 @@
         android:id="@+id/getter_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/style2"
         app:itemIconTint="@drawable/bottom_navigation_colors"
         app:itemTextColor="@drawable/bottom_navigation_colors"
         android:windowSoftInputMode="adjustResize|stateHidden"

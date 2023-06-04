@@ -1,6 +1,5 @@
 package com.buyhelp.nofoodsharingproject.domain.helpers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -13,19 +12,19 @@ import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.buyhelp.nofoodsharingproject.data.models.Getter;
 import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.buyhelp.nofoodsharingproject.data.models.ShortDataUser;
-import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 public class DefineUser {
     private EncryptedSharedPreferences encryptedSharedPreferences;
     private SharedPreferences sharedPreferences;
 
     @Inject
-    public DefineUser(Context ctx) {
+    public DefineUser(@Named("application_context") Context ctx) {
         initEsp(ctx);
     }
 

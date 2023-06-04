@@ -35,7 +35,6 @@ public class AdvertisementListViewModel extends AndroidViewModel {
     private final AdvertsRepository advertsRepository;
     private final MapRepository mapRepository;
 
-
     public AdvertisementListViewModel(Application application, AdvertsRepository advertsRepository, MapRepository mapRepository) {
         super(application);
         this.advertsRepository = advertsRepository;

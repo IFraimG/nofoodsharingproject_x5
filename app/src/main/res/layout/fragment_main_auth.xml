@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="180dp"
+            android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical">
@@ -41,20 +42,24 @@
 
             <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                 android:id="@+id/main_auth_btn_getter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium"
                 android:layout_height="70dp"
-                android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/standard_size_very_medium"
                 android:text="@string/i_getter_text"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
+                android:textFontWeight="700"
                 android:textSize="20sp"
-                app:backgroundTint="@color/light_orange" />
+                android:background="@drawable/style2" />
 
             <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                 android:id="@+id/main_auth_btn_setter"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium"
                 android:text="@string/i_setter_text"
                 android:textColor="@color/white"
                 android:textSize="20sp"

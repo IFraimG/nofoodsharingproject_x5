@@ -19,9 +19,8 @@ import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.scopes.AppScope;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
+import javax.inject.Named;
 
-import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Interceptor;
@@ -41,10 +40,11 @@ public class RetrofitService {
     public RetrofitService() {}
 
     @Inject
-    public RetrofitService(Context ctx) {
+    public RetrofitService(@Named("application_context") Context ctx) {
         this.ctx = ctx;
     }
 
+    @AppScope
     @Provides
     public HttpLoggingInterceptor getHttpLoggingInterceptor() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -53,6 +53,7 @@ public class RetrofitService {
         return loggingInterceptor;
     }
 
+    @AppScope
     @Provides
     public Interceptor getAuthInterceptor() {
         return chain -> {
@@ -72,6 +73,7 @@ public class RetrofitService {
         };
     }
 
+    @AppScope
     @Provides
     public Retrofit create() {
         OkHttpClient.Builder client = new OkHttpClient.Builder().addInterceptor(getHttpLoggingInterceptor()).addInterceptor(getAuthInterceptor());
@@ -83,63 +85,81 @@ public class RetrofitService {
                 .build();
     }
 
+    @AppScope
     @Provides
     public Retrofit getInstance() {
         if (retrofit == null) retrofit = create();
         return retrofit;
     }
 
+    @AppScope
     @Provides
     public GetterApiService provideGetterRetrofitService(RetrofitService retrofitService) {
         return new GetterApiService(retrofitService);
     }
 
+    @AppScope
     @Provides
     public GetterRepository provideGetterRepository(GetterApiService getterApiService) {
         return new GetterRepository(getterApiService);
     }
 
+    @AppScope
     @Provides
     public AuthApiService provideAuthRetrofitService(RetrofitService retrofitService) {
         return new AuthApiService(retrofitService);
     }
+
+    @AppScope
     @Provides
     public AuthRepository provideAuthRepository(AuthApiService authApiService) {
         return new AuthRepository(authApiService);
     }
 
+
+    @AppScope
     @Provides
     public SetterApiService provideSetterRetrofitService(RetrofitService retrofitService) {
         return new SetterApiService(retrofitService);
     }
+
+    @AppScope
     @Provides
     public SetterRepository provideSetterRepository(SetterApiService setterApiService) {
         return new SetterRepository(setterApiService);
     }
 
+    @AppScope
     @Provides
     public AdvertsApiService provideAdvertsRetrofitService(RetrofitService retrofitService) {
         return new AdvertsApiService(retrofitService);
     }
 
+    @AppScope
     @Provides
     public AdvertsRepository provideAdvertsRepository(AdvertsApiService advertsApiService) {
         return new AdvertsRepository(advertsApiService);
     }
 
+    @AppScope
     @Provides
     public MapApiService provideMapRetrofitService(RetrofitService retrofitService) {
         return new MapApiService(retrofitService);
     }
+
+    @AppScope
     @Provides
     public MapRepository provideMapRepository(MapApiService mapApiService) {
         return new MapRepository(mapApiService);
     }
 
+    @AppScope
     @Provides
     public InnerNotificationService provideInnerNotificationRetrofitService(RetrofitService retrofitService) {
         return new InnerNotificationService(retrofitService);
     }
+
+    @AppScope
     @Provides
     public NotificationRepository provideInnerNotificationRepository(InnerNotificationService innerNotificationService) {
         return new NotificationRepository(innerNotificationService);

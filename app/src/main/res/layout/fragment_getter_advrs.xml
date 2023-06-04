@@ -176,9 +176,11 @@
             </LinearLayout>
 
             <FrameLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium"
                 android:layout_marginTop="@dimen/standard_size_small"
                 android:layout_marginBottom="80dp"
                 android:orientation="vertical">

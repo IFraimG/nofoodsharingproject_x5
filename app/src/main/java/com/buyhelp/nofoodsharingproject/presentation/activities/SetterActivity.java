@@ -23,6 +23,7 @@ import com.buyhelp.nofoodsharingproject.domain.utils.DateNowChecker;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowCheckerOld;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
+import com.buyhelp.nofoodsharingproject.presentation.views.CustomBottomNavigationMenu;
 
 import javax.inject.Inject;
 
@@ -50,12 +51,6 @@ public class SetterActivity extends AppCompatActivity {
         navController = navHostFragment.getNavController();
 
         NavigationUI.setupWithNavController(binding.setterNavigation, navController);
-
-        Menu menu = binding.setterNavigation.getMenu();
-        MenuItem specialItem = menu.findItem(R.id.setterAdvrsF);
-        DrawableCompat.setTintList(specialItem.getIcon(), ContextCompat.getColorStateList(this, R.color.new_custom_green_dark));
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             DateNowChecker dateNowChecker = new DateNowChecker();
             if (dateNowChecker.getHour() >= 10 && dateNowChecker.getHour() < 23) initLocation();

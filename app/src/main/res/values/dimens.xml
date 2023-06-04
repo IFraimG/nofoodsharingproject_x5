@@ -5,11 +5,11 @@
     <dimen name="normal_button_size">24dp</dimen>
     <dimen name="standard_size_little">5dp</dimen>
     <dimen name="standard_size_small">10dp</dimen>
-    <dimen name="standard_size_medium">15dp</dimen>
+    <dimen name="standard_size_medium">16dp</dimen>
+    <dimen name="text_title">20sp</dimen>
     <dimen name="standard_size_very_medium">20dp</dimen>
     <dimen name="very_big">50dp</dimen>
     <dimen name="size_48">48dp</dimen>
     <dimen name="size_64">64dp</dimen>
     <dimen name="fk_size">40dp</dimen>
-
 </resources>

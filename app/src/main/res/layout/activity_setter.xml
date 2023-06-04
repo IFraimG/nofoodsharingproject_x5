@@ -17,14 +17,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph_setter" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.buyhelp.nofoodsharingproject.presentation.views.CustomBottomNavigationMenu
         android:id="@+id/setter_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/style2"
         app:itemIconTint="@drawable/bottom_navigation_colors"
         app:itemTextColor="@drawable/bottom_navigation_colors"
-        android:windowSoftInputMode="stateHidden"
+        android:windowSoftInputMode="adjustResize|stateHidden"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/setter_bottom_menu" />

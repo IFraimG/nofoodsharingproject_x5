@@ -30,10 +30,6 @@ public class GetterActivity extends AppCompatActivity {
 
         PermissionHandler.requestCalendarPermissions(this);
 
-        Menu menu = binding.getterNavigation.getMenu();
-        MenuItem specialItem = menu.findItem(R.id.getterAdvrsF);
-        DrawableCompat.setTintList(specialItem.getIcon(), ContextCompat.getColorStateList(this, R.color.new_custom_green_dark));
-
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_getter_fragment);
         navController = navHostFragment.getNavController();
 

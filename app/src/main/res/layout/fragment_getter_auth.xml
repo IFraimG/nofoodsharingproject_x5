@@ -65,22 +65,29 @@
 
             <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                 android:id="@+id/auth_getter_create"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/fk_size"
+                android:layout_marginStart="@dimen/fk_size"
+                android:layout_marginEnd="@dimen/fk_size"
+                android:layout_marginBottom="@dimen/standard_size_very_medium"
                 android:text="@string/create_new_account_text"
                 android:textSize="18sp"
                 android:visibility="gone"
-                app:backgroundTint="@color/light_orange" />
+                android:textColor="@color/white"
+                android:background="@drawable/custom_round_border_active" />
 
             <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
                 android:id="@+id/auth_getter_btn_login"
-                android:layout_marginTop="@dimen/fk_size"
-                android:layout_marginBottom="@dimen/fk_size"
-                android:layout_width="300dp"
+                android:layout_marginStart="@dimen/fk_size"
+                android:layout_marginEnd="@dimen/fk_size"
+                android:layout_marginBottom="@dimen/standard_size_very_medium"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:layout_width="match_parent"
                 android:layout_height="80dp"
-                app:backgroundTint="@color/light_orange"
+                android:textColor="@color/white"
+                android:background="@drawable/custom_round_border_active"
                 android:layout_gravity="center"
                 android:textSize="24sp"
                 android:text="@string/Enter_text" />
