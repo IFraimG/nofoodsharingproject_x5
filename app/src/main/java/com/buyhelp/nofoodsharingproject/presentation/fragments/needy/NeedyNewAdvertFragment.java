@@ -58,7 +58,7 @@ public class NeedyNewAdvertFragment extends Fragment {
         binding.productChoosenItems.setOnItemClickListener((parent, view, position, id) -> removeItem(position));
 
         binding.buttonBack.setOnClickListener(v ->  Navigation.findNavController(v).navigate(R.id.action_needyNewAdvertFragment_to_needyAdvrsF));
-        binding.readyToCreate.setOnClickListener(View -> createAdvert());
+        binding.readyToCreate.setOnClickListener(v -> createAdvert(v));
 
         return binding.getRoot();
     }
@@ -86,22 +86,22 @@ public class NeedyNewAdvertFragment extends Fragment {
     }
 
 
-    private void createAdvert() {
+    private void createAdvert(View v) {
         if (viewModel.getUserItems().size() == 0)
-            Snackbar.make(requireContext(), requireView(), getString(R.string.add_to_list_product), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(requireContext(), v, getString(R.string.add_to_list_product), Snackbar.LENGTH_SHORT).show();
         else if (binding.needyAdvertInputTitle.getText().toString().length() == 0) {
-            Snackbar.make(requireContext(),requireView(), getString(R.string.edit_name), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(requireContext(), v, getString(R.string.edit_name), Snackbar.LENGTH_SHORT).show();
         } else if (viewModel.getUserItems().size() > 3) {
-            Snackbar.make(requireContext(), requireView(), getString(R.string.many_products), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(requireContext(), v, getString(R.string.many_products), Snackbar.LENGTH_SHORT).show();
         } else {
             binding.readyToCreate.setEnabled(false);
             viewModel.createAdvert(binding.needyAdvertInputTitle.getText().toString()).observe(requireActivity(), advertisement -> {
                 int code = viewModel.getStatusCode();
-                if (code > 299) Snackbar.make(requireContext(), requireView(), getString(R.string.problems), Snackbar.LENGTH_SHORT).show();
+                if (code > 299) Snackbar.make(requireContext(), v, getString(R.string.problems), Snackbar.LENGTH_SHORT).show();
 
                 if (advertisement != null) {
-                    Snackbar.make(requireContext(), requireView(), getString(R.string.advert_sucesfully_create), Snackbar.LENGTH_SHORT).show();
-                    Navigation.findNavController(requireView()).navigate(R.id.action_needyNewAdvertFragment_to_needyAdvrsF);
+                    Snackbar.make(requireContext(), v, getString(R.string.advert_sucesfully_create), Snackbar.LENGTH_SHORT).show();
+                    Navigation.findNavController(v).navigate(R.id.action_needyNewAdvertFragment_to_needyAdvrsF);
                 } else binding.readyToCreate.setEnabled(true);
             });
         }

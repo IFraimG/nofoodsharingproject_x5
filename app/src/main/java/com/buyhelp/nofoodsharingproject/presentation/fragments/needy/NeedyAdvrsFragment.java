@@ -90,27 +90,19 @@ public class NeedyAdvrsFragment extends Fragment {
 
     private void renderStatus(LoaderStatus loaderStatus) {
         switch (loaderStatus.getStatus()) {
-            case LOADING:
+            case LOADING -> {
                 binding.needyAdvertSwiper.setRefreshing(true);
                 hideAdvertisementElements();
-                break;
-            case FAILURE:
-                hideAdvertisementElements();
-                break;
+            }
+            case FAILURE -> hideAdvertisementElements();
         }
     }
 
     private void renderStatusRemove(LoaderStatus loaderStatus) {
         switch (loaderStatus.getStatus()) {
-            case LOADING:
-                binding.needyAdvertSwiper.setRefreshing(true);
-                break;
-            case LOADED:
-                hideAdvertisementElements();
-                break;
-            case FAILURE:
-                binding.needyAdvertSwiper.setRefreshing(false);
-                break;
+            case LOADING -> binding.needyAdvertSwiper.setRefreshing(true);
+            case LOADED -> hideAdvertisementElements();
+            case FAILURE -> binding.needyAdvertSwiper.setRefreshing(false);
         }
     }
 
@@ -130,9 +122,7 @@ public class NeedyAdvrsFragment extends Fragment {
         binding.stopAdvert.setOnClickListener(View -> viewModel.removeAdvertisement());
         binding.pickUpOrder.setOnClickListener(View -> viewModel.takeProducts(defineUser.getUser().getX5_Id()));
 
-        binding.needyAdvertFaq.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_needyAdvrsF_to_faqFragment);
-        });
+        binding.needyAdvertFaq.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_needyAdvrsF_to_faqFragment));
 
         binding.needyAdvertSwiper.setOnRefreshListener(this::getAdvertisement);
     }
