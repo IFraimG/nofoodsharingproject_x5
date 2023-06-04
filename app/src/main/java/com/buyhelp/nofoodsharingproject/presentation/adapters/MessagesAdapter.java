@@ -42,19 +42,15 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
         holder.body.setText(message.getBody());
         holder.dateCreated.setText(message.getDateCreated());
-        if (message.getAuthorID().equals(userID)) {
-            holder.msgLayout.setBackground(AppCompatResources.getDrawable(ctx, R.drawable.style7));
-            holder.body.setTextColor(ctx.getResources().getColor(R.color.white));
-            holder.textYou.setTextColor(ctx.getResources().getColor(R.color.white));
-            holder.dateCreated.setTextColor(ctx.getResources().getColor(R.color.white));
-            holder.textYou.setVisibility(View.VISIBLE);
-        } else {
-            holder.msgLayout.setBackground(AppCompatResources.getDrawable(ctx, R.drawable.custom_round_border));
-            holder.body.setTextColor(ctx.getResources().getColor(R.color.black));
-            holder.textYou.setTextColor(ctx.getResources().getColor(R.color.black));
-            holder.dateCreated.setTextColor(ctx.getResources().getColor(R.color.black));
-            holder.textYou.setVisibility(View.GONE);
-        }
+        updateMessage(holder, message.getAuthorID().equals(userID));
+    }
+
+    private void updateMessage(ViewHolder holder, boolean isAuthor) {
+        holder.msgLayout.setBackground(isAuthor ? AppCompatResources.getDrawable(ctx, R.drawable.style7) : AppCompatResources.getDrawable(ctx, R.drawable.custom_round_border));
+        holder.body.setTextColor(isAuthor ? ctx.getResources().getColor(R.color.white) : ctx.getResources().getColor(R.color.black));
+        holder.textYou.setTextColor(isAuthor ? ctx.getResources().getColor(R.color.white) : ctx.getResources().getColor(R.color.black));
+        holder.dateCreated.setTextColor(isAuthor ? ctx.getResources().getColor(R.color.white) : ctx.getResources().getColor(R.color.black));
+        holder.textYou.setVisibility(isAuthor ? View.VISIBLE : View.GONE);
     }
 
     @Override
