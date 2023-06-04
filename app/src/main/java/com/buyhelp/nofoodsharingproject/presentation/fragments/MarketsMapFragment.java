@@ -94,9 +94,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PermissionComponent permissionComponent = DaggerPermissionComponent.builder().defineActivity(new ActivityModule(requireActivity())).definePermissions(new PermissionHandlerModule()).build();
-        permissionHandler = permissionComponent.getPermissionHandler();
-
+        permissionHandler = DaggerPermissionComponent.builder().defineActivity(new ActivityModule(requireActivity())).definePermissions(new PermissionHandlerModule()).build().getPermissionHandler();
         if (permissionHandler != null) permissionHandler.requestMapPermissions((AppCompatActivity) requireActivity());
 
         SearchFactory.initialize(requireContext());
@@ -154,13 +152,6 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         initMap();
         getPinnedMarketInfo();
 
-        binding.mapSetMarketBtn.setOnClickListener(View -> {
-            Pair<String, Boolean> userData = defineUser.getTypeUser();
-            viewModel.updateMarket(userData.second, userData.first);
-        });
-
-        binding.mapMakeRoute.setOnClickListener(View -> createRoute());
-
         return binding.getRoot();
     }
 
@@ -202,6 +193,10 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     }
 
     private void getPinnedMarketInfo() {
+        binding.mapSetMarketBtn.setOnClickListener(View -> viewModel.updateMarket(defineUser.getTypeUser().second, defineUser.getTypeUser().first));
+        binding.mapMakeRoute.setOnClickListener(View -> createRoute());
+
+
         Pair<String, Boolean> userData = defineUser.getTypeUser();
         String userType = userData.second ? "needy" : "giver";
 
@@ -243,9 +238,8 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         if (isAvailableLocation) {
             Location myLocation = new CustomLocation(myPoint.getLatitude(), myPoint.getLongitude()).getLocation();
             Point resultPoint = viewModel.getMarketPoints().get(0);
-            Location resultLocation =new CustomLocation(resultPoint.getLatitude(), resultPoint.getLongitude()).getLocation();
 
-            double minDistance = myLocation.distanceTo(resultLocation);
+            double minDistance = myLocation.distanceTo(new CustomLocation(resultPoint.getLatitude(), resultPoint.getLongitude()).getLocation());
 
             for (int i = 1; i < viewModel.getMarketPoints().size(); i++) {
                 Point intermediatePoint = viewModel.getMarketPoints().get(i);
