@@ -16,6 +16,7 @@ import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepos
 import com.buyhelp.nofoodsharingproject.data.api.giver.GiverRepository;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
+import com.buyhelp.nofoodsharingproject.presentation.di.qualifiers.ApplicationContext;
 import com.buyhelp.nofoodsharingproject.presentation.di.scopes.AppScope;
 
 import javax.inject.Inject;
@@ -36,11 +37,10 @@ public class RetrofitService {
     private Context ctx;
 //    public String BASE_URL = "https://buy-help-server.onrender.com";
     public String BASE_URL = "http://192.168.0.100:8080";
-
     public RetrofitService() {}
 
     @Inject
-    public RetrofitService(@Named("application_context") Context ctx) {
+    public RetrofitService(@ApplicationContext Context ctx) {
         this.ctx = ctx;
     }
 

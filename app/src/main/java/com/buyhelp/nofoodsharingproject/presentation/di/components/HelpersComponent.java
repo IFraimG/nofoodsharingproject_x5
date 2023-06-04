@@ -1,9 +1,10 @@
 package com.buyhelp.nofoodsharingproject.presentation.di.components;
 
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
-
+import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.DefineUserModule;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.PermissionHandlerModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.scopes.HelpersScope;
 
 import dagger.Subcomponent;
@@ -21,5 +22,4 @@ public interface HelpersComponent {
     }
 
     DefineUser getDefineUser();
-
 }

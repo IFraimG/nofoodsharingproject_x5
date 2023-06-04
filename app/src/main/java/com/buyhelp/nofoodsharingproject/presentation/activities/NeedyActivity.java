@@ -13,11 +13,16 @@ import androidx.navigation.ui.NavigationUI;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.ActivityNeedyBinding;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerPermissionComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.PermissionComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.ActivityModule;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.PermissionHandlerModule;
 
 
 public class NeedyActivity extends AppCompatActivity {
     private NavController navController;
     private ActivityNeedyBinding binding;
+    private PermissionHandler permissionHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +30,10 @@ public class NeedyActivity extends AppCompatActivity {
         binding = ActivityNeedyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        PermissionHandler.requestCalendarPermissions(this);
+        PermissionComponent permissionComponent = DaggerPermissionComponent.builder().defineActivity(new ActivityModule(this)).definePermissions(new PermissionHandlerModule()).build();
+        permissionHandler = permissionComponent.getPermissionHandler();
+
+        permissionHandler.requestCalendarPermissions(this);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_needy_fragment);
         navController = navHostFragment.getNavController();
@@ -40,14 +48,14 @@ public class NeedyActivity extends AppCompatActivity {
         binding = null;
     }
 
-    public void setBottomNavigationVisibility(boolean isVisible) {
-        if (isVisible) binding.needyNavigation.setVisibility(View.VISIBLE);
-        else binding.needyNavigation.setVisibility(View.GONE);
-    }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         NavigationUI.onNavDestinationSelected(item, navController);
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setBottomNavigationVisibility(boolean isVisible) {
+        if (isVisible) binding.needyNavigation.setVisibility(View.VISIBLE);
+        else binding.needyNavigation.setVisibility(View.GONE);
     }
 }

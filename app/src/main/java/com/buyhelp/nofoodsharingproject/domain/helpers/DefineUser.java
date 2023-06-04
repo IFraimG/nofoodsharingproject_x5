@@ -17,19 +17,19 @@ import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
 import com.buyhelp.nofoodsharingproject.data.models.Giver;
 import com.buyhelp.nofoodsharingproject.data.models.Needy;
 import com.buyhelp.nofoodsharingproject.data.models.ShortDataUser;
+import com.buyhelp.nofoodsharingproject.presentation.di.qualifiers.ApplicationContext;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 public class DefineUser {
     private EncryptedSharedPreferences encryptedSharedPreferences;
     private SharedPreferences sharedPreferences;
 
     @Inject
-    public DefineUser(@Named("application_context") Context ctx) {
+    public DefineUser(@ApplicationContext Context ctx) {
         initEsp(ctx);
     }
 

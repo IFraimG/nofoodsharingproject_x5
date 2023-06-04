@@ -11,7 +11,7 @@ import com.buyhelp.nofoodsharingproject.presentation.activities.GiverActivity;
 import com.buyhelp.nofoodsharingproject.presentation.activities.NeedyActivity;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainAuthActivity;
-import com.buyhelp.nofoodsharingproject.presentation.di.modules.ActivityModule;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.ActivityListModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.ChatListModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.ChatModule;
@@ -26,7 +26,7 @@ import dagger.Component;
 
 @AppScope
 @Component(modules = { AppModule.class, RetrofitService.class,
-        ActivityModule.class, MapModule.class, NotifyModule.class, ChatListModule.class, ChatModule.class })
+        ActivityListModule.class, MapModule.class, NotifyModule.class, ChatListModule.class, ChatModule.class })
 @Singleton
 public interface AppComponent {
     MainActivity inject(MainActivity mainActivity);

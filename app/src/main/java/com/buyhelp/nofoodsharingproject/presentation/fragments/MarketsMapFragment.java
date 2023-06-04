@@ -5,6 +5,7 @@ import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,6 +24,12 @@ import com.buyhelp.nofoodsharingproject.data.models.Market;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
+import com.buyhelp.nofoodsharingproject.presentation.activities.GiverActivity;
+import com.buyhelp.nofoodsharingproject.presentation.activities.NeedyActivity;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerPermissionComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.PermissionComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.ActivityModule;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.PermissionHandlerModule;
 import com.buyhelp.nofoodsharingproject.presentation.factories.MapFactory;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.MapViewModel;
 import com.google.android.material.snackbar.Snackbar;
@@ -83,12 +90,16 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     private MapViewModel viewModel;
     private ArrayAdapter<String> adapter = null;
     private MapRepository mapRepository;
+    private PermissionHandler permissionHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PermissionHandler.requestMapPermissions(requireActivity());
+        PermissionComponent permissionComponent = DaggerPermissionComponent.builder().defineActivity(new ActivityModule((AppCompatActivity) requireActivity())).definePermissions(new PermissionHandlerModule()).build();
+        permissionHandler = permissionComponent.getPermissionHandler();
+
+        if (permissionHandler != null) permissionHandler.requestMapPermissions((AppCompatActivity) requireActivity());
 
         SearchFactory.initialize(requireContext());
         DirectionsFactory.initialize(requireContext());
@@ -154,7 +165,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     }
 
     private void initLocation() {
-        if (PermissionHandler.checkPermissions(requireContext())) {
+        if (permissionHandler != null && permissionHandler.checkPermissions((AppCompatActivity) requireActivity())) {
             locationListener = new LocationListener() {
                 @Override
                 public void onLocationStatusUpdated(@NonNull LocationStatus locationStatus) {
@@ -173,7 +184,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     }
 
     private void initMap() {
-        PermissionHandler.requestMapPermissions(requireActivity());
+        if (permissionHandler != null) permissionHandler.requestMapPermissions((AppCompatActivity) requireActivity());
 
         mapView.getMap().setRotateGesturesEnabled(false);
 

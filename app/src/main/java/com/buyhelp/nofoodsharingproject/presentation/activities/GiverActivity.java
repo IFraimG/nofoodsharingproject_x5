@@ -15,6 +15,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.databinding.ActivityGiverBinding;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerPermissionComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.PermissionComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.ActivityModule;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.PermissionHandlerModule;
 import com.buyhelp.nofoodsharingproject.presentation.services.LocationTrackingService;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowChecker;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowCheckerOld;
@@ -29,6 +33,7 @@ public class GiverActivity extends AppCompatActivity {
 
     @Inject
     public DefineUser defineUser;
+    private PermissionHandler permissionHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +45,12 @@ public class GiverActivity extends AppCompatActivity {
         ApplicationCore app = (ApplicationCore) getApplication();
         app.getAppComponent().inject(this);
 
-        PermissionHandler.requestCalendarPermissions(this);
-        if (defineUser.getIsLocation()) PermissionHandler.requestPermissions(this);
+        PermissionComponent permissionComponent = (PermissionComponent) DaggerPermissionComponent.builder().defineActivity(new ActivityModule(this)).definePermissions(new PermissionHandlerModule());
+        permissionHandler = permissionComponent.getPermissionHandler();
+
+        permissionHandler.requestCalendarPermissions(this);
+
+        if (defineUser.getIsLocation()) permissionHandler.requestPermissions(this);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_giver_fragment);
         navController = navHostFragment.getNavController();
@@ -75,7 +84,7 @@ public class GiverActivity extends AppCompatActivity {
     }
 
     private void initLocation() {
-        if (!PermissionHandler.checkPermissions(getApplicationContext())) PermissionHandler.requestPermissions(this);
+        if (!permissionHandler.checkPermissions(this)) permissionHandler.requestPermissions(this);
         else {
             if (defineUser.getIsLocation()) {
                 Intent serviceIntent = new Intent(this, LocationTrackingService.class);

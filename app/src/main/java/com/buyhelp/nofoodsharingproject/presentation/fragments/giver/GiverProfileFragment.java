@@ -31,6 +31,10 @@ import com.buyhelp.nofoodsharingproject.data.models.Giver;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerPermissionComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.components.PermissionComponent;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.ActivityModule;
+import com.buyhelp.nofoodsharingproject.presentation.di.modules.PermissionHandlerModule;
 import com.buyhelp.nofoodsharingproject.presentation.factories.giver.GiverProfileFactory;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.giver.GiverProfileViewModel;
 import com.google.android.material.snackbar.Snackbar;
@@ -53,6 +57,7 @@ public class GiverProfileFragment extends Fragment {
     private GiverProfileViewModel viewModel;
     private GiverRepository giverRepository;
     private AdvertsRepository advertsRepository;
+    private PermissionHandler permissionHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +68,11 @@ public class GiverProfileFragment extends Fragment {
         advertsRepository = app.getAppComponent().getAdvertsRepository();
         defineUser = app.getHelpersComponent().getDefineUser();
 
+        PermissionComponent permissionComponent = DaggerPermissionComponent.builder().defineActivity(new ActivityModule((AppCompatActivity) requireActivity())).definePermissions(new PermissionHandlerModule()).build();
+        permissionHandler = permissionComponent.getPermissionHandler();
+
         setHasOptionsMenu(true);
+
 
         this.user = defineUser.defineGiver();
 
@@ -76,7 +85,7 @@ public class GiverProfileFragment extends Fragment {
         binding = FragmentGiverProfileBinding.inflate(inflater);
         mBinding = new WeakReference<>(binding);
 
-        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        AppCompatActivity appCompatActivity = (AppCompatActivity) requireActivity();
         appCompatActivity.setSupportActionBar(binding.giverProfileToolbar);
 
         binding.giverProfileName.setText(user.getLogin());
@@ -139,8 +148,8 @@ public class GiverProfileFragment extends Fragment {
         binding.giverOpenVk.setOnClickListener(View -> vkLoad());
 
         binding.giverProfileLocation.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) PermissionHandler.requestPermissions(requireActivity());
-            isCheckedLocation = isChecked && PermissionHandler.checkPermissions(requireContext());
+            if (isChecked) permissionHandler.requestPermissions((AppCompatActivity) requireActivity());
+            isCheckedLocation = isChecked && permissionHandler.checkPermissions((AppCompatActivity) requireActivity());
             binding.giverProfileLocation.setChecked(isCheckedLocation);
         });
 

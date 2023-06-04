@@ -7,23 +7,31 @@
 package com.buyhelp.nofoodsharingproject.domain.helpers;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import javax.inject.Inject;
+
 public class PermissionHandler {
+    private AppCompatActivity activity;
+
     public PermissionHandler() {}
+
+    @Inject
+    public PermissionHandler(AppCompatActivity activity) {
+        this.activity = activity;
+    }
 
     /**
      * Метод для проверки включенной геолокации
      */
-    public static boolean checkPermissions(Context ctx) {
-        int firstPermission = ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION);
-        int secondPermission = ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION);
+    public boolean checkPermissions(AppCompatActivity activity) {
+        int firstPermission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
+        int secondPermission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
 
         return firstPermission == PackageManager.PERMISSION_GRANTED && secondPermission == PackageManager.PERMISSION_GRANTED;
     }
@@ -31,14 +39,14 @@ public class PermissionHandler {
     /**
      * Метод для проверки включенной геолокации, в том числе и в фоновом режиме
      */
-    public static void requestPermissions(Activity activity) {
+    public void requestPermissions(AppCompatActivity activity) {
         ActivityCompat.requestPermissions(activity,
                 new String[]{
                         android.Manifest.permission.ACCESS_FINE_LOCATION,
                         android.Manifest.permission.ACCESS_COARSE_LOCATION,
                 }, 200);
 
-        if (ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ActivityCompat.requestPermissions(activity,
                     new String[]{ android.Manifest.permission.ACCESS_BACKGROUND_LOCATION }, 201);
@@ -48,10 +56,10 @@ public class PermissionHandler {
     /**
      * Метод для проверки и запросов разрешений на включение календаря
      */
-    public static void requestCalendarPermissions(Activity activity) {
-        if (ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.READ_CALENDAR)
+    public void requestCalendarPermissions(AppCompatActivity activity) {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CALENDAR)
                 != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.WRITE_CALENDAR)
+                ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALENDAR)
                         != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity,
                     new String[]{ android.Manifest.permission.READ_CALENDAR, android.Manifest.permission.WRITE_CALENDAR,  }, 202);
@@ -61,9 +69,9 @@ public class PermissionHandler {
     /**
      * Метод для проверки включенной геолокации
      */
-    public static void requestMapPermissions(Activity activity) {
-        int firstPermission = ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
-        int secondPermission = ContextCompat.checkSelfPermission(activity.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+    public void requestMapPermissions(AppCompatActivity activity) {
+        int firstPermission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION);
+        int secondPermission = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION);
 
         if (firstPermission != PackageManager.PERMISSION_GRANTED && secondPermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 200);

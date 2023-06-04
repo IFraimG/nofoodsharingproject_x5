@@ -1,16 +1,28 @@
 package com.buyhelp.nofoodsharingproject.presentation.di.modules;
 
-import com.buyhelp.nofoodsharingproject.presentation.activities.GiverActivity;
-import com.buyhelp.nofoodsharingproject.presentation.activities.NeedyActivity;
+
+import android.content.Context;
+
+import com.buyhelp.nofoodsharingproject.presentation.di.qualifiers.ActivityContext;
+import com.buyhelp.nofoodsharingproject.presentation.di.scopes.PermissionsScope;
+
 
 import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
+import dagger.Provides;
 
 @Module
-public abstract class ActivityModule {
-    @ContributesAndroidInjector(modules = { NeedyFragmentsModule.class })
-    abstract NeedyActivity contributeNeedyActivity();
+public class ActivityModule {
 
-    @ContributesAndroidInjector(modules = { GiverFragmentsModule.class })
-    abstract GiverActivity contributeGiverActivity();
+    private final Context ctx;
+
+    public ActivityModule(@ActivityContext Context activity) {
+        this.ctx = activity;
+    }
+
+    @PermissionsScope
+    @ActivityContext
+    @Provides
+    Context provideActivity() {
+        return ctx;
+    }
 }
