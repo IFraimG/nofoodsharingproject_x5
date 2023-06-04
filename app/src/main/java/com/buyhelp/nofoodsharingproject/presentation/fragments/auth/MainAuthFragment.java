@@ -47,14 +47,10 @@ public class MainAuthFragment extends Fragment {
         binding = FragmentMainAuthBinding.inflate(inflater);
         mBinding = new WeakReference<>(binding);
 
-        Button btnGetter = binding.mainAuthBtnGetter;
-        Button btnSetter = binding.mainAuthBtnSetter;
-        ImageView imageSecret = binding.secretClickableImage;
+        binding.secretClickableImage.setOnClickListener(View -> secretClickerHandler());
 
-        imageSecret.setOnClickListener(View -> secretClickerHandler());
-
-        btnSetter.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_setterAuthF));
-        btnGetter.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_getterAuthF));
+        binding.mainAuthBtnGiver.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_giverAuthF));
+        binding.mainAuthBtnNeedy.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_mainAuthF_to_needyAuthF));
 
         return binding.getRoot();
     }

@@ -9,8 +9,8 @@ import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.SignUpResponseI;
-import com.buyhelp.nofoodsharingproject.data.models.Getter;
-import com.buyhelp.nofoodsharingproject.data.models.Setter;
+import com.buyhelp.nofoodsharingproject.data.models.Giver;
+import com.buyhelp.nofoodsharingproject.data.models.Needy;
 import com.buyhelp.nofoodsharingproject.data.models.ShortDataUser;
 
 import java.io.IOException;
@@ -58,13 +58,13 @@ public class DefineUser {
         sharedPreferences = ctx.getSharedPreferences("prms", Context.MODE_PRIVATE);
     }
 
-    public Setter defineSetter() {
+    public Giver defineGiver() {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
         String userID = encryptedSharedPreferences.getString("X5_id", "");
         String token = encryptedSharedPreferences.getString("token", "");
 
-        Setter user = new Setter();
+        Giver user = new Giver();
         user.setLogin(login);
         user.setPhone(phone);
         user.setX5_Id(userID);
@@ -73,13 +73,13 @@ public class DefineUser {
         return user;
     }
 
-    public Getter defineGetter() {
+    public Needy defineNeedy() {
         String login = encryptedSharedPreferences.getString("login", "");
         String phone = encryptedSharedPreferences.getString("phone", "");
         String userID = encryptedSharedPreferences.getString("X5_id", "");
         String token = encryptedSharedPreferences.getString("token", "");
 
-        Getter user = new Getter();
+        Needy user = new Needy();
         user.setLogin(login);
         user.setPhone(phone);
         user.setX5_Id(userID);
@@ -90,7 +90,7 @@ public class DefineUser {
 
     public Pair<String, Boolean> getTypeUser() {
         String userID = encryptedSharedPreferences.getString("X5_id", "");
-        boolean isUser = encryptedSharedPreferences.getBoolean("isGetter", false);
+        boolean isUser = encryptedSharedPreferences.getBoolean("isNeedy", false);
 
         return new Pair<>(userID, isUser);
     }
@@ -105,17 +105,17 @@ public class DefineUser {
         if (sharedPreferences != null) sharedPreferences.edit().clear().apply();
     }
 
-    public void saveUserDataGetter(boolean isGetter, String X5_id, SignUpResponseI<Getter> result) {
-        saveData(isGetter, X5_id, result.getUser().getLogin(), result.getUser().getPhone(), result.getToken(), result.user.getTokenFCM());
+    public void saveUserDataNeedy(boolean isNeedy, String X5_id, SignUpResponseI<Needy> result) {
+        saveData(isNeedy, X5_id, result.getUser().getLogin(), result.getUser().getPhone(), result.getToken(), result.user.getTokenFCM());
     }
 
-    public void saveUserDataSetter(boolean isGetter, String X5_id, SignUpResponseI<Setter> result) {
-        saveData(isGetter, X5_id, result.getUser().getLogin(), result.getUser().getPhone(), result.getToken(), result.user.getTokenFCM());
+    public void saveUserDataGiver(boolean isNeedy, String X5_id, SignUpResponseI<Giver> result) {
+        saveData(isNeedy, X5_id, result.getUser().getLogin(), result.getUser().getPhone(), result.getToken(), result.user.getTokenFCM());
     }
 
-    private void saveData(boolean isGetter, String X5_id, String login, String phone, String token, String FCMtoken) {
+    private void saveData(boolean isNeedy, String X5_id, String login, String phone, String token, String FCMtoken) {
         SharedPreferences.Editor editor = encryptedSharedPreferences.edit();
-        editor.putBoolean("isGetter", isGetter);
+        editor.putBoolean("isNeedy", isNeedy);
         editor.putString("login", login);
         editor.putString("phone", phone);
         if (X5_id != null) editor.putString("X5_id", X5_id);
@@ -157,10 +157,10 @@ public class DefineUser {
         return sharedPreferences.getBoolean(key, false);
     }
 
-    public String isGetter() {
-        if (!encryptedSharedPreferences.contains("isGetter")) return null;
+    public String isNeedy() {
+        if (!encryptedSharedPreferences.contains("isNeedy")) return null;
 
-        return encryptedSharedPreferences.getBoolean("isGetter", false) ? "getter" : "setter";
+        return encryptedSharedPreferences.getBoolean("isNeedy", false) ? "needy" : "giver";
     }
 
     public String getToken() {

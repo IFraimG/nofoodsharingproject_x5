@@ -8,9 +8,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.buyhelp.nofoodsharingproject.data.api.map.MapRepository;
 import com.buyhelp.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
-import com.buyhelp.nofoodsharingproject.data.models.Getter;
+import com.buyhelp.nofoodsharingproject.data.models.Giver;
+import com.buyhelp.nofoodsharingproject.data.models.Needy;
 import com.buyhelp.nofoodsharingproject.data.models.Market;
-import com.buyhelp.nofoodsharingproject.data.models.Setter;
 import com.yandex.mapkit.geometry.Point;
 
 
@@ -99,25 +99,25 @@ public class MapViewModel extends AndroidViewModel {
         }
     }
 
-    public void updateMarket(boolean isGetter, String userID) {
+    public void updateMarket(boolean isNeedy, String userID) {
         if (choosenMarket.getValue() != null && !choosenMarket.getValue().equals("Выберите магазин")) {
-            if (isGetter) {
-                mapRepository.setGetterMarket(userID, choosenMarket.getValue()).enqueue(new Callback<>() {
+            if (isNeedy) {
+                mapRepository.setNeedyMarket(userID, choosenMarket.getValue()).enqueue(new Callback<>() {
                     @Override
-                    public void onResponse(@NotNull Call<Getter> call, @NotNull retrofit2.Response<Getter> response) {}
+                    public void onResponse(@NotNull Call<Needy> call, @NotNull retrofit2.Response<Needy> response) {}
 
                     @Override
-                    public void onFailure(@NotNull Call<Getter> call, @NotNull Throwable t) {
+                    public void onFailure(@NotNull Call<Needy> call, @NotNull Throwable t) {
                         t.printStackTrace();
                     }
                 });
             } else {
-                mapRepository.setSetterMarket(userID, choosenMarket.getValue()).enqueue(new Callback<>() {
+                mapRepository.setGiverMarket(userID, choosenMarket.getValue()).enqueue(new Callback<>() {
                     @Override
-                    public void onResponse(@NotNull Call<Setter> call, @NotNull retrofit2.Response<Setter> response) {}
+                    public void onResponse(@NotNull Call<Giver> call, @NotNull retrofit2.Response<Giver> response) {}
 
                     @Override
-                    public void onFailure(@NotNull Call<Setter> call, @NotNull Throwable t) {
+                    public void onFailure(@NotNull Call<Giver> call, @NotNull Throwable t) {
                         t.printStackTrace();
                     }
                 });

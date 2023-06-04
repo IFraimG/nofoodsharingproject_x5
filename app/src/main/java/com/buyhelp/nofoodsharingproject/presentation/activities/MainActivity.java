@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
         ApplicationCore app = (ApplicationCore) getApplication();
         app.getAppComponent().inject(this);
 
-        String res = defineUser.isGetter();
+        String res = defineUser.isNeedy();
         if (res != null) {
-            if (res.equals("setter")) authSetter();
-            else if (res.equals("getter")) authGetter();
+            if (res.equals("giver")) authGiver();
+            else if (res.equals("needy")) authNeedy();
             else redirectToAuth();
         } else redirectToAuth();
     }
@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
         binding = null;
     }
 
-    public void authSetter() {
-        authRepository.checkAuthSetter(defineUser.getToken()).enqueue(new Callback<>() {
+    public void authGiver() {
+        authRepository.checkAuthGiver(defineUser.getToken()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().getIsAuth()) {
-                    Intent intentSetter = new Intent(getApplicationContext(), SetterActivity.class);
-                    startActivity(intentSetter);
+                    Intent intentGiver = new Intent(getApplicationContext(), GiverActivity.class);
+                    startActivity(intentGiver);
                     finish();
                 } else redirectToAuth();
             }
@@ -68,14 +68,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void authGetter() {
-        authRepository.checkAuthGetter(defineUser.getToken()).enqueue(new Callback<>() {
+    public void authNeedy() {
+        authRepository.checkAuthNeedy(defineUser.getToken()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<CheckAuthI> call, @NotNull Response<CheckAuthI> response) {
                 if (response.body() == null) redirectToAuth();
                 else if (response.body().getIsAuth()) {
-                    Intent intentGetter = new Intent(getApplicationContext(), GetterActivity.class);
-                    startActivity(intentGetter);
+                    Intent intentNeedy = new Intent(getApplicationContext(), NeedyActivity.class);
+                    startActivity(intentNeedy);
                     finish();
                 } else redirectToAuth();
             }

@@ -90,7 +90,7 @@ public class LocationTrackingService extends Service implements LocationListener
         advertsRepository = app.getAppComponent().getAdvertsRepository();
 
         defineUser = new DefineUser(getApplicationContext());
-        if (defineUser.getTypeUser().second.equals(false)) startForeground(1, notifySetter());
+        if (defineUser.getTypeUser().second.equals(false)) startForeground(1, notifyGiver());
 
         getMarket();
 
@@ -104,7 +104,7 @@ public class LocationTrackingService extends Service implements LocationListener
     @Override
     public void onLocationChanged(Location location) {
         if (location != null && compareCoords != null && location.distanceTo(compareCoords) < 50 && checkTimer() && titleMarket.length() != 0) {
-            getRandomGetterAdvert();
+            getRandomNeedyAdvert();
         }
 
     }
@@ -128,7 +128,7 @@ public class LocationTrackingService extends Service implements LocationListener
     }
 
     private void getMarket() {
-        mapRepository.getPinMarket(defineUser.getTypeUser().second.equals(true) ? "getter" : "setter", defineUser.getTypeUser().first.toString()).enqueue(new Callback<MarketTitleResponse>() {
+        mapRepository.getPinMarket(defineUser.getTypeUser().second.equals(true) ? "needy" : "giver", defineUser.getTypeUser().first.toString()).enqueue(new Callback<MarketTitleResponse>() {
             @Override
             public void onResponse(@NotNull Call<MarketTitleResponse> call, @NotNull Response<MarketTitleResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -171,7 +171,7 @@ public class LocationTrackingService extends Service implements LocationListener
         }
     }
 
-    private void getRandomGetterAdvert() {
+    private void getRandomNeedyAdvert() {
         advertsRepository.getRandomAdvertByMarket(titleMarket).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
@@ -202,10 +202,10 @@ public class LocationTrackingService extends Service implements LocationListener
                 listProducts.append(result[result.length - 1]).append(".");
                 body.append(listProducts);
             }
-        } else body.append(getString(R.string.help_getter));
+        } else body.append(getString(R.string.help_needy));
 
         Notification notification = new Notification(title, body.toString(), defineUser.getTypeUser().first.toString());
-        notification.setTypeOfUser("setter");
+        notification.setTypeOfUser("giver");
         notification.setAdvertID(advert.getAdvertsID());
         showNotification(title, body.toString());
 
@@ -259,7 +259,7 @@ public class LocationTrackingService extends Service implements LocationListener
     }
 
 
-    private android.app.Notification notifySetter() {
+    private android.app.Notification notifyGiver() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             channel = new NotificationChannel("my_channel_id", "Location Observer", NotificationManager.IMPORTANCE_LOW);
             NotificationManager manager = getSystemService(NotificationManager.class);

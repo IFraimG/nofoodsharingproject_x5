@@ -20,15 +20,15 @@
             android:layout_marginStart="@dimen/standard_size_very_medium"
             android:src="@drawable/ic_baseline_chevron_left_24" />
         <TextView
-            android:id="@+id/getter_notify_title"
-            style="@style/heading_getter_fragments"
+            android:id="@+id/needy_notify_title"
+            style="@style/heading_needy_fragments"
             android:layout_width="0dp"
             android:layout_weight="0.2"
             android:layout_marginTop="@dimen/standard_size_very_medium"
             android:layout_marginStart="@dimen/standard_size_small"
             android:text="@string/faq_link" />
         <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
-            android:id="@+id/getter_policy_open"
+            android:id="@+id/needy_policy_open"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
@@ -70,7 +70,7 @@
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:layout_margin="@dimen/standard_size_very_medium"
-                android:text="@string/setter_account_text"/>
+                android:text="@string/giver_account_text"/>
             <TextView
                 android:id="@+id/faq_item_question"
                 android:layout_width="match_parent"
@@ -83,7 +83,7 @@
                 android:textStyle="bold"
                 android:textSize="18sp" />
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/faq_setter_list"
+                android:id="@+id/faq_giver_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -94,10 +94,10 @@
                 android:textSize="24sp"
                 android:textColor="@color/black"
                 android:layout_margin="@dimen/standard_size_very_medium"
-                android:text="@string/getter_account_text"/>
+                android:text="@string/needy_account_text"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/faq_getter_list"
+                android:id="@+id/faq_needy_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"

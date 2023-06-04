@@ -36,11 +36,11 @@ public class CustomBottomNavigationMenu extends BottomNavigationView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        MenuItem specialItemSetter = getMenu().findItem(R.id.setterAdvrsF);
-        changeColor(specialItemSetter);
+        MenuItem specialItemGiver = getMenu().findItem(R.id.giverAdvrsF);
+        changeColor(specialItemGiver);
 
-        MenuItem specialItemGetter = getMenu().findItem(R.id.getterAdvrsF);
-        changeColor(specialItemGetter);
+        MenuItem specialItemNeedy = getMenu().findItem(R.id.needyAdvrsF);
+        changeColor(specialItemNeedy);
     }
 
     private void changeColor(MenuItem menuItem) {

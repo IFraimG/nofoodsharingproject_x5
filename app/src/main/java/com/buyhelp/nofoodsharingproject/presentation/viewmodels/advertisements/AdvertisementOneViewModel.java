@@ -11,11 +11,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.dto.ResponseDeleteAdvert;
+import com.buyhelp.nofoodsharingproject.data.api.giver.GiverRepository;
 import com.buyhelp.nofoodsharingproject.data.api.map.MapRepository;
 import com.buyhelp.nofoodsharingproject.data.api.map.dto.MarketTitleResponse;
 import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepository;
 import com.buyhelp.nofoodsharingproject.data.api.notifications.dto.ResponseFCMToken;
-import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
 import com.buyhelp.nofoodsharingproject.data.models.Advertisement;
 import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
 import com.buyhelp.nofoodsharingproject.data.models.Notification;
@@ -40,14 +40,14 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
     private final MutableLiveData<LoaderStatus> _status = new MutableLiveData<>();
     private final MutableLiveData<LoaderStatus> _statusRemove = new MutableLiveData<>();
     private final NotificationRepository notificationRepository;
-    private final SetterRepository setterRepository;
+    private final GiverRepository giverRepository;
     private final AdvertsRepository advertsRepository;
     private final MapRepository mapRepository;
 
-    public AdvertisementOneViewModel(@NonNull Application application, NotificationRepository notificationRepository, SetterRepository setterRepository, AdvertsRepository advertsRepository, MapRepository mapRepository) {
+    public AdvertisementOneViewModel(@NonNull Application application, NotificationRepository notificationRepository, GiverRepository giverRepository, AdvertsRepository advertsRepository, MapRepository mapRepository) {
         super(application);
         this.notificationRepository = notificationRepository;
-        this.setterRepository = setterRepository;
+        this.giverRepository = giverRepository;
         this.advertsRepository = advertsRepository;
         this.mapRepository = mapRepository;
     }
@@ -107,8 +107,8 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
         });
     }
 
-    public LiveData<String> getAddress(String userID, boolean isGetter) {
-        String userData = isGetter ? "getter" : "setter";
+    public LiveData<String> getAddress(String userID, boolean isNeedy) {
+        String userData = isNeedy ? "needy" : "giver";
 
         mapRepository.getPinMarket(userData, userID).enqueue(new Callback<>() {
             @Override
@@ -186,7 +186,7 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
         Notification notification = new Notification();
         notification.setTitle(getApplication().getApplicationContext().getString(R.string.success_deal));
         notification.setDescription(body);
-        notification.setTypeOfUser("setter");
+        notification.setTypeOfUser("giver");
         notification.setFromUserID(_advert.getValue().getAuthorID());
         notification.setUserID(_advert.getValue().getUserDoneID());
 
@@ -206,7 +206,7 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
 
     // Шаг 3 - Получаем fmc token
     private void getFMCToken(String body) {
-        setterRepository.getFCMtoken(_advert.getValue().getUserDoneID()).enqueue(new Callback<>() {
+        giverRepository.getFCMtoken(_advert.getValue().getUserDoneID()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
                 if (response.isSuccessful() && response.body() != null) sendFMCMessage(response.body(), body);

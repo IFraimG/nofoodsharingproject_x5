@@ -3,14 +3,14 @@ package com.buyhelp.nofoodsharingproject.presentation.di.components;
 import com.buyhelp.nofoodsharingproject.data.api.RetrofitService;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
-import com.buyhelp.nofoodsharingproject.data.api.getter.GetterRepository;
+import com.buyhelp.nofoodsharingproject.data.api.giver.GiverRepository;
+import com.buyhelp.nofoodsharingproject.data.api.needy.NeedyRepository;
 import com.buyhelp.nofoodsharingproject.data.api.map.MapRepository;
 import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepository;
-import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
-import com.buyhelp.nofoodsharingproject.presentation.activities.GetterActivity;
+import com.buyhelp.nofoodsharingproject.presentation.activities.GiverActivity;
+import com.buyhelp.nofoodsharingproject.presentation.activities.NeedyActivity;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainActivity;
 import com.buyhelp.nofoodsharingproject.presentation.activities.MainAuthActivity;
-import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.ActivityModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.ChatListModule;
@@ -22,7 +22,6 @@ import com.buyhelp.nofoodsharingproject.presentation.di.scopes.AppScope;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import dagger.android.AndroidInjector;
 
 
 @AppScope
@@ -32,8 +31,8 @@ import dagger.android.AndroidInjector;
 public interface AppComponent {
     MainActivity inject(MainActivity mainActivity);
     MainAuthActivity inject(MainAuthActivity mainAuthActivity);
-    GetterActivity inject(GetterActivity getterActivity);
-    SetterActivity inject(SetterActivity setterActivity);
+    NeedyActivity inject(NeedyActivity needyActivity);
+    GiverActivity inject(GiverActivity giverActivity);
 
     @Component.Builder
     interface Builder {
@@ -48,8 +47,8 @@ public interface AppComponent {
 
     AuthRepository getAuthRepository();
     MapRepository getMapRepository();
-    GetterRepository getGetterRepository();
-    SetterRepository getSetterRepository();
+    NeedyRepository getNeedyRepository();
+    GiverRepository getGiverRepository();
     AdvertsRepository getAdvertsRepository();
     NotificationRepository getNotificationRepository();
 

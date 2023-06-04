@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
-import com.buyhelp.nofoodsharingproject.presentation.activities.GetterActivity;
-import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
-import com.buyhelp.nofoodsharingproject.presentation.adapters.FaqAdapter;
 import com.buyhelp.nofoodsharingproject.databinding.FragmentFaqBinding;
+import com.buyhelp.nofoodsharingproject.presentation.activities.GiverActivity;
+import com.buyhelp.nofoodsharingproject.presentation.activities.NeedyActivity;
+import com.buyhelp.nofoodsharingproject.presentation.adapters.FaqAdapter;
 import com.buyhelp.nofoodsharingproject.data.models.Faq;
 import com.buyhelp.nofoodsharingproject.R;
 
@@ -28,7 +28,7 @@ public class FaqFragment extends Fragment {
     private WeakReference<FragmentFaqBinding> mBinding;
     private AlertDialog alertDialog;
 
-    private final Faq[] getterQuesitons = new Faq[]{
+    private final Faq[] needyQuesitons = new Faq[]{
             new Faq("Как создать объявление?", "Для создания объявления необходимо перейти на вкладку \"Объяления\", и проверить, что пункт \"Адрес магазина\" не пустой. Если же адреса нет, то вам необходимо прикрепиться к магазину. Читайте об этом ниже. Затем, необходимо нажать на кнопку \"Создать новое объявление\". В случае отсутствия данной кнопки, проверьте, есть ли у вас созданное активное объявление, и удалите его, посредством нажатия на кнопку \"Удалить объявление\", а затем нажмите  \"Создать новое объявление\". Затем, нажатием на названия продуктов, выберите необходимые вам товары. Помните, что их должно быть не более двух. В нижней части экрана отобразиться список товаров, выбранных вами. Также, не забудте ввести название вашего объявления. Затем, остаётся только нажать кнопку \"Готово\", и ваше объявление создано. Также, оно отобразится на экране \"Объявления\"."),
             new Faq("Каким образом я могу забрать продукты?", "Для того, чтобы забрать продукты из магазина необхдимо: подойти к кассам и спросить про выдачу заказов. В случае, если в магазине есть зона доставки, то обращаться стоит туда. Найдя человека, который готов выдать вам заказ, назовите 4х-символьный код в приложении, который отображается на экране \"Объявления\". После получения пакета с продуктами, вы обязательно должны нажать кнопку \"Забираю продукты\", показав это человеку, выдавшему вам продукты."),
             new Faq("В течении какого времени активно моё объявление?", "Объявление активно в течение трёх часов с момента его создания. В случае, если до закрытия самого магазина осталось менее установленного времени, объявление станет не активным автоматически при закрытии магазина."),
@@ -37,7 +37,7 @@ public class FaqFragment extends Fragment {
             new Faq("Никто не откликается на мои объявления? Что делать?", "Возможно, ваши объявления слишком дорогие для \"отдающих\" пользователей. Советуем делать в объявлении всего один продукт: так, шанс того, что вам помогут увеличивается в разы. Также, проблема может быть в малом количестве \"Отдающих\" пользователей, прикреплённых к этому магазину. В таком случае, советуем прикрепиться к другому ближайшему магазину."),
             new Faq("Как я могу редактировать данные профиля?", "На вкладке \"Профиль\" вы можете редактировать свои данные. Для этого необходимо заполнить поля в соответствии с подсказками, а затем нажать на \"Редактировать профиль\". После этого, если все новые даннные введены корректно, профиль обновится."),
     };
-    private final Faq[] setterQuesitons = new Faq[]{
+    private final Faq[] giverQuesitons = new Faq[]{
             new Faq("Я живу рядом с магазином и мне постоянно приходят уведомления. Могу ли я их отключить?", "Для того, чтобы отключить уведомления, необходимо: на экране \"Профиль\" в левом верхнем углу найти три точки. Нажав на них, выберите пункт \"Редактировние профиля\""),
             new Faq("Как прикрепиться к магазину?", "Для прикрепления к магазину необходимо в нижней панели навигации выбрать фрагмент \"Карта\". В верхней части экрана отобразится окно, при нажатии на которое откроется список ближайших магазинов, участвующих в программе. Выбрав необходимый вам магазин, необходимо нажать кнопку \"Прикрепиться к этому магазину\"."),
             new Faq("Хочу изменить данные моего профиля. Что делать?", "Перейдите в раздел \"Профиль\" и нажмите на три точки в левом верхнем углу. Нажмите\"Редактировать профиль\" и редактируйте ваш профиль."),
@@ -52,16 +52,16 @@ public class FaqFragment extends Fragment {
 
         binding.faqReturn.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
-        FaqAdapter faqAdapterSetter = new FaqAdapter(requireContext());
-        FaqAdapter faqAdapterGetter = new FaqAdapter(requireContext());
+        FaqAdapter faqAdapterGiver = new FaqAdapter(requireContext());
+        FaqAdapter faqAdapterNeedy = new FaqAdapter(requireContext());
 
-        faqAdapterSetter.loadFaq(Arrays.asList(setterQuesitons));
-        faqAdapterGetter.loadFaq(Arrays.asList(getterQuesitons));
+        faqAdapterGiver.loadFaq(Arrays.asList(giverQuesitons));
+        faqAdapterNeedy.loadFaq(Arrays.asList(needyQuesitons));
 
-        binding.faqSetterList.setAdapter(faqAdapterSetter);
-        binding.faqGetterList.setAdapter(faqAdapterGetter);
+        binding.faqGiverList.setAdapter(faqAdapterGiver);
+        binding.faqNeedyList.setAdapter(faqAdapterNeedy);
 
-        binding.getterPolicyOpen.setOnClickListener(View -> createPrivacyPolicyDialog());
+        binding.needyPolicyOpen.setOnClickListener(View -> createPrivacyPolicyDialog());
         binding.faqItemQuestion.setOnClickListener(View -> createFaqItemQuestionDialog());
 
         return binding.getRoot();
@@ -70,20 +70,20 @@ public class FaqFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (getActivity() instanceof SetterActivity) {
-            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(false);
-        } else if (getActivity() instanceof GetterActivity) {
-            ((GetterActivity) requireActivity()).setBottomNavigationVisibility(false);
+        if (getActivity() instanceof GiverActivity) {
+            ((GiverActivity) requireActivity()).setBottomNavigationVisibility(false);
+        } else if (getActivity() instanceof NeedyActivity) {
+            ((NeedyActivity) requireActivity()).setBottomNavigationVisibility(false);
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (getActivity() instanceof SetterActivity) {
-            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(true);
-        } else if (getActivity() instanceof GetterActivity ) {
-            ((GetterActivity) requireActivity()).setBottomNavigationVisibility(true);
+        if (getActivity() instanceof GiverActivity) {
+            ((GiverActivity) requireActivity()).setBottomNavigationVisibility(true);
+        } else if (getActivity() instanceof NeedyActivity) {
+            ((NeedyActivity) requireActivity()).setBottomNavigationVisibility(true);
         }
     }
 

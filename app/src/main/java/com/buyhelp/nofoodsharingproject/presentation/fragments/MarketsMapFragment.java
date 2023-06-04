@@ -197,7 +197,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
 
     private void getPinnedMarketInfo() {
         Pair<String, Boolean> userData = defineUser.getTypeUser();
-        String userType = userData.second ? "getter" : "setter";
+        String userType = userData.second ? "needy" : "giver";
 
         viewModel.getPinnedMarketInfo(userType, userData.first).observe(requireActivity(), listMarkets -> {
             if (adapter == null) {

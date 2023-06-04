@@ -67,7 +67,7 @@ public class SecretFragment extends DialogFragment {
 //    }
 
 //    private void getFreeAddresses() {
-//        adapter = new ArrayAdapter<>(requireContext(), R.layout.item_getter_product_name, list);
+//        adapter = new ArrayAdapter<>(requireContext(), R.layout.item_needy_product_name, list);
 //        String subnet = "192.168.0.";
 //        int timeout = 1000;
 //

@@ -37,8 +37,8 @@
             </intent-filter>
         </activity>
         <activity android:exported="false" android:name=".presentation.activities.MainAuthActivity" android:screenOrientation="portrait"  />
-        <activity android:configChanges="orientation|screenSize" android:name=".presentation.activities.SetterActivity" android:screenOrientation="portrait" android:exported="false" />
-        <activity android:configChanges="orientation|screenSize" android:name=".presentation.activities.GetterActivity" android:exported="false" android:screenOrientation="portrait"  />
+        <activity android:configChanges="orientation|screenSize" android:name=".presentation.activities.GiverActivity" android:screenOrientation="portrait" android:exported="false" />
+        <activity android:configChanges="orientation|screenSize" android:name=".presentation.activities.NeedyActivity" android:exported="false" android:screenOrientation="portrait"  />
 
         <service
             android:name=".presentation.services.LocationTrackingService"

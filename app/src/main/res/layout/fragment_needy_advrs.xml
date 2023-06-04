@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_color"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_needy_advrs">
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/needy_advert_swiper">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    style="@style/heading_needy_fragments"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.7"
+                    android:text="@string/button_navigation_first_first"
+                 />
+
+                <TextView
+                    android:id="@+id/needy_advert_faq"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"
+                    android:layout_gravity="center|top"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:text="@string/faq_link"
+                    android:textColor="@color/black"
+                    android:background="@drawable/custom_round_border"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/standard_size_small"
+                android:layout_marginBottom="@dimen/standard_size_small"
+                android:background="@color/grey_100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_adv_text"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:textColor="@color/grey_500"
+                android:id="@+id/text_number_of_advert" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:text="@string/number_adv_text_hint6"
+                android:layout_gravity="center"
+                android:textSize="48sp"
+                android:id="@+id/number_of_advertisement"
+                android:textColor="@color/grey_500"
+                android:visibility="invisible"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adress_shop_text"
+                    android:textColor="@color/grey_500"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/standard_size_small"
+                    android:text="@string/adress_shop_text_hint"
+                    android:id="@+id/address_shop"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/standard_size_small"
+                android:layout_marginLeft="@dimen/standard_size_very_medium"
+                android:layout_marginRight="@dimen/standard_size_very_medium"
+                android:background="@color/grey_light"/>
+
+            <LinearLayout
+                android:id="@+id/needy_block_timer"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/standard_size_small"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginBottom="30dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_text"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/timer_to_advert"
+                    android:layout_marginStart="@dimen/standard_size_small"
+                    android:text="@string/time_text_hint"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/needy_advert_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adv_text_hint"
+                    android:layout_marginStart="@dimen/standard_size_very_medium"
+                    android:textColor="@color/grey_500"/>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/standard_size_small"
+                    android:layout_marginBottom="@dimen/standard_size_small"
+                    android:layout_marginStart="@dimen/standard_size_very_medium"
+                    android:layout_marginEnd="@dimen/standard_size_very_medium"
+                    android:background="@color/grey_100"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:id="@+id/needy_advert_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_gravity="center">
+                <TextView
+                    android:id="@+id/needy_advert_title_products"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/name_advert_text"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/grey_500"/>
+                <ListView
+                    android:layout_gravity="center"
+                    android:id="@+id/needy_advert_products"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:dividerHeight="5dp"
+                    android:divider="@color/white"
+                    android:layout_marginTop="@dimen/standard_size_very_medium" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/standard_size_very_medium"
+                android:layout_marginEnd="@dimen/standard_size_very_medium"
+                android:layout_marginTop="@dimen/standard_size_small"
+                android:layout_marginBottom="80dp"
+                android:orientation="vertical">
+
+                <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
+                    android:id="@+id/stop_advert"
+                    style="@style/grey_500_button"
+                    android:layout_gravity="center|top"
+                    android:text="@string/stop_adv_text"
+                    android:layout_marginTop="20dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:background="@drawable/style6"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:visibility="invisible" />
+
+                <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
+                    android:id="@+id/pick_up_order"
+                    style="@style/grey_500_button"
+                    android:layout_gravity="center|top"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/style6"
+                    android:textColor="@color/white"
+                    android:text="@string/adv_zabor_text"
+                    android:visibility="invisible" />
+
+                <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
+                    android:id="@+id/create_new_request"
+                    style="@style/grey_500_button"
+                    android:layout_width="match_parent"
+                    android:background="@drawable/style6"
+                    android:textColor="@color/white"
+                    android:text="@string/add_new_request_button"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:visibility="invisible" />
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>
+

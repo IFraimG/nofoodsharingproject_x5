@@ -7,10 +7,10 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.data.api.getter.GetterRepository;
-import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
-import com.buyhelp.nofoodsharingproject.data.models.Getter;
-import com.buyhelp.nofoodsharingproject.data.models.Setter;
+import com.buyhelp.nofoodsharingproject.data.api.giver.GiverRepository;
+import com.buyhelp.nofoodsharingproject.data.api.needy.NeedyRepository;
+import com.buyhelp.nofoodsharingproject.data.models.Needy;
+import com.buyhelp.nofoodsharingproject.data.models.Giver;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -24,8 +24,8 @@ import retrofit2.Response;
 public class CustomMessagingService extends FirebaseMessagingService {
     final String CHANNEL_ID = "HEADS_UP_NOTIFICATION";
     private DefineUser defineUser;
-    private GetterRepository getterRepository;
-    private SetterRepository setterRepository;
+    private NeedyRepository needyRepository;
+    private GiverRepository giverRepository;
 
     @Override
     public void onNewToken(@NonNull String token) {
@@ -34,17 +34,17 @@ public class CustomMessagingService extends FirebaseMessagingService {
         defineUser = new DefineUser(getApplicationContext());
 
         ApplicationCore app = (ApplicationCore) getApplication();
-        getterRepository = app.getAppComponent().getGetterRepository();
-        setterRepository = app.getAppComponent().getSetterRepository();
+        needyRepository = app.getAppComponent().getNeedyRepository();
+        giverRepository = app.getAppComponent().getGiverRepository();
 
         if (defineUser.getToken() != null && defineUser.getToken().length() > 0 && defineUser.getTypeUser().second.equals(true)) {
-            changeGetterToken(token);
-        } else changeSetterToken(token);
+            changeNeedyToken(token);
+        } else changeGiverToken(token);
     }
 
-    private void changeSetterToken(String token) {
-        Setter setter = defineUser.defineSetter();
-        setterRepository.changeToken(setter.getX5_Id(), setter.getTokenFCM()).enqueue(new Callback<>() {
+    private void changeGiverToken(String token) {
+        Giver giver = defineUser.defineGiver();
+        giverRepository.changeToken(giver.getX5_Id(), giver.getTokenFCM()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) defineUser.changeFCMtoken(token);
@@ -57,9 +57,9 @@ public class CustomMessagingService extends FirebaseMessagingService {
         });
     }
 
-    private void changeGetterToken(String token) {
-        Getter getter = defineUser.defineGetter();
-        getterRepository.changeToken(getter.getX5_Id(), getter.getTokenFCM()).enqueue(new Callback<>() {
+    private void changeNeedyToken(String token) {
+        Needy needy = defineUser.defineNeedy();
+        needyRepository.changeToken(needy.getX5_Id(), needy.getTokenFCM()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) defineUser.changeFCMtoken(token);

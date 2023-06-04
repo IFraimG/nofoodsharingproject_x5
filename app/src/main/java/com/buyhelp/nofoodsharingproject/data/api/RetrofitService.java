@@ -6,14 +6,14 @@ import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsApiService;
 import com.buyhelp.nofoodsharingproject.data.api.adverts.AdvertsRepository;
 import com.buyhelp.nofoodsharingproject.data.api.auth.AuthApiService;
 import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
-import com.buyhelp.nofoodsharingproject.data.api.getter.GetterApiService;
-import com.buyhelp.nofoodsharingproject.data.api.getter.GetterRepository;
+import com.buyhelp.nofoodsharingproject.data.api.giver.GiverApiService;
+import com.buyhelp.nofoodsharingproject.data.api.needy.NeedyApiService;
+import com.buyhelp.nofoodsharingproject.data.api.needy.NeedyRepository;
 import com.buyhelp.nofoodsharingproject.data.api.map.MapApiService;
 import com.buyhelp.nofoodsharingproject.data.api.map.MapRepository;
 import com.buyhelp.nofoodsharingproject.data.api.notifications.InnerNotificationService;
 import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepository;
-import com.buyhelp.nofoodsharingproject.data.api.setter.SetterApiService;
-import com.buyhelp.nofoodsharingproject.data.api.setter.SetterRepository;
+import com.buyhelp.nofoodsharingproject.data.api.giver.GiverRepository;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.scopes.AppScope;
@@ -94,14 +94,14 @@ public class RetrofitService {
 
     @AppScope
     @Provides
-    public GetterApiService provideGetterRetrofitService(RetrofitService retrofitService) {
-        return new GetterApiService(retrofitService);
+    public NeedyApiService provideNeedyRetrofitService(RetrofitService retrofitService) {
+        return new NeedyApiService(retrofitService);
     }
 
     @AppScope
     @Provides
-    public GetterRepository provideGetterRepository(GetterApiService getterApiService) {
-        return new GetterRepository(getterApiService);
+    public NeedyRepository provideNeedyRepository(NeedyApiService needyApiService) {
+        return new NeedyRepository(needyApiService);
     }
 
     @AppScope
@@ -119,14 +119,14 @@ public class RetrofitService {
 
     @AppScope
     @Provides
-    public SetterApiService provideSetterRetrofitService(RetrofitService retrofitService) {
-        return new SetterApiService(retrofitService);
+    public GiverApiService provideGiverRetrofitService(RetrofitService retrofitService) {
+        return new GiverApiService(retrofitService);
     }
 
     @AppScope
     @Provides
-    public SetterRepository provideSetterRepository(SetterApiService setterApiService) {
-        return new SetterRepository(setterApiService);
+    public GiverRepository provideGiverRepository(GiverApiService giverApiService) {
+        return new GiverRepository(giverApiService);
     }
 
     @AppScope

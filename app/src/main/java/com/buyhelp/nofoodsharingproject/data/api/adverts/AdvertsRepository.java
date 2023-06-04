@@ -47,8 +47,8 @@ public class AdvertsRepository {
         return advertsAPI.takingProducts(new RequestTakingProduct(authorID));
     }
 
-    public Call<ResponseHistoryAdverts> findSetterAdvertisements(String userID) {
-        return advertsAPI.findSetterAdvertisements(userID);
+    public Call<ResponseHistoryAdverts> findGiverAdvertisements(String userID) {
+        return advertsAPI.findGiverAdvertisements(userID);
     }
 
     public Call<Advertisement> getRandomAdvertByMarket(String market) {

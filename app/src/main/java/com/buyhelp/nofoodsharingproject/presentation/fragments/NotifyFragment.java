@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.buyhelp.nofoodsharingproject.data.api.notifications.NotificationRepository;
+import com.buyhelp.nofoodsharingproject.databinding.FragmentNeedyNotifyBinding;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
-import com.buyhelp.nofoodsharingproject.presentation.adapters.GetterNotificationsAdapter;
-import com.buyhelp.nofoodsharingproject.databinding.FragmentGetterNotifyBinding;
+import com.buyhelp.nofoodsharingproject.presentation.adapters.NeedyNotificationsAdapter;
 import com.buyhelp.nofoodsharingproject.data.models.LoaderStatus;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.factories.NotificationFactory;
@@ -22,8 +22,8 @@ import java.lang.ref.WeakReference;
 
 public class NotifyFragment extends Fragment {
     private NotificationsViewModel viewModel;
-    private FragmentGetterNotifyBinding binding;
-    private WeakReference<FragmentGetterNotifyBinding> mBinding;
+    private FragmentNeedyNotifyBinding binding;
+    private WeakReference<FragmentNeedyNotifyBinding> mBinding;
     private DefineUser defineUser;
     private NotificationRepository notificationRepository;
     @Override
@@ -36,11 +36,11 @@ public class NotifyFragment extends Fragment {
     }
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentGetterNotifyBinding.inflate(inflater);
+        binding = FragmentNeedyNotifyBinding.inflate(inflater);
         mBinding = new WeakReference<>(binding);
 
-        GetterNotificationsAdapter getterNotificationsAdapter = new GetterNotificationsAdapter(getContext());
-        binding.notifyRecycler.setAdapter(getterNotificationsAdapter);
+        NeedyNotificationsAdapter needyNotificationsAdapter = new NeedyNotificationsAdapter(getContext());
+        binding.notifyRecycler.setAdapter(needyNotificationsAdapter);
 
         viewModel = new ViewModelProvider(
                 requireActivity(),
@@ -49,11 +49,11 @@ public class NotifyFragment extends Fragment {
 
         Pair<String, Boolean> userType = defineUser.getTypeUser();
 
-        viewModel.getAllNotifications(userType.first, userType.second ? "getter" : "setter").observe(requireActivity(), getterNotificationsAdapter::updateNotifications);
+        viewModel.getAllNotifications(userType.first, userType.second ? "needy" : "giver").observe(requireActivity(), needyNotificationsAdapter::updateNotifications);
         viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
 
-        binding.getterNotifySwiper.setOnRefreshListener(() -> {
-            viewModel.getAllNotifications(userType.first, userType.second ? "getter" : "setter").observe(requireActivity(), getterNotificationsAdapter::updateNotifications);
+        binding.needyNotifySwiper.setOnRefreshListener(() -> {
+            viewModel.getAllNotifications(userType.first, userType.second ? "needy" : "giver").observe(requireActivity(), needyNotificationsAdapter::updateNotifications);
             viewModel.getLoaderStatus().observe(requireActivity(), this::renderStatus);
         });
 
@@ -70,17 +70,17 @@ public class NotifyFragment extends Fragment {
         switch (loaderStatus.getStatus()) {
             case LOADING:
                 binding.notifyRecycler.setVisibility(View.INVISIBLE);
-                binding.getterNotifyLoader.setVisibility(View.VISIBLE);
+                binding.needyNotifyLoader.setVisibility(View.VISIBLE);
                 break;
             case LOADED:
                 binding.notifyRecycler.setVisibility(View.VISIBLE);
-                binding.getterNotifyLoader.setVisibility(View.INVISIBLE);
-                binding.getterNotifySwiper.setRefreshing(false);
+                binding.needyNotifyLoader.setVisibility(View.INVISIBLE);
+                binding.needyNotifySwiper.setRefreshing(false);
                 break;
             case FAILURE:
                 binding.notifyRecycler.setVisibility(View.INVISIBLE);
-                binding.getterNotifyLoader.setVisibility(View.INVISIBLE);
-                binding.getterNotifySwiper.setRefreshing(false);
+                binding.needyNotifyLoader.setVisibility(View.INVISIBLE);
+                binding.needyNotifySwiper.setRefreshing(false);
                 break;
         }
     }

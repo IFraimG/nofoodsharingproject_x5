@@ -13,11 +13,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.buyhelp.nofoodsharingproject.databinding.FragmentListChatsBinding;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.R;
-import com.buyhelp.nofoodsharingproject.presentation.activities.GetterActivity;
-import com.buyhelp.nofoodsharingproject.presentation.activities.SetterActivity;
-import com.buyhelp.nofoodsharingproject.databinding.FragmentListChatsBinding;
+import com.buyhelp.nofoodsharingproject.presentation.activities.NeedyActivity;
+import com.buyhelp.nofoodsharingproject.presentation.activities.GiverActivity;
 import com.buyhelp.nofoodsharingproject.data.models.Chat;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 
@@ -76,20 +76,20 @@ public class ChatsListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (getActivity() instanceof SetterActivity) {
-            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(false);
-        } else if (getActivity() instanceof GetterActivity) {
-            ((GetterActivity) requireActivity()).setBottomNavigationVisibility(false);
+        if (getActivity() instanceof GiverActivity) {
+            ((GiverActivity) requireActivity()).setBottomNavigationVisibility(false);
+        } else if (getActivity() instanceof NeedyActivity) {
+            ((NeedyActivity) requireActivity()).setBottomNavigationVisibility(false);
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (getActivity() instanceof SetterActivity) {
-            ((SetterActivity) requireActivity()).setBottomNavigationVisibility(true);
-        } else if (getActivity() instanceof GetterActivity) {
-            ((GetterActivity) requireActivity()).setBottomNavigationVisibility(true);
+        if (getActivity() instanceof GiverActivity) {
+            ((GiverActivity) requireActivity()).setBottomNavigationVisibility(true);
+        } else if (getActivity() instanceof NeedyActivity) {
+            ((NeedyActivity) requireActivity()).setBottomNavigationVisibility(true);
         }
     }
 
@@ -112,7 +112,7 @@ public class ChatsListFragment extends Fragment {
 
     private void getChatsList() {
         Pair<String, Boolean> userData = defineUser.getTypeUser();
-        String type = userData.second ? "getter" : "setter";
+        String type = userData.second ? "needy" : "giver";
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type", type);

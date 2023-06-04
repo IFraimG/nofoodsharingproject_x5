@@ -37,8 +37,8 @@ public interface AdvertsAPI {
     @PUT("/advertisements/finish_getting_product")
     Call<Advertisement> takingProducts(@Body RequestTakingProduct requestTakingProduct);
 
-    @GET("/advertisements/find_setter_advertisements/{userID}")
-    Call<ResponseHistoryAdverts> findSetterAdvertisements(@Path("userID") String userID);
+    @GET("/advertisements/find_giver_advertisements/{userID}")
+    Call<ResponseHistoryAdverts> findGiverAdvertisements(@Path("userID") String userID);
 
     @GET("/advertisements/get_active_by_market")
     Call<Advertisement> getRandomAdvertByMarket(@Query("market") String market);

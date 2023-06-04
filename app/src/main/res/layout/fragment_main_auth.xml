@@ -41,26 +41,26 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
-                android:id="@+id/main_auth_btn_getter"
+                android:id="@+id/main_auth_btn_needy"
                 android:layout_width="match_parent"
                 android:layout_marginStart="@dimen/standard_size_very_medium"
                 android:layout_marginEnd="@dimen/standard_size_very_medium"
                 android:layout_height="70dp"
                 android:layout_marginBottom="@dimen/standard_size_very_medium"
-                android:text="@string/i_getter_text"
+                android:text="@string/i_needy_text"
                 android:textColor="@color/black"
                 android:textFontWeight="700"
                 android:textSize="20sp"
                 android:background="@drawable/style2" />
 
             <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton
-                android:id="@+id/main_auth_btn_setter"
+                android:id="@+id/main_auth_btn_giver"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/standard_size_very_medium"
                 android:layout_marginEnd="@dimen/standard_size_very_medium"
-                android:text="@string/i_setter_text"
+                android:text="@string/i_giver_text"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:background="@drawable/custom_round_border_active" />

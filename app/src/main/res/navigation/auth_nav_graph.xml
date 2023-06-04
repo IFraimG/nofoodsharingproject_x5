@@ -5,12 +5,12 @@
     app:startDestination="@id/mainAuthF">
 
     <fragment
-        android:id="@+id/getterAuthF"
-        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.auth.GetterAuthFragment"
-        android:label="fragment_getter_auth"
-        tools:layout="@layout/fragment_getter_auth" >
+        android:id="@+id/needyAuthF"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.auth.NeedyAuthFragment"
+        android:label="fragment_needy_auth"
+        tools:layout="@layout/fragment_needy_auth" >
         <action
-            android:id="@+id/action_getterAuthF_to_mainAuthF"
+            android:id="@+id/action_needyAuthF_to_mainAuthF"
             app:destination="@id/mainAuthF"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
@@ -18,12 +18,12 @@
             app:popExitAnim="@anim/nav_pop_exit"/>
     </fragment>
     <fragment
-        android:id="@+id/setterAuthF"
-        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.auth.SetterAuthFragment"
-        android:label="fragment_setter_auth"
-        tools:layout="@layout/fragment_setter_auth">
+        android:id="@+id/giverAuthF"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.auth.GiverAuthFragment"
+        android:label="fragment_giver_auth"
+        tools:layout="@layout/fragment_giver_auth">
         <action
-            android:id="@+id/action_setterAuthF_to_mainAuthF"
+            android:id="@+id/action_giverAuthF_to_mainAuthF"
             app:destination="@id/mainAuthF"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
@@ -31,8 +31,8 @@
             app:popExitAnim="@anim/nav_pop_exit"
             />
         <action
-            android:id="@+id/action_setterAuthF_to_setterLoginAuthF"
-            app:destination="@id/setterLoginAuthF"
+            android:id="@+id/action_giverAuthF_to_giverLoginauthF"
+            app:destination="@id/giverLoginauthF"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -45,16 +45,16 @@
         android:label="fragment_main_auth"
         tools:layout="@layout/fragment_main_auth" >
         <action
-            android:id="@+id/action_mainAuthF_to_setterAuthF"
-            app:destination="@id/setterAuthF"
+            android:id="@+id/action_mainAuthF_to_giverAuthF"
+            app:destination="@id/giverAuthF"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit"
             />
         <action
-            android:id="@+id/action_mainAuthF_to_getterAuthF"
-            app:destination="@id/getterAuthF"
+            android:id="@+id/action_mainAuthF_to_needyAuthF"
+            app:destination="@id/needyAuthF"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
@@ -62,13 +62,13 @@
             />
     </fragment>
     <fragment
-        android:id="@+id/setterLoginAuthF"
-        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.auth.SetterLoginAuthFragment"
-        android:label="fragment_setter_login_auth"
-        tools:layout="@layout/fragment_setter_login_auth" >
+        android:id="@+id/giverLoginauthF"
+        android:name="com.buyhelp.nofoodsharingproject.presentation.fragments.auth.GiverLoginAuthFragment"
+        android:label="fragment_giver_login_auth"
+        tools:layout="@layout/fragment_giver_login_auth" >
         <action
-            android:id="@+id/action_setterLoginAuthF_to_setterAuthF"
-            app:destination="@id/setterAuthF"
+            android:id="@+id/action_giverLoginauthF_to_giverAuthF"
+            app:destination="@id/giverAuthF"
             app:enterAnim="@anim/nav_enter"
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
