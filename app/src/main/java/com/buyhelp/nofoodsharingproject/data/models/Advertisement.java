@@ -1,3 +1,8 @@
+/**
+ * Класс {@code Advertisement} является главной моделью объявления
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.data.models;
 
 import com.google.gson.annotations.Expose;
@@ -38,10 +43,6 @@ public class Advertisement {
     @Expose
     private String dateOfCreated;
 
-    @SerializedName("dateOfExpires")
-    @Expose
-    private String dateOfExpires;
-
     @SerializedName("isSuccessDone")
     @Expose
     private boolean isDone = false;
@@ -58,13 +59,19 @@ public class Advertisement {
 
     public Advertisement() {}
 
+    /**
+     * Конструктор для создания пустого объявления, без списка продуктов
+     */
     public Advertisement(String title, String authorID, String authorName) {
         this.title = title;
         this.authorID = authorID;
         this.authorName = authorName;
-        this.dateOfExpires = Long.toString(new Date().getTime());
     }
 
+    /**
+     * Метод для генерации рандомного кода, необходимого для получения продуктов нуждающимся
+     * @return Возвращает id, состоящий из 4 русских букв
+     */
     public static String generateID() {
         String alphabet = "абвгдежзиклмнопрстухцчшщэюя";
         int length = 4;
@@ -82,6 +89,9 @@ public class Advertisement {
         return isDone;
     }
 
+    /**
+     * Этот метод добавляет в класс listProducts в формате String[]
+     */
     public void setListProductsCustom(List<String> listProducts) {
         this.listProducts = new String[listProducts.size()];
         for (int i = 0; i < listProducts.size(); i++) {
@@ -97,6 +107,9 @@ public class Advertisement {
         return listProducts;
     }
 
+    /**
+     * Метод для получения названий списка продуктов
+     */
     public List<String> getListTitleProducts() {
         listArrayProducts = new ArrayList<>();
         listArrayProducts.addAll(Arrays.asList(listProducts));
@@ -120,7 +133,6 @@ public class Advertisement {
         if (authorName == null) return "";
         return authorName;
     }
-
 
     public String getGettingProductID() {
         return gettingProductID;

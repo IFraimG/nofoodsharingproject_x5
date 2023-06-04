@@ -1,3 +1,8 @@
+/**
+ * Абстрактный класс {@code User} является родительским классом для Giver, Needy и содержит их общие свойства и методы
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.data.models;
 
 import com.google.gson.annotations.Expose;

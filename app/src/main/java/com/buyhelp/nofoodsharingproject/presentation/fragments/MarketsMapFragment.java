@@ -88,7 +88,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PermissionHandler.requestMapPermissions(requireActivity(), requireContext());
+        PermissionHandler.requestMapPermissions(requireActivity());
 
         SearchFactory.initialize(requireContext());
         DirectionsFactory.initialize(requireContext());
@@ -173,7 +173,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     }
 
     private void initMap() {
-        PermissionHandler.requestMapPermissions(requireActivity(), requireContext());
+        PermissionHandler.requestMapPermissions(requireActivity());
 
         mapView.getMap().setRotateGesturesEnabled(false);
 

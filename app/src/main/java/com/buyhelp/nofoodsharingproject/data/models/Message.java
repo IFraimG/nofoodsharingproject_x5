@@ -1,3 +1,8 @@
+/**
+ * Класс {@code Message} - модель сообщения
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.data.models;
 
 import com.google.gson.annotations.SerializedName;
@@ -73,6 +78,9 @@ public class Message {
         return messageID;
     }
 
+    /**
+     * Метод для создания даты при отправке сообщения в чате
+     */
     public void createDate() {
         Calendar calendar = Calendar.getInstance();
 

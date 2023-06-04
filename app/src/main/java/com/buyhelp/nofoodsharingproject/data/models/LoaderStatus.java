@@ -1,3 +1,8 @@
+/**
+ * Класс {@code LoaderStatus} необходим для отображения лоадера во время загрузки элементов при отправке запроса на сервер
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.data.models;
 
 public class LoaderStatus {

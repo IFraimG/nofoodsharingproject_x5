@@ -1,3 +1,8 @@
+/**
+ * Класс {@code Market} необходим хранения информации о магазине для их отображения на карте
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.data.models;
 
 import com.yandex.mapkit.geometry.Point;
@@ -13,14 +18,26 @@ public class Market {
     public Market(String title) {
         this.title = title;
     }
+
+    /**
+     * Конструктор для получения координат
+     */
     public Market(double latitude, double longitude) {
         this.point = new Point(latitude, longitude);
     }
+
+    /**
+     * Конструктор для получения координат
+     */
     public Market(String title, double latitude, double longitude) {
         this.point = new Point(latitude, longitude);
         this.title = title;
     }
 
+    /**
+     * Конструктор для получения координат
+     * @param isReal нужен, чтобы отделять магазин от элемента "Выберите магазин", который есть вместе с другими Market в Spinner
+     */
     public Market(String title, double latitude, double longitude, boolean isReal) {
         this.point = new Point(latitude, longitude);
         this.title = title;

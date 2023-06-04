@@ -1,6 +1,9 @@
-package com.buyhelp.nofoodsharingproject.data.models;
+/**
+ * Класс {@code Faq} содержит основную модель Faq с вопросом и ответом
+ * @author Кулагин Александр
+ */
 
-import android.graphics.drawable.Drawable;
+package com.buyhelp.nofoodsharingproject.data.models;
 
 public class Faq {
     private String question;

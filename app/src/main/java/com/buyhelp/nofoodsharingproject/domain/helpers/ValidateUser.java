@@ -1,3 +1,8 @@
+/**
+ * Класс {@code ValidateUser} необходим для проверки введенных данных на страницах авторизаций
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.domain.helpers;
 
 import android.content.Context;

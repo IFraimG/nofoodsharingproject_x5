@@ -1,3 +1,8 @@
+/**
+ * Класс {@code ShortDataUser} представляет упрощенную версию Needy/Giver
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.data.models;
 
 public class ShortDataUser {

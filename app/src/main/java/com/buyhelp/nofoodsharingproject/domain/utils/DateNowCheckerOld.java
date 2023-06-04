@@ -1,3 +1,9 @@
+/**
+ * Класс {@code DateNowCheckerOld} необходим для работы с датами
+ * Функции этого класса доступны только для Android, версии НИЖЕ 8.0
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.domain.utils;
 
 import org.threeten.bp.ZoneId;
@@ -11,6 +17,10 @@ public class DateNowCheckerOld extends DateNowChecker {
         this.dateNowUpdate();
     }
 
+    /**
+     * Метод для форматирования даты в форматы Hours:Minutes:Seconds и Years:Months:Days
+     * Локализация времени происходит по Московскому времени
+     */
     @Override
     public void dateNowUpdate() {
         this.dateTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"));
@@ -37,30 +47,5 @@ public class DateNowCheckerOld extends DateNowChecker {
         this.dateTime = ZonedDateTime.now(ZoneId.of("Europe/Moscow"));
 
         return dateTime.getSecond();
-    }
-
-    @Override
-    public boolean isNight() {
-        return false;
-    }
-
-    @Override
-    public String getTimeHMS() {
-        return this.timeHMS;
-    }
-
-    @Override
-    public String getTimeYMD() {
-        return this.timeYMD;
-    }
-
-    @Override
-    public void setTimeHMS(String timeHMS) {
-        this.timeHMS = timeHMS;
-    }
-
-    @Override
-    public void setTimeYMD(String timeYMD) {
-        this.timeYMD = timeYMD;
     }
 }

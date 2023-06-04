@@ -1,3 +1,8 @@
+/**
+ * Класс {@code Notification} - модель уведомления
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.data.models;
 
 import com.google.gson.annotations.Expose;

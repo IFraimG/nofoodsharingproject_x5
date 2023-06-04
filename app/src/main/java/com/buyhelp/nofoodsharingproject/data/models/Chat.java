@@ -40,16 +40,8 @@ public class Chat {
         this.chatID = chatID;
     }
 
-    public String[] getUsers() {
-        return users;
-    }
-
     public void setUsers(String[] users) {
         this.users = users;
-    }
-
-    public String getDateCreated() {
-        return dateCreated;
     }
 
     public void setDateCreated(String dateCreated) {
