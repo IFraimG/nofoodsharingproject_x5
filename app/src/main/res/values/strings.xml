@@ -137,7 +137,7 @@
     <string name="loading">Загрузка</string>
     <string name="return_to_main_page">Вернуться на страницу объявлений</string>
     <string name="set_route_near_market">Построить маршрут до ближайшего магазина</string>
-    <string name="open_location">Включите геолокацию!</string>
+    <string name="open_location">Идет подключение геолокации....</string>
     <string name="edit_profile">Редактировать данные</string>
     <string name="log_out">Выйти из аккаунта</string>
     <string name="update">Обновить</string>

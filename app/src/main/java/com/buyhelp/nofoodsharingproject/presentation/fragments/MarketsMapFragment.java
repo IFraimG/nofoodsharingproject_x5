@@ -22,6 +22,7 @@ import com.buyhelp.nofoodsharingproject.databinding.FragmentMarketsMapBinding;
 import com.buyhelp.nofoodsharingproject.data.models.Market;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
+import com.buyhelp.nofoodsharingproject.domain.utils.CustomLocation;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerPermissionComponent;
 import com.buyhelp.nofoodsharingproject.presentation.di.components.PermissionComponent;
@@ -127,11 +128,11 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         binding = FragmentMarketsMapBinding.inflate(inflater);
         mBinding = new WeakReference<>(binding);
 
-        this.mapView = binding.mapview;
-
         viewModel = new ViewModelProvider(requireActivity(),
                 new MapFactory(requireActivity().getApplication(), mapRepository))
                 .get(MapViewModel.class);
+
+        this.mapView = binding.mapview;
 
         if (permissionHandler != null && permissionHandler.checkPermissions((AppCompatActivity) requireActivity())) {
             locationListener = new LocationListener() {
@@ -240,24 +241,16 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
 
     private void createRoute() {
         if (isAvailableLocation) {
-            Location myLocation = new Location("");
-            myLocation.setLatitude(myPoint.getLatitude());
-            myLocation.setLongitude(myPoint.getLongitude());
-
+            Location myLocation = new CustomLocation(myPoint.getLatitude(), myPoint.getLongitude()).getLocation();
             Point resultPoint = viewModel.getMarketPoints().get(0);
-
-            Location resultLocation = new Location("");
-            resultLocation.setLatitude(resultPoint.getLatitude());
-            resultLocation.setLongitude(resultPoint.getLongitude());
+            Location resultLocation =new CustomLocation(resultPoint.getLatitude(), resultPoint.getLongitude()).getLocation();
 
             double minDistance = myLocation.distanceTo(resultLocation);
 
             for (int i = 1; i < viewModel.getMarketPoints().size(); i++) {
                 Point intermediatePoint = viewModel.getMarketPoints().get(i);
 
-                Location intermediateLocation = new Location("");
-                intermediateLocation.setLatitude(intermediatePoint.getLatitude());
-                intermediateLocation.setLongitude(intermediatePoint.getLongitude());
+                Location intermediateLocation = new CustomLocation(intermediatePoint.getLatitude(), intermediatePoint.getLongitude()).getLocation();
 
                 if (myLocation.distanceTo(intermediateLocation) < minDistance) {
                     minDistance = myLocation.distanceTo(intermediateLocation);
