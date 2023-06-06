@@ -1,3 +1,9 @@
+/**
+ * Класс {@code MarketsMapFragment} - фрагмент яндекс карты
+ * @author Кулагин Александр
+ */
+
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments;
 
 import android.graphics.PointF;
@@ -25,7 +31,6 @@ import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
 import com.buyhelp.nofoodsharingproject.domain.utils.CustomLocation;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
 import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerPermissionComponent;
-import com.buyhelp.nofoodsharingproject.presentation.di.components.PermissionComponent;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.ActivityModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.PermissionHandlerModule;
 import com.buyhelp.nofoodsharingproject.presentation.factories.MapFactory;
@@ -169,6 +174,12 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         if (mapView != null) mapView.getMap().getMapObjects().clear();
     }
 
+    /**
+     * Инициализация параметров отображения яндекс карты
+     * Отображение меток магазинов на карте
+     * Отображение метки пользователя по умолчанию
+     * Запрос на включение геолокации
+     */
     private void initMap() {
         if (permissionHandler != null) permissionHandler.requestMapPermissions((AppCompatActivity) requireActivity());
 
@@ -192,6 +203,9 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         }
     }
 
+    /**
+     * Получение информации о прикрепленном магазине
+     */
     private void getPinnedMarketInfo() {
         binding.mapSetMarketBtn.setOnClickListener(View -> viewModel.updateMarket(defineUser.getTypeUser().second, defineUser.getTypeUser().first));
         binding.mapMakeRoute.setOnClickListener(View -> createRoute());
@@ -224,6 +238,10 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         });
     }
 
+    /**
+     * Этот метод отображает название магазина
+     * @param point координаты магазина
+     */
     private void handleMarkerTap(Point point) {
         for (Market fullListMarket : viewModel.getFullListMarkets()) {
             Point pointMarket = fullListMarket.getPoint();
@@ -234,6 +252,9 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         }
     }
 
+    /**
+     * Этот метод строит маршрут до ближайшего магазина
+     */
     private void createRoute() {
         if (isAvailableLocation) {
             Location myLocation = new CustomLocation(myPoint.getLatitude(), myPoint.getLongitude()).getLocation();
@@ -283,6 +304,9 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         return false;
     }
 
+    /**
+     * Этот метод отображает метку пользователя
+     */
     @Override
     public void onObjectAdded(UserLocationView userLocationView) {
         userLocationLayer.setAnchor(

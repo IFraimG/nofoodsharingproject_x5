@@ -1,3 +1,8 @@
+/**
+ * Класс {@code ChatListFragment} - фрагмент страницы списка чатов
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments;
 
 import android.os.Bundle;
@@ -110,6 +115,9 @@ public class ChatsListFragment extends Fragment {
         }
     }
 
+    /**
+     * Этот метод получает список чатов
+     */
     private void getChatsList() {
         Pair<String, Boolean> userData = defineUser.getTypeUser();
         String type = userData.second ? "needy" : "giver";
@@ -127,13 +135,12 @@ public class ChatsListFragment extends Fragment {
                 JSONObject data = (JSONObject) args[0];
                 chatsUpdate(data);
             });
-//            requireActivity().runOnUiThread(() -> {
-//                JSONObject data = (JSONObject) args[0];
-//                chatsUpdate(data);
-//            });
         });
     }
 
+    /**
+     * Этот метод отображает список чатов
+     */
     private void chatsUpdate(JSONObject data) {
         try {
             JSONArray chatsJSON = data.getJSONArray("result");

@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <TextView
             style="@style/heading_needy_fragments"
             android:minWidth="200dp"
@@ -65,24 +64,14 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:orientation="vertical">
-
             <androidx.cardview.widget.CardView
                 android:layout_width="300dp"
+                android:layout_marginTop="@dimen/standard_size_very_medium"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/standard_size_small"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="2dp"
                 app:cardMaxElevation="4dp">
-
-                <TextView
-                    android:id="@+id/needy_profile_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/standard_size_very_medium"
-                    android:gravity="center"
-                    android:text="@string/edit_profile_data_text"
-                    android:textColor="@color/grey_500"
-                    android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/needy_profile_edit_login"
@@ -144,7 +133,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="380dp"
-                    android:layout_marginBottom="100dp"
+                    android:layout_marginBottom="@dimen/standard_size_very_medium"
                     android:orientation="horizontal">
 
                     <com.buyhelp.nofoodsharingproject.presentation.views.CustomAppCompatButton

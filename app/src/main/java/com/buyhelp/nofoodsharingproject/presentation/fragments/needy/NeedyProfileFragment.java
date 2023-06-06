@@ -1,3 +1,9 @@
+/**
+ * Класс {@code NeedyProfileFragment} - фрагмент для редактирования профиля отдающего
+ * @author Кулагин Александр
+ */
+
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments.needy;
 
 import android.content.Intent;
@@ -115,6 +121,9 @@ public class NeedyProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * Этот метод позволяет выйти из аккаунта
+     */
     private void logout() {
         defineUser.clearData();
 

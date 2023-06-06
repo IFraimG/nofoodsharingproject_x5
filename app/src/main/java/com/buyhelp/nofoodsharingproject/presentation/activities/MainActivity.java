@@ -1,3 +1,8 @@
+/**
+ * Класс {@code MainActivity} - активность, перенаправляющая пользователя в GiverActivity/NeedyActivity/MainAuthActivity
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.activities;
 
 import androidx.appcompat.app.AppCompatActivity;

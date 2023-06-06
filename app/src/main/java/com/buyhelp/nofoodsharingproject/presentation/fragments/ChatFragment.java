@@ -1,3 +1,8 @@
+/**
+ * Класс {@code ChatFragment} - фрагмент страницы чата с сообщениями
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments;
 
 import android.os.Bundle;
@@ -117,6 +122,10 @@ public class ChatFragment extends Fragment {
             mSocket.off("get_messages");
         }
     }
+
+    /**
+     * Этот метод получает список сообщений
+     */
     private final Emitter.Listener setMessages = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
@@ -149,6 +158,9 @@ public class ChatFragment extends Fragment {
         }
     };
 
+    /**
+     * Этот метод отправляет сообщение в чат
+     */
     private void sendMessage() {
         String body = binding.messagesInput.getText().toString();
         if (body.length() == 0) Snackbar.make(requireContext(), requireView(), getString(R.string.no_input_message), Snackbar.LENGTH_SHORT).show();

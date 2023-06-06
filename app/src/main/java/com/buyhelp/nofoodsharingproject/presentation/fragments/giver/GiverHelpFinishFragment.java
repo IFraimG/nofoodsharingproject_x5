@@ -1,3 +1,8 @@
+/**
+ * Класс {@code GiverHelpFinishFragment} - фрагмент итоговой страницы при покупки продуктов
+ * @author Кулагин Александр
+ */
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments.giver;
 
 import android.content.ActivityNotFoundException;
@@ -34,7 +39,6 @@ public class GiverHelpFinishFragment extends Fragment {
     private Socket socket;
     private DefineUser defineUser;
     private String needyID;
-    private String generateID;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +57,7 @@ public class GiverHelpFinishFragment extends Fragment {
         mBinding = new WeakReference<>(binding);
 
         needyID = getArguments().getString("needyID");
-        generateID = getArguments().getString("gettingProductID");
+        String generateID = getArguments().getString("gettingProductID");
 
         if (generateID != null) binding.giverFinishCode.setText(generateID);
 
@@ -98,6 +102,9 @@ public class GiverHelpFinishFragment extends Fragment {
         }
     }
 
+    /**
+     * Этот метод перенаправляет пользователя в сервис VK чэкбэк
+     */
     private void vkLoad() {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.vk_link)));
@@ -107,6 +114,9 @@ public class GiverHelpFinishFragment extends Fragment {
         }
     }
 
+    /**
+     * Этот метод создает чат с пользователем и открывает страницу со списком чатов
+     */
     private void createChat(View v) {
         try {
             JSONArray arr = new JSONArray(new String[]{defineUser.getTypeUser().first, needyID});

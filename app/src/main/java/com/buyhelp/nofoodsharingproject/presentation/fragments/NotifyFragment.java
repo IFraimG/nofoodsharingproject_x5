@@ -1,3 +1,9 @@
+/**
+ * Класс {@code NotifyFragment} - фрагмент страницы истории уведомлений
+ * @author Кулагин Александр
+ */
+
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments;
 
 import android.os.Bundle;
@@ -68,20 +74,20 @@ public class NotifyFragment extends Fragment {
 
     private void renderStatus(LoaderStatus loaderStatus) {
         switch (loaderStatus.getStatus()) {
-            case LOADING:
+            case LOADING -> {
                 binding.notifyRecycler.setVisibility(View.INVISIBLE);
                 binding.needyNotifyLoader.setVisibility(View.VISIBLE);
-                break;
-            case LOADED:
+            }
+            case LOADED -> {
                 binding.notifyRecycler.setVisibility(View.VISIBLE);
                 binding.needyNotifyLoader.setVisibility(View.INVISIBLE);
                 binding.needyNotifySwiper.setRefreshing(false);
-                break;
-            case FAILURE:
+            }
+            case FAILURE -> {
                 binding.notifyRecycler.setVisibility(View.INVISIBLE);
                 binding.needyNotifyLoader.setVisibility(View.INVISIBLE);
                 binding.needyNotifySwiper.setRefreshing(false);
-                break;
+            }
         }
     }
 

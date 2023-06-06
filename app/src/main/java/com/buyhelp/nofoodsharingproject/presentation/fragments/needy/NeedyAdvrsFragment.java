@@ -1,3 +1,9 @@
+/**
+ * Класс {@code NeedyAdvrsFragment} - фрагмент, где содержится информация об объявлении нуждающегося
+ * @author Омельчук Григорий
+ */
+
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments.needy;
 
 import android.os.Bundle;
@@ -161,6 +167,9 @@ public class NeedyAdvrsFragment extends Fragment {
         binding.needyAdvertSwiper.setRefreshing(false);
     }
 
+    /**
+     * Этот метод отображает кнопку создания объявления, если время по МСК с 10 часов утра до 11 часов вечера
+     */
     private void showCreateButton() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             DateNowChecker dateNowChecker = new DateNowChecker();
@@ -175,6 +184,9 @@ public class NeedyAdvrsFragment extends Fragment {
         }
     }
 
+    /**
+     * Этот метод запрашивает информацию об объявлении
+     */
     private void getAdvertisement() {
         viewModel.getAdvert(defineUser.getUser().getX5_Id()).observe(requireActivity(), advert -> {
             if (advert != null) {

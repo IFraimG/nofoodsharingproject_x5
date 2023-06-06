@@ -1,3 +1,9 @@
+/**
+ * Класс {@code FaqFragment} - фрагмент с ответами на вопросы
+ * @author Кулагин Александр
+ */
+
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments;
 
 import android.os.Bundle;
@@ -93,6 +99,9 @@ public class FaqFragment extends Fragment {
         mBinding.clear();
     }
 
+    /**
+     * Открывает вопрос с инструкцией, как включить геолокацию
+     */
     private void createFaqItemQuestionDialog() {
         if (alertDialog != null && alertDialog.isShowing()) alertDialog.cancel();
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -119,6 +128,9 @@ public class FaqFragment extends Fragment {
         alertDialog.show();
     }
 
+    /**
+     * Открытие диалогового окна с политикой конфеденциальности
+     */
     private void createPrivacyPolicyDialog() {
         if (alertDialog != null && alertDialog.isShowing()) alertDialog.cancel();
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());

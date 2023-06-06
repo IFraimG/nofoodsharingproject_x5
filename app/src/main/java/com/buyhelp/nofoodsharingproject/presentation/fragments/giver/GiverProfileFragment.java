@@ -1,3 +1,9 @@
+/**
+ * Класс {@code GiverProfileFragment} - фрагмент редактирования профиля отдающего
+ * @author Кулагин Александр
+ */
+
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments.giver;
 
 import android.annotation.SuppressLint;
@@ -263,6 +269,9 @@ public class GiverProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * Этот метод позволяет выйти из аккаунта
+     */
     private void logout() {
         defineUser.clearData();
 
@@ -271,6 +280,9 @@ public class GiverProfileFragment extends Fragment {
         requireActivity().finish();
     }
 
+    /**
+     * Этот метод открывает список чатов
+     */
     private void vkLoad() {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.vk_link)));

@@ -1,3 +1,9 @@
+/**
+ * Класс {@code LocationTrackingService} - сервис отслеживания геолокации пользователя в фоновом режиме
+ * @author Кулагин Александр
+ */
+
+
 package com.buyhelp.nofoodsharingproject.presentation.services;
 
 import android.Manifest;
@@ -127,6 +133,9 @@ public class LocationTrackingService extends Service implements LocationListener
         return null;
     }
 
+    /**
+     * Получение информации о прикрепленном магазине у пользователя
+     */
     private void getMarket() {
         mapRepository.getPinMarket(defineUser.getTypeUser().second.equals(true) ? "needy" : "giver", defineUser.getTypeUser().first.toString()).enqueue(new Callback<MarketTitleResponse>() {
             @Override
@@ -152,6 +161,9 @@ public class LocationTrackingService extends Service implements LocationListener
         });
     }
 
+    /**
+     * Этот метод проверяет время с последней отправки уведомления
+     */
     private boolean checkTimer() {
         String dateLocation = sharedPreferences.getString("locationDate", "");
         if (dateLocation.length() == 0) return true;
@@ -171,6 +183,9 @@ public class LocationTrackingService extends Service implements LocationListener
         }
     }
 
+    /**
+     * Этот метод отображает рандомное объявление нуждающегося, который прикреплен к тому же магазину, что и нуждающийся
+     */
     private void getRandomNeedyAdvert() {
         advertsRepository.getRandomAdvertByMarket(titleMarket).enqueue(new Callback<>() {
             @Override
@@ -258,7 +273,9 @@ public class LocationTrackingService extends Service implements LocationListener
         notificationManagerCompat.notify(1, builder.build());
     }
 
-
+    /**
+     * Этот метод предупреждает пользователя о том, что у него включена геолокация
+     */
     private android.app.Notification notifyGiver() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             channel = new NotificationChannel("my_channel_id", "Location Observer", NotificationManager.IMPORTANCE_LOW);

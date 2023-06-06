@@ -1,3 +1,9 @@
+/**
+ * Класс {@code NeedyNewAdvertFragment} - фрагмент для создания объявления нуждающимся
+ * @author Омельчук Григорий
+ */
+
+
 package com.buyhelp.nofoodsharingproject.presentation.fragments.needy;
 
 import android.os.Bundle;
@@ -98,7 +104,6 @@ public class NeedyNewAdvertFragment extends Fragment {
         super.onDestroyView();
         mBinding.clear();
     }
-
 
     private void createAdvert() {
         if (viewModel.getUserItems().size() == 0)

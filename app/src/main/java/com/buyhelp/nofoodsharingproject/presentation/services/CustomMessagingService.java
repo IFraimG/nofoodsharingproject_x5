@@ -1,3 +1,9 @@
+/**
+ * Класс {@code CustomMessagingService} - сервис отправки удаленных сообщений пользователям
+ * @author Кулагин Александр
+ */
+
+
 package com.buyhelp.nofoodsharingproject.presentation.services;
 
 import android.app.Notification;
