@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
@@ -26,7 +25,6 @@ import com.buyhelp.nofoodsharingproject.presentation.activities.MainAuthActivity
 import com.buyhelp.nofoodsharingproject.data.models.ShortDataUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.ValidateUser;
-import com.buyhelp.nofoodsharingproject.data.models.Needy;
 import com.buyhelp.nofoodsharingproject.presentation.viewmodels.needy.NeedyProfileViewModel;
 import com.buyhelp.nofoodsharingproject.presentation.factories.needy.NeedyProfileFactory;
 import com.google.android.material.snackbar.Snackbar;
@@ -94,29 +92,26 @@ public class NeedyProfileFragment extends Fragment {
             Snackbar.make(requireContext(), requireView(), getString(R.string.uncorrect_password), Snackbar.LENGTH_LONG).show();
         } else {
             binding.needyProfileSave.setEnabled(false);
-            viewModel.editProfile(defineUser, new RequestNeedyEditProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText)).observe(requireActivity(), new Observer<Needy>() {
-                @Override
-                public void onChanged(Needy needy) {
-                    int code = viewModel.getStatusCode();
-                    if (code == 403) Snackbar.make(requireContext(), requireView(), getString(R.string.used_data), Snackbar.LENGTH_SHORT).show();
-                    else if (code > 299) Snackbar.make(requireContext(), requireView(), getString(R.string.your_password_uncorrect), Snackbar.LENGTH_SHORT).show();
+            viewModel.editProfile(defineUser, new RequestNeedyEditProfile(user.getX5_Id(), newLogin, newPhone, newPassword, oldPasswordText)).observe(requireActivity(), needy -> {
+                int code = viewModel.getStatusCode();
+                if (code == 403) Snackbar.make(requireContext(), requireView(), getString(R.string.used_data), Snackbar.LENGTH_SHORT).show();
+                else if (code > 299) Snackbar.make(requireContext(), requireView(), getString(R.string.your_password_uncorrect), Snackbar.LENGTH_SHORT).show();
 
-                    if (needy != null) {
-                        binding.needyProfileLogin.setText(needy.getLogin());
-                        binding.needyProfilePhone.setText(needy.getPhone());
+                if (needy != null) {
+                    binding.needyProfileLogin.setText(needy.getLogin());
+                    binding.needyProfilePhone.setText(needy.getPhone());
 
-                        defineUser.editProfileInfo(needy.getLogin(), needy.getPhone());
+                    defineUser.editProfileInfo(needy.getLogin(), needy.getPhone());
 
-                        binding.needyProfileEditLogin.setText("");
-                        binding.needyProfileEditPassword.setText("");
-                        binding.needyProfileEditPhone.setText("");
-                        binding.needyProfileEditOldPassword.setText("");
+                    binding.needyProfileEditLogin.setText("");
+                    binding.needyProfileEditPassword.setText("");
+                    binding.needyProfileEditPhone.setText("");
+                    binding.needyProfileEditOldPassword.setText("");
 
-                        Snackbar.make(requireContext(), requireView(), getString(R.string.sucses), Snackbar.LENGTH_SHORT).show();
-                    }
-
-                    binding.needyProfileSave.setEnabled(true);
+                    Snackbar.make(requireContext(), requireView(), getString(R.string.sucses), Snackbar.LENGTH_SHORT).show();
                 }
+
+                binding.needyProfileSave.setEnabled(true);
             });
         }
     }

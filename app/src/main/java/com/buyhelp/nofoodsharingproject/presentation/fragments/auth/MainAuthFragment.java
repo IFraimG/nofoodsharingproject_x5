@@ -32,7 +32,6 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MainAuthFragment extends Fragment {
-    private FragmentMainAuthBinding binding;
     private WeakReference<FragmentMainAuthBinding> mBinding;
     private int countClick = 0;
     private ScheduledFuture<String> future;
@@ -47,7 +46,7 @@ public class MainAuthFragment extends Fragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentMainAuthBinding.inflate(inflater);
+        FragmentMainAuthBinding binding = FragmentMainAuthBinding.inflate(inflater);
         mBinding = new WeakReference<>(binding);
 
         binding.secretClickableImage.setOnClickListener(View -> secretClickerHandler());

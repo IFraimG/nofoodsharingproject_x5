@@ -29,6 +29,7 @@ public class ApplicationCore extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // убрать при запуске в production
         new Instabug.Builder(this, BuildConfig.instabugKey)
                 .setInvocationEvents(InstabugInvocationEvent.SHAKE, InstabugInvocationEvent.SCREENSHOT)
                 .build();
@@ -55,6 +56,9 @@ public class ApplicationCore extends Application {
         return appComponent;
     }
 
+    /**
+     * Получение helper (DefineUser) для редактирования информации в ESP/SP
+     */
     public HelpersComponent getHelpersComponent() {
         return helpersComponent;
     }

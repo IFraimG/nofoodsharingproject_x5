@@ -30,7 +30,6 @@ import java.lang.ref.WeakReference;
 import java.util.Arrays;
 
 public class FaqFragment extends Fragment {
-    private FragmentFaqBinding binding;
     private WeakReference<FragmentFaqBinding> mBinding;
     private AlertDialog alertDialog;
 
@@ -53,7 +52,7 @@ public class FaqFragment extends Fragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentFaqBinding.inflate(inflater);
+        FragmentFaqBinding binding = FragmentFaqBinding.inflate(inflater);
         mBinding = new WeakReference<>(binding);
 
         binding.faqReturn.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());

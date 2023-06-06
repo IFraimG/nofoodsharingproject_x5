@@ -61,28 +61,26 @@ public class GiverAuthFragment extends Fragment {
         binding.giverAuthBtnReg.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_giverAuthF_to_giverLoginauthF));
         binding.authGiverSignupBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_giverAuthF_to_mainAuthF));
 
-        binding.giverAuthBtnLogin.setOnClickListener(View -> {
-            viewModelNeedy.sendToNotifyAccount().observe(requireActivity(), tokenFCM -> {
-                String dtoPhone = binding.giverAuthPhone.getText().toString().replaceAll("\\s", "");
-                String dtoLogin = binding.giverAuthLogin.getText().toString().replaceAll("\\s", "");
-                String dtoPassword = binding.giverAuthPassword.getText().toString().replaceAll("\\s", "");
+        binding.giverAuthBtnLogin.setOnClickListener(View -> viewModelNeedy.sendToNotifyAccount().observe(requireActivity(), tokenFCM -> {
+            String dtoPhone = binding.giverAuthPhone.getText().toString().replaceAll("\\s", "");
+            String dtoLogin = binding.giverAuthLogin.getText().toString().replaceAll("\\s", "");
+            String dtoPassword = binding.giverAuthPassword.getText().toString().replaceAll("\\s", "");
 
-                if (ValidateUser.isValidate(requireContext(), dtoPhone, dtoLogin, dtoPassword)) {
-                    binding.giverAuthBtnLogin.setEnabled(false);
-                    viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), giverSignUpResponseI -> {
-                        binding.giverAuthBtnLogin.setEnabled(true);
+            if (ValidateUser.isValidate(requireContext(), dtoPhone, dtoLogin, dtoPassword)) {
+                binding.giverAuthBtnLogin.setEnabled(false);
+                viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), giverSignUpResponseI -> {
+                    binding.giverAuthBtnLogin.setEnabled(true);
 
-                        int code = viewModel.getStatusCode();
-                        if (code == 400) Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
-                        else if (code == 403) Snackbar.make(requireContext(), requireView(), getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
-                        else if (code <= 299) {
-                            Intent intent = new Intent(requireContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                }
-            });
-        });
+                    int code = viewModel.getStatusCode();
+                    if (code == 400) Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
+                    else if (code == 403) Snackbar.make(requireContext(), requireView(), getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
+                    else if (code <= 299) {
+                        Intent intent = new Intent(requireContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }));
 
         return binding.getRoot();
     }

@@ -28,12 +28,7 @@ public class SecretFragment extends DialogFragment {
         DefineUser defineUser = app.getHelpersComponent().getDefineUser();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setPositiveButton("Подключить", (dialog, id) -> {
-            defineUser.initBaseRetrofitPath(input.getText().toString());
-        }).setNegativeButton("Отмена", (dialog, id) -> {
-            defineUser.setDefaultBasePathForRetrofit();
-        });
-
+        builder.setPositiveButton("Подключить", (dialog, id) -> defineUser.initBaseRetrofitPath(input.getText().toString())).setNegativeButton("Отмена", (dialog, id) -> defineUser.setDefaultBasePathForRetrofit());
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,

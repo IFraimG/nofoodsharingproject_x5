@@ -65,7 +65,7 @@ public class GiverLoginAuthFragment extends Fragment {
                     int code = viewModel.getStatusCode();
                     if (code == 400) Snackbar.make(requireContext(), requireView(), getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
                     else if (code == 404) Snackbar.make(requireActivity(), requireView(), getString(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
-
+    
                     if (giverSignUpResponseI == null) binding.loginAuthBtn.setEnabled(true);
                     else {
                         Intent intent = new Intent(getContext(), MainActivity.class);

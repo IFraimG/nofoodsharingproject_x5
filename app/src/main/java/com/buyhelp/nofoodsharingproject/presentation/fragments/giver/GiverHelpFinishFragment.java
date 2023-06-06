@@ -34,11 +34,10 @@ import io.socket.client.Socket;
 
 
 public class GiverHelpFinishFragment extends Fragment {
-    private FragmentGiverFinishHelpBinding binding;
     private WeakReference<FragmentGiverFinishHelpBinding> mBinding;
     private Socket socket;
     private DefineUser defineUser;
-    private String needyID;
+    private String needyID = "";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,18 +52,16 @@ public class GiverHelpFinishFragment extends Fragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentGiverFinishHelpBinding.inflate(inflater);
+        FragmentGiverFinishHelpBinding binding = FragmentGiverFinishHelpBinding.inflate(inflater);
         mBinding = new WeakReference<>(binding);
 
-        needyID = getArguments().getString("needyID");
+        if (getArguments() != null) needyID = getArguments().getString("needyID");
         String generateID = getArguments().getString("gettingProductID");
 
         if (generateID != null) binding.giverFinishCode.setText(generateID);
 
         binding.giverFinishGotovk.setOnClickListener(View -> vkLoad());
-        binding.giverFinishReturn.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_giverHelpFinishFragment_to_giverAdvrsF);
-        });
+        binding.giverFinishReturn.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_giverHelpFinishFragment_to_giverAdvrsF));
 
         binding.giverFinishOpenChat.setOnClickListener(this::createChat);
 

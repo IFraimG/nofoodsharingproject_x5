@@ -43,10 +43,9 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
     private WeakReference<FragmentChatBinding> mBinding;
     private Socket mSocket;
-    private String chatID;
+    private String chatID = "";
     private DefineUser defineUser;
     private MessagesAdapter messagesAdapter;
-    private LinearLayoutManager layoutManager;
     private final List<Message> messages = new ArrayList<>();
 
     @Override
@@ -66,11 +65,11 @@ public class ChatFragment extends Fragment {
         binding = FragmentChatBinding.inflate(getLayoutInflater());
         mBinding = new WeakReference<>(binding);
 
-        chatID = getArguments().getString("chatID");
+        if (getArguments() != null) chatID = getArguments().getString("chatID");
 
         messagesAdapter = new MessagesAdapter(requireContext(), defineUser.getUser().getX5_Id());
         messagesAdapter.updateMessages(messages);
-        layoutManager = new LinearLayoutManager(requireContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         binding.messagesList.setLayoutManager(layoutManager);
         binding.messagesList.setAdapter(messagesAdapter);
 

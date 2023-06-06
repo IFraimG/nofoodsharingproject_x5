@@ -37,7 +37,6 @@ import java.util.List;
 
 import io.socket.client.Socket;
 public class ChatsListFragment extends Fragment {
-    private FragmentListChatsBinding binding;
     private WeakReference<FragmentListChatsBinding> mBinding;
     private DefineUser defineUser;
     private ArrayAdapter<String> arrayAdapter;
@@ -58,7 +57,7 @@ public class ChatsListFragment extends Fragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentListChatsBinding.inflate(inflater);
+        FragmentListChatsBinding binding = FragmentListChatsBinding.inflate(inflater);
         mBinding = new WeakReference<>(binding);
 
         getChatsList();
@@ -130,12 +129,10 @@ public class ChatsListFragment extends Fragment {
             err.printStackTrace();
         }
 
-        mSocket.on("get_chats", args -> {
-            new Handler(Looper.getMainLooper()).post(() -> {
-                JSONObject data = (JSONObject) args[0];
-                chatsUpdate(data);
-            });
-        });
+        mSocket.on("get_chats", args -> new Handler(Looper.getMainLooper()).post(() -> {
+            JSONObject data = (JSONObject) args[0];
+            chatsUpdate(data);
+        }));
     }
 
     /**

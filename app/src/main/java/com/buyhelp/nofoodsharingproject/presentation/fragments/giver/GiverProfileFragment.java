@@ -239,9 +239,11 @@ public class GiverProfileFragment extends Fragment {
 
                 defineUser.editProfileInfo(giver.getLogin(), giver.getPhone());
                 Snackbar.make(requireContext(), requireView(), getString(R.string.sucses), Snackbar.LENGTH_SHORT).show();
+
+                removeEdit();
             }
+
             enabledButton(true);
-            removeEdit();
         });
     }
 

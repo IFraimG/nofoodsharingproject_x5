@@ -51,33 +51,31 @@ public class NeedyAuthFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity(), new NeedyAuthFactory(requireActivity().getApplication(), authRepository)).get(NeedyAuthViewModel.class);
 
-        binding.authNeedyCreate.setOnClickListener(v -> {
-            viewModel.sendToNotifyAccount().observe(requireActivity(), tokenFCM -> {
-                String dtoPhone = binding.authNeedySignupPhone.getText().toString().replaceAll("\\s", "");
-                String dtoLogin = binding.authNeedySignupLogin.getText().toString().replaceAll("\\s", "");
-                String dtoPassword = binding.authNeedySignupPassword.getText().toString().replaceAll("\\s", "");
+        binding.authNeedyCreate.setOnClickListener(v -> viewModel.sendToNotifyAccount().observe(requireActivity(), tokenFCM -> {
+            String dtoPhone = binding.authNeedySignupPhone.getText().toString().replaceAll("\\s", "");
+            String dtoLogin = binding.authNeedySignupLogin.getText().toString().replaceAll("\\s", "");
+            String dtoPassword = binding.authNeedySignupPassword.getText().toString().replaceAll("\\s", "");
 
-                binding.authNeedyCreate.setEnabled(false);
-                binding.authNeedyCreate.setEnabled(false);
+            binding.authNeedyCreate.setEnabled(false);
+            binding.authNeedyCreate.setEnabled(false);
 
-                viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), needySignUpResponseI -> {
-                    binding.authNeedyCreate.setEnabled(true);
-                    binding.authNeedyCreate.setEnabled(true);
+            viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), needySignUpResponseI -> {
+                binding.authNeedyCreate.setEnabled(true);
+                binding.authNeedyCreate.setEnabled(true);
 
-                    int code = viewModel.getStatusCode();
-                    if (code == 400) Snackbar.make(requireContext(), v, getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
-                    else if (code == 403) {
-                        Snackbar.make(requireContext(), v, getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
-                    } else {
-                        if (needySignUpResponseI != null) {
-                            Intent intent = new Intent(getContext(), MainActivity.class);
-                            startActivity(intent);
-                            requireActivity().finish();
-                        }
+                int code = viewModel.getStatusCode();
+                if (code == 400) Snackbar.make(requireContext(), v, getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
+                else if (code == 403) {
+                    Snackbar.make(requireContext(), v, getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
+                } else {
+                    if (needySignUpResponseI != null) {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                        requireActivity().finish();
                     }
-                });
+                }
             });
-        });
+        }));
 
         binding.authNeedyBtnLogin.setOnClickListener(v -> {
             String dtoPhone = binding.authNeedySignupPhone.getText().toString().replaceAll("\\s", "");
@@ -93,19 +91,13 @@ public class NeedyAuthFragment extends Fragment {
 
                     code = viewModel.getStatusCode();
                     if (code == 400) Snackbar.make(requireContext(), v, getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
-                    else if (code == 403) {
-                        Snackbar.make(requireContext(), v, getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
-                        binding.authNeedyCreate.setVisibility(android.view.View.GONE);
-                    }
                     else if (code == 404) Snackbar.make(requireContext(), v, getText(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
 
-                    if (code != 403) {
-                        if (needySignUpResponseI == null) {
-                            binding.authNeedyCreate.setVisibility(android.view.View.VISIBLE);
-                        } else {
-                            Intent intent = new Intent(getContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
+                    if (needySignUpResponseI == null) {
+                        binding.authNeedyCreate.setVisibility(android.view.View.VISIBLE);
+                    } else {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
                     }
                 });
             } else {
