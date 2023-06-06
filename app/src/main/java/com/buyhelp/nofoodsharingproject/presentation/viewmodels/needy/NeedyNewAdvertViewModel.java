@@ -25,7 +25,8 @@ public class NeedyNewAdvertViewModel extends AndroidViewModel {
     private final List<String> userItems = new ArrayList<>();
     private final MutableLiveData<Advertisement> advert = new MutableLiveData<>();
     private int statusCode = 0;
-    private AdvertsRepository advertsRepository;
+    private final AdvertsRepository advertsRepository;
+    private final MutableLiveData<Boolean> isCreatedNavigate = new MutableLiveData<>(false);
 
     private final String[] productItems = new String[]{"Хлеб", "Картофель", "Мороженая рыба", "Сливочное масло",
             "Подсолнечное масло", "Яйца куриные", "Молоко", "Чай", "Кофе", "Соль", "Сахар",
@@ -51,7 +52,10 @@ public class NeedyNewAdvertViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NotNull Call<Advertisement> call, @NotNull Response<Advertisement> response) {
                 statusCode = response.code();
-                if (response.isSuccessful()) advert.setValue(response.body());
+                if (response.isSuccessful()) {
+                    advert.setValue(response.body());
+                    isCreatedNavigate.setValue(true);
+                }
             }
 
             @Override
@@ -92,5 +96,13 @@ public class NeedyNewAdvertViewModel extends AndroidViewModel {
 
     public int getStatusCode() {
         return statusCode;
+    }
+
+    public LiveData<Boolean> isNavigate() {
+        return isCreatedNavigate;
+    }
+
+    public void cancelNavigate() {
+        isCreatedNavigate.setValue(false);
     }
 }
