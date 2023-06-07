@@ -29,10 +29,9 @@ public class ApplicationCore extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // убрать при запуске в production
-        new Instabug.Builder(this, BuildConfig.instabugKey)
-                .setInvocationEvents(InstabugInvocationEvent.SHAKE, InstabugInvocationEvent.SCREENSHOT)
-                .build();
+//        new Instabug.Builder(this, BuildConfig.instabugKey)
+//                .setInvocationEvents(InstabugInvocationEvent.SHAKE, InstabugInvocationEvent.SCREENSHOT)
+//                .build();
 
         if (!isInitMap) {
             MapKitFactory.setApiKey(BuildConfig.apiKey);
