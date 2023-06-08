@@ -91,7 +91,7 @@ javaScript
 | MessagesAdapter | Адаптер сообщений|
 | GiverAdvertListAdapter | Адаптер списка объявлений у "отдающего" пользователя |
 
-| Models | Функция                           |
+| Models | meaning                          |
 | ------ |-----------------------------------|
 | Advertisment| Модель обявлений                  |
 | Chat | Модель чатов                      |
