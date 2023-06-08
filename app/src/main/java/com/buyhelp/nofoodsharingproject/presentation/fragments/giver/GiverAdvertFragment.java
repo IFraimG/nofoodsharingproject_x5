@@ -149,7 +149,7 @@ public class GiverAdvertFragment extends Fragment {
     private void makeHelp(View v) {
         binding.giverAdvertAccept.setEnabled(false);
         String generateID = Advertisement.generateID();
-        viewModel.makeHelp(defineUser).observe(requireActivity(), advertisement -> {
+        viewModel.makeHelp(defineUser, generateID).observe(requireActivity(), advertisement -> {
             Bundle args = new Bundle();
             args.putString("needyID", advertisement.getAuthorID());
             args.putString("gettingProductID", generateID);

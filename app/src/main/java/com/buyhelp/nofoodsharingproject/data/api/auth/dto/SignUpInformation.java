@@ -1,6 +1,5 @@
 package com.buyhelp.nofoodsharingproject.data.api.auth.dto;
 
-// для отправки запроса
 public class SignUpInformation {
     String phone;
     String login;

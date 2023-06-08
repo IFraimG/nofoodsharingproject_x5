@@ -54,9 +54,8 @@ public class GiverAdvertViewModel extends AndroidViewModel {
         return _advert;
     }
 
-    public LiveData<Advertisement> makeHelp(DefineUser defineUser) {
-        String generateID = Advertisement.generateID();
-        advertsRepository.makeDoneAdvert(new RequestDoneAdvert(_advert.getValue().getAuthorID(), (String) defineUser.getTypeUser().first, generateID)).enqueue(new Callback<>() {
+    public LiveData<Advertisement> makeHelp(DefineUser defineUser, String generateID) {
+        if (_advert.getValue() != null) advertsRepository.makeDoneAdvert(new RequestDoneAdvert(_advert.getValue().getAuthorID(), defineUser.getTypeUser().first, generateID)).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<RequestDoneAdvert> call, @NotNull Response<RequestDoneAdvert> response) {
                 if (response.isSuccessful()) saveMessageForUser(defineUser);
@@ -74,27 +73,30 @@ public class GiverAdvertViewModel extends AndroidViewModel {
     }
 
     private void saveMessageForUser(DefineUser defineUser) {
-        Notification notification = new Notification(getApplication().getString(R.string.success_advert), getApplication().getString(R.string.success_advert_body), _advert.getValue().getAuthorID());
-        notification.setFromUserID((String) defineUser.getTypeUser().first);
-        notification.setListItems(_advert.getValue().getListProducts());
-        notification.setTypeOfUser("needy");
-        notificationRepository.createNotification(notification).enqueue(new Callback<>() {
-            @Override
-            public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
-                if (!response.isSuccessful()) Toast.makeText(getApplication(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                else getFCMTokenByUserID();
-            }
+        if (_advert.getValue() != null) {
+            Notification notification = new Notification(getApplication().getString(R.string.success_advert), getApplication().getString(R.string.success_advert_body), _advert.getValue().getAuthorID());
+            notification.setFromUserID(defineUser.getTypeUser().first);
+            notification.setListItems(_advert.getValue().getListProducts());
+            notification.setTypeOfUser("needy");
+            notificationRepository.createNotification(notification).enqueue(new Callback<>() {
+                @Override
+                public void onResponse(@NotNull Call<Notification> call, @NotNull Response<Notification> response) {
+                    if (!response.isSuccessful())
+                        Toast.makeText(getApplication(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                    else getFCMTokenByUserID();
+                }
 
-            @Override
-            public void onFailure(@NotNull Call<Notification> call, @NotNull Throwable t) {
-                Toast.makeText(getApplication(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(@NotNull Call<Notification> call, @NotNull Throwable t) {
+                    Toast.makeText(getApplication(), R.string.smth_wrong, Toast.LENGTH_SHORT).show();
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 
     private void getFCMTokenByUserID() {
-        needyRepository.getFCMtoken(_advert.getValue().getAuthorID()).enqueue(new Callback<>() {
+        if (_advert.getValue() != null) needyRepository.getFCMtoken(_advert.getValue().getAuthorID()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
                 if (response.isSuccessful() && response.body() != null) {

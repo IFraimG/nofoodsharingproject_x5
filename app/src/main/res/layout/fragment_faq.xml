@@ -105,5 +105,4 @@
                 tools:listitem="@layout/item_faq" />
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

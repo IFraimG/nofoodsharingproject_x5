@@ -91,7 +91,7 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
 
     public void removeAdvertisement() {
         _statusRemove.setValue(LoaderStatus.LOADING);
-        advertsRepository.deleteAdvert(_advert.getValue().getAdvertsID()).enqueue(new Callback<>() {
+        if (_advert.getValue() != null) advertsRepository.deleteAdvert(_advert.getValue().getAdvertsID()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<ResponseDeleteAdvert> call, @NotNull Response<ResponseDeleteAdvert> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().isDelete) {
@@ -150,6 +150,7 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
                 Date firstDate = dateFormat.parse(timeStart);
                 Date secondDate = dateFormat.parse(timeEnd);
 
+                if (firstDate == null || secondDate == null) return "";
                 long diffInMillis = 2 * 60 * 60 * 1000 - (secondDate.getTime() - firstDate.getTime());
 
                 long hours = TimeUnit.MILLISECONDS.toHours(diffInMillis);
@@ -180,9 +181,11 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
         });
     }
 
-    // Шаг 2 - сохраняем сообщение об этом у отдающего
+    /**
+     * Этот метод сохраняет сообщение у отдающего
+     */
     private void sendNotification() {
-        String body =  "Благодарим вас за помощь! Пользователь " + _advert.getValue().getAuthorName() + " забрал продукты";
+        String body = "Благодарим вас за помощь! Пользователь " + _advert.getValue().getAuthorName() + " забрал продукты";
         Notification notification = new Notification();
         notification.setTitle(getApplication().getApplicationContext().getString(R.string.success_deal));
         notification.setDescription(body);
@@ -204,9 +207,12 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
         });
     }
 
-    // Шаг 3 - Получаем fmc token
+    /**
+     * Этот метод получает fmc token
+     * @param body - описание уведомления
+     */
     private void getFMCToken(String body) {
-        giverRepository.getFCMtoken(_advert.getValue().getUserDoneID()).enqueue(new Callback<>() {
+        if (_advert.getValue() != null) giverRepository.getFCMtoken(_advert.getValue().getUserDoneID()).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<ResponseFCMToken> call, @NotNull Response<ResponseFCMToken> response) {
                 if (response.isSuccessful() && response.body() != null) sendFMCMessage(response.body(), body);
@@ -220,7 +226,11 @@ public class AdvertisementOneViewModel extends AndroidViewModel {
         });
     }
 
-    // Шаг 4 - Отправляем через firebase сообщение об успешно полученном токене
+    /**
+     * Этот метод отправляет через firebase сообщение об успешно полученном токене
+     * @param body - описание сообщения
+     * @param response - объект, который выдает fcm token
+     */
     private void sendFMCMessage(ResponseFCMToken response, String body) {
         notificationRepository.requestNotifyDonateCall(response.getFcmToken(), getApplication().getApplicationContext().getString(R.string.success_deal), body).enqueue(new Callback<>() {
             @Override
