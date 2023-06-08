@@ -34,8 +34,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitService {
     private Retrofit retrofit;
     private Context ctx;
-//    public String BASE_URL = "https://buy-help-server.onrender.com";
-    public String BASE_URL = "http://192.168.0.100:8080";
+    public String BASE_URL = "https://buy-help-server.onrender.com";
+
     public RetrofitService() {}
 
     @Inject

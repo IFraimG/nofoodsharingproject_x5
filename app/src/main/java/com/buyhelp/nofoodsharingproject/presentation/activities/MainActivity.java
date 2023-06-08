@@ -7,12 +7,18 @@ package com.buyhelp.nofoodsharingproject.presentation.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.buyhelp.nofoodsharingproject.R;
 import com.buyhelp.nofoodsharingproject.data.api.auth.dto.CheckAuthI;
 import com.buyhelp.nofoodsharingproject.data.api.auth.AuthRepository;
 import com.buyhelp.nofoodsharingproject.databinding.ActivityMainBinding;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.presentation.ApplicationCore;
+import com.buyhelp.nofoodsharingproject.presentation.services.NetworkChangeReceiver;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     public DefineUser defineUser;
 
+    private NetworkChangeReceiver networkChangeReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,12 +47,36 @@ public class MainActivity extends AppCompatActivity {
         ApplicationCore app = (ApplicationCore) getApplication();
         app.getAppComponent().inject(this);
 
-        String res = defineUser.isNeedy();
-        if (res != null) {
-            if (res.equals("giver")) authGiver();
-            else if (res.equals("needy")) authNeedy();
-            else redirectToAuth();
-        } else redirectToAuth();
+        networkChangeReceiver = new NetworkChangeReceiver(new NetworkChangeReceiver.NetworkChangeListener() {
+            @Override
+            public void onNetworkConnected() {
+                String res = defineUser.isNeedy();
+                if (res != null) {
+                    if (res.equals("giver")) authGiver();
+                    else if (res.equals("needy")) authNeedy();
+                    else redirectToAuth();
+                } else redirectToAuth();
+
+            }
+
+            @Override
+            public void onNetworkDisconnected() {
+                Toast.makeText(getApplicationContext(), getString(R.string.no_wifi), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
     }
 
     @Override

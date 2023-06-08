@@ -1,6 +1,8 @@
 package com.buyhelp.nofoodsharingproject.presentation.activities;
 
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -24,6 +26,7 @@ import com.buyhelp.nofoodsharingproject.domain.utils.DateNowChecker;
 import com.buyhelp.nofoodsharingproject.domain.utils.DateNowCheckerOld;
 import com.buyhelp.nofoodsharingproject.domain.helpers.DefineUser;
 import com.buyhelp.nofoodsharingproject.domain.helpers.PermissionHandler;
+import com.buyhelp.nofoodsharingproject.presentation.services.NetworkChangeReceiver;
 
 import javax.inject.Inject;
 
@@ -34,6 +37,7 @@ public class GiverActivity extends AppCompatActivity {
     @Inject
     public DefineUser defineUser;
     private PermissionHandler permissionHandler;
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,17 @@ public class GiverActivity extends AppCompatActivity {
 
         ApplicationCore app = (ApplicationCore) getApplication();
         app.getAppComponent().inject(this);
+
+        networkChangeReceiver = new NetworkChangeReceiver(new NetworkChangeReceiver.NetworkChangeListener() {
+            @Override
+            public void onNetworkConnected() {}
+
+            @Override
+            public void onNetworkDisconnected() {
+                Intent intent = new Intent(GiverActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         PermissionComponent permissionComponent = DaggerPermissionComponent.builder().defineActivity(new ActivityModule(this)).definePermissions(new PermissionHandlerModule()).build();
         permissionHandler = permissionComponent.getPermissionHandler();
@@ -63,6 +78,19 @@ public class GiverActivity extends AppCompatActivity {
             DateNowCheckerOld dateNowCheckerOld = new DateNowCheckerOld();
             if (dateNowCheckerOld.getHour() >= 10 && dateNowCheckerOld.getHour() < 23) initLocation();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkChangeReceiver);
     }
 
     public void setBottomNavigationVisibility(boolean isVisible) {
