@@ -7,7 +7,7 @@
 Пожалуйста, проверьте страницу [CONTRIBUTING](CONTRIBUTING.md), если вы хотите помочь.
 
 
-![logotype](https://github.com/IFraimG/nofoodsharingproject_x5/blob/master/app/src/main/res/drawable-v24/logo2.png)
+![logotype](https://github.com/IFraimG/nofoodsharingproject_x5/blob/master/app/src/main/res/drawable-v24/rectangle_2.png)
 
 ## Основная идея проекта:
 Создание приложения для людей, которые располагают возможностью помочь малообеспеченным, удобно совершать пожертвоания.
@@ -70,63 +70,60 @@ javaScript
 
 
 #### Данные
-Для хранения данных о аккаунте пользователя непосредственно на устройстве используются SharedPreferences.
+Для хранения данных о аккаунте пользователя непосредственно на устройстве используются SharedPreferences и encrypted SharedPreferences.
 Данные о объявлениях "Принимающих" пользователей, их статусах, аккаунтах, чатах и тд хрянятся на сервере и испозуются в приложении с помощью фреймворка Retrofit. С помощью MongoDB реализованно использование баз данных, а через Socket.io реализована работа чата в приложении. Шифрование данных - Bcrypt.js.
 
 #### Реализация (Регулярно обновляется)
 ###### Java
-| Android class           | Функция |
-|-------------------------| ------ |
-| ChatActivity            | Чат |
-| ChatListActivity        | Список чатов |
-| FaqActivity             | Faq |
-| NeedyActivity          | Основная активности "принимающего" пользователя |
-| NeedyNewAdvertActivity | Создание нобъявление "принимающим" пользователем |
-| MainActivity            | Основная активность |
-| MainAuthActivity        | Основная активность регистрации |
-| GiverActivity           | Основная активности "отдающего" пользователя |
-| giverAdvertActivity     | Просмотр объявления "принимающего" пользователя "отдающим" |
-| giverHelpFinishActivity | Сообщение об успешном пожертвовании и переход в vk чекбек |
-| NeedyAuthfragment      | Фрагмент авторизации "принимающего" пользователя|
-| MainAuthFragment        | Основной Фрагмент авторизации|
-| GiverAuthFragment       |  Фрагмент создания "отдающего" пользователя |
-| GiverLoginAuthFragment  | Фрагмент авторизации "отдающего" пользователя |
-| NeedyAdvsFragment      | Раздел "объявления" в аккаунте "принимающего" в приложении|
-| NeedyProfileFragment   | Раздел "профиль" в аккаунте "пинимающего" в приложении|
-| GiverAdvsFragment       | Раздел "объявления" в аккаунте "отдающего" в приложении|
-| GiverProfileFragment   | Раздел "профиль" в аккаунте "отдающего" в приложении|
-| MarketsMapFragment      | Раздел "карта" в приложении|
-| NotifyFragment          | Раздел "уведомления" в приложении|
-| SecretFragment          | Для разработчиков |
 
-| Adapter | Функция |
+| Android folder | meaning |
+| -- | ------ |
+| data| api, models|
+| domain | helpers, utils |
+| presentation| работа UI |
+
+
+###### data:
+| Adapter | meaning |
 | ------ | ------ |
 | FaqAdapter | Адаптер для Faq |
 | NeedyNotificationsAdapter | Адаптер уведомлений "принимающего" пользователя|
 | MessagesAdapter | Адаптер сообщений|
 | GiverAdvertListAdapter | Адаптер списка объявлений у "отдающего" пользователя |
 
-| Models | Функция |
-| ------ | ------ |
-| Advertisment| Модель обявлений |
-| Chat | Модель чатов |
-| Faq | Модель faq |
+| Models | Функция                           |
+| ------ |-----------------------------------|
+| Advertisment| Модель обявлений                  |
+| Chat | Модель чатов                      |
+| Faq | Модель faq                        |
 | Needy | Модель "принимающих" пользователей |
-| LoaderStatus | Модель статуса загрузки |
-| Market | Модель магазинов |
-| Message | Модель сообщений |
-| Notification | Модель уведомлений |
-| Giver| Модель "отдающих" пользователей |
-| ShortDataUser | Модель данных о пользователях |
+| LoaderStatus | Модель статуса загрузки           |
+| Market | Модель магазинов                  |
+| Message | Модель сообщений                  |
+| Notification | Модель уведомлений                |
+| Giver| Модель "отдающих" пользователей   |
+| ShortDataUser | Модель данных о пользователях     |
+| User | Модель пользователя               |
 
-Далее, рассмотрим по папкам классов:
-| Папка | Функция |
-| ------ | ------ |
-| data| отвечают за взаимодействие с данными|
+###### domain:
+| Android folder | meaning |
+|---------------| -- |
+| helpers | Вспомогательные классы |
+| utils  | Утилиты |
+
+
+###### presentation:
+| Android folder | meaning |
+|---------------| -- |
+| activities |   Активности |
+| adapters  | Адаптеры |
+| di | dependency injection |
+| factories | factories |
+| fragments | Фрагменты |
 | services | Сервисы |
-| utils | Проверки, валидации, и тд|
-| view_models | Модели отображений элементов |
-Итого - 93 класса.
+| viewmodels | Вью модели |
+| views | Кастомизация элементов |
+
 
 ###### Xml
 - Все повторяющиеся элементы дизайна вынесены в res/values/
