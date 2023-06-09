@@ -9,8 +9,6 @@ import com.buyhelp.nofoodsharingproject.presentation.di.components.DaggerAppComp
 import com.buyhelp.nofoodsharingproject.presentation.di.components.HelpersComponent;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.AppModule;
 import com.buyhelp.nofoodsharingproject.presentation.di.modules.DefineUserModule;
-import com.instabug.library.Instabug;
-import com.instabug.library.invocation.InstabugInvocationEvent;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.yandex.mapkit.MapKitFactory;
 
@@ -44,7 +42,7 @@ public class ApplicationCore extends Application {
 
         AndroidThreeTen.init(getApplicationContext());
 
-        mSocket = IO.socket(URI.create(helpersComponent.getDefineUser().getBaseForRetrofit()));
+        mSocket = IO.socket(URI.create("http://151.248.112.20:8080"));
     }
 
     public Socket getSocket() {

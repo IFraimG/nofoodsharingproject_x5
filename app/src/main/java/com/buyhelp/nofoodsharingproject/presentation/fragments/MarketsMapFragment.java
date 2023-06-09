@@ -215,8 +215,9 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         String userType = userData.second ? "needy" : "giver";
 
         viewModel.getPinnedMarketInfo(userType, userData.first).observe(requireActivity(), listMarkets -> {
+
             if (adapter == null) {
-                adapter = new ArrayAdapter<>(getContext(), R.layout.market_item, listMarkets);
+                adapter = new ArrayAdapter<>(requireContext(), R.layout.market_item, listMarkets);
                 adapter.setDropDownViewResource(R.layout.map_dropdown_text);
                 binding.mapListMarkets.setAdapter(adapter);
 

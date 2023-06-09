@@ -44,12 +44,16 @@ public class DefineUser {
         else editor.putString("server_url", "https://buy-help-server.onrender.com").apply();
     }
 
+    /**
+     * @deprecated
+     */
     public String getBaseForRetrofit() {
         return sharedPreferences.getString("server_url", "https://buy-help-server.onrender.com");
     }
 
     /**
      * Метод для подключения к серверу по умолчанию
+     * @deprecated
      */
     public void setDefaultBasePathForRetrofit() {
         SharedPreferences.Editor editor = sharedPreferences.edit();

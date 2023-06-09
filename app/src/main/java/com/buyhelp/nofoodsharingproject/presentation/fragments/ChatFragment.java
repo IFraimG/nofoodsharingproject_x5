@@ -75,10 +75,6 @@ public class ChatFragment extends Fragment {
 
         binding.messagesSend.setOnClickListener(View -> sendMessage());
         binding.chatReturn.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
-        binding.chatReturn.setOnLongClickListener(v -> {
-            Navigation.findNavController(v).popBackStack();
-            return false;
-        });
 
         mSocket.emit("get_messages", chatID);
         mSocket.on("set_messages", setMessages);
