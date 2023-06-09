@@ -1,12 +1,15 @@
 package com.buyhelp.nofoodsharingproject.data.api.map.dto;
 
+import com.google.gson.annotations.SerializedName;
+
 public class RequestMarketInfo {
-    String userID;
-    String market;
+    @SerializedName("userID")
+    private String userID;
 
-    public RequestMarketInfo() {
+    @SerializedName("market")
+    private String market;
 
-    }
+    public RequestMarketInfo() {}
 
     public RequestMarketInfo(String userID, String market) {
         this.userID = userID;

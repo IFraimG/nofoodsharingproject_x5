@@ -1,3 +1,9 @@
+/**
+ * Класс {@code NetworkChangeReceiver} - сервис проверки на подключение пользователя к сети
+ * @author Кулагин Александр
+ */
+
+
 package com.buyhelp.nofoodsharingproject.presentation.services;
 
 import android.content.BroadcastReceiver;
@@ -27,7 +33,6 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         if (connectivityManager != null) {
             NetworkCapabilities networkCapabilities = connectivityManager.getNetworkCapabilities(connectivityManager.getActiveNetwork());
             return networkCapabilities != null && (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
-//                Toast.makeText(getApplicationContext(), getString(R.string.no_wifi), Toast.LENGTH_LONG).show();
         }
         return false;
     }

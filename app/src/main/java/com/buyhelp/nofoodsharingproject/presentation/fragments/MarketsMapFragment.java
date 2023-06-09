@@ -110,7 +110,6 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         defineUser = app.getHelpersComponent().getDefineUser();
     }
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -169,6 +168,7 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         mBinding.clear();
 
         if (mapView != null) mapView.getMap().getMapObjects().clear();
@@ -182,8 +182,6 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
      */
     private void initMap() {
         if (permissionHandler != null) permissionHandler.requestMapPermissions((AppCompatActivity) requireActivity());
-
-        mapView.getMap().setRotateGesturesEnabled(false);
 
         userLocationLayer = MapKitFactory.getInstance().createUserLocationLayer(mapView.getMapWindow());
         userLocationLayer.setVisible(true);
@@ -210,18 +208,16 @@ public class MarketsMapFragment extends Fragment implements UserLocationObjectLi
         binding.mapSetMarketBtn.setOnClickListener(View -> viewModel.updateMarket(defineUser.getTypeUser().second, defineUser.getTypeUser().first));
         binding.mapMakeRoute.setOnClickListener(View -> createRoute());
 
-
         Pair<String, Boolean> userData = defineUser.getTypeUser();
         String userType = userData.second ? "needy" : "giver";
 
         viewModel.getPinnedMarketInfo(userType, userData.first).observe(requireActivity(), listMarkets -> {
-
             if (adapter == null) {
                 adapter = new ArrayAdapter<>(requireContext(), R.layout.market_item, listMarkets);
                 adapter.setDropDownViewResource(R.layout.map_dropdown_text);
                 binding.mapListMarkets.setAdapter(adapter);
 
-                if (viewModel.getOldPosition() != -1) binding.mapListMarkets.setSelection(viewModel.getOldPosition());
+//                if (viewModel.getOldPosition() != -1) binding.mapListMarkets.setSelection(viewModel.getOldPosition());
             } else {
                 if (viewModel.getOldPosition() != -1) binding.mapListMarkets.setSelection(viewModel.getOldPosition());
                 adapter.notifyDataSetChanged();

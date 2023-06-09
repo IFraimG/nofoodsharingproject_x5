@@ -1,7 +1,6 @@
 package com.buyhelp.nofoodsharingproject.presentation.viewmodels;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -41,7 +40,7 @@ public class MapViewModel extends AndroidViewModel {
 
 
     private final MutableLiveData<String> choosenMarket = new MutableLiveData<>();
-    private int oldPosition = -1;
+    private MutableLiveData<Integer> oldPosition = new MutableLiveData<>(-1);
     private String[] listMarkets;
     private final MutableLiveData<List<String>> _markets = new MutableLiveData<>();
     private final MapRepository mapRepository;
@@ -56,22 +55,23 @@ public class MapViewModel extends AndroidViewModel {
         mapRepository.getPinMarket(userType, userID).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<MarketTitleResponse> call, @NonNull Response<MarketTitleResponse> response) {
-                if (response.code() == 404) {
-                    choosenMarket.setValue("");
-                    listMarkets = new String[fullListMarkets.length];
-                    for (int i = 0; i < fullListMarkets.length; i++) {
-                        listMarkets[i] = fullListMarkets[i].getTitle();
-                    }
-                } else {
-                    if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                         listMarkets = new String[fullListMarkets.length - 1];
                         choosenMarket.setValue(response.body().market);
                         for (int i = 1; i < fullListMarkets.length; i++) {
                             if (fullListMarkets[i].getTitle().equals(choosenMarket.getValue())) {
-                                oldPosition = i;
+                                if (oldPosition.getValue() != null) {
+                                    if (oldPosition.getValue() == -1) oldPosition.setValue(i);
+                                    else oldPosition.setValue(i - 1);
+                                }
                             }
                             listMarkets[i - 1] = fullListMarkets[i].getTitle();
                         }
+                } else {
+                    choosenMarket.setValue("");
+                    listMarkets = new String[fullListMarkets.length];
+                    for (int i = 0; i < fullListMarkets.length; i++) {
+                        listMarkets[i] = fullListMarkets[i].getTitle();
                     }
                 }
 
@@ -80,7 +80,7 @@ public class MapViewModel extends AndroidViewModel {
 
             @Override
             public void onFailure(@NonNull Call<MarketTitleResponse> call, @NonNull Throwable t) {
-
+                t.printStackTrace();
             }
         });
 
@@ -89,13 +89,14 @@ public class MapViewModel extends AndroidViewModel {
 
 
     public int getOldPosition() {
-        return this.oldPosition;
+        if (oldPosition.getValue() == null) return -1;
+        return oldPosition.getValue();
     }
 
     public void changePosition(int position) {
         if (_markets.getValue() != null) {
             choosenMarket.setValue(_markets.getValue().get(position));
-            oldPosition = position;
+            oldPosition.setValue(position);
         }
     }
 

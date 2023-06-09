@@ -33,23 +33,6 @@ public class DefineUser {
         initEsp(ctx);
     }
 
-    /**
-     * Метод для подключения к серверу
-     * @param path принимает на вход строку для подключения к серверу (доменная ссылка или localhost)
-     */
-    public void initBaseRetrofitPath(String path) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String result = "http://" + path + ":8080";
-        if (path.length() > 0) editor.putString("server_url", result).apply();
-        else editor.putString("server_url", "https://buy-help-server.onrender.com").apply();
-    }
-
-    /**
-     * @deprecated
-     */
-    public String getBaseForRetrofit() {
-        return sharedPreferences.getString("server_url", "https://buy-help-server.onrender.com");
-    }
 
     /**
      * Метод для подключения к серверу по умолчанию
