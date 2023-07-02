@@ -54,7 +54,7 @@ javaScript
 - Firebase Cloud Messaging
 - Encrypted Sharedpreferences
 - Socket-io java client
-- Data/View binding
+- View binding
 - Glide
 - Android CI
 - Instabug
