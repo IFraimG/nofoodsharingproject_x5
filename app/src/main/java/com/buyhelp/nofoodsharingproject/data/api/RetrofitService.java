@@ -34,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitService {
     private Retrofit retrofit;
     private Context ctx;
-    public String BASE_URL = "http://151.248.112.20:8080";
+    public String BASE_URL = "http://buyhelp.sytes.net:8080/";
 
     public RetrofitService() {}
 
