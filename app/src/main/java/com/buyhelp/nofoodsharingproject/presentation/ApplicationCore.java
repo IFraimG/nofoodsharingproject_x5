@@ -42,7 +42,7 @@ public class ApplicationCore extends Application {
 
         AndroidThreeTen.init(getApplicationContext());
 
-        mSocket = IO.socket(URI.create("http://151.248.112.20:8080"));
+        mSocket = IO.socket(URI.create("http://95.163.242.189:8080"));
     }
 
     public Socket getSocket() {
