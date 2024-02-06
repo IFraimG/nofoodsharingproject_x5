@@ -8,6 +8,7 @@ package com.buyhelp.nofoodsharingproject.presentation.fragments.auth;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -61,22 +62,30 @@ public class GiverLoginAuthFragment extends Fragment {
 
             if (dtoLogin.length() == 0 || dtoPassword.length() == 0) Snackbar.make(requireContext(), requireView(), getString(R.string.not_full), Snackbar.LENGTH_LONG).show();
             else {
-                viewModel.login(dtoLogin, dtoPassword).observe(requireActivity(), giverSignUpResponseI -> {
-                    int code = viewModel.getStatusCode();
-                    if (code == 400) Snackbar.make(requireContext(), requireView(), getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
-                    else if (code == 404) Snackbar.make(requireActivity(), requireView(), getString(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
-    
-                    if (giverSignUpResponseI == null) binding.loginAuthBtn.setEnabled(true);
-                    else {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        startActivity(intent);
-                        requireActivity().finish();
-                    }
-                });
+                viewModel.login(dtoLogin, dtoPassword).observe(requireActivity(), giverSignUpResponseI -> binding.loginAuthBtn.setEnabled(true));
             }
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View createdView, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(createdView, savedInstanceState);
+
+        viewModel.getStatusCode().observe(getViewLifecycleOwner(), code -> {
+            if (code == 400) {
+                Snackbar.make(requireContext(), requireView(), getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
+                viewModel.clearStatusCode();
+            } else if (code == 404) {
+                Snackbar.make(requireActivity(), requireView(), getString(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
+                viewModel.clearStatusCode();
+            } else if (code != 0 && code <= 299) {
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+                requireActivity().finish();
+            }
+        });
     }
 
     @Override

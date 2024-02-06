@@ -8,6 +8,8 @@ package com.buyhelp.nofoodsharingproject.presentation.fragments.auth;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -33,7 +35,6 @@ public class NeedyAuthFragment extends Fragment {
     private FragmentNeedyAuthBinding binding;
     private WeakReference<FragmentNeedyAuthBinding> mBinding;
     private NeedyAuthViewModel viewModel;
-    private int code;
     public AuthRepository authRepository;
 
     @Override
@@ -62,18 +63,6 @@ public class NeedyAuthFragment extends Fragment {
             viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), needySignUpResponseI -> {
                 binding.authNeedyCreate.setEnabled(true);
                 binding.authNeedyCreate.setEnabled(true);
-
-                int code = viewModel.getStatusCode();
-                if (code == 400) Snackbar.make(requireContext(), v, getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
-                else if (code == 403) {
-                    Snackbar.make(requireContext(), v, getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
-                } else {
-                    if (needySignUpResponseI != null) {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        startActivity(intent);
-                        requireActivity().finish();
-                    }
-                }
             });
         }));
 
@@ -89,16 +78,7 @@ public class NeedyAuthFragment extends Fragment {
                     binding.authNeedyBtnLogin.setEnabled(true);
                     binding.authNeedyCreate.setEnabled(true);
 
-                    code = viewModel.getStatusCode();
-                    if (code == 400) Snackbar.make(requireContext(), v, getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
-                    else if (code == 404) Snackbar.make(requireContext(), v, getText(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
-
-                    if (needySignUpResponseI == null) {
-                        binding.authNeedyCreate.setVisibility(android.view.View.VISIBLE);
-                    } else {
-                        Intent intent = new Intent(getContext(), MainActivity.class);
-                        startActivity(intent);
-                    }
+                    if (needySignUpResponseI == null) binding.authNeedyCreate.setVisibility(android.view.View.VISIBLE);
                 });
             } else {
                 binding.authNeedyBtnLogin.setEnabled(true);
@@ -110,6 +90,29 @@ public class NeedyAuthFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+    @Override
+    public void onViewCreated(@NonNull View createdView, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(createdView, savedInstanceState);
+
+        viewModel.getStatusCode().observe(getViewLifecycleOwner(), code -> {
+            if (code == 400) {
+                Snackbar.make(requireContext(), requireView(), getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
+                viewModel.clearStatusCode();
+            } else if (code == 404) {
+                Snackbar.make(requireContext(), requireView(), getText(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
+                viewModel.clearStatusCode();
+            } else if (code != 0 && code <= 299) {
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                viewModel.clearStatusCode();
+                startActivity(intent);
+            } else if (code == 403) {
+                Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
+                viewModel.clearStatusCode();
+            }
+        });
+    }
+
 
     @Override
     public void onDestroyView() {

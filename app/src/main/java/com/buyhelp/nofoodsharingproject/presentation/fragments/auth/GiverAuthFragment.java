@@ -7,7 +7,11 @@ package com.buyhelp.nofoodsharingproject.presentation.fragments.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
@@ -68,21 +72,31 @@ public class GiverAuthFragment extends Fragment {
 
             if (ValidateUser.isValidate(requireContext(), dtoPhone, dtoLogin, dtoPassword)) {
                 binding.giverAuthBtnLogin.setEnabled(false);
-                viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), giverSignUpResponseI -> {
-                    binding.giverAuthBtnLogin.setEnabled(true);
-
-                    int code = viewModel.getStatusCode();
-                    if (code == 400) Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
-                    else if (code == 403) Snackbar.make(requireContext(), requireView(), getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
-                    else if (code <= 299) {
-                        Intent intent = new Intent(requireContext(), MainActivity.class);
-                        startActivity(intent);
-                    }
-                });
+                viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), giverSignUpResponseI -> binding.giverAuthBtnLogin.setEnabled(true));
             }
         }));
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View createdView, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(createdView, savedInstanceState);
+
+        viewModel.getStatusCode().observe(getViewLifecycleOwner(), code -> {
+            if (code == 400) {
+                Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
+                viewModel.clearStatusCode();
+            } else if (code == 403) {
+                Snackbar.make(requireContext(), requireView(), getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
+                viewModel.clearStatusCode();
+            }
+            else if (code <= 299 && code != 0) {
+                Intent intent = new Intent(requireContext(), MainActivity.class);
+                viewModel.clearStatusCode();
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

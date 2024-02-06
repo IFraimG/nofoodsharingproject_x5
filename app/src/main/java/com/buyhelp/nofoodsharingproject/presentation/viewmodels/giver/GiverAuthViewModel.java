@@ -20,7 +20,7 @@ import retrofit2.Response;
 
 public class GiverAuthViewModel extends AndroidViewModel {
     private final MutableLiveData<String> tokenFCM = new MutableLiveData<>();
-    private int code = 0;
+    private MutableLiveData<Integer> code = new MutableLiveData<Integer>(0);
     private AuthRepository authRepository;
     private final MutableLiveData<SignUpResponseI<Giver>> createdUser = new MutableLiveData<>();
 
@@ -35,11 +35,11 @@ public class GiverAuthViewModel extends AndroidViewModel {
     }
 
     public LiveData<SignUpResponseI<Giver>> login(String login, String password) {
-        code = 0;
+        code.setValue(0);
         authRepository.giverLogin(login, password).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Giver>> call, @NotNull Response<SignUpResponseI<Giver>> response) {
-                code = response.code();
+                code.setValue(response.code());
                 if (response.isSuccessful() && response.body() != null && response.body().token != null) {
                     createdUser.setValue(response.body());
                     pushData(response.body());
@@ -49,7 +49,7 @@ public class GiverAuthViewModel extends AndroidViewModel {
             @Override
             public void onFailure(@NotNull Call<SignUpResponseI<Giver>> call, @NotNull Throwable t) {
                 t.printStackTrace();
-                code = 400;
+                code.setValue(400);
                 createdUser.setValue(null);
             }
         });
@@ -58,11 +58,11 @@ public class GiverAuthViewModel extends AndroidViewModel {
     }
 
     public LiveData<SignUpResponseI<Giver>> signup(String tokenFCM, String dtoPhone, String dtoLogin, String dtoPassword) {
-        code = 0;
+        code.setValue(0);
         authRepository.giverRegistration(dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<>() {
             @Override
             public void onResponse(@NotNull Call<SignUpResponseI<Giver>> call, @NotNull Response<SignUpResponseI<Giver>> response) {
-                code = response.code();
+                code.setValue(response.code());
                 if (response.isSuccessful()) {
                     if (response.body() != null && response.body().token != null) {
                         createdUser.setValue(response.body());
@@ -74,7 +74,7 @@ public class GiverAuthViewModel extends AndroidViewModel {
             @Override
             public void onFailure(@NotNull Call<SignUpResponseI<Giver>> call, @NotNull Throwable t) {
                 t.printStackTrace();
-                code = 400;
+                code.setValue(400);
                 createdUser.setValue(null);
             }
         });
@@ -82,7 +82,11 @@ public class GiverAuthViewModel extends AndroidViewModel {
         return createdUser;
     }
 
-    public int getStatusCode() {
+    public LiveData<Integer> getStatusCode() {
         return code;
+    }
+
+    public void clearStatusCode() {
+        code.setValue(0);
     }
 }
