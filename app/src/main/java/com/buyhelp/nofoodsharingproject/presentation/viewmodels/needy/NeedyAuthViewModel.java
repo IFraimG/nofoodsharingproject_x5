@@ -37,7 +37,7 @@ public class NeedyAuthViewModel extends AndroidViewModel {
         defineUser.saveUserDataNeedy(true, result.user.getX5_Id(), result);
     }
 
-    public LiveData<SignUpResponseI<Needy>> login(String phone, String login, String password) {
+    public LiveData<Integer> login(String phone, String login, String password) {
         statusCode.setValue(0);
         authRepository.needyLogin(phone, login, password).enqueue(new Callback<>() {
                 @Override
@@ -57,10 +57,10 @@ public class NeedyAuthViewModel extends AndroidViewModel {
                 }
             });
 
-        return createdUser;
+        return statusCode;
     }
 
-    public LiveData<SignUpResponseI<Needy>> signup(String tokenFCM, String dtoPhone, String dtoLogin, String dtoPassword) {
+    public LiveData<Integer> signup(String tokenFCM, String dtoPhone, String dtoLogin, String dtoPassword) {
         statusCode.setValue(0);
         authRepository.needyRegistration(dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<>() {
             @Override
@@ -80,7 +80,7 @@ public class NeedyAuthViewModel extends AndroidViewModel {
             }
         });
 
-        return createdUser;
+        return statusCode;
     }
 
     public LiveData<String> sendToNotifyAccount() {

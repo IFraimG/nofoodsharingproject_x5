@@ -8,8 +8,6 @@ package com.buyhelp.nofoodsharingproject.presentation.fragments.auth;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -60,9 +58,25 @@ public class NeedyAuthFragment extends Fragment {
             binding.authNeedyCreate.setEnabled(false);
             binding.authNeedyCreate.setEnabled(false);
 
-            viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), needySignUpResponseI -> {
+            viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), code -> {
                 binding.authNeedyCreate.setEnabled(true);
                 binding.authNeedyCreate.setEnabled(true);
+
+                if (code == 400) {
+                    Snackbar.make(requireContext(), requireView(), getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
+                    viewModel.clearStatusCode();
+                } else if (code == 404) {
+                    binding.authNeedyCreate.setVisibility(android.view.View.VISIBLE);
+                    Snackbar.make(requireContext(), requireView(), getText(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
+                    viewModel.clearStatusCode();
+                } else if (code != 0 && code <= 299) {
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    viewModel.clearStatusCode();
+                    startActivity(intent);
+                } else if (code == 403) {
+                    Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
+                    viewModel.clearStatusCode();
+                }
             });
         }));
 
@@ -74,11 +88,25 @@ public class NeedyAuthFragment extends Fragment {
             binding.authNeedyBtnLogin.setEnabled(false);
             binding.authNeedyCreate.setEnabled(false);
             if (ValidateUser.isValidate(requireContext(), dtoPhone, dtoLogin, dtoPassword)) {
-                viewModel.login(dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), needySignUpResponseI -> {
+                viewModel.login(dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), code -> {
                     binding.authNeedyBtnLogin.setEnabled(true);
                     binding.authNeedyCreate.setEnabled(true);
 
-                    if (needySignUpResponseI == null) binding.authNeedyCreate.setVisibility(android.view.View.VISIBLE);
+                    if (code == 400) {
+                        Snackbar.make(requireContext(), requireView(), getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
+                        viewModel.clearStatusCode();
+                    } else if (code == 404) {
+                        binding.authNeedyCreate.setVisibility(android.view.View.VISIBLE);
+                        Snackbar.make(requireContext(), requireView(), getText(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
+                        viewModel.clearStatusCode();
+                    } else if (code != 0 && code <= 299) {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        viewModel.clearStatusCode();
+                        startActivity(intent);
+                    } else if (code == 403) {
+                        Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
+                        viewModel.clearStatusCode();
+                    }
                 });
             } else {
                 binding.authNeedyBtnLogin.setEnabled(true);
@@ -90,29 +118,6 @@ public class NeedyAuthFragment extends Fragment {
 
         return binding.getRoot();
     }
-
-    @Override
-    public void onViewCreated(@NonNull View createdView, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(createdView, savedInstanceState);
-
-        viewModel.getStatusCode().observe(getViewLifecycleOwner(), code -> {
-            if (code == 400) {
-                Snackbar.make(requireContext(), requireView(), getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
-                viewModel.clearStatusCode();
-            } else if (code == 404) {
-                Snackbar.make(requireContext(), requireView(), getText(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
-                viewModel.clearStatusCode();
-            } else if (code != 0 && code <= 299) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                viewModel.clearStatusCode();
-                startActivity(intent);
-            } else if (code == 403) {
-                Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
-                viewModel.clearStatusCode();
-            }
-        });
-    }
-
 
     @Override
     public void onDestroyView() {

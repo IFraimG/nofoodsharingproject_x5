@@ -23,6 +23,6 @@ public class MapRepository {
     }
 
     public Call<MarketTitleResponse> getPinMarket(String typeUser, String userID) {
-        return mapAPI.getPinMarket(typeUser, userID);
+        return typeUser.equals("needy") ? mapAPI.getPinMarketNeedy(userID) : mapAPI.getPinMarketGiver(userID);
     }
 }

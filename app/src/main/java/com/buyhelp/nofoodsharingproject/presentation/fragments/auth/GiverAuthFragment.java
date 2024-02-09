@@ -72,31 +72,25 @@ public class GiverAuthFragment extends Fragment {
 
             if (ValidateUser.isValidate(requireContext(), dtoPhone, dtoLogin, dtoPassword)) {
                 binding.giverAuthBtnLogin.setEnabled(false);
-                viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), giverSignUpResponseI -> binding.giverAuthBtnLogin.setEnabled(true));
+                viewModel.signup(tokenFCM, dtoPhone, dtoLogin, dtoPassword).observe(requireActivity(), code -> {
+                    binding.giverAuthBtnLogin.setEnabled(true);
+                    if (code == 400) {
+                        Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
+                        viewModel.clearStatusCode();
+                    } else if (code == 403) {
+                        Snackbar.make(requireContext(), requireView(), getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
+                        viewModel.clearStatusCode();
+                    }
+                    else if (code <= 299 && code != 0) {
+                        Intent intent = new Intent(requireContext(), MainActivity.class);
+                        viewModel.clearStatusCode();
+                        startActivity(intent);
+                    }
+                });
             }
         }));
 
         return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View createdView, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(createdView, savedInstanceState);
-
-        viewModel.getStatusCode().observe(getViewLifecycleOwner(), code -> {
-            if (code == 400) {
-                Snackbar.make(requireContext(), requireView(), getString(R.string.account_created), Snackbar.LENGTH_SHORT).show();
-                viewModel.clearStatusCode();
-            } else if (code == 403) {
-                Snackbar.make(requireContext(), requireView(), getString(R.string.data_repeat), Snackbar.LENGTH_SHORT).show();
-                viewModel.clearStatusCode();
-            }
-            else if (code <= 299 && code != 0) {
-                Intent intent = new Intent(requireContext(), MainActivity.class);
-                viewModel.clearStatusCode();
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

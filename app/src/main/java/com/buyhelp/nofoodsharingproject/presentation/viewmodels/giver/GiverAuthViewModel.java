@@ -34,7 +34,7 @@ public class GiverAuthViewModel extends AndroidViewModel {
         defineUser.saveUserDataGiver(false, result.user.getX5_Id(), result);
     }
 
-    public LiveData<SignUpResponseI<Giver>> login(String login, String password) {
+    public LiveData<Integer> login(String login, String password) {
         code.setValue(0);
         authRepository.giverLogin(login, password).enqueue(new Callback<>() {
             @Override
@@ -54,10 +54,10 @@ public class GiverAuthViewModel extends AndroidViewModel {
             }
         });
 
-        return createdUser;
+        return code;
     }
 
-    public LiveData<SignUpResponseI<Giver>> signup(String tokenFCM, String dtoPhone, String dtoLogin, String dtoPassword) {
+    public LiveData<Integer> signup(String tokenFCM, String dtoPhone, String dtoLogin, String dtoPassword) {
         code.setValue(0);
         authRepository.giverRegistration(dtoPhone, dtoLogin, dtoPassword, tokenFCM).enqueue(new Callback<>() {
             @Override
@@ -79,7 +79,7 @@ public class GiverAuthViewModel extends AndroidViewModel {
             }
         });
 
-        return createdUser;
+        return code;
     }
 
     public LiveData<Integer> getStatusCode() {

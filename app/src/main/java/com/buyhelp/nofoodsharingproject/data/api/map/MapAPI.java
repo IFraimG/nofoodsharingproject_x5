@@ -18,6 +18,10 @@ public interface MapAPI {
     @PUT("/needy/set_market")
     Call<Needy> setNeedyMarket(@Body RequestMarketInfo requestMarketInfo);
 
-    @GET("/get_pin_market")
-    Call<MarketTitleResponse> getPinMarket(@Query("typeUser") String typeUser, @Query("userID") String userId);
+    @GET("/giver/get_pin_market")
+    Call<MarketTitleResponse> getPinMarketGiver(@Query("userID") String userId);
+
+    @GET("/needy/get_pin_market")
+    Call<MarketTitleResponse> getPinMarketNeedy(@Query("userID") String userId);
+
 }

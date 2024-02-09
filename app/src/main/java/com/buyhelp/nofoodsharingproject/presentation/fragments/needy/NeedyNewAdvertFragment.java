@@ -75,6 +75,8 @@ public class NeedyNewAdvertFragment extends Fragment {
 
         viewModel.isNavigate().observe(getViewLifecycleOwner(), isNavigate -> {
             if (isNavigate) {
+                arrayAdapterChoosenItems.clear();
+                arrayAdapterChoosenItems.notifyDataSetChanged();
                 Navigation.findNavController(requireView()).navigate(R.id.action_needyNewAdvertFragment_to_needyAdvrsF);
                 viewModel.cancelNavigate();
             }

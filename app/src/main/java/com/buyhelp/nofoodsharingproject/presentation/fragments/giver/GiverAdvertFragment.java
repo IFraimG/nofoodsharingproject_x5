@@ -103,6 +103,7 @@ public class GiverAdvertFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (productsAdapter != null) productsAdapter.clear();
         mBinding.clear();
     }
 
@@ -127,9 +128,11 @@ public class GiverAdvertFragment extends Fragment {
         binding.giverAdvertCreateChat.setEnabled(false);
         binding.giverAdvertAccept.setEnabled(false);
 
+        productsAdapter = new ArrayAdapter<>(requireContext(), R.layout.item_needy_product_name);
         viewModel.getAdvert(advertID).observe(requireActivity(), advertisement -> {
             if (advertisement != null) {
-                productsAdapter = new ArrayAdapter<>(requireContext(), R.layout.item_needy_product_name, advertisement.getListProducts());
+                productsAdapter.clear();
+                productsAdapter.addAll(advertisement.getListProducts());
                 binding.giverAdvertProductItemListProducts.setAdapter(productsAdapter);
 
                 binding.giverAdvertAuthor.setText(advertisement.getAuthorName());

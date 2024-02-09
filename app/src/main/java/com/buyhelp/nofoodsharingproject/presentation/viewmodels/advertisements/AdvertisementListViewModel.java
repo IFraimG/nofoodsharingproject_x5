@@ -72,21 +72,24 @@ public class AdvertisementListViewModel extends AndroidViewModel {
 
     public void loadAdverts(String market) {
         if (LoaderStatus.Status.LOADED.equals(this.getLoaderStatus().getValue().getStatus())) _status.setValue(LoaderStatus.LOADING);
-        advertsRepository.getListAdverts(market).enqueue(new Callback<>() {
-            @Override
-            public void onResponse(@NotNull Call<ResponseActiveAdverts> call, @NotNull Response<ResponseActiveAdverts> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    _adverts.setValue(Arrays.asList(response.body().getAdvertisements()));
-                    if (LoaderStatus.Status.LOADING.equals(getLoaderStatus().getValue().getStatus())) _status.setValue(LoaderStatus.LOADED);
+        if (market != null) {
+            advertsRepository.getListAdverts(market).enqueue(new Callback<>() {
+                @Override
+                public void onResponse(@NotNull Call<ResponseActiveAdverts> call, @NotNull Response<ResponseActiveAdverts> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        _adverts.setValue(Arrays.asList(response.body().getAdvertisements()));
+                        if (LoaderStatus.Status.LOADING.equals(getLoaderStatus().getValue().getStatus()))
+                            _status.setValue(LoaderStatus.LOADED);
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NotNull Call<ResponseActiveAdverts> call, @NotNull Throwable t) {
-                _status.setValue(LoaderStatus.FAILURE);
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(@NotNull Call<ResponseActiveAdverts> call, @NotNull Throwable t) {
+                    _status.setValue(LoaderStatus.FAILURE);
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 
     public LiveData<String> getMarket() {

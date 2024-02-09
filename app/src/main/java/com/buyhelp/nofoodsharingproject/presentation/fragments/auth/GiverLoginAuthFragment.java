@@ -62,30 +62,24 @@ public class GiverLoginAuthFragment extends Fragment {
 
             if (dtoLogin.length() == 0 || dtoPassword.length() == 0) Snackbar.make(requireContext(), requireView(), getString(R.string.not_full), Snackbar.LENGTH_LONG).show();
             else {
-                viewModel.login(dtoLogin, dtoPassword).observe(requireActivity(), giverSignUpResponseI -> binding.loginAuthBtn.setEnabled(true));
+                viewModel.login(dtoLogin, dtoPassword).observe(requireActivity(), code -> {
+                    binding.loginAuthBtn.setEnabled(true);
+                    if (code == 400) {
+                        Snackbar.make(requireContext(), requireView(), getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
+                        viewModel.clearStatusCode();
+                    } else if (code == 404) {
+                        Snackbar.make(requireActivity(), requireView(), getString(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
+                        viewModel.clearStatusCode();
+                    } else if (code != 0 && code <= 299) {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        startActivity(intent);
+                        requireActivity().finish();
+                    }
+                });
             }
         });
 
         return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View createdView, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(createdView, savedInstanceState);
-
-        viewModel.getStatusCode().observe(getViewLifecycleOwner(), code -> {
-            if (code == 400) {
-                Snackbar.make(requireContext(), requireView(), getString(R.string.not_right_password), Snackbar.LENGTH_SHORT).show();
-                viewModel.clearStatusCode();
-            } else if (code == 404) {
-                Snackbar.make(requireActivity(), requireView(), getString(R.string.account_not_exist), Snackbar.LENGTH_SHORT).show();
-                viewModel.clearStatusCode();
-            } else if (code != 0 && code <= 299) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
-                requireActivity().finish();
-            }
-        });
     }
 
     @Override
